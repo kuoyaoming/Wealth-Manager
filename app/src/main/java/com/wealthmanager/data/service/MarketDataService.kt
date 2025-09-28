@@ -27,26 +27,41 @@ class MarketDataService @Inject constructor(
                 try {
                     debugLogManager.log("MARKET_DATA", "Updating ${stock.symbol} (${stock.market} market)")
                     val region = if (stock.market == "TW") "TW" else "US"
+                    
+                    // Log API request details
+                    debugLogManager.log("MARKET_DATA", "API Request - Symbol: ${stock.symbol}, Region: $region")
+                    
                     val response = marketDataApi.getStockQuote(stock.symbol, region)
                     
+                    // Log full API response
+                    debugLogManager.log("MARKET_DATA", "API Response received for ${stock.symbol}")
+                    debugLogManager.log("MARKET_DATA", "Response result count: ${response.quoteResponse.result?.size ?: 0}")
+                    
                     val result = response.quoteResponse.result?.firstOrNull()
-                    if (result != null && result.regularMarketPrice != null) {
-                        val twdEquivalent = calculateTwdEquivalent(
-                            result.regularMarketPrice,
-                            stock.shares,
-                            result.currency ?: "USD"
-                        )
+                    if (result != null) {
+                        debugLogManager.log("MARKET_DATA", "Quote data for ${stock.symbol}: price=${result.regularMarketPrice}, currency=${result.currency}")
                         
-                        val updatedStock = stock.copy(
-                            currentPrice = result.regularMarketPrice,
-                            twdEquivalent = twdEquivalent,
-                            lastUpdated = System.currentTimeMillis()
-                        )
-                        
-                        assetRepository.updateStockAsset(updatedStock)
-                        debugLogManager.log("MARKET_DATA", "Updated ${stock.symbol}: Price=${result.regularMarketPrice}, TWD=${twdEquivalent}")
+                        if (result.regularMarketPrice != null) {
+                            val twdEquivalent = calculateTwdEquivalent(
+                                result.regularMarketPrice,
+                                stock.shares,
+                                result.currency ?: "USD"
+                            )
+                            
+                            val updatedStock = stock.copy(
+                                currentPrice = result.regularMarketPrice,
+                                twdEquivalent = twdEquivalent,
+                                lastUpdated = System.currentTimeMillis()
+                            )
+                            
+                            assetRepository.updateStockAsset(updatedStock)
+                            debugLogManager.log("MARKET_DATA", "Updated ${stock.symbol}: Price=${result.regularMarketPrice}, TWD=${twdEquivalent}")
+                        } else {
+                            debugLogManager.logError("No price data for ${stock.symbol}")
+                        }
                     } else {
                         debugLogManager.logError("No market data found for ${stock.symbol}")
+                        debugLogManager.log("MARKET_DATA", "API returned empty result for ${stock.symbol}")
                     }
                     
                 } catch (e: Exception) {
@@ -65,22 +80,35 @@ class MarketDataService @Inject constructor(
         try {
             debugLogManager.log("MARKET_DATA", "Starting exchange rate update")
             
+            // Log API request details
+            debugLogManager.log("MARKET_DATA", "API Request - Exchange Rate: USD=X")
+            
             val response = marketDataApi.getExchangeRate("USD=X")
+            
+            // Log full API response
+            debugLogManager.log("MARKET_DATA", "API Response received for exchange rate")
+            debugLogManager.log("MARKET_DATA", "Response result count: ${response.quoteResponse.result?.size ?: 0}")
+            
             val result = response.quoteResponse.result?.firstOrNull()
             
-            if (result != null && result.regularMarketPrice != null) {
-                debugLogManager.log("MARKET_DATA", "Received exchange rate: ${result.regularMarketPrice}")
+            if (result != null) {
+                debugLogManager.log("MARKET_DATA", "Exchange rate data: price=${result.regularMarketPrice}, currency=${result.currency}")
                 
-                val exchangeRate = ExchangeRate(
-                    currencyPair = "USD_TWD",
-                    rate = result.regularMarketPrice,
-                    lastUpdated = System.currentTimeMillis()
-                )
-                
-                assetRepository.insertExchangeRate(exchangeRate)
-                debugLogManager.log("MARKET_DATA", "Exchange rate updated: USD/TWD = ${result.regularMarketPrice}")
+                if (result.regularMarketPrice != null) {
+                    val exchangeRate = ExchangeRate(
+                        currencyPair = "USD_TWD",
+                        rate = result.regularMarketPrice,
+                        lastUpdated = System.currentTimeMillis()
+                    )
+                    
+                    assetRepository.insertExchangeRate(exchangeRate)
+                    debugLogManager.log("MARKET_DATA", "Exchange rate updated: USD/TWD = ${result.regularMarketPrice}")
+                } else {
+                    debugLogManager.logError("No exchange rate price data found")
+                }
             } else {
                 debugLogManager.logError("No exchange rate data found")
+                debugLogManager.log("MARKET_DATA", "API returned empty result for exchange rate")
             }
             
         } catch (e: Exception) {
@@ -94,9 +122,21 @@ class MarketDataService @Inject constructor(
             
             val region = if (market == "TW") "TW" else "US"
             debugLogManager.log("MARKET_DATA", "Using region: $region for search")
+            
+            // Log API request details
+            debugLogManager.log("MARKET_DATA", "API Request - Query: $query, Region: $region")
+            
             val response = marketDataApi.searchStocks(query, region)
             
-            debugLogManager.log("MARKET_DATA", "API returned ${response.quotes.size} stock results")
+            // Log full API response
+            debugLogManager.log("MARKET_DATA", "API Response received - Status: Success")
+            debugLogManager.log("MARKET_DATA", "API Response - Raw quotes count: ${response.quotes.size}")
+            
+            // Log each quote for debugging
+            response.quotes.forEachIndexed { index, quote ->
+                debugLogManager.log("MARKET_DATA", "Quote $index: symbol=${quote.symbol}, shortName=${quote.shortName}, longName=${quote.longName}")
+            }
+            
             val searchResults = response.quotes.map { quote ->
                 StockSearchItem(
                     symbol = quote.symbol,
@@ -112,6 +152,7 @@ class MarketDataService @Inject constructor(
             
         } catch (e: Exception) {
             debugLogManager.logError("Failed to search stocks: ${e.message}", e)
+            debugLogManager.log("MARKET_DATA", "Search failed for query: '$query', market: '$market'")
             emptyList()
         }
     }

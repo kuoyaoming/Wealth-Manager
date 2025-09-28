@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
@@ -15,6 +16,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 import com.wealthmanager.data.service.StockSearchItem
@@ -35,11 +37,12 @@ fun AddAssetDialog(
     var selectedTab by remember { mutableStateOf(0) }
     var cashCurrency by remember { mutableStateOf("TWD") }
     var cashAmount by remember { mutableStateOf("") }
-    var stockSymbol by remember { mutableStateOf("") }
-    var stockShares by remember { mutableStateOf("") }
-    var stockMarket by remember { mutableStateOf("TW") }
-    var searchQuery by remember { mutableStateOf("") }
-    var showSearchResults by remember { mutableStateOf(false) }
+        var stockSymbol by remember { mutableStateOf("") }
+        var stockShares by remember { mutableStateOf("") }
+        var stockMarket by remember { mutableStateOf("TW") }
+        var searchQuery by remember { mutableStateOf("") }
+        var showSearchResults by remember { mutableStateOf(false) }
+        var searchError by remember { mutableStateOf("") }
     
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Add Asset Dialog Opened")
@@ -152,7 +155,12 @@ fun AddAssetDialog(
                                     debugLogManager.log("UI", "User typing cash amount: $it")
                                     cashAmount = it 
                                 },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 placeholder = { Text("Enter amount") },
+                                isError = cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null,
+                                supportingText = if (cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null) {
+                                    { Text("請輸入有效的數字", color = MaterialTheme.colorScheme.error) }
+                                } else null,
                                 modifier = Modifier.fillMaxWidth()
                             )
                         }
@@ -163,19 +171,22 @@ fun AddAssetDialog(
                             Spacer(modifier = Modifier.height(8.dp))
                             OutlinedTextField(
                                 value = stockSymbol,
-                                onValueChange = { 
-                                    debugLogManager.log("UI", "User typing stock symbol: $it")
-                                    stockSymbol = it
-                                    searchQuery = it
-                                    if (it.length > 2) {
-                                        debugLogManager.logUserAction("Stock Search Triggered")
-                                        debugLogManager.log("UI", "Auto-triggering stock search for: $it")
-                                        onSearchStocks(it, stockMarket)
-                                        showSearchResults = true
-                                    } else {
-                                        showSearchResults = false
-                                    }
-                                },
+                                    onValueChange = {
+                                        debugLogManager.log("UI", "User typing stock symbol: $it")
+                                        stockSymbol = it
+                                        searchQuery = it
+                                        searchError = "" // Clear previous errors
+                                        
+                                        if (it.length > 2) {
+                                            debugLogManager.logUserAction("Stock Search Triggered")
+                                            debugLogManager.log("UI", "Auto-triggering stock search for: $it")
+                                            onSearchStocks(it, stockMarket)
+                                            showSearchResults = true
+                                        } else {
+                                            showSearchResults = false
+                                            searchError = if (it.isNotEmpty()) "請輸入至少3個字符進行搜索" else ""
+                                        }
+                                    },
                                 placeholder = { Text("e.g., AAPL, TSMC") },
                                 trailingIcon = {
                                     if (isSearching) {
@@ -220,6 +231,7 @@ fun AddAssetDialog(
                                                 debugLogManager.log("UI", "User selected stock: ${result.symbol} - ${result.longName}")
                                                 stockSymbol = result.symbol
                                                 showSearchResults = false
+                                                searchError = ""
                                             }
                                         ) {
                                             Column(
@@ -254,6 +266,20 @@ fun AddAssetDialog(
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
                                 }
+                            } else if (searchError.isNotEmpty()) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = searchError,
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.error
+                                )
+                            } else if (showSearchResults && searchResults.isEmpty() && !isSearching) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Text(
+                                    text = "未找到匹配的股票，請檢查股票代號是否正確",
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.error
+                                )
                             }
                             Spacer(modifier = Modifier.height(16.dp))
                             Text("Shares")
@@ -264,7 +290,12 @@ fun AddAssetDialog(
                                     debugLogManager.log("UI", "User typing stock shares: $it")
                                     stockShares = it 
                                 },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 placeholder = { Text("Enter number of shares") },
+                                isError = stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null,
+                                supportingText = if (stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null) {
+                                    { Text("請輸入有效的股數", color = MaterialTheme.colorScheme.error) }
+                                } else null,
                                 modifier = Modifier.fillMaxWidth()
                             )
                             Spacer(modifier = Modifier.height(16.dp))

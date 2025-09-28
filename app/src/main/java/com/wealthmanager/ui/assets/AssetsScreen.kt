@@ -13,6 +13,8 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
+import com.wealthmanager.data.entity.CashAsset
+import com.wealthmanager.data.entity.StockAsset
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -88,8 +90,16 @@ fun AssetsScreen(
                 items(uiState.cashAssets.size) { index ->
                     CashAssetItem(
                         asset = uiState.cashAssets[index],
-                        onEdit = { /* TODO: Edit cash asset */ },
-                        onDelete = { /* TODO: Delete cash asset */ }
+                        onEdit = { asset ->
+                            debugLogManager.logUserAction("Edit Cash Asset")
+                            debugLogManager.log("UI", "User wants to edit cash asset: ${asset.currency} ${asset.amount}")
+                            // TODO: Implement edit dialog
+                        },
+                        onDelete = { asset ->
+                            debugLogManager.logUserAction("Delete Cash Asset")
+                            debugLogManager.log("UI", "User wants to delete cash asset: ${asset.currency} ${asset.amount}")
+                            viewModel.deleteCashAsset(asset)
+                        }
                     )
                 }
             }
@@ -115,8 +125,16 @@ fun AssetsScreen(
                 items(uiState.stockAssets.size) { index ->
                     StockAssetItem(
                         asset = uiState.stockAssets[index],
-                        onEdit = { /* TODO: Edit stock asset */ },
-                        onDelete = { /* TODO: Delete stock asset */ }
+                        onEdit = { asset ->
+                            debugLogManager.logUserAction("Edit Stock Asset")
+                            debugLogManager.log("UI", "User wants to edit stock asset: ${asset.symbol}")
+                            // TODO: Implement edit dialog
+                        },
+                        onDelete = { asset ->
+                            debugLogManager.logUserAction("Delete Stock Asset")
+                            debugLogManager.log("UI", "User wants to delete stock asset: ${asset.symbol}")
+                            viewModel.deleteStockAsset(asset)
+                        }
                     )
                 }
             }

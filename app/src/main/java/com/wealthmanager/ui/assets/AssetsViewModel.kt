@@ -80,23 +80,39 @@ class AssetsViewModel @Inject constructor(
         }
     }
     
-    fun addStockAsset(symbol: String, shares: Double, market: String) {
-        debugLogManager.log("ASSETS", "Adding stock asset: $symbol, $shares shares, market: $market")
-        viewModelScope.launch {
-            val stockAsset = StockAsset(
-                id = System.currentTimeMillis().toString(),
-                symbol = symbol,
-                companyName = symbol, // Simple mapping
-                shares = shares.toInt(),
-                market = market,
-                currentPrice = 0.0, // Will be fetched later
-                twdEquivalent = 0.0 // Will be calculated later
-            )
-            debugLogManager.log("ASSETS", "Stock asset created: $symbol, ${shares.toInt()} shares")
-            assetRepository.insertStockAsset(stockAsset)
-            debugLogManager.log("ASSETS", "Stock asset inserted to database")
+        fun addStockAsset(symbol: String, shares: Double, market: String) {
+            debugLogManager.log("ASSETS", "Adding stock asset: $symbol, $shares shares, market: $market")
+            viewModelScope.launch {
+                val stockAsset = StockAsset(
+                    id = System.currentTimeMillis().toString(),
+                    symbol = symbol,
+                    companyName = symbol, // Simple mapping
+                    shares = shares.toInt(),
+                    market = market,
+                    currentPrice = 0.0, // Will be fetched later
+                    twdEquivalent = 0.0 // Will be calculated later
+                )
+                debugLogManager.log("ASSETS", "Stock asset created: $symbol, ${shares.toInt()} shares")
+                assetRepository.insertStockAsset(stockAsset)
+                debugLogManager.log("ASSETS", "Stock asset inserted to database")
+            }
         }
-    }
+
+        fun deleteCashAsset(asset: CashAsset) {
+            debugLogManager.log("ASSETS", "Deleting cash asset: ${asset.currency} ${asset.amount}")
+            viewModelScope.launch {
+                assetRepository.deleteCashAsset(asset)
+                debugLogManager.log("ASSETS", "Cash asset deleted successfully")
+            }
+        }
+
+        fun deleteStockAsset(asset: StockAsset) {
+            debugLogManager.log("ASSETS", "Deleting stock asset: ${asset.symbol}")
+            viewModelScope.launch {
+                assetRepository.deleteStockAsset(asset)
+                debugLogManager.log("ASSETS", "Stock asset deleted successfully")
+            }
+        }
 }
 
 data class AssetsUiState(
