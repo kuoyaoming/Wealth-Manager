@@ -154,6 +154,8 @@ class MarketDataService @Inject constructor(
                 val cachedRate = assetRepository.getExchangeRateSync("USD_TWD")
                 if (cachedRate != null) {
                     debugLogManager.logWarning("MARKET_DATA", "Using cached rate: ${cachedRate.rate} (last updated: ${cachedRate.lastUpdated})")
+                    // Update API status to indicate stale data
+                    // Note: This would need ApiStatusManager injection to work properly
                 } else {
                     debugLogManager.logWarning("MARKET_DATA", "No cached rate available, using default 30.0")
                 }
