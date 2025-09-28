@@ -1,0 +1,53 @@
+--------- beginning of main
+09-28 23:11:59.956 W/zygote64(  348): Activation of cgroup controller +memory failed in path /sys/fs/cgroup/apps/uid_10361: Invalid argument
+09-28 23:11:59.963 I/Zygote  (  348): Process 348 crated for com.wealthmanager
+09-28 23:11:59.963 I/m.wealthmanager(  348): Late-enabling -Xcheck:jni
+09-28 23:11:59.986 I/m.wealthmanager(  348): Using CollectorTypeCMC GC.
+09-28 23:11:59.995 D/nativeloader(  348): Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+09-28 23:12:00.032 D/CompatChangeReporter(  348): Compat change id reported: 242716250; UID 10361; state: ENABLED
+09-28 23:12:00.740 D/nativeloader(  348): Configuring clns-9 for other apk /data/app/~~jJ8tYYNFgtQvopPCtI0-cQ==/com.wealthmanager-LpZ-z9ndkiGhMtfhZPkw2Q==/base.apk. target_sdk_version=34, uses_libraries=, library_path=/data/app/~~jJ8tYYNFgtQvopPCtI0-cQ==/com.wealthmanager-LpZ-z9ndkiGhMtfhZPkw2Q==/lib/arm64, permitted_path=/data:/mnt/expand:/data/user/0/com.wealthmanager
+09-28 23:12:00.749 V/GraphicsEnvironment(  348): Currently set values for:
+09-28 23:12:00.749 V/GraphicsEnvironment(  348):   angle_gl_driver_selection_pkgs=[com.android.angle, com.google.android.apps.tachyon]
+09-28 23:12:00.749 V/GraphicsEnvironment(  348):   angle_gl_driver_selection_values=[angle, native]
+09-28 23:12:00.749 V/GraphicsEnvironment(  348): com.wealthmanager is not listed in per-application setting
+09-28 23:12:00.749 V/GraphicsEnvironment(  348): ANGLE allowlist from config: 
+09-28 23:12:00.749 V/GraphicsEnvironment(  348): com.wealthmanager is not listed in ANGLE allowlist or settings, returning default
+09-28 23:12:00.749 V/GraphicsEnvironment(  348): Neither updatable production driver nor prerelease driver is supported.
+09-28 23:12:00.753 E/FeatureFlagsImplExport(  348): android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package com.android.org.conscrypt.net.flags cannot be found on the device
+--------- beginning of system
+09-28 23:12:00.796 I/DisplayManager(  348): Choreographer implicitly registered for the refresh rate.
+09-28 23:12:00.905 E/ashmem  (  348): Pinning is deprecated since Android Q. Please use trim or other methods.
+09-28 23:12:00.996 D/DesktopExperienceFlags(  348): Toggle override initialized to: false
+09-28 23:12:00.997 D/DesktopModeFlags(  348): Toggle override initialized to: OVERRIDE_UNSET
+09-28 23:12:01.310 I/ContentCaptureHelper(  348): Setting logging level to OFF
+09-28 23:12:01.468 I/Choreographer(  348): Skipped 81 frames!  The application may be doing too much work on its main thread.
+09-28 23:12:01.957 W/m.wealthmanager(  348): Method java.lang.Object androidx.compose.runtime.snapshots.SnapshotStateMap.mutate(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:12:01.957 W/m.wealthmanager(  348): Common causes for lock verification issues are non-optimized dex code
+09-28 23:12:01.957 W/m.wealthmanager(  348): and incorrect proguard optimizations.
+09-28 23:12:01.957 W/m.wealthmanager(  348): Method void androidx.compose.runtime.snapshots.SnapshotStateMap.update(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:12:01.959 W/m.wealthmanager(  348): Method boolean androidx.compose.runtime.snapshots.SnapshotStateMap.removeIf$runtime_release(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:12:02.374 D/WindowOnBackDispatcher(  348): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@69cf28f
+09-28 23:12:02.378 I/HWUI    (  348): Using FreeType backend (prop=Auto)
+09-28 23:12:02.705 W/m.wealthmanager(  348): Method boolean androidx.compose.runtime.snapshots.SnapshotStateList.conditionalUpdate(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:12:02.707 W/m.wealthmanager(  348): Method java.lang.Object androidx.compose.runtime.snapshots.SnapshotStateList.mutate(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:12:02.707 W/m.wealthmanager(  348): Method void androidx.compose.runtime.snapshots.SnapshotStateList.update(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:12:02.969 I/m.wealthmanager(  348): hiddenapi: Accessing hidden method Ljava/lang/invoke/MethodHandles$Lookup;-><init>(Ljava/lang/Class;I)V (runtime_flags=0, domain=core-platform, api=unsupported) from Lretrofit2/Platform; (domain=app) using reflection: allowed
+09-28 23:12:03.027 D/WealthManagerDebug(  348): [23:12:03.017] DASHBOARD: DashboardViewModel initialized
+09-28 23:12:03.031 D/WealthManagerDebug(  348): [23:12:03.027] DASHBOARD: Starting to observe assets
+09-28 23:12:04.651 I/HWUI    (  348): Davey! duration=3814ms; Flags=1, FrameTimelineVsyncId=67651406, IntendedVsync=154846433524542, Vsync=154847108640912, InputEventId=0, HandleInputStart=154847115027716, AnimationStart=154847115063035, PerformTraversalsStart=154847115486497, DrawStart=154850014981168, FrameDeadline=154846449524542, FrameStartTime=154847113717128, FrameInterval=8334770, WorkloadTarget=16000000, SyncQueued=154850088940071, SyncStart=154850109009570, IssueDrawCommandsStart=154850109667000, SwapBuffers=154850260648079, FrameCompleted=154850267979988, DequeueBufferDuration=77678, QueueBufferDuration=1816040, GpuCompleted=154850267979988, SwapBuffersCompleted=154850262792651, DisplayPresentTime=0, CommandSubmissionCompleted=154850260648079, 
+09-28 23:12:04.690 I/NavController(  348): Ignoring popBackStack to route auth as it was not found on the current back stack
+09-28 23:12:04.720 D/WealthManagerDebug(  348): [23:12:04.713] USER_ACTION: Dashboard Screen Opened
+09-28 23:12:04.724 D/WealthManagerDebug(  348): [23:12:04.720] DASHBOARD: Loading portfolio data
+09-28 23:12:04.753 I/Choreographer(  348): Skipped 366 frames!  The application may be doing too much work on its main thread.
+09-28 23:12:04.908 D/WealthManagerDebug(  348): [23:12:04.902] DASHBOARD: DashboardViewModel initialized
+09-28 23:12:04.911 D/WealthManagerDebug(  348): [23:12:04.908] DASHBOARD: Starting to observe assets
+09-28 23:12:05.056 I/m.wealthmanager(  348): Compiler allocated 4970KB to compile void android.view.ViewRootImpl.performTraversals()
+09-28 23:12:05.103 W/WindowOnBackDispatcher(  348): OnBackInvokedCallback is not enabled for the application.
+09-28 23:12:05.103 W/WindowOnBackDispatcher(  348): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+09-28 23:12:05.157 D/WealthManagerDebug(  348): [23:12:05.153] DASHBOARD: Assets updated - Cash: 2, Stock: 2
+09-28 23:12:05.163 D/WealthManagerDebug(  348): [23:12:05.157] DASHBOARD: Total Assets: 60100.1, Cash: 60100.1, Stock: 0.0
+09-28 23:12:05.196 D/WealthManagerDebug(  348): [23:12:05.188] USER_ACTION: Dashboard Screen Opened
+09-28 23:12:05.200 D/WealthManagerDebug(  348): [23:12:05.196] DASHBOARD: Loading portfolio data
+09-28 23:12:05.212 I/Choreographer(  348): Skipped 52 frames!  The application may be doing too much work on its main thread.
+09-28 23:12:05.375 D/WealthManagerDebug(  348): [23:12:05.370] DASHBOARD: Assets updated - Cash: 2, Stock: 2
+09-28 23:12:05.381 D/WealthManagerDebug(  348): [23:12:05.375] DASHBOARD: Total Assets: 60100.1, Cash: 60100.1, Stock: 0.0

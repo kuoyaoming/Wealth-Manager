@@ -13,7 +13,7 @@ if errorlevel 1 (
 )
 
 REM Check if APK file exists
-if not exist "WealthManager-v0.1.5-complete.apk" (
+if not exist "WealthManager_v0.1.6_final.apk" (
     echo APK file not found: WealthManager-v0.1.5-complete.apk
     echo Please ensure the APK file is in the current directory
     pause
