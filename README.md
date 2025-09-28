@@ -106,6 +106,207 @@ This application prioritizes user privacy and data security:
 - No data transmission to external servers
 - Biometric authentication ensures only you can access your financial data
 
+## 🏗️ Application Architecture
+
+### Page Flow & Navigation
+```mermaid
+graph TD
+    A[App Launch] --> B[MainActivity]
+    B --> C[WealthManagerNavigation]
+    C --> D{Authentication Check}
+    D -->|Not Authenticated| E[BiometricAuthScreen]
+    D -->|Authenticated| F[DashboardScreen]
+    
+    E --> G[BiometricAuthViewModel]
+    G --> H[BiometricAuthManager]
+    H --> I{Biometric Available?}
+    I -->|Yes| J[Show Authenticate Button]
+    I -->|No| K[Show Skip Button]
+    J --> L[User Authenticates]
+    K --> M[User Skips]
+    L -->|Success| N[Navigate to Dashboard]
+    L -->|Error| O[Show Error Message]
+    M --> N
+    O --> P[Retry or Skip]
+    P --> N
+    
+    N --> F
+    F --> Q[DashboardViewModel]
+    Q --> R[AssetRepository]
+    R --> S[Room Database]
+    S --> T[CashAsset Table]
+    S --> U[StockAsset Table]
+    
+    F --> V[Total Assets Card]
+    F --> W[Cash Assets Card]
+    F --> X[Stock Assets Card]
+    F --> Y[Pie Chart Card]
+    F --> Z[Debug Log Button]
+    
+    F --> AA[Add Assets Button]
+    AA --> BB[AssetsScreen]
+    BB --> CC[AssetsViewModel]
+    CC --> R
+    
+    BB --> DD[AddAssetDialog]
+    DD --> EE{Asset Type?}
+    EE -->|Cash| FF[Cash Input Form]
+    EE -->|Stock| GG[Stock Input Form]
+    FF --> HH[Add Cash Asset]
+    GG --> II[Add Stock Asset]
+    HH --> CC
+    II --> CC
+    
+    CC --> JJ[Insert to Database]
+    JJ --> S
+    
+    Z --> KK[DebugLogManager]
+    KK --> LL[Copy Logs to Clipboard]
+    
+    style A fill:#e1f5fe
+    style E fill:#fff3e0
+    style F fill:#e8f5e8
+    style BB fill:#f3e5f5
+    style DD fill:#fce4ec
+    style S fill:#e0f2f1
+```
+
+### Component Architecture
+```mermaid
+classDiagram
+    class MainActivity {
+        +onCreate()
+        +setContent()
+    }
+    
+    class WealthManagerNavigation {
+        +isAuthenticated: Boolean
+        +navController: NavHostController
+    }
+    
+    class BiometricAuthScreen {
+        +onAuthSuccess()
+        +onSkipAuth()
+    }
+    
+    class BiometricAuthViewModel {
+        +checkBiometricAvailability()
+        +authenticate()
+        +uiState: StateFlow
+    }
+    
+    class BiometricAuthManager {
+        +isBiometricAvailable()
+        +createBiometricPrompt()
+        +showBiometricPrompt()
+    }
+    
+    class DashboardScreen {
+        +onNavigateToAssets()
+    }
+    
+    class DashboardViewModel {
+        +loadPortfolioData()
+        +refreshData()
+        +uiState: StateFlow
+    }
+    
+    class AssetsScreen {
+        +onNavigateBack()
+    }
+    
+    class AssetsViewModel {
+        +loadAssets()
+        +addCashAsset()
+        +addStockAsset()
+        +uiState: StateFlow
+    }
+    
+    class AddAssetDialog {
+        +onAddCash()
+        +onAddStock()
+        +onDismiss()
+    }
+    
+    class AssetRepository {
+        +getAllCashAssets()
+        +getAllStockAssets()
+        +insertCashAsset()
+        +insertStockAsset()
+    }
+    
+    class DebugLogManager {
+        +log()
+        +logUserAction()
+        +logBiometric()
+        +copyLogsToClipboard()
+    }
+    
+    class RoomDatabase {
+        +CashAsset Table
+        +StockAsset Table
+    }
+    
+    MainActivity --> WealthManagerNavigation
+    WealthManagerNavigation --> BiometricAuthScreen
+    WealthManagerNavigation --> DashboardScreen
+    BiometricAuthScreen --> BiometricAuthViewModel
+    BiometricAuthViewModel --> BiometricAuthManager
+    DashboardScreen --> DashboardViewModel
+    DashboardScreen --> AssetsScreen
+    AssetsScreen --> AssetsViewModel
+    AssetsScreen --> AddAssetDialog
+    AssetsViewModel --> AssetRepository
+    DashboardViewModel --> AssetRepository
+    AssetRepository --> RoomDatabase
+    BiometricAuthScreen --> DebugLogManager
+    DashboardScreen --> DebugLogManager
+```
+
+### Data Flow
+```mermaid
+sequenceDiagram
+    participant U as User
+    participant A as App
+    participant B as BiometricAuth
+    participant D as Dashboard
+    participant AS as AssetsScreen
+    participant DB as Database
+    participant DL as DebugLog
+    
+    U->>A: Launch App
+    A->>DL: Log App Launch
+    A->>B: Check Authentication
+    B->>U: Show Biometric Prompt
+    U->>B: Authenticate/Skip
+    B->>DL: Log Authentication Result
+    B->>A: Authentication Success
+    A->>D: Navigate to Dashboard
+    D->>DL: Log Dashboard Open
+    D->>DB: Load Assets
+    DB->>D: Return Asset Data
+    D->>U: Display Portfolio
+    
+    U->>D: Click Add Assets
+    D->>DL: Log Navigation
+    D->>AS: Navigate to Assets
+    AS->>DL: Log Assets Screen Open
+    U->>AS: Click Add Button
+    AS->>U: Show Add Dialog
+    U->>AS: Fill Asset Form
+    AS->>DL: Log Asset Addition
+    AS->>DB: Insert Asset
+    DB->>AS: Confirm Insert
+    AS->>D: Navigate Back
+    D->>DB: Refresh Data
+    DB->>D: Updated Assets
+    D->>U: Show Updated Portfolio
+    
+    U->>D: Click Debug Button
+    D->>DL: Copy Logs
+    DL->>U: Logs in Clipboard
+```
+
 ## 📞 Support
 
 For technical support or feature requests, please contact the development team through the app's support section.
