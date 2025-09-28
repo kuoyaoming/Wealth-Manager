@@ -2,8 +2,9 @@ package com.wealthmanager.ui.dashboard
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyVerticalGrid
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Refresh
@@ -16,12 +17,9 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-// import com.wealthmanager.BuildConfig
 import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
-import com.wealthmanager.ui.responsive.ResponsiveSpacer
-import com.wealthmanager.ui.responsive.ResponsiveSpacerSize
 import com.wealthmanager.data.service.ApiUsageManager
 import com.wealthmanager.ui.dashboard.ApiUsageIndicator
 
@@ -37,16 +35,14 @@ fun DashboardScreen(
     val responsiveLayout = rememberResponsiveLayout()
     val apiUsageManager = viewModel.apiUsageManager
     
-    // Check if this is a debug build
     val isDebugBuild = remember {
         try {
             Class.forName("com.wealthmanager.BuildConfig").getField("DEBUG").getBoolean(null)
         } catch (e: Exception) {
-            true // Assume debug if BuildConfig is not available
+            true
         }
     }
     
-    // Observe API status
     val apiStatus by viewModel.apiStatus.collectAsState()
     
     LaunchedEffect(Unit) {
@@ -58,26 +54,25 @@ fun DashboardScreen(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.dashboard_title)) },
-                    actions = {
+                actions = {
+                    IconButton(onClick = { 
+                        debugLogManager.logUserAction("Refresh Data Button Clicked")
+                        debugLogManager.log("UI", "User clicked refresh button to update market data")
+                        viewModel.refreshData() 
+                    }) {
+                        Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
+                    }
+                    
+                    if (isDebugBuild) {
                         IconButton(onClick = { 
-                            debugLogManager.logUserAction("Refresh Data Button Clicked")
-                            debugLogManager.log("UI", "User clicked refresh button to update market data")
-                            viewModel.refreshData() 
+                            debugLogManager.logUserAction("Debug Log Button Clicked")
+                            debugLogManager.log("UI", "User clicked debug log button to copy logs to clipboard")
+                            debugLogManager.copyLogsToClipboard(context)
                         }) {
-                            Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
-                        }
-                        
-                        // Only show debug button in debug builds
-                        if (isDebugBuild) {
-                            IconButton(onClick = { 
-                                debugLogManager.logUserAction("Debug Log Button Clicked")
-                                debugLogManager.log("UI", "User clicked debug log button to copy logs to clipboard")
-                                debugLogManager.copyLogsToClipboard(context)
-                            }) {
-                                Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
-                            }
+                            Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
                         }
                     }
+                }
             )
         },
         floatingActionButton = {
@@ -91,128 +86,118 @@ fun DashboardScreen(
                 Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_cash))
             }
         }
-        ) { paddingValues ->
-            if (responsiveLayout.columns > 1) {
-                // 使用網格佈局（平板/大螢幕）
-                LazyVerticalGrid(
-                    columns = GridCells.Fixed(responsiveLayout.columns),
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                        .padding(responsiveLayout.paddingLarge),
-                    verticalArrangement = Arrangement.spacedBy(responsiveLayout.cardSpacing),
-                    horizontalArrangement = Arrangement.spacedBy(responsiveLayout.gridSpacing)
-                ) {
-                    // API Error Banner (全寬)
-                    if (apiStatus.hasError) {
-                        item(span = { GridItemSpan(responsiveLayout.columns) }) {
-                            ApiErrorBanner(
-                                errorMessage = apiStatus.errorMessage,
-                                isRetrying = apiStatus.isRetrying,
-                                isDataStale = apiStatus.isDataStale,
-                                onRetry = { viewModel.retryApiCall() },
-                                onDismiss = { viewModel.dismissApiError() }
-                            )
-                        }
-                    }
-                    
-                    // API使用狀態指示器（僅在debug模式下顯示）
-                    if (isDebugBuild) {
-                        item(span = { GridItemSpan(responsiveLayout.columns) }) {
-                            ApiUsageIndicator(apiUsageManager = apiUsageManager)
-                        }
-                    }
-                    
-                    // 總資產卡片（全寬）
+    ) { paddingValues ->
+        if (responsiveLayout.columns > 1) {
+            LazyVerticalGrid(
+                columns = GridCells.Fixed(responsiveLayout.columns),
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(responsiveLayout.paddingLarge),
+                verticalArrangement = Arrangement.spacedBy(responsiveLayout.cardSpacing),
+                horizontalArrangement = Arrangement.spacedBy(responsiveLayout.gridSpacing)
+            ) {
+                if (apiStatus.hasError) {
                     item(span = { GridItemSpan(responsiveLayout.columns) }) {
-                        TotalAssetsCard(
-                            totalValue = uiState.totalAssets,
-                            isLoading = uiState.isLoading
+                        ApiErrorBanner(
+                            errorMessage = apiStatus.errorMessage,
+                            isRetrying = apiStatus.isRetrying,
+                            isDataStale = apiStatus.isDataStale,
+                            onRetry = { viewModel.retryApiCall() },
+                            onDismiss = { viewModel.dismissApiError() }
                         )
-                    }
-                    
-                    // 現金和股票資產卡片（並排顯示）
-                    item {
-                        CashAssetsCard(
-                            cashValue = uiState.cashAssets,
-                            isLoading = uiState.isLoading
-                        )
-                    }
-                    
-                    item {
-                        StockAssetsCard(
-                            stockValue = uiState.stockAssets,
-                            isLoading = uiState.isLoading
-                        )
-                    }
-                    
-                    // 圓餅圖（全寬）
-                    if (uiState.assets.isNotEmpty()) {
-                        item(span = { GridItemSpan(responsiveLayout.columns) }) {
-                            PieChartCard(
-                                assets = uiState.assets,
-                                isLoading = uiState.isLoading
-                            )
-                        }
                     }
                 }
-            } else {
-                // 使用單列佈局（手機）
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(paddingValues)
-                        .padding(responsiveLayout.paddingLarge),
-                    verticalArrangement = Arrangement.spacedBy(responsiveLayout.cardSpacing)
-                ) {
-                    // API Error Banner
-                    if (apiStatus.hasError) {
-                        item {
-                            ApiErrorBanner(
-                                errorMessage = apiStatus.errorMessage,
-                                isRetrying = apiStatus.isRetrying,
-                                isDataStale = apiStatus.isDataStale,
-                                onRetry = { viewModel.retryApiCall() },
-                                onDismiss = { viewModel.dismissApiError() }
-                            )
-                        }
+                
+                if (isDebugBuild) {
+                    item(span = { GridItemSpan(responsiveLayout.columns) }) {
+                        ApiUsageIndicator(apiUsageManager = apiUsageManager)
                     }
-                    
-                    // API使用狀態指示器（僅在debug模式下顯示）
-                    if (isDebugBuild) {
-                        item {
-                            ApiUsageIndicator(apiUsageManager = apiUsageManager)
-                        }
-                    }
-                    
-                    item {
-                        TotalAssetsCard(
-                            totalValue = uiState.totalAssets,
+                }
+                
+                item(span = { GridItemSpan(responsiveLayout.columns) }) {
+                    TotalAssetsCard(
+                        totalValue = uiState.totalAssets,
+                        isLoading = uiState.isLoading
+                    )
+                }
+                
+                item {
+                    CashAssetsCard(
+                        cashValue = uiState.cashAssets,
+                        isLoading = uiState.isLoading
+                    )
+                }
+                
+                item {
+                    StockAssetsCard(
+                        stockValue = uiState.stockAssets,
+                        isLoading = uiState.isLoading
+                    )
+                }
+                
+                if (uiState.assets.isNotEmpty()) {
+                    item(span = { GridItemSpan(responsiveLayout.columns) }) {
+                        PieChartCard(
+                            assets = uiState.assets,
                             isLoading = uiState.isLoading
                         )
                     }
-                    
+                }
+            }
+        } else {
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(responsiveLayout.paddingLarge),
+                verticalArrangement = Arrangement.spacedBy(responsiveLayout.cardSpacing)
+            ) {
+                if (apiStatus.hasError) {
                     item {
-                        CashAssetsCard(
-                            cashValue = uiState.cashAssets,
-                            isLoading = uiState.isLoading
+                        ApiErrorBanner(
+                            errorMessage = apiStatus.errorMessage,
+                            isRetrying = apiStatus.isRetrying,
+                            isDataStale = apiStatus.isDataStale,
+                            onRetry = { viewModel.retryApiCall() },
+                            onDismiss = { viewModel.dismissApiError() }
                         )
                     }
-                    
+                }
+                
+                if (isDebugBuild) {
                     item {
-                        StockAssetsCard(
-                            stockValue = uiState.stockAssets,
+                        ApiUsageIndicator(apiUsageManager = apiUsageManager)
+                    }
+                }
+                
+                item {
+                    TotalAssetsCard(
+                        totalValue = uiState.totalAssets,
+                        isLoading = uiState.isLoading
+                    )
+                }
+                
+                item {
+                    CashAssetsCard(
+                        cashValue = uiState.cashAssets,
+                        isLoading = uiState.isLoading
+                    )
+                }
+                
+                item {
+                    StockAssetsCard(
+                        stockValue = uiState.stockAssets,
+                        isLoading = uiState.isLoading
+                    )
+                }
+                
+                if (uiState.assets.isNotEmpty()) {
+                    item {
+                        PieChartCard(
+                            assets = uiState.assets,
                             isLoading = uiState.isLoading
                         )
-                    }
-                    
-                    if (uiState.assets.isNotEmpty()) {
-                        item {
-                            PieChartCard(
-                                assets = uiState.assets,
-                                isLoading = uiState.isLoading
-                            )
-                        }
                     }
                 }
             }

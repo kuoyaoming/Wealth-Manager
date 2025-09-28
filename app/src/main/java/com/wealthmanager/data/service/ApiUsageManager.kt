@@ -61,13 +61,13 @@ class ApiUsageManager @Inject constructor(
         
         // 檢查每日限制
         if (requestsToday.get() >= getDailyLimit()) {
-            debugLogManager.logWarning("Daily API limit reached: ${requestsToday.get()}/${getDailyLimit()}")
+            debugLogManager.logWarning("Daily API limit reached: ${requestsToday.get()}/${getDailyLimit()}", "API_USAGE")
             return false
         }
         
         // 檢查每分鐘限制
         if (requestsThisMinute.get() >= getMinuteLimit()) {
-            debugLogManager.logWarning("Minute API limit reached: ${requestsThisMinute.get()}/${getMinuteLimit()}")
+            debugLogManager.logWarning("Minute API limit reached: ${requestsThisMinute.get()}/${getMinuteLimit()}", "API_USAGE")
             return false
         }
         

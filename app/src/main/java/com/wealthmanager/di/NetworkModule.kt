@@ -1,5 +1,6 @@
 package com.wealthmanager.di
 
+import android.content.Context
 import com.wealthmanager.data.api.MarketDataApi
 import com.wealthmanager.data.service.ApiRetryManager
 import com.wealthmanager.data.service.ApiStatusManager
@@ -7,6 +8,7 @@ import com.wealthmanager.data.service.ApiUsageManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
+import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -54,19 +56,25 @@ object NetworkModule {
     
     @Provides
     @Singleton
-    fun provideApiRetryManager(): ApiRetryManager {
-        return ApiRetryManager()
+    fun provideApiRetryManager(debugLogManager: com.wealthmanager.debug.DebugLogManager): ApiRetryManager {
+        return ApiRetryManager(debugLogManager)
     }
     
     @Provides
     @Singleton
-    fun provideApiStatusManager(): ApiStatusManager {
-        return ApiStatusManager()
+    fun provideApiStatusManager(debugLogManager: com.wealthmanager.debug.DebugLogManager): ApiStatusManager {
+        return ApiStatusManager(debugLogManager)
     }
     
     @Provides
     @Singleton
     fun provideApiUsageManager(debugLogManager: com.wealthmanager.debug.DebugLogManager): ApiUsageManager {
         return ApiUsageManager(debugLogManager)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideContext(@ApplicationContext context: Context): Context {
+        return context
     }
 }
