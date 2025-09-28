@@ -14,7 +14,8 @@ class MarketDataService @Inject constructor(
     private val marketDataApi: MarketDataApi,
     private val assetRepository: AssetRepository,
     private val debugLogManager: DebugLogManager,
-    private val apiRetryManager: ApiRetryManager
+    private val apiRetryManager: ApiRetryManager,
+    private val apiUsageManager: ApiUsageManager
 ) {
     
     companion object {
@@ -37,11 +38,20 @@ class MarketDataService @Inject constructor(
                 try {
                     debugLogManager.log("MARKET_DATA", "Updating ${stock.symbol} (${stock.market} market)")
                     
+                    // 檢查API使用限制
+                    if (!apiUsageManager.canMakeRequest()) {
+                        debugLogManager.logWarning("API rate limit reached, skipping ${stock.symbol}")
+                        continue
+                    }
+                    
                     val result = apiRetryManager.executeWithRetry(
                         operation = {
                             debugLogManager.log("MARKET_DATA", "Alpha Vantage API Request - Symbol: ${stock.symbol}")
                             
                             val response = marketDataApi.getStockQuote("GLOBAL_QUOTE", stock.symbol, ALPHA_VANTAGE_API_KEY)
+                            
+                            // 記錄API請求
+                            apiUsageManager.recordRequest()
                             
                             debugLogManager.log("MARKET_DATA", "Alpha Vantage API Response received for ${stock.symbol}")
                             
@@ -105,10 +115,19 @@ class MarketDataService @Inject constructor(
         try {
             debugLogManager.log("MARKET_DATA", "Starting exchange rate update with Alpha Vantage API")
             
+            // 檢查API使用限制
+            if (!apiUsageManager.canMakeRequest()) {
+                debugLogManager.logWarning("API rate limit reached, skipping exchange rate update")
+                return
+            }
+            
             val result = apiRetryManager.executeWithRetry(
                 operation = {
                     debugLogManager.log("MARKET_DATA", "Alpha Vantage API Request - Exchange Rate: USD to TWD")
                     val response = marketDataApi.getExchangeRate("CURRENCY_EXCHANGE_RATE", "USD", "TWD", ALPHA_VANTAGE_API_KEY)
+                    
+                    // 記錄API請求
+                    apiUsageManager.recordRequest()
                     
                     debugLogManager.log("MARKET_DATA", "Alpha Vantage API Response received for exchange rate")
                     
@@ -176,11 +195,20 @@ class MarketDataService @Inject constructor(
             debugLogManager.log("MARKET_DATA", "=== STARTING ALPHA VANTAGE STOCK SEARCH ===")
             debugLogManager.log("MARKET_DATA", "Searching stocks: '$query' in market: '$market'")
             
+            // 檢查API使用限制
+            if (!apiUsageManager.canMakeRequest()) {
+                debugLogManager.logWarning("API rate limit reached, cannot search stocks")
+                return emptyList()
+            }
+            
             // Log API request details
             debugLogManager.log("MARKET_DATA", "Alpha Vantage API Request - Query: $query")
             debugLogManager.log("MARKET_DATA", "API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=$query&apikey=$ALPHA_VANTAGE_API_KEY")
             
             val response = marketDataApi.searchStocks("SYMBOL_SEARCH", query, ALPHA_VANTAGE_API_KEY)
+            
+            // 記錄API請求
+            apiUsageManager.recordRequest()
             
             // Log full API response
             debugLogManager.log("MARKET_DATA", "Alpha Vantage API Response received - Status: Success")
