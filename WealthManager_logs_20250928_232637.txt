@@ -1,0 +1,1507 @@
+--------- beginning of main
+09-28 23:26:36.484 W/zygote64( 9105): Activation of cgroup controller +memory failed in path /sys/fs/cgroup/apps/uid_10361: Invalid argument
+09-28 23:26:36.491 I/Zygote  ( 9105): Process 9105 crated for com.wealthmanager
+09-28 23:26:36.492 I/m.wealthmanager( 9105): Late-enabling -Xcheck:jni
+09-28 23:26:36.525 I/m.wealthmanager( 9105): Using CollectorTypeCMC GC.
+09-28 23:26:36.536 D/nativeloader( 9105): Load libframework-connectivity-tiramisu-jni.so using APEX ns com_android_tethering for caller /apex/com.android.tethering/javalib/framework-connectivity-t.jar: ok
+09-28 23:26:36.570 D/CompatChangeReporter( 9105): Compat change id reported: 242716250; UID 10361; state: ENABLED
+09-28 23:26:37.136 D/nativeloader( 9105): Configuring clns-9 for other apk /data/app/~~h36bu77DGLstiVk-crKzmg==/com.wealthmanager-mmegeRrRwHiUTFjw8u3Gvg==/base.apk. target_sdk_version=34, uses_libraries=, library_path=/data/app/~~h36bu77DGLstiVk-crKzmg==/com.wealthmanager-mmegeRrRwHiUTFjw8u3Gvg==/lib/arm64, permitted_path=/data:/mnt/expand:/data/user/0/com.wealthmanager
+09-28 23:26:37.145 V/GraphicsEnvironment( 9105): Currently set values for:
+09-28 23:26:37.146 V/GraphicsEnvironment( 9105):   angle_gl_driver_selection_pkgs=[com.android.angle, com.google.android.apps.tachyon]
+09-28 23:26:37.146 V/GraphicsEnvironment( 9105):   angle_gl_driver_selection_values=[angle, native]
+09-28 23:26:37.146 V/GraphicsEnvironment( 9105): com.wealthmanager is not listed in per-application setting
+09-28 23:26:37.146 V/GraphicsEnvironment( 9105): ANGLE allowlist from config: 
+09-28 23:26:37.146 V/GraphicsEnvironment( 9105): com.wealthmanager is not listed in ANGLE allowlist or settings, returning default
+09-28 23:26:37.146 V/GraphicsEnvironment( 9105): Neither updatable production driver nor prerelease driver is supported.
+09-28 23:26:37.150 E/FeatureFlagsImplExport( 9105): android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package com.android.org.conscrypt.net.flags cannot be found on the device
+--------- beginning of system
+09-28 23:26:37.180 I/DisplayManager( 9105): Choreographer implicitly registered for the refresh rate.
+09-28 23:26:37.200 E/ashmem  ( 9105): Pinning is deprecated since Android Q. Please use trim or other methods.
+09-28 23:26:37.220 D/DesktopExperienceFlags( 9105): Toggle override initialized to: false
+09-28 23:26:37.220 D/DesktopModeFlags( 9105): Toggle override initialized to: OVERRIDE_UNSET
+09-28 23:26:37.274 I/ContentCaptureHelper( 9105): Setting logging level to OFF
+09-28 23:26:37.409 W/m.wealthmanager( 9105): Method java.lang.Object androidx.compose.runtime.snapshots.SnapshotStateMap.mutate(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:26:37.409 W/m.wealthmanager( 9105): Common causes for lock verification issues are non-optimized dex code
+09-28 23:26:37.409 W/m.wealthmanager( 9105): and incorrect proguard optimizations.
+09-28 23:26:37.409 W/m.wealthmanager( 9105): Method void androidx.compose.runtime.snapshots.SnapshotStateMap.update(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:26:37.409 W/m.wealthmanager( 9105): Method boolean androidx.compose.runtime.snapshots.SnapshotStateMap.removeIf$runtime_release(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:26:37.498 D/WindowOnBackDispatcher( 9105): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@6639dee
+09-28 23:26:37.499 I/HWUI    ( 9105): Using FreeType backend (prop=Auto)
+09-28 23:26:37.569 W/m.wealthmanager( 9105): Method boolean androidx.compose.runtime.snapshots.SnapshotStateList.conditionalUpdate(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:26:37.569 W/m.wealthmanager( 9105): Method java.lang.Object androidx.compose.runtime.snapshots.SnapshotStateList.mutate(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:26:37.569 W/m.wealthmanager( 9105): Method void androidx.compose.runtime.snapshots.SnapshotStateList.update(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 23:26:37.624 I/m.wealthmanager( 9105): hiddenapi: Accessing hidden method Ljava/lang/invoke/MethodHandles$Lookup;-><init>(Ljava/lang/Class;I)V (runtime_flags=0, domain=core-platform, api=unsupported) from Lretrofit2/Platform; (domain=app) using reflection: allowed
+09-28 23:26:37.638 D/WealthManagerDebug( 9105): [23:26:37.635] DASHBOARD: DashboardViewModel initialized
+09-28 23:26:37.639 D/WealthManagerDebug( 9105): [23:26:37.638] DASHBOARD: Starting to observe assets
+09-28 23:26:37.975 I/NavController( 9105): Ignoring popBackStack to route auth as it was not found on the current back stack
+09-28 23:26:37.982 D/WealthManagerDebug( 9105): [23:26:37.980] USER_ACTION: Dashboard Screen Opened
+09-28 23:26:37.983 D/WealthManagerDebug( 9105): [23:26:37.982] DASHBOARD: Loading portfolio data
+09-28 23:26:37.989 I/Choreographer( 9105): Skipped 76 frames!  The application may be doing too much work on its main thread.
+09-28 23:26:38.016 D/WealthManagerDebug( 9105): [23:26:38.015] DASHBOARD: DashboardViewModel initialized
+09-28 23:26:38.017 D/WealthManagerDebug( 9105): [23:26:38.016] DASHBOARD: Starting to observe assets
+09-28 23:26:38.050 W/WindowOnBackDispatcher( 9105): OnBackInvokedCallback is not enabled for the application.
+09-28 23:26:38.050 W/WindowOnBackDispatcher( 9105): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+09-28 23:26:38.242 D/WealthManagerDebug( 9105): [23:26:38.240] DASHBOARD: Assets updated - Cash: 2, Stock: 2
+09-28 23:26:38.243 D/WealthManagerDebug( 9105): [23:26:38.242] DASHBOARD: Total Assets: 1363.0, Cash: 1363.0, Stock: 0.0
+09-28 23:26:38.245 D/ImeBackDispatcher( 9105): switch root view (mImeCallbacks.size=0)
+09-28 23:26:38.250 I/HWUI    ( 9105): Davey! duration=886ms; Flags=0, FrameTimelineVsyncId=67823082, IntendedVsync=155725733697119, Vsync=155726367893179, InputEventId=0, HandleInputStart=155726370935818, AnimationStart=155726370937649, PerformTraversalsStart=155726431706570, DrawStart=155726433052477, FrameDeadline=155726358854044, FrameStartTime=155726370578397, FrameInterval=8344685, WorkloadTarget=16600000, SyncQueued=155726617730944, SyncStart=155726617838569, IssueDrawCommandsStart=155726617932523, SwapBuffers=155726619031074, FrameCompleted=155726619907417, DequeueBufferDuration=14201, QueueBufferDuration=164428, GpuCompleted=155726619907417, SwapBuffersCompleted=155726619233263, DisplayPresentTime=-5762213774473032616, CommandSubmissionCompleted=155726619031074, 
+09-28 23:26:38.253 D/WealthManagerDebug( 9105): [23:26:38.251] USER_ACTION: Dashboard Screen Opened
+09-28 23:26:38.255 D/WealthManagerDebug( 9105): [23:26:38.253] DASHBOARD: Loading portfolio data
+09-28 23:26:38.261 I/Choreographer( 9105): Skipped 32 frames!  The application may be doing too much work on its main thread.
+09-28 23:26:38.337 D/WealthManagerDebug( 9105): [23:26:38.335] DASHBOARD: Assets updated - Cash: 2, Stock: 2
+09-28 23:26:38.339 D/WealthManagerDebug( 9105): [23:26:38.337] DASHBOARD: Total Assets: 1363.0, Cash: 1363.0, Stock: 0.0
+09-28 23:26:38.341 D/InsetsController( 9105): hide(ime())
+09-28 23:26:38.342 I/ImeTracker( 9105): com.wealthmanager:331a2cb0: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-28 23:26:38.533 I/m.wealthmanager( 9105): Compiler allocated 4970KB to compile void android.view.ViewRootImpl.performTraversals()
+09-28 23:26:38.596 D/WealthManagerDebug( 9105): [23:26:38.594] CHART: PieChartComponent rendered with 4 assets
+09-28 23:26:38.598 D/WealthManagerDebug( 9105): [23:26:38.596] CHART: Total chart value: 1363.0
+09-28 23:26:38.599 D/WealthManagerDebug( 9105): [23:26:38.598] CHART: Asset 0: TWD 586.0 = 586.0 (42%)
+09-28 23:26:38.600 D/WealthManagerDebug( 9105): [23:26:38.599] CHART: Asset 1: TWD 777.0 = 777.0 (57%)
+09-28 23:26:38.602 D/WealthManagerDebug( 9105): [23:26:38.600] CHART: Asset 2: 0050 (0050) = 0.0 (0%)
+09-28 23:26:38.603 D/WealthManagerDebug( 9105): [23:26:38.602] CHART: Asset 3: apple (apple) = 0.0 (0%)
+09-28 23:26:38.604 I/Choreographer( 9105): Skipped 30 frames!  The application may be doing too much work on its main thread.
+09-28 23:26:42.388 D/ProfileInstaller( 9105): Installing profile for com.wealthmanager
+09-28 23:26:42.547 D/WealthManagerDebug( 9105): [23:26:42.546] USER_ACTION: Navigate to Assets Button Clicked
+09-28 23:26:42.547 D/WealthManagerDebug( 9105): [23:26:42.547] UI: User clicked FAB to navigate to Assets screen
+09-28 23:26:42.711 D/WealthManagerDebug( 9105): [23:26:42.710] USER_ACTION: Assets Screen Opened
+09-28 23:26:42.712 D/WealthManagerDebug( 9105): [23:26:42.712] UI: Assets screen loaded, starting to load assets
+09-28 23:26:42.712 D/WealthManagerDebug( 9105): [23:26:42.712] ASSETS: Loading assets from repository
+09-28 23:26:42.794 D/WealthManagerDebug( 9105): [23:26:42.794] ASSETS: Assets loaded - Cash: 2, Stock: 2
+09-28 23:26:45.518 D/WealthManagerDebug( 9105): [23:26:45.517] USER_ACTION: Add Asset FAB Clicked
+09-28 23:26:45.518 D/WealthManagerDebug( 9105): [23:26:45.518] UI: User clicked FAB to open Add Asset dialog
+09-28 23:26:45.556 W/WindowOnBackDispatcher( 9105): OnBackInvokedCallback is not enabled for the application.
+09-28 23:26:45.556 W/WindowOnBackDispatcher( 9105): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+09-28 23:26:45.663 D/CompatChangeReporter( 9105): Compat change id reported: 289878283; UID 10361; state: ENABLED
+09-28 23:26:45.707 D/WindowOnBackDispatcher( 9105): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@eb4bb57
+09-28 23:26:45.784 D/WealthManagerDebug( 9105): [23:26:45.783] USER_ACTION: Add Asset Dialog Opened
+09-28 23:26:45.875 D/ImeBackDispatcher( 9105): switch root view (mImeCallbacks.size=0)
+09-28 23:26:45.879 D/InsetsController( 9105): hide(ime())
+09-28 23:26:45.879 I/ImeTracker( 9105): com.wealthmanager:a306dd3c: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-28 23:26:47.043 D/WealthManagerDebug( 9105): [23:26:47.042] USER_ACTION: Stock Tab Selected
+09-28 23:26:47.043 D/WealthManagerDebug( 9105): [23:26:47.043] UI: User switched to Stock tab in Add Asset dialog
+09-28 23:26:48.064 D/Compose Focus( 9105): Owner FocusChanged(true)
+09-28 23:26:48.125 D/InsetsController( 9105): show(ime())
+09-28 23:26:48.126 I/ImeTracker( 9105): com.wealthmanager:3f8fddce: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT_BY_INSETS_API fromUser false
+09-28 23:26:48.128 D/ImeBackDispatcher( 9105): Undo preliminary clear (mImeCallbacks.size=0)
+09-28 23:26:48.128 D/InsetsController( 9105): Setting requestedVisibleTypes to -1 (was -9)
+09-28 23:26:48.243 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:26:48.244 D/ImeBackDispatcher( 9105): Register received callback id=88012994 priority=0
+09-28 23:26:48.244 D/WindowOnBackDispatcher( 9105): setTopOnBackInvokedCallback (unwrapped): android.view.ImeBackAnimationController@9440cc
+09-28 23:26:48.306 W/InteractionJankMonitor( 9105): Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.wealthmanager
+09-28 23:26:48.556 I/ImeTracker( 9105): com.wealthmanager:3f8fddce: onShown
+09-28 23:26:50.372 D/WealthManagerDebug( 9105): [23:26:50.372] UI: User typing stock symbol: t
+09-28 23:26:50.801 D/WealthManagerDebug( 9105): [23:26:50.799] UI: User typing stock symbol: ts
+09-28 23:26:51.909 D/WealthManagerDebug( 9105): [23:26:51.909] UI: User typing stock symbol: tsm
+09-28 23:26:51.911 D/WealthManagerDebug( 9105): [23:26:51.910] USER_ACTION: Stock Search Triggered
+09-28 23:26:51.911 D/WealthManagerDebug( 9105): [23:26:51.911] UI: Auto-triggering stock search for: tsm
+09-28 23:26:51.912 D/WealthManagerDebug( 9105): [23:26:51.912] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:26:51.912 D/WealthManagerDebug( 9105): [23:26:51.912] ASSETS: Searching stocks: 'tsm' in market: 'TW'
+09-28 23:26:51.912 D/WealthManagerDebug( 9105): [23:26:51.912] USER_ACTION: Stock Search Initiated
+09-28 23:26:51.913 D/WealthManagerDebug( 9105): [23:26:51.913] ASSETS: Search state set to loading
+09-28 23:26:51.913 D/WealthManagerDebug( 9105): [23:26:51.913] ASSETS: Calling marketDataService.searchStocks
+09-28 23:26:51.915 D/WealthManagerDebug( 9105): [23:26:51.914] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:26:51.915 D/WealthManagerDebug( 9105): [23:26:51.915] MARKET_DATA: Searching stocks: 'tsm' in market: 'TW'
+09-28 23:26:51.915 D/WealthManagerDebug( 9105): [23:26:51.915] MARKET_DATA: Alpha Vantage API Request - Query: tsm
+09-28 23:26:51.915 D/WealthManagerDebug( 9105): [23:26:51.915] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tsm&apikey=ZHQ6865SM7I0IMML
+09-28 23:26:51.943 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tsm&apikey=ZHQ6865SM7I0IMML
+09-28 23:26:51.944 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:26:52.331 D/WealthManagerDebug( 9105): [23:26:52.331] UI: User typing stock symbol: tsmc
+09-28 23:26:52.332 D/WealthManagerDebug( 9105): [23:26:52.332] USER_ACTION: Stock Search Triggered
+09-28 23:26:52.332 D/WealthManagerDebug( 9105): [23:26:52.332] UI: Auto-triggering stock search for: tsmc
+09-28 23:26:52.332 D/WealthManagerDebug( 9105): [23:26:52.332] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:26:52.332 D/WealthManagerDebug( 9105): [23:26:52.332] ASSETS: Searching stocks: 'tsmc' in market: 'TW'
+09-28 23:26:52.332 D/WealthManagerDebug( 9105): [23:26:52.332] USER_ACTION: Stock Search Initiated
+09-28 23:26:52.333 D/WealthManagerDebug( 9105): [23:26:52.333] ASSETS: Search state set to loading
+09-28 23:26:52.333 D/WealthManagerDebug( 9105): [23:26:52.333] ASSETS: Calling marketDataService.searchStocks
+09-28 23:26:52.333 D/WealthManagerDebug( 9105): [23:26:52.333] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:26:52.333 D/WealthManagerDebug( 9105): [23:26:52.333] MARKET_DATA: Searching stocks: 'tsmc' in market: 'TW'
+09-28 23:26:52.333 D/WealthManagerDebug( 9105): [23:26:52.333] MARKET_DATA: Alpha Vantage API Request - Query: tsmc
+09-28 23:26:52.333 D/WealthManagerDebug( 9105): [23:26:52.333] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tsmc&apikey=ZHQ6865SM7I0IMML
+09-28 23:26:52.339 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tsmc&apikey=ZHQ6865SM7I0IMML
+09-28 23:26:52.339 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:26:52.404 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tsm&apikey=ZHQ6865SM7I0IMML (459ms)
+09-28 23:26:52.404 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:26:52 GMT
+09-28 23:26:52.404 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:26:52.404 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:26:52.404 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:26:52.404 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:26:52.404 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:26:52.404 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=2OvTCkZfv4AlGs2ln45tojdm5buOsa0aD1JAlizF11E%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073212"}],"max_age":3600}
+09-28 23:26:52.405 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=2OvTCkZfv4AlGs2ln45tojdm5buOsa0aD1JAlizF11E%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073212"
+09-28 23:26:52.405 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:26:52.405 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:26:52.405 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:26:52.405 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:26:52.405 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:26:52.405 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:26:52.405 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:26:52.405 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=4,cfOrigin;dur=208
+09-28 23:26:52.405 I/okhttp.OkHttpClient( 9105): cf-ray: 986442f7c9754a9e-TPE
+09-28 23:26:52.406 I/okhttp.OkHttpClient( 9105): {
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):     "bestMatches": [
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSM",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "2. name": "Taiwan Semiconductor Manufacturing",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "3. type": "Equity",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "1.0000"
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSME",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "2. name": "THRIVENT SMALL-MID CAP EQUITY ETF ",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.8571"
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMG",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "2. name": "Leverage Shares 2X Long TSM Daily ETF",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.8571"
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMBX",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "2. name": "JOHN HANCOCK TAX-FREE BOND FUND CLASS B",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMCX",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "2. name": "TOUCHSTONE DYNAMIC ALLOCATION FUND C",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMEX",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "2. name": "NUVEEN QUANT SMALL/MID CAP EQUITY FUND CLASS A",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:52.407 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMIX",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "2. name": "TOUCHSTONE DYNAMIC GLOBAL ALLOCATION FUND INSTITUTIONAL",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMMX",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "2. name": "NUVEEN QUANT SMALL/MID CAP EQUITY FUND PREMIER CLASS",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSM3.LON",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "2. name": "Leverage Shares 3x Long Taiwan Semiconductor (TSM) ETP Securities",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "4. region": "United Kingdom",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "08:00",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:30",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC+01",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.6667"
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMC34.SAO",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "2. name": "Taiwan Semiconductor Manufacturing Company Limited",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "3. type": "Equity",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "4. region": "Brazil/Sao Paolo",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "10:00",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "17:30",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-03",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "8. currency": "BRL",
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.5000"
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):         }
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105):     ]
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105): }
+09-28 23:26:52.408 I/okhttp.OkHttpClient( 9105): <-- END HTTP (3931-byte body)
+09-28 23:26:52.425 D/WealthManagerDebug( 9105): [23:26:52.425] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:26:52.425 D/WealthManagerDebug( 9105): [23:26:52.425] MARKET_DATA: API Response - Raw matches count: 10
+09-28 23:26:52.426 D/WealthManagerDebug( 9105): [23:26:52.426] MARKET_DATA: Match 0: symbol=TSM, name=Taiwan Semiconductor Manufacturing
+09-28 23:26:52.426 D/WealthManagerDebug( 9105): [23:26:52.426] MARKET_DATA: Match 1: symbol=TSME, name=THRIVENT SMALL-MID CAP EQUITY ETF 
+09-28 23:26:52.426 D/WealthManagerDebug( 9105): [23:26:52.426] MARKET_DATA: Match 2: symbol=TSMG, name=Leverage Shares 2X Long TSM Daily ETF
+09-28 23:26:52.426 D/WealthManagerDebug( 9105): [23:26:52.426] MARKET_DATA: Match 3: symbol=TSMBX, name=JOHN HANCOCK TAX-FREE BOND FUND CLASS B
+09-28 23:26:52.426 D/WealthManagerDebug( 9105): [23:26:52.426] MARKET_DATA: Match 4: symbol=TSMCX, name=TOUCHSTONE DYNAMIC ALLOCATION FUND C
+09-28 23:26:52.426 D/WealthManagerDebug( 9105): [23:26:52.426] MARKET_DATA: Match 5: symbol=TSMEX, name=NUVEEN QUANT SMALL/MID CAP EQUITY FUND CLASS A
+09-28 23:26:52.426 D/WealthManagerDebug( 9105): [23:26:52.426] MARKET_DATA: Match 6: symbol=TSMIX, name=TOUCHSTONE DYNAMIC GLOBAL ALLOCATION FUND INSTITUTIONAL
+09-28 23:26:52.427 D/WealthManagerDebug( 9105): [23:26:52.426] MARKET_DATA: Match 7: symbol=TSMMX, name=NUVEEN QUANT SMALL/MID CAP EQUITY FUND PREMIER CLASS
+09-28 23:26:52.427 D/WealthManagerDebug( 9105): [23:26:52.427] MARKET_DATA: Match 8: symbol=TSM3.LON, name=Leverage Shares 3x Long Taiwan Semiconductor (TSM) ETP Securities
+09-28 23:26:52.427 D/WealthManagerDebug( 9105): [23:26:52.427] MARKET_DATA: Match 9: symbol=TSMC34.SAO, name=Taiwan Semiconductor Manufacturing Company Limited
+09-28 23:26:52.427 D/WealthManagerDebug( 9105): [23:26:52.427] MARKET_DATA: Stock search completed: 10 results processed
+09-28 23:26:52.428 D/WealthManagerDebug( 9105): [23:26:52.427] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:26:52.428 D/WealthManagerDebug( 9105): [23:26:52.428] ASSETS: MarketDataService returned 10 results
+09-28 23:26:52.428 D/WealthManagerDebug( 9105): [23:26:52.428] ASSETS: Stock search completed: 10 results found
+09-28 23:26:52.428 D/WealthManagerDebug( 9105): [23:26:52.428] ASSETS: UI state updated with search results
+09-28 23:26:52.428 D/WealthManagerDebug( 9105): [23:26:52.428] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:26:52.627 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tsmc&apikey=ZHQ6865SM7I0IMML (287ms)
+09-28 23:26:52.627 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:26:52 GMT
+09-28 23:26:52.627 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:26:52.627 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:26:52.627 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:26:52.627 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=2OvTCkZfv4AlGs2ln45tojdm5buOsa0aD1JAlizF11E%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073212"}],"max_age":3600}
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=2OvTCkZfv4AlGs2ln45tojdm5buOsa0aD1JAlizF11E%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073212"
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=5,cfOrigin;dur=207
+09-28 23:26:52.628 I/okhttp.OkHttpClient( 9105): cf-ray: 986442f97b514a9e-TPE
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105): {
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):     "bestMatches": [
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMCX",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "2. name": "TOUCHSTONE DYNAMIC ALLOCATION FUND C",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.8889"
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMC34.SAO",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "2. name": "Taiwan Semiconductor Manufacturing Company Limited",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "3. type": "Equity",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "4. region": "Brazil/Sao Paolo",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "10:00",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "17:30",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-03",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "8. currency": "BRL",
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.6154"
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):         }
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105):     ]
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105): }
+09-28 23:26:52.629 I/okhttp.OkHttpClient( 9105): <-- END HTTP (814-byte body)
+09-28 23:26:52.699 D/WealthManagerDebug( 9105): [23:26:52.698] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:26:52.699 D/WealthManagerDebug( 9105): [23:26:52.699] MARKET_DATA: API Response - Raw matches count: 2
+09-28 23:26:52.700 D/WealthManagerDebug( 9105): [23:26:52.699] MARKET_DATA: Match 0: symbol=TSMCX, name=TOUCHSTONE DYNAMIC ALLOCATION FUND C
+09-28 23:26:52.700 D/WealthManagerDebug( 9105): [23:26:52.700] MARKET_DATA: Match 1: symbol=TSMC34.SAO, name=Taiwan Semiconductor Manufacturing Company Limited
+09-28 23:26:52.700 D/WealthManagerDebug( 9105): [23:26:52.700] MARKET_DATA: Stock search completed: 2 results processed
+09-28 23:26:52.701 D/WealthManagerDebug( 9105): [23:26:52.701] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:26:52.701 D/WealthManagerDebug( 9105): [23:26:52.701] ASSETS: MarketDataService returned 2 results
+09-28 23:26:52.702 D/WealthManagerDebug( 9105): [23:26:52.701] ASSETS: Stock search completed: 2 results found
+09-28 23:26:52.702 D/WealthManagerDebug( 9105): [23:26:52.702] ASSETS: UI state updated with search results
+09-28 23:26:52.702 D/WealthManagerDebug( 9105): [23:26:52.702] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:26:52.867 I/m.wealthmanager( 9105): Compiler allocated 9596KB to compile void com.wealthmanager.ui.assets.AddAssetDialogKt$AddAssetDialog$5.invoke(androidx.compose.runtime.Composer, int)
+09-28 23:26:56.677 D/WealthManagerDebug( 9105): [23:26:56.677] UI: User typing stock symbol: tsm
+09-28 23:26:56.678 D/WealthManagerDebug( 9105): [23:26:56.678] USER_ACTION: Stock Search Triggered
+09-28 23:26:56.678 D/WealthManagerDebug( 9105): [23:26:56.678] UI: Auto-triggering stock search for: tsm
+09-28 23:26:56.678 D/WealthManagerDebug( 9105): [23:26:56.678] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:26:56.678 D/WealthManagerDebug( 9105): [23:26:56.678] ASSETS: Searching stocks: 'tsm' in market: 'TW'
+09-28 23:26:56.679 D/WealthManagerDebug( 9105): [23:26:56.679] USER_ACTION: Stock Search Initiated
+09-28 23:26:56.679 D/WealthManagerDebug( 9105): [23:26:56.679] ASSETS: Search state set to loading
+09-28 23:26:56.680 D/WealthManagerDebug( 9105): [23:26:56.679] ASSETS: Calling marketDataService.searchStocks
+09-28 23:26:56.680 D/WealthManagerDebug( 9105): [23:26:56.680] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:26:56.680 D/WealthManagerDebug( 9105): [23:26:56.680] MARKET_DATA: Searching stocks: 'tsm' in market: 'TW'
+09-28 23:26:56.680 D/WealthManagerDebug( 9105): [23:26:56.680] MARKET_DATA: Alpha Vantage API Request - Query: tsm
+09-28 23:26:56.680 D/WealthManagerDebug( 9105): [23:26:56.680] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tsm&apikey=ZHQ6865SM7I0IMML
+09-28 23:26:56.682 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tsm&apikey=ZHQ6865SM7I0IMML
+09-28 23:26:56.682 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:26:56.953 D/WealthManagerDebug( 9105): [23:26:56.952] UI: User typing stock symbol: ts
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=tsm&apikey=ZHQ6865SM7I0IMML (283ms)
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:26:56 GMT
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=GtQJYQQtSHX1psI%2BWXm5KZ9iERUo%2FkXztJwkbJwxVcs%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073216"}],"max_age":3600}
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=GtQJYQQtSHX1psI%2BWXm5KZ9iERUo%2FkXztJwkbJwxVcs%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073216"
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=5,cfOrigin;dur=210
+09-28 23:26:56.966 I/okhttp.OkHttpClient( 9105): cf-ray: 9864431459994a9e-TPE
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105): {
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):     "bestMatches": [
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSM",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "2. name": "Taiwan Semiconductor Manufacturing",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "3. type": "Equity",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "1.0000"
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSME",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "2. name": "THRIVENT SMALL-MID CAP EQUITY ETF ",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.8571"
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMG",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "2. name": "Leverage Shares 2X Long TSM Daily ETF",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.8571"
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMBX",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "2. name": "JOHN HANCOCK TAX-FREE BOND FUND CLASS B",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMCX",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "2. name": "TOUCHSTONE DYNAMIC ALLOCATION FUND C",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMEX",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "2. name": "NUVEEN QUANT SMALL/MID CAP EQUITY FUND CLASS A",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:26:56.968 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMIX",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "2. name": "TOUCHSTONE DYNAMIC GLOBAL ALLOCATION FUND INSTITUTIONAL",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMMX",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "2. name": "NUVEEN QUANT SMALL/MID CAP EQUITY FUND PREMIER CLASS",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSM3.LON",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "2. name": "Leverage Shares 3x Long Taiwan Semiconductor (TSM) ETP Securities",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "4. region": "United Kingdom",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "08:00",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:30",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC+01",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.6667"
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "1. symbol": "TSMC34.SAO",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "2. name": "Taiwan Semiconductor Manufacturing Company Limited",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "3. type": "Equity",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "4. region": "Brazil/Sao Paolo",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "10:00",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "17:30",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-03",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "8. currency": "BRL",
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.5000"
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):         }
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105):     ]
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105): }
+09-28 23:26:56.969 I/okhttp.OkHttpClient( 9105): <-- END HTTP (3931-byte body)
+09-28 23:26:57.085 D/WealthManagerDebug( 9105): [23:26:57.084] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:26:57.085 D/WealthManagerDebug( 9105): [23:26:57.085] MARKET_DATA: API Response - Raw matches count: 10
+09-28 23:26:57.085 D/WealthManagerDebug( 9105): [23:26:57.085] MARKET_DATA: Match 0: symbol=TSM, name=Taiwan Semiconductor Manufacturing
+09-28 23:26:57.086 D/WealthManagerDebug( 9105): [23:26:57.085] MARKET_DATA: Match 1: symbol=TSME, name=THRIVENT SMALL-MID CAP EQUITY ETF 
+09-28 23:26:57.086 D/WealthManagerDebug( 9105): [23:26:57.086] MARKET_DATA: Match 2: symbol=TSMG, name=Leverage Shares 2X Long TSM Daily ETF
+09-28 23:26:57.086 D/WealthManagerDebug( 9105): [23:26:57.086] MARKET_DATA: Match 3: symbol=TSMBX, name=JOHN HANCOCK TAX-FREE BOND FUND CLASS B
+09-28 23:26:57.086 D/WealthManagerDebug( 9105): [23:26:57.086] MARKET_DATA: Match 4: symbol=TSMCX, name=TOUCHSTONE DYNAMIC ALLOCATION FUND C
+09-28 23:26:57.086 D/WealthManagerDebug( 9105): [23:26:57.086] MARKET_DATA: Match 5: symbol=TSMEX, name=NUVEEN QUANT SMALL/MID CAP EQUITY FUND CLASS A
+09-28 23:26:57.086 D/WealthManagerDebug( 9105): [23:26:57.086] MARKET_DATA: Match 6: symbol=TSMIX, name=TOUCHSTONE DYNAMIC GLOBAL ALLOCATION FUND INSTITUTIONAL
+09-28 23:26:57.087 D/WealthManagerDebug( 9105): [23:26:57.086] MARKET_DATA: Match 7: symbol=TSMMX, name=NUVEEN QUANT SMALL/MID CAP EQUITY FUND PREMIER CLASS
+09-28 23:26:57.087 D/WealthManagerDebug( 9105): [23:26:57.087] MARKET_DATA: Match 8: symbol=TSM3.LON, name=Leverage Shares 3x Long Taiwan Semiconductor (TSM) ETP Securities
+09-28 23:26:57.087 D/WealthManagerDebug( 9105): [23:26:57.087] MARKET_DATA: Match 9: symbol=TSMC34.SAO, name=Taiwan Semiconductor Manufacturing Company Limited
+09-28 23:26:57.087 D/WealthManagerDebug( 9105): [23:26:57.087] MARKET_DATA: Stock search completed: 10 results processed
+09-28 23:26:57.087 D/WealthManagerDebug( 9105): [23:26:57.087] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:26:57.088 D/WealthManagerDebug( 9105): [23:26:57.088] ASSETS: MarketDataService returned 10 results
+09-28 23:26:57.088 D/WealthManagerDebug( 9105): [23:26:57.088] ASSETS: Stock search completed: 10 results found
+09-28 23:26:57.088 D/WealthManagerDebug( 9105): [23:26:57.088] ASSETS: UI state updated with search results
+09-28 23:26:57.088 D/WealthManagerDebug( 9105): [23:26:57.088] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:26:57.258 D/WealthManagerDebug( 9105): [23:26:57.257] UI: User typing stock symbol: t
+09-28 23:26:57.714 D/WealthManagerDebug( 9105): [23:26:57.713] UI: User typing stock symbol: 
+09-28 23:26:59.802 D/WealthManagerDebug( 9105): [23:26:59.798] UI: User typing stock symbol: 0
+09-28 23:27:00.022 D/WealthManagerDebug( 9105): [23:27:00.022] UI: User typing stock symbol: 00
+09-28 23:27:00.369 D/WealthManagerDebug( 9105): [23:27:00.368] UI: User typing stock symbol: 005
+09-28 23:27:00.370 D/WealthManagerDebug( 9105): [23:27:00.370] USER_ACTION: Stock Search Triggered
+09-28 23:27:00.370 D/WealthManagerDebug( 9105): [23:27:00.370] UI: Auto-triggering stock search for: 005
+09-28 23:27:00.371 D/WealthManagerDebug( 9105): [23:27:00.370] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:27:00.371 D/WealthManagerDebug( 9105): [23:27:00.371] ASSETS: Searching stocks: '005' in market: 'TW'
+09-28 23:27:00.371 D/WealthManagerDebug( 9105): [23:27:00.371] USER_ACTION: Stock Search Initiated
+09-28 23:27:00.372 D/WealthManagerDebug( 9105): [23:27:00.372] ASSETS: Search state set to loading
+09-28 23:27:00.373 D/WealthManagerDebug( 9105): [23:27:00.372] ASSETS: Calling marketDataService.searchStocks
+09-28 23:27:00.373 D/WealthManagerDebug( 9105): [23:27:00.373] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:27:00.373 D/WealthManagerDebug( 9105): [23:27:00.373] MARKET_DATA: Searching stocks: '005' in market: 'TW'
+09-28 23:27:00.373 D/WealthManagerDebug( 9105): [23:27:00.373] MARKET_DATA: Alpha Vantage API Request - Query: 005
+09-28 23:27:00.374 D/WealthManagerDebug( 9105): [23:27:00.373] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=005&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:00.377 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=005&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:00.377 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=005&apikey=ZHQ6865SM7I0IMML (345ms)
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:00 GMT
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=SfPwXh29Sg%2FQI3Zmlz6BRlHvCdmXhMFf2P6H82kOtXE%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073220"}],"max_age":3600}
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=SfPwXh29Sg%2FQI3Zmlz6BRlHvCdmXhMFf2P6H82kOtXE%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073220"
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=4,cfOrigin;dur=313
+09-28 23:27:00.723 I/okhttp.OkHttpClient( 9105): cf-ray: 9864432b68cb4a9e-TPE
+09-28 23:27:00.724 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:00.725 I/okhttp.OkHttpClient( 9105):     "bestMatches": []
+09-28 23:27:00.725 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:00.725 I/okhttp.OkHttpClient( 9105): <-- END HTTP (25-byte body)
+09-28 23:27:00.726 D/WealthManagerDebug( 9105): [23:27:00.725] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:27:00.726 D/WealthManagerDebug( 9105): [23:27:00.726] MARKET_DATA: API Response - Raw matches count: 0
+09-28 23:27:00.726 D/WealthManagerDebug( 9105): [23:27:00.726] MARKET_DATA: Stock search completed: 0 results processed
+09-28 23:27:00.726 D/WealthManagerDebug( 9105): [23:27:00.726] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:27:00.726 D/WealthManagerDebug( 9105): [23:27:00.726] ASSETS: MarketDataService returned 0 results
+09-28 23:27:00.727 D/WealthManagerDebug( 9105): [23:27:00.726] ASSETS: Stock search completed: 0 results found
+09-28 23:27:00.727 D/WealthManagerDebug( 9105): [23:27:00.727] ASSETS: UI state updated with search results
+09-28 23:27:00.727 D/WealthManagerDebug( 9105): [23:27:00.727] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:27:00.846 D/WealthManagerDebug( 9105): [23:27:00.845] UI: User typing stock symbol: 0050
+09-28 23:27:00.846 D/WealthManagerDebug( 9105): [23:27:00.846] USER_ACTION: Stock Search Triggered
+09-28 23:27:00.846 D/WealthManagerDebug( 9105): [23:27:00.846] UI: Auto-triggering stock search for: 0050
+09-28 23:27:00.846 D/WealthManagerDebug( 9105): [23:27:00.846] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:27:00.847 D/WealthManagerDebug( 9105): [23:27:00.846] ASSETS: Searching stocks: '0050' in market: 'TW'
+09-28 23:27:00.847 D/WealthManagerDebug( 9105): [23:27:00.847] USER_ACTION: Stock Search Initiated
+09-28 23:27:00.847 D/WealthManagerDebug( 9105): [23:27:00.847] ASSETS: Search state set to loading
+09-28 23:27:00.847 D/WealthManagerDebug( 9105): [23:27:00.847] ASSETS: Calling marketDataService.searchStocks
+09-28 23:27:00.847 D/WealthManagerDebug( 9105): [23:27:00.847] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:27:00.848 D/WealthManagerDebug( 9105): [23:27:00.847] MARKET_DATA: Searching stocks: '0050' in market: 'TW'
+09-28 23:27:00.848 D/WealthManagerDebug( 9105): [23:27:00.848] MARKET_DATA: Alpha Vantage API Request - Query: 0050
+09-28 23:27:00.848 D/WealthManagerDebug( 9105): [23:27:00.848] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=0050&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:00.850 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=0050&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:00.850 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:01.092 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=0050&apikey=ZHQ6865SM7I0IMML (242ms)
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:01 GMT
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=SfPwXh29Sg%2FQI3Zmlz6BRlHvCdmXhMFf2P6H82kOtXE%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073220"}],"max_age":3600}
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=SfPwXh29Sg%2FQI3Zmlz6BRlHvCdmXhMFf2P6H82kOtXE%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073220"
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=3,cfOrigin;dur=211
+09-28 23:27:01.093 I/okhttp.OkHttpClient( 9105): cf-ray: 9864432e6b974a9e-TPE
+09-28 23:27:01.095 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:01.095 I/okhttp.OkHttpClient( 9105):     "bestMatches": []
+09-28 23:27:01.095 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:01.095 I/okhttp.OkHttpClient( 9105): <-- END HTTP (25-byte body)
+09-28 23:27:01.100 D/WealthManagerDebug( 9105): [23:27:01.099] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:27:01.100 D/WealthManagerDebug( 9105): [23:27:01.100] MARKET_DATA: API Response - Raw matches count: 0
+09-28 23:27:01.100 D/WealthManagerDebug( 9105): [23:27:01.100] MARKET_DATA: Stock search completed: 0 results processed
+09-28 23:27:01.101 D/WealthManagerDebug( 9105): [23:27:01.100] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:27:01.101 D/WealthManagerDebug( 9105): [23:27:01.101] ASSETS: MarketDataService returned 0 results
+09-28 23:27:01.101 D/WealthManagerDebug( 9105): [23:27:01.101] ASSETS: Stock search completed: 0 results found
+09-28 23:27:01.101 D/WealthManagerDebug( 9105): [23:27:01.101] ASSETS: UI state updated with search results
+09-28 23:27:01.101 D/WealthManagerDebug( 9105): [23:27:01.101] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:27:02.360 D/WealthManagerDebug( 9105): [23:27:02.357] UI: User typing stock symbol: 005
+09-28 23:27:02.362 D/WealthManagerDebug( 9105): [23:27:02.361] USER_ACTION: Stock Search Triggered
+09-28 23:27:02.362 D/WealthManagerDebug( 9105): [23:27:02.362] UI: Auto-triggering stock search for: 005
+09-28 23:27:02.364 D/WealthManagerDebug( 9105): [23:27:02.363] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:27:02.364 D/WealthManagerDebug( 9105): [23:27:02.364] ASSETS: Searching stocks: '005' in market: 'TW'
+09-28 23:27:02.365 D/WealthManagerDebug( 9105): [23:27:02.364] USER_ACTION: Stock Search Initiated
+09-28 23:27:02.367 D/WealthManagerDebug( 9105): [23:27:02.366] ASSETS: Search state set to loading
+09-28 23:27:02.368 D/WealthManagerDebug( 9105): [23:27:02.367] ASSETS: Calling marketDataService.searchStocks
+09-28 23:27:02.368 D/WealthManagerDebug( 9105): [23:27:02.368] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:27:02.369 D/WealthManagerDebug( 9105): [23:27:02.369] MARKET_DATA: Searching stocks: '005' in market: 'TW'
+09-28 23:27:02.370 D/WealthManagerDebug( 9105): [23:27:02.369] MARKET_DATA: Alpha Vantage API Request - Query: 005
+09-28 23:27:02.370 D/WealthManagerDebug( 9105): [23:27:02.370] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=005&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:02.376 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=005&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:02.376 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:02.644 D/WealthManagerDebug( 9105): [23:27:02.643] UI: User typing stock symbol: 00
+09-28 23:27:02.658 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=005&apikey=ZHQ6865SM7I0IMML (281ms)
+09-28 23:27:02.658 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:02 GMT
+09-28 23:27:02.658 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:02.658 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:02.658 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:02.658 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:02.658 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:02.658 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=QLrxXvLkdC7isH6pmkYQAC9gP8hJ4pabP35uDITmork%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073222"}],"max_age":3600}
+09-28 23:27:02.658 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=QLrxXvLkdC7isH6pmkYQAC9gP8hJ4pabP35uDITmork%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073222"
+09-28 23:27:02.658 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:02.659 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:02.659 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:02.659 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:02.659 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:02.659 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:02.659 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:02.659 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=3,cfOrigin;dur=209
+09-28 23:27:02.659 I/okhttp.OkHttpClient( 9105): cf-ray: 986443382cb84a9e-TPE
+09-28 23:27:02.661 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:02.661 I/okhttp.OkHttpClient( 9105):     "bestMatches": []
+09-28 23:27:02.661 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:02.661 I/okhttp.OkHttpClient( 9105): <-- END HTTP (25-byte body)
+09-28 23:27:02.687 D/WealthManagerDebug( 9105): [23:27:02.686] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:27:02.687 D/WealthManagerDebug( 9105): [23:27:02.687] MARKET_DATA: API Response - Raw matches count: 0
+09-28 23:27:02.688 D/WealthManagerDebug( 9105): [23:27:02.687] MARKET_DATA: Stock search completed: 0 results processed
+09-28 23:27:02.688 D/WealthManagerDebug( 9105): [23:27:02.688] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:27:02.688 D/WealthManagerDebug( 9105): [23:27:02.688] ASSETS: MarketDataService returned 0 results
+09-28 23:27:02.688 D/WealthManagerDebug( 9105): [23:27:02.688] ASSETS: Stock search completed: 0 results found
+09-28 23:27:02.688 D/WealthManagerDebug( 9105): [23:27:02.688] ASSETS: UI state updated with search results
+09-28 23:27:02.688 D/WealthManagerDebug( 9105): [23:27:02.688] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:27:03.054 D/WealthManagerDebug( 9105): [23:27:03.052] UI: User typing stock symbol: 0
+09-28 23:27:03.420 D/WealthManagerDebug( 9105): [23:27:03.419] UI: User typing stock symbol: 
+09-28 23:27:05.780 D/WealthManagerDebug( 9105): [23:27:05.778] UI: User typing stock symbol: v
+09-28 23:27:06.440 D/WealthManagerDebug( 9105): [23:27:06.439] UI: User typing stock symbol: vt
+09-28 23:27:06.820 D/WealthManagerDebug( 9105): [23:27:06.819] UI: User typing stock symbol: vti
+09-28 23:27:06.822 D/WealthManagerDebug( 9105): [23:27:06.821] USER_ACTION: Stock Search Triggered
+09-28 23:27:06.823 D/WealthManagerDebug( 9105): [23:27:06.822] UI: Auto-triggering stock search for: vti
+09-28 23:27:06.824 D/WealthManagerDebug( 9105): [23:27:06.823] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:27:06.824 D/WealthManagerDebug( 9105): [23:27:06.824] ASSETS: Searching stocks: 'vti' in market: 'TW'
+09-28 23:27:06.825 D/WealthManagerDebug( 9105): [23:27:06.824] USER_ACTION: Stock Search Initiated
+09-28 23:27:06.826 D/WealthManagerDebug( 9105): [23:27:06.826] ASSETS: Search state set to loading
+09-28 23:27:06.827 D/WealthManagerDebug( 9105): [23:27:06.827] ASSETS: Calling marketDataService.searchStocks
+09-28 23:27:06.828 D/WealthManagerDebug( 9105): [23:27:06.827] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:27:06.828 D/WealthManagerDebug( 9105): [23:27:06.828] MARKET_DATA: Searching stocks: 'vti' in market: 'TW'
+09-28 23:27:06.829 D/WealthManagerDebug( 9105): [23:27:06.828] MARKET_DATA: Alpha Vantage API Request - Query: vti
+09-28 23:27:06.830 D/WealthManagerDebug( 9105): [23:27:06.829] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=vti&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:06.834 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=vti&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:06.834 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:07.074 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=vti&apikey=ZHQ6865SM7I0IMML (240ms)
+09-28 23:27:07.075 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:07 GMT
+09-28 23:27:07.075 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:07.075 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:07.075 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:07.075 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:07.075 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:07.075 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=k1DHKpjqm7o4CBnNgSmhvMIp0sMQ5SY%2FKbCSl8Xg%2BRs%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073226"}],"max_age":3600}
+09-28 23:27:07.075 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=k1DHKpjqm7o4CBnNgSmhvMIp0sMQ5SY%2FKbCSl8Xg%2BRs%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073226"
+09-28 23:27:07.075 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:07.076 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:07.076 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:07.076 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:07.076 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:07.076 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:07.076 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:07.076 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=3,cfOrigin;dur=209
+09-28 23:27:07.076 I/okhttp.OkHttpClient( 9105): cf-ray: 98644353ce084a9e-TPE
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):     "bestMatches": [
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTI",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL STOCK MARKET INDEX FUND ETF SHARES",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "1.0000"
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIAF",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "2. name": "Vita 34 AG",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "3. type": "Equity",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIBX",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL BOND INDEX FUND INVESTOR SHARES",
+09-28 23:27:07.078 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIDX",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "2. name": "VIRTUS DFA 2045 TARGET DATE RETIREMENT INCOME FUND CLASS I",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIEX",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "2. name": "Vanguard Total Int Bnd II Index Fd USD - Admiral Shares",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIFF",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "2. name": "VALDOR TECHNOLOGY",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "3. type": "Equity",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIFX",
+09-28 23:27:07.079 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL BOND INDEX FUND INSTITUTIONAL SHARES",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIIX",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL BOND II INDEX FUND INVESTOR SHARES",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIIX",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "2. name": "VONTOBEL INTERNATIONAL EQUITY INSTITUTIONAL FUND CLASS I",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTILX",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL BOND II INDEX FUND INSTITUTIONAL SHARES",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):         }
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105):     ]
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:07.080 I/okhttp.OkHttpClient( 9105): <-- END HTTP (3990-byte body)
+09-28 23:27:07.092 D/WealthManagerDebug( 9105): [23:27:07.091] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:27:07.093 D/WealthManagerDebug( 9105): [23:27:07.092] MARKET_DATA: API Response - Raw matches count: 10
+09-28 23:27:07.093 D/WealthManagerDebug( 9105): [23:27:07.093] MARKET_DATA: Match 0: symbol=VTI, name=VANGUARD TOTAL STOCK MARKET INDEX FUND ETF SHARES
+09-28 23:27:07.093 D/WealthManagerDebug( 9105): [23:27:07.093] MARKET_DATA: Match 1: symbol=VTIAF, name=Vita 34 AG
+09-28 23:27:07.093 D/WealthManagerDebug( 9105): [23:27:07.093] MARKET_DATA: Match 2: symbol=VTIBX, name=VANGUARD TOTAL INTERNATIONAL BOND INDEX FUND INVESTOR SHARES
+09-28 23:27:07.093 D/WealthManagerDebug( 9105): [23:27:07.093] MARKET_DATA: Match 3: symbol=VTIDX, name=VIRTUS DFA 2045 TARGET DATE RETIREMENT INCOME FUND CLASS I
+09-28 23:27:07.093 D/WealthManagerDebug( 9105): [23:27:07.093] MARKET_DATA: Match 4: symbol=VTIEX, name=Vanguard Total Int Bnd II Index Fd USD - Admiral Shares
+09-28 23:27:07.094 D/WealthManagerDebug( 9105): [23:27:07.093] MARKET_DATA: Match 5: symbol=VTIFF, name=VALDOR TECHNOLOGY
+09-28 23:27:07.094 D/WealthManagerDebug( 9105): [23:27:07.094] MARKET_DATA: Match 6: symbol=VTIFX, name=VANGUARD TOTAL INTERNATIONAL BOND INDEX FUND INSTITUTIONAL SHARES
+09-28 23:27:07.094 D/WealthManagerDebug( 9105): [23:27:07.094] MARKET_DATA: Match 7: symbol=VTIIX, name=VANGUARD TOTAL INTERNATIONAL BOND II INDEX FUND INVESTOR SHARES
+09-28 23:27:07.094 D/WealthManagerDebug( 9105): [23:27:07.094] MARKET_DATA: Match 8: symbol=VTIIX, name=VONTOBEL INTERNATIONAL EQUITY INSTITUTIONAL FUND CLASS I
+09-28 23:27:07.094 D/WealthManagerDebug( 9105): [23:27:07.094] MARKET_DATA: Match 9: symbol=VTILX, name=VANGUARD TOTAL INTERNATIONAL BOND II INDEX FUND INSTITUTIONAL SHARES
+09-28 23:27:07.094 D/WealthManagerDebug( 9105): [23:27:07.094] MARKET_DATA: Stock search completed: 10 results processed
+09-28 23:27:07.095 D/WealthManagerDebug( 9105): [23:27:07.094] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:27:07.095 D/WealthManagerDebug( 9105): [23:27:07.095] ASSETS: MarketDataService returned 10 results
+09-28 23:27:07.095 D/WealthManagerDebug( 9105): [23:27:07.095] ASSETS: Stock search completed: 10 results found
+09-28 23:27:07.095 D/WealthManagerDebug( 9105): [23:27:07.095] ASSETS: UI state updated with search results
+09-28 23:27:07.095 D/WealthManagerDebug( 9105): [23:27:07.095] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:27:08.978 D/WealthManagerDebug( 9105): [23:27:08.977] UI: User typing stock symbol: vt
+09-28 23:27:09.330 D/WealthManagerDebug( 9105): [23:27:09.329] UI: User typing stock symbol: v
+09-28 23:27:09.775 D/WealthManagerDebug( 9105): [23:27:09.774] UI: User typing stock symbol: 
+09-28 23:27:14.235 D/WealthManagerDebug( 9105): [23:27:14.234] UI: User typing stock symbol: V
+09-28 23:27:14.966 D/WealthManagerDebug( 9105): [23:27:14.966] UI: User typing stock symbol: VX
+09-28 23:27:15.466 D/WealthManagerDebug( 9105): [23:27:15.464] UI: User typing stock symbol: VXU
+09-28 23:27:15.468 D/WealthManagerDebug( 9105): [23:27:15.467] USER_ACTION: Stock Search Triggered
+09-28 23:27:15.469 D/WealthManagerDebug( 9105): [23:27:15.468] UI: Auto-triggering stock search for: VXU
+09-28 23:27:15.470 D/WealthManagerDebug( 9105): [23:27:15.469] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:27:15.472 D/WealthManagerDebug( 9105): [23:27:15.471] ASSETS: Searching stocks: 'VXU' in market: 'TW'
+09-28 23:27:15.472 D/WealthManagerDebug( 9105): [23:27:15.472] USER_ACTION: Stock Search Initiated
+09-28 23:27:15.475 D/WealthManagerDebug( 9105): [23:27:15.473] ASSETS: Search state set to loading
+09-28 23:27:15.476 D/WealthManagerDebug( 9105): [23:27:15.475] ASSETS: Calling marketDataService.searchStocks
+09-28 23:27:15.477 D/WealthManagerDebug( 9105): [23:27:15.476] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:27:15.478 D/WealthManagerDebug( 9105): [23:27:15.477] MARKET_DATA: Searching stocks: 'VXU' in market: 'TW'
+09-28 23:27:15.479 D/WealthManagerDebug( 9105): [23:27:15.478] MARKET_DATA: Alpha Vantage API Request - Query: VXU
+09-28 23:27:15.479 D/WealthManagerDebug( 9105): [23:27:15.479] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=VXU&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:15.484 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=VXU&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:15.484 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:15.970 D/WealthManagerDebug( 9105): [23:27:15.969] UI: User typing stock symbol: VXUS
+09-28 23:27:15.970 D/WealthManagerDebug( 9105): [23:27:15.970] USER_ACTION: Stock Search Triggered
+09-28 23:27:15.970 D/WealthManagerDebug( 9105): [23:27:15.970] UI: Auto-triggering stock search for: VXUS
+09-28 23:27:15.970 D/WealthManagerDebug( 9105): [23:27:15.970] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:27:15.971 D/WealthManagerDebug( 9105): [23:27:15.970] ASSETS: Searching stocks: 'VXUS' in market: 'TW'
+09-28 23:27:15.971 D/WealthManagerDebug( 9105): [23:27:15.971] USER_ACTION: Stock Search Initiated
+09-28 23:27:15.971 D/WealthManagerDebug( 9105): [23:27:15.971] ASSETS: Search state set to loading
+09-28 23:27:15.971 D/WealthManagerDebug( 9105): [23:27:15.971] ASSETS: Calling marketDataService.searchStocks
+09-28 23:27:15.971 D/WealthManagerDebug( 9105): [23:27:15.971] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:27:15.972 D/WealthManagerDebug( 9105): [23:27:15.972] MARKET_DATA: Searching stocks: 'VXUS' in market: 'TW'
+09-28 23:27:15.972 D/WealthManagerDebug( 9105): [23:27:15.972] MARKET_DATA: Alpha Vantage API Request - Query: VXUS
+09-28 23:27:15.972 D/WealthManagerDebug( 9105): [23:27:15.972] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=VXUS&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:15.974 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=VXUS&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:15.974 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:16.278 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=VXU&apikey=ZHQ6865SM7I0IMML (793ms)
+09-28 23:27:16.278 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:16 GMT
+09-28 23:27:16.279 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:16.279 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:16.280 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:16.280 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:16.280 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:16.280 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=SyDVCkdvea7RrxW6YhBK%2FKGgTtlhD70ADRx6b6q7OBk%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073235"}],"max_age":3600}
+09-28 23:27:16.281 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=SyDVCkdvea7RrxW6YhBK%2FKGgTtlhD70ADRx6b6q7OBk%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073235"
+09-28 23:27:16.281 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:16.282 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:16.282 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:16.282 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:16.282 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:16.283 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:16.284 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:16.284 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=3,cfOrigin;dur=716
+09-28 23:27:16.284 I/okhttp.OkHttpClient( 9105): cf-ray: 9864438a1f944a9e-TPE
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):     "bestMatches": [
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VXUS",
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL STOCK INDEX FUND ETF SHARES",
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.8571"
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):         }
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105):     ]
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:16.285 I/okhttp.OkHttpClient( 9105): <-- END HTTP (424-byte body)
+09-28 23:27:16.288 D/WealthManagerDebug( 9105): [23:27:16.287] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:27:16.288 D/WealthManagerDebug( 9105): [23:27:16.288] MARKET_DATA: API Response - Raw matches count: 1
+09-28 23:27:16.288 D/WealthManagerDebug( 9105): [23:27:16.288] MARKET_DATA: Match 0: symbol=VXUS, name=VANGUARD TOTAL INTERNATIONAL STOCK INDEX FUND ETF SHARES
+09-28 23:27:16.288 D/WealthManagerDebug( 9105): [23:27:16.288] MARKET_DATA: Stock search completed: 1 results processed
+09-28 23:27:16.288 D/WealthManagerDebug( 9105): [23:27:16.288] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:27:16.289 D/WealthManagerDebug( 9105): [23:27:16.288] ASSETS: MarketDataService returned 1 results
+09-28 23:27:16.289 D/WealthManagerDebug( 9105): [23:27:16.289] ASSETS: Stock search completed: 1 results found
+09-28 23:27:16.289 D/WealthManagerDebug( 9105): [23:27:16.289] ASSETS: UI state updated with search results
+09-28 23:27:16.289 D/WealthManagerDebug( 9105): [23:27:16.289] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:27:16.465 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=VXUS&apikey=ZHQ6865SM7I0IMML (490ms)
+09-28 23:27:16.465 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:16 GMT
+09-28 23:27:16.465 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:16.465 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:16.465 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:16.465 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:16.465 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:16.465 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=9fYzUfLYza94MeNxue7yWh3CUKnD6maRpAxRWlXeJFw%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073236"}],"max_age":3600}
+09-28 23:27:16.465 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=9fYzUfLYza94MeNxue7yWh3CUKnD6maRpAxRWlXeJFw%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073236"
+09-28 23:27:16.466 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:16.466 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:16.466 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:16.466 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:16.466 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:16.466 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:16.466 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:16.466 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=3,cfOrigin;dur=426
+09-28 23:27:16.466 I/okhttp.OkHttpClient( 9105): cf-ray: 9864438d1a234a9e-TPE
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):     "bestMatches": [
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VXUS",
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL STOCK INDEX FUND ETF SHARES",
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "1.0000"
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):         }
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105):     ]
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:16.467 I/okhttp.OkHttpClient( 9105): <-- END HTTP (424-byte body)
+09-28 23:27:16.469 D/WealthManagerDebug( 9105): [23:27:16.468] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:27:16.469 D/WealthManagerDebug( 9105): [23:27:16.469] MARKET_DATA: API Response - Raw matches count: 1
+09-28 23:27:16.469 D/WealthManagerDebug( 9105): [23:27:16.469] MARKET_DATA: Match 0: symbol=VXUS, name=VANGUARD TOTAL INTERNATIONAL STOCK INDEX FUND ETF SHARES
+09-28 23:27:16.470 D/WealthManagerDebug( 9105): [23:27:16.470] MARKET_DATA: Stock search completed: 1 results processed
+09-28 23:27:16.470 D/WealthManagerDebug( 9105): [23:27:16.470] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:27:16.470 D/WealthManagerDebug( 9105): [23:27:16.470] ASSETS: MarketDataService returned 1 results
+09-28 23:27:16.470 D/WealthManagerDebug( 9105): [23:27:16.470] ASSETS: Stock search completed: 1 results found
+09-28 23:27:16.470 D/WealthManagerDebug( 9105): [23:27:16.470] ASSETS: UI state updated with search results
+09-28 23:27:16.470 D/WealthManagerDebug( 9105): [23:27:16.470] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:27:17.419 D/WealthManagerDebug( 9105): [23:27:17.418] USER_ACTION: Stock Selected from Search
+09-28 23:27:17.420 D/WealthManagerDebug( 9105): [23:27:17.419] UI: User selected stock: VXUS - VANGUARD TOTAL INTERNATIONAL STOCK INDEX FUND ETF SHARES
+09-28 23:27:19.145 D/InsetsController( 9105): show(ime())
+09-28 23:27:19.146 I/ImeTracker( 9105): com.wealthmanager:a8efc3f6: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT_BY_INSETS_API fromUser false
+09-28 23:27:19.146 I/ImeTracker( 9105): com.wealthmanager:a8efc3f6: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+09-28 23:27:19.169 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:19.214 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:19.235 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:20.222 D/InsetsController( 9105): show(ime())
+09-28 23:27:20.223 I/ImeTracker( 9105): com.wealthmanager:57adb4ef: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT_BY_INSETS_API fromUser false
+09-28 23:27:20.223 I/ImeTracker( 9105): com.wealthmanager:57adb4ef: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+09-28 23:27:20.287 D/WindowOnBackDispatcher( 9105): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@72ee639
+09-28 23:27:20.304 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:20.326 I/ImeTracker( 9105): system_server:dcdbd6b5: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+09-28 23:27:20.330 I/ImeTracker( 9105): system_server:6d11fa9: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+09-28 23:27:20.375 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:20.391 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:21.113 D/WealthManagerDebug( 9105): [23:27:21.112] UI: User typing stock symbol: VXU
+09-28 23:27:21.113 D/WealthManagerDebug( 9105): [23:27:21.113] USER_ACTION: Stock Search Triggered
+09-28 23:27:21.113 D/WealthManagerDebug( 9105): [23:27:21.113] UI: Auto-triggering stock search for: VXU
+09-28 23:27:21.114 D/WealthManagerDebug( 9105): [23:27:21.113] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:27:21.114 D/WealthManagerDebug( 9105): [23:27:21.114] ASSETS: Searching stocks: 'VXU' in market: 'TW'
+09-28 23:27:21.114 D/WealthManagerDebug( 9105): [23:27:21.114] USER_ACTION: Stock Search Initiated
+09-28 23:27:21.114 D/WealthManagerDebug( 9105): [23:27:21.114] ASSETS: Search state set to loading
+09-28 23:27:21.114 D/WealthManagerDebug( 9105): [23:27:21.114] ASSETS: Calling marketDataService.searchStocks
+09-28 23:27:21.114 D/WealthManagerDebug( 9105): [23:27:21.114] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:27:21.115 D/WealthManagerDebug( 9105): [23:27:21.114] MARKET_DATA: Searching stocks: 'VXU' in market: 'TW'
+09-28 23:27:21.115 D/WealthManagerDebug( 9105): [23:27:21.115] MARKET_DATA: Alpha Vantage API Request - Query: VXU
+09-28 23:27:21.115 D/WealthManagerDebug( 9105): [23:27:21.115] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=VXU&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:21.118 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=VXU&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:21.118 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:21.166 D/WindowOnBackDispatcher( 9105): setTopOnBackInvokedCallback (unwrapped): null
+09-28 23:27:21.306 D/WealthManagerDebug( 9105): [23:27:21.305] UI: User typing stock symbol: VX
+09-28 23:27:21.367 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=VXU&apikey=ZHQ6865SM7I0IMML (248ms)
+09-28 23:27:21.367 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:21 GMT
+09-28 23:27:21.367 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:21.367 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:21.368 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:21.368 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:21.368 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:21.368 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=H4xnDn7abQWUZ6DnpG5NZyq2LktR5%2Faje4%2FkLWBIGt8%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073241"}],"max_age":3600}
+09-28 23:27:21.368 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=H4xnDn7abQWUZ6DnpG5NZyq2LktR5%2Faje4%2FkLWBIGt8%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073241"
+09-28 23:27:21.369 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:21.369 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:21.369 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:21.369 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:21.369 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:21.370 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:21.370 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:21.370 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=2,cfOrigin;dur=210
+09-28 23:27:21.370 I/okhttp.OkHttpClient( 9105): cf-ray: 986443ad1f504a9e-TPE
+09-28 23:27:21.372 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):     "bestMatches": [
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VXUS",
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL STOCK INDEX FUND ETF SHARES",
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.8571"
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):         }
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105):     ]
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:21.373 I/okhttp.OkHttpClient( 9105): <-- END HTTP (424-byte body)
+09-28 23:27:21.416 D/WealthManagerDebug( 9105): [23:27:21.416] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:27:21.416 D/WealthManagerDebug( 9105): [23:27:21.416] MARKET_DATA: API Response - Raw matches count: 1
+09-28 23:27:21.417 D/WealthManagerDebug( 9105): [23:27:21.417] MARKET_DATA: Match 0: symbol=VXUS, name=VANGUARD TOTAL INTERNATIONAL STOCK INDEX FUND ETF SHARES
+09-28 23:27:21.417 D/WealthManagerDebug( 9105): [23:27:21.417] MARKET_DATA: Stock search completed: 1 results processed
+09-28 23:27:21.417 D/WealthManagerDebug( 9105): [23:27:21.417] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:27:21.417 D/WealthManagerDebug( 9105): [23:27:21.417] ASSETS: MarketDataService returned 1 results
+09-28 23:27:21.418 D/WealthManagerDebug( 9105): [23:27:21.418] ASSETS: Stock search completed: 1 results found
+09-28 23:27:21.418 D/WealthManagerDebug( 9105): [23:27:21.418] ASSETS: UI state updated with search results
+09-28 23:27:21.418 D/WealthManagerDebug( 9105): [23:27:21.418] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:27:21.536 D/WealthManagerDebug( 9105): [23:27:21.535] UI: User typing stock symbol: V
+09-28 23:27:21.773 D/WealthManagerDebug( 9105): [23:27:21.772] UI: User typing stock symbol: 
+09-28 23:27:22.858 D/WealthManagerDebug( 9105): [23:27:22.857] UI: User typing stock symbol: v
+09-28 23:27:23.487 D/WealthManagerDebug( 9105): [23:27:23.486] UI: User typing stock symbol: vt
+09-28 23:27:24.276 D/WealthManagerDebug( 9105): [23:27:24.273] UI: User typing stock symbol: vti
+09-28 23:27:24.278 D/WealthManagerDebug( 9105): [23:27:24.277] USER_ACTION: Stock Search Triggered
+09-28 23:27:24.279 D/WealthManagerDebug( 9105): [23:27:24.278] UI: Auto-triggering stock search for: vti
+09-28 23:27:24.279 D/WealthManagerDebug( 9105): [23:27:24.279] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 23:27:24.279 D/WealthManagerDebug( 9105): [23:27:24.279] ASSETS: Searching stocks: 'vti' in market: 'TW'
+09-28 23:27:24.280 D/WealthManagerDebug( 9105): [23:27:24.279] USER_ACTION: Stock Search Initiated
+09-28 23:27:24.280 D/WealthManagerDebug( 9105): [23:27:24.280] ASSETS: Search state set to loading
+09-28 23:27:24.281 D/WealthManagerDebug( 9105): [23:27:24.280] ASSETS: Calling marketDataService.searchStocks
+09-28 23:27:24.281 D/WealthManagerDebug( 9105): [23:27:24.281] MARKET_DATA: === STARTING ALPHA VANTAGE STOCK SEARCH ===
+09-28 23:27:24.281 D/WealthManagerDebug( 9105): [23:27:24.281] MARKET_DATA: Searching stocks: 'vti' in market: 'TW'
+09-28 23:27:24.281 D/WealthManagerDebug( 9105): [23:27:24.281] MARKET_DATA: Alpha Vantage API Request - Query: vti
+09-28 23:27:24.281 D/WealthManagerDebug( 9105): [23:27:24.281] MARKET_DATA: API URL: https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=vti&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:24.283 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=vti&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:24.283 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:24.570 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=SYMBOL_SEARCH&keywords=vti&apikey=ZHQ6865SM7I0IMML (286ms)
+09-28 23:27:24.571 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:24 GMT
+09-28 23:27:24.571 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:24.572 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:24.572 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:24.572 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:24.573 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=z9c2tgPirht4ziBRyRnK4SUJVN2pTOTEPME7hKCjF4o%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073244"}],"max_age":3600}
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=z9c2tgPirht4ziBRyRnK4SUJVN2pTOTEPME7hKCjF4o%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073244"
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=4,cfOrigin;dur=211
+09-28 23:27:24.574 I/okhttp.OkHttpClient( 9105): cf-ray: 986443c0d95d4a9e-TPE
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):     "bestMatches": [
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTI",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL STOCK MARKET INDEX FUND ETF SHARES",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "3. type": "ETF",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "1.0000"
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIAF",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "2. name": "Vita 34 AG",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "3. type": "Equity",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIBX",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL BOND INDEX FUND INVESTOR SHARES",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIDX",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "2. name": "VIRTUS DFA 2045 TARGET DATE RETIREMENT INCOME FUND CLASS I",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIEX",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "2. name": "Vanguard Total Int Bnd II Index Fd USD - Admiral Shares",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIFF",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "2. name": "VALDOR TECHNOLOGY",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "3. type": "Equity",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIFX",
+09-28 23:27:24.576 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL BOND INDEX FUND INSTITUTIONAL SHARES",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIIX",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL BOND II INDEX FUND INVESTOR SHARES",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTIIX",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "2. name": "VONTOBEL INTERNATIONAL EQUITY INSTITUTIONAL FUND CLASS I",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):         },
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):         {
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "1. symbol": "VTILX",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "2. name": "VANGUARD TOTAL INTERNATIONAL BOND II INDEX FUND INSTITUTIONAL SHARES",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "3. type": "Mutual Fund",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "4. region": "United States",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "5. marketOpen": "09:30",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "6. marketClose": "16:00",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "7. timezone": "UTC-04",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "8. currency": "USD",
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):             "9. matchScore": "0.7500"
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):         }
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105):     ]
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:24.577 I/okhttp.OkHttpClient( 9105): <-- END HTTP (3990-byte body)
+09-28 23:27:24.586 D/WealthManagerDebug( 9105): [23:27:24.585] MARKET_DATA: Alpha Vantage API Response received - Status: Success
+09-28 23:27:24.586 D/WealthManagerDebug( 9105): [23:27:24.586] MARKET_DATA: API Response - Raw matches count: 10
+09-28 23:27:24.586 D/WealthManagerDebug( 9105): [23:27:24.586] MARKET_DATA: Match 0: symbol=VTI, name=VANGUARD TOTAL STOCK MARKET INDEX FUND ETF SHARES
+09-28 23:27:24.586 D/WealthManagerDebug( 9105): [23:27:24.586] MARKET_DATA: Match 1: symbol=VTIAF, name=Vita 34 AG
+09-28 23:27:24.586 D/WealthManagerDebug( 9105): [23:27:24.586] MARKET_DATA: Match 2: symbol=VTIBX, name=VANGUARD TOTAL INTERNATIONAL BOND INDEX FUND INVESTOR SHARES
+09-28 23:27:24.586 D/WealthManagerDebug( 9105): [23:27:24.586] MARKET_DATA: Match 3: symbol=VTIDX, name=VIRTUS DFA 2045 TARGET DATE RETIREMENT INCOME FUND CLASS I
+09-28 23:27:24.586 D/WealthManagerDebug( 9105): [23:27:24.586] MARKET_DATA: Match 4: symbol=VTIEX, name=Vanguard Total Int Bnd II Index Fd USD - Admiral Shares
+09-28 23:27:24.586 D/WealthManagerDebug( 9105): [23:27:24.586] MARKET_DATA: Match 5: symbol=VTIFF, name=VALDOR TECHNOLOGY
+09-28 23:27:24.586 D/WealthManagerDebug( 9105): [23:27:24.586] MARKET_DATA: Match 6: symbol=VTIFX, name=VANGUARD TOTAL INTERNATIONAL BOND INDEX FUND INSTITUTIONAL SHARES
+09-28 23:27:24.587 D/WealthManagerDebug( 9105): [23:27:24.587] MARKET_DATA: Match 7: symbol=VTIIX, name=VANGUARD TOTAL INTERNATIONAL BOND II INDEX FUND INVESTOR SHARES
+09-28 23:27:24.587 D/WealthManagerDebug( 9105): [23:27:24.587] MARKET_DATA: Match 8: symbol=VTIIX, name=VONTOBEL INTERNATIONAL EQUITY INSTITUTIONAL FUND CLASS I
+09-28 23:27:24.587 D/WealthManagerDebug( 9105): [23:27:24.587] MARKET_DATA: Match 9: symbol=VTILX, name=VANGUARD TOTAL INTERNATIONAL BOND II INDEX FUND INSTITUTIONAL SHARES
+09-28 23:27:24.587 D/WealthManagerDebug( 9105): [23:27:24.587] MARKET_DATA: Stock search completed: 10 results processed
+09-28 23:27:24.587 D/WealthManagerDebug( 9105): [23:27:24.587] MARKET_DATA: === ALPHA VANTAGE STOCK SEARCH COMPLETED ===
+09-28 23:27:24.587 D/WealthManagerDebug( 9105): [23:27:24.587] ASSETS: MarketDataService returned 10 results
+09-28 23:27:24.587 D/WealthManagerDebug( 9105): [23:27:24.587] ASSETS: Stock search completed: 10 results found
+09-28 23:27:24.588 D/WealthManagerDebug( 9105): [23:27:24.588] ASSETS: UI state updated with search results
+09-28 23:27:24.588 D/WealthManagerDebug( 9105): [23:27:24.588] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 23:27:26.387 D/WealthManagerDebug( 9105): [23:27:26.386] USER_ACTION: Stock Selected from Search
+09-28 23:27:26.387 D/WealthManagerDebug( 9105): [23:27:26.387] UI: User selected stock: VTI - VANGUARD TOTAL STOCK MARKET INDEX FUND ETF SHARES
+09-28 23:27:26.476 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:26.517 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:26.520 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:28.324 D/InsetsController( 9105): show(ime())
+09-28 23:27:28.325 I/ImeTracker( 9105): com.wealthmanager:558602b2: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT_BY_INSETS_API fromUser false
+09-28 23:27:28.326 I/ImeTracker( 9105): com.wealthmanager:558602b2: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+09-28 23:27:28.350 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:28.404 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:28.426 W/RecordingIC( 9105): requestCursorUpdates is not supported
+09-28 23:27:29.317 D/WealthManagerDebug( 9105): [23:27:29.315] UI: User typing stock shares: 5
+09-28 23:27:29.718 D/WealthManagerDebug( 9105): [23:27:29.716] UI: User typing stock shares: 50
+09-28 23:27:31.070 D/WealthManagerDebug( 9105): [23:27:31.069] USER_ACTION: US Market Selected
+09-28 23:27:31.070 D/WealthManagerDebug( 9105): [23:27:31.070] UI: User selected US market for stock
+09-28 23:27:32.553 D/WealthManagerDebug( 9105): [23:27:32.552] USER_ACTION: Add Asset Button Clicked
+09-28 23:27:32.553 D/WealthManagerDebug( 9105): [23:27:32.553] UI: Adding stock asset: VTI, 50 shares, US market
+09-28 23:27:32.553 D/WealthManagerDebug( 9105): [23:27:32.553] ASSETS: Adding stock asset: VTI, 50.0 shares, market: US
+09-28 23:27:32.554 D/WealthManagerDebug( 9105): [23:27:32.554] ASSETS: Stock asset created: VTI, 50 shares
+09-28 23:27:32.554 D/WealthManagerDebug( 9105): [23:27:32.554] REPOSITORY: Inserting stock asset: VTI 50 shares
+09-28 23:27:32.565 D/ImeBackDispatcher( 9105): Clear (mImeCallbacks.size=1)
+09-28 23:27:32.565 D/WindowOnBackDispatcher( 9105): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@eb4bb57
+09-28 23:27:32.566 D/ImeBackDispatcher( 9105): switch root view (mImeCallbacks.size=0)
+09-28 23:27:32.566 D/WindowOnBackDispatcher( 9105): setTopOnBackInvokedCallback (unwrapped): null
+09-28 23:27:32.589 D/HWUI    ( 9105): endAllActiveAnimators on 0xb400007006a7b340 (UnprojectedRipple) with handle 0xb400006f36abbee0
+09-28 23:27:32.614 D/WealthManagerDebug( 9105): [23:27:32.614] REPOSITORY: Stock asset inserted successfully
+09-28 23:27:32.615 D/WealthManagerDebug( 9105): [23:27:32.615] ASSETS: Stock asset inserted to database
+09-28 23:27:32.623 D/WealthManagerDebug( 9105): [23:27:32.623] DASHBOARD: Assets updated - Cash: 2, Stock: 3
+09-28 23:27:32.624 D/WealthManagerDebug( 9105): [23:27:32.623] DASHBOARD: Total Assets: 1363.0, Cash: 1363.0, Stock: 0.0
+09-28 23:27:32.624 D/WealthManagerDebug( 9105): [23:27:32.624] DASHBOARD: Assets updated - Cash: 2, Stock: 3
+09-28 23:27:32.624 D/WealthManagerDebug( 9105): [23:27:32.624] DASHBOARD: Total Assets: 1363.0, Cash: 1363.0, Stock: 0.0
+09-28 23:27:32.625 D/WealthManagerDebug( 9105): [23:27:32.625] ASSETS: Assets loaded - Cash: 2, Stock: 3
+09-28 23:27:32.648 I/ImeTracker( 9105): com.wealthmanager:bb642c34: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+09-28 23:27:32.648 I/ImeTracker( 9105): com.wealthmanager:bb642c34: onFailed at PHASE_CLIENT_VIEW_SERVED
+09-28 23:27:32.688 W/m.wealthmanager( 9105): Cleared Reference was only reachable from finalizer (only reported once)
+09-28 23:27:32.692 D/ImeBackDispatcher( 9105): switch root view (mImeCallbacks.size=0)
+09-28 23:27:32.696 D/InsetsController( 9105): hide(ime())
+09-28 23:27:32.696 I/ImeTracker( 9105): com.wealthmanager:74eded8a: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-28 23:27:32.706 W/RemoteInputConnectionImpl( 9105): requestCursorUpdates on inactive InputConnection
+09-28 23:27:32.713 D/ImeBackDispatcher( 9105): Unregister received callback id=88012994
+09-28 23:27:32.713 W/ImeBackDispatcher( 9105): Ime callback not found. Ignoring unregisterReceivedCallback. callbackId: 88012994 remaining callbacks: 0
+09-28 23:27:32.747 I/m.wealthmanager( 9105): Background concurrent mark compact GC freed 23MB AllocSpace bytes, 3(112KB) LOS objects, 77% free, 7294KB/31MB, paused 614us,5.228ms total 122.167ms
+09-28 23:27:32.778 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.779 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.783 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.795 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.795 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.795 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.795 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.795 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.796 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.797 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.798 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.798 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.798 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.798 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.798 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.798 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.798 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.800 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.800 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.800 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.800 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.800 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.800 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.802 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.803 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.803 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.803 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.803 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.803 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.803 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.803 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.806 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.806 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.806 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.806 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.807 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.807 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.807 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.807 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.807 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.807 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.807 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.807 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.807 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.807 W/System  ( 9105): A resource failed to call release. 
+09-28 23:27:32.815 D/ImeBackDispatcher( 9105): Register received callback id=88012994 priority=0
+09-28 23:27:32.815 D/WindowOnBackDispatcher( 9105): setTopOnBackInvokedCallback (unwrapped): android.view.ImeBackAnimationController@db78594
+09-28 23:27:32.821 D/ImeBackDispatcher( 9105): Unregister received callback id=88012994
+09-28 23:27:32.821 D/WindowOnBackDispatcher( 9105): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@6639dee
+09-28 23:27:32.822 I/ImeTracker( 9105): system_server:e5d4c1c7: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+09-28 23:27:38.147 D/WealthManagerDebug( 9105): [23:27:38.146] USER_ACTION: Back Button Clicked
+09-28 23:27:38.148 D/WealthManagerDebug( 9105): [23:27:38.147] UI: User clicked back button to return to dashboard
+09-28 23:27:38.312 D/WealthManagerDebug( 9105): [23:27:38.311] USER_ACTION: Dashboard Screen Opened
+09-28 23:27:38.313 D/WealthManagerDebug( 9105): [23:27:38.312] DASHBOARD: Loading portfolio data
+09-28 23:27:38.316 D/WealthManagerDebug( 9105): [23:27:38.315] CHART: PieChartComponent rendered with 5 assets
+09-28 23:27:38.316 D/WealthManagerDebug( 9105): [23:27:38.316] CHART: Total chart value: 1363.0
+09-28 23:27:38.316 D/WealthManagerDebug( 9105): [23:27:38.316] CHART: Asset 0: TWD 586.0 = 586.0 (42%)
+09-28 23:27:38.316 D/WealthManagerDebug( 9105): [23:27:38.316] CHART: Asset 1: TWD 777.0 = 777.0 (57%)
+09-28 23:27:38.316 D/WealthManagerDebug( 9105): [23:27:38.316] CHART: Asset 2: VTI (VTI) = 0.0 (0%)
+09-28 23:27:38.316 D/WealthManagerDebug( 9105): [23:27:38.316] CHART: Asset 3: 0050 (0050) = 0.0 (0%)
+09-28 23:27:38.317 D/WealthManagerDebug( 9105): [23:27:38.316] CHART: Asset 4: apple (apple) = 0.0 (0%)
+09-28 23:27:40.919 D/WealthManagerDebug( 9105): [23:27:40.919] USER_ACTION: Refresh Data Button Clicked
+09-28 23:27:40.920 D/WealthManagerDebug( 9105): [23:27:40.920] UI: User clicked refresh button to update market data
+09-28 23:27:40.920 D/WealthManagerDebug( 9105): [23:27:40.920] DASHBOARD: Refreshing data - starting market data update
+09-28 23:27:40.920 D/WealthManagerDebug( 9105): [23:27:40.920] API_STATUS: Retry state changed: true
+09-28 23:27:40.941 D/WealthManagerDebug( 9105): [23:27:40.940] DASHBOARD: Asset check - Stock assets: 3
+09-28 23:27:40.941 D/WealthManagerDebug( 9105): [23:27:40.941] DASHBOARD: Updating exchange rates
+09-28 23:27:40.941 D/WealthManagerDebug( 9105): [23:27:40.941] MARKET_DATA: Starting exchange rate update with Alpha Vantage API
+09-28 23:27:40.942 D/WealthManagerDebug( 9105): [23:27:40.942] API_RETRY: Alpha Vantage Exchange Rate Update - Attempt 1/3
+09-28 23:27:40.942 D/WealthManagerDebug( 9105): [23:27:40.942] MARKET_DATA: Alpha Vantage API Request - Exchange Rate: USD to TWD
+09-28 23:27:40.948 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=TWD&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:40.948 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:41.256 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=CURRENCY_EXCHANGE_RATE&from_currency=USD&to_currency=TWD&apikey=ZHQ6865SM7I0IMML (307ms)
+09-28 23:27:41.256 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:41 GMT
+09-28 23:27:41.256 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:41.256 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:41.256 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:41.256 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:41.256 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:41.256 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=DX%2BTjOsu3DWTBJ%2FmjL0rJpKV1%2Bb16hdxVAxEzQIRN7A%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073261"}],"max_age":3600}
+09-28 23:27:41.256 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=DX%2BTjOsu3DWTBJ%2FmjL0rJpKV1%2Bb16hdxVAxEzQIRN7A%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073261"
+09-28 23:27:41.256 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:41.257 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:41.257 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:41.257 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:41.257 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:41.257 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:41.257 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:41.257 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=4,cfOrigin;dur=209
+09-28 23:27:41.257 I/okhttp.OkHttpClient( 9105): cf-ray: 986444296f954a9e-TPE
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):     "Realtime Currency Exchange Rate": {
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):         "1. From_Currency Code": "USD",
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):         "2. From_Currency Name": "United States Dollar",
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):         "3. To_Currency Code": "TWD",
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):         "4. To_Currency Name": "New Taiwan Dollar",
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):         "5. Exchange Rate": "30.44100000",
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):         "6. Last Refreshed": "2025-09-28 15:27:15",
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):         "7. Time Zone": "UTC",
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):         "8. Bid Price": "30.44000000",
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):         "9. Ask Price": "30.44220000"
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105):     }
+09-28 23:27:41.258 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:41.259 I/okhttp.OkHttpClient( 9105): <-- END HTTP (440-byte body)
+09-28 23:27:41.264 D/WealthManagerDebug( 9105): [23:27:41.264] MARKET_DATA: Alpha Vantage API Response received for exchange rate
+09-28 23:27:41.265 D/WealthManagerDebug( 9105): [23:27:41.265] MARKET_DATA: Exchange rate data: USD/TWD = 30.441
+09-28 23:27:41.265 D/WealthManagerDebug( 9105): [23:27:41.265] API_RETRY: Alpha Vantage Exchange Rate Update - Success on attempt 1
+09-28 23:27:41.266 D/WealthManagerDebug( 9105): [23:27:41.266] REPOSITORY: Inserting exchange rate: USD_TWD = 30.441
+09-28 23:27:41.272 D/WealthManagerDebug( 9105): [23:27:41.272] REPOSITORY: Exchange rate inserted successfully
+09-28 23:27:41.273 D/WealthManagerDebug( 9105): [23:27:41.272] MARKET_DATA: Exchange rate updated: USD/TWD = 30.441
+09-28 23:27:41.273 D/WealthManagerDebug( 9105): [23:27:41.273] DASHBOARD: Updating stock prices for 3 stocks
+09-28 23:27:41.273 D/WealthManagerDebug( 9105): [23:27:41.273] MARKET_DATA: Starting stock price update with Alpha Vantage API
+09-28 23:27:41.281 D/WealthManagerDebug( 9105): [23:27:41.281] MARKET_DATA: Found 3 stock assets to update
+09-28 23:27:41.281 D/WealthManagerDebug( 9105): [23:27:41.281] MARKET_DATA: Updating VTI (US market)
+09-28 23:27:41.282 D/WealthManagerDebug( 9105): [23:27:41.282] API_RETRY: Alpha Vantage Stock Price Update for VTI - Attempt 1/3
+09-28 23:27:41.282 D/WealthManagerDebug( 9105): [23:27:41.282] MARKET_DATA: Alpha Vantage API Request - Symbol: VTI
+09-28 23:27:41.290 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=VTI&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:41.291 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:41.674 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=VTI&apikey=ZHQ6865SM7I0IMML (383ms)
+09-28 23:27:41.674 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:41 GMT
+09-28 23:27:41.674 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:41.674 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=DX%2BTjOsu3DWTBJ%2FmjL0rJpKV1%2Bb16hdxVAxEzQIRN7A%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073261"}],"max_age":3600}
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=DX%2BTjOsu3DWTBJ%2FmjL0rJpKV1%2Bb16hdxVAxEzQIRN7A%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073261"
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=2,cfOrigin;dur=213
+09-28 23:27:41.675 I/okhttp.OkHttpClient( 9105): cf-ray: 9864442bca464a9e-TPE
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):     "Global Quote": {
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):         "01. symbol": "VTI",
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):         "02. open": "325.8900",
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):         "03. high": "327.3429",
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):         "04. low": "325.2200",
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):         "05. price": "327.1800",
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):         "06. volume": "3169264",
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):         "07. latest trading day": "2025-09-26",
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):         "08. previous close": "325.1400",
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):         "09. change": "2.0400",
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):         "10. change percent": "0.6274%"
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105):     }
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:41.676 I/okhttp.OkHttpClient( 9105): <-- END HTTP (383-byte body)
+09-28 23:27:41.683 D/WealthManagerDebug( 9105): [23:27:41.681] MARKET_DATA: Alpha Vantage API Response received for VTI
+09-28 23:27:41.684 D/WealthManagerDebug( 9105): [23:27:41.683] MARKET_DATA: Quote data for VTI: price=327.18
+09-28 23:27:41.685 D/WealthManagerDebug( 9105): [23:27:41.684] API_RETRY: Alpha Vantage Stock Price Update for VTI - Success on attempt 1
+09-28 23:27:41.685 D/WealthManagerDebug( 9105): [23:27:41.685] MARKET_DATA: Calculating TWD equivalent: 327.18 * 50 in USD
+09-28 23:27:41.693 D/WealthManagerDebug( 9105): [23:27:41.693] MARKET_DATA: USD calculation: 497984.31899999996 (rate: 30.441)
+09-28 23:27:41.694 D/WealthManagerDebug( 9105): [23:27:41.693] REPOSITORY: Updating stock asset: VTI
+09-28 23:27:41.698 D/WealthManagerDebug( 9105): [23:27:41.698] REPOSITORY: Stock asset updated successfully
+09-28 23:27:41.698 D/WealthManagerDebug( 9105): [23:27:41.698] MARKET_DATA: Updated VTI: Price=327.18, TWD=497984.31899999996
+09-28 23:27:41.698 D/WealthManagerDebug( 9105): [23:27:41.698] MARKET_DATA: Updating 0050 (TW market)
+09-28 23:27:41.699 D/WealthManagerDebug( 9105): [23:27:41.698] API_RETRY: Alpha Vantage Stock Price Update for 0050 - Attempt 1/3
+09-28 23:27:41.699 D/WealthManagerDebug( 9105): [23:27:41.699] MARKET_DATA: Alpha Vantage API Request - Symbol: 0050
+09-28 23:27:41.701 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=0050&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:41.701 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:41.705 D/WealthManagerDebug( 9105): [23:27:41.705] DASHBOARD: Assets updated - Cash: 2, Stock: 3
+09-28 23:27:41.706 D/WealthManagerDebug( 9105): [23:27:41.706] DASHBOARD: Total Assets: 499347.31899999996, Cash: 1363.0, Stock: 497984.31899999996
+09-28 23:27:41.707 D/WealthManagerDebug( 9105): [23:27:41.707] DASHBOARD: Assets updated - Cash: 2, Stock: 3
+09-28 23:27:41.707 D/WealthManagerDebug( 9105): [23:27:41.707] DASHBOARD: Total Assets: 499347.31899999996, Cash: 1363.0, Stock: 497984.31899999996
+09-28 23:27:41.801 D/WealthManagerDebug( 9105): [23:27:41.800] CHART: PieChartComponent rendered with 5 assets
+09-28 23:27:41.801 D/WealthManagerDebug( 9105): [23:27:41.801] CHART: Total chart value: 499347.31899999996
+09-28 23:27:41.801 D/WealthManagerDebug( 9105): [23:27:41.801] CHART: Asset 0: TWD 586.0 = 586.0 (0%)
+09-28 23:27:41.801 D/WealthManagerDebug( 9105): [23:27:41.801] CHART: Asset 1: TWD 777.0 = 777.0 (0%)
+09-28 23:27:41.801 D/WealthManagerDebug( 9105): [23:27:41.801] CHART: Asset 2: VTI (VTI) = 497984.31899999996 (99%)
+09-28 23:27:41.802 D/WealthManagerDebug( 9105): [23:27:41.801] CHART: Asset 3: 0050 (0050) = 0.0 (0%)
+09-28 23:27:41.802 D/WealthManagerDebug( 9105): [23:27:41.802] CHART: Asset 4: apple (apple) = 0.0 (0%)
+09-28 23:27:42.048 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=0050&apikey=ZHQ6865SM7I0IMML (344ms)
+09-28 23:27:42.048 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:42 GMT
+09-28 23:27:42.049 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:42.049 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:42.049 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:42.049 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:42.049 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:42.050 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=DX%2BTjOsu3DWTBJ%2FmjL0rJpKV1%2Bb16hdxVAxEzQIRN7A%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073261"}],"max_age":3600}
+09-28 23:27:42.050 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=DX%2BTjOsu3DWTBJ%2FmjL0rJpKV1%2Bb16hdxVAxEzQIRN7A%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073261"
+09-28 23:27:42.050 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:42.050 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:42.050 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:42.050 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:42.051 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:42.051 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:42.051 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:42.051 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=3,cfOrigin;dur=302
+09-28 23:27:42.051 I/okhttp.OkHttpClient( 9105): cf-ray: 9864442dbc6d4a9e-TPE
+09-28 23:27:42.057 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:42.058 I/okhttp.OkHttpClient( 9105):     "Global Quote": {}
+09-28 23:27:42.058 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:42.058 I/okhttp.OkHttpClient( 9105): <-- END HTTP (26-byte body)
+09-28 23:27:42.062 D/WealthManagerDebug( 9105): [23:27:42.062] MARKET_DATA: Alpha Vantage API Response received for 0050
+09-28 23:27:42.070 D/WealthManagerDebug( 9105): [23:27:42.070] API_RETRY: Other exception: NullPointerException
+09-28 23:27:42.071 D/WealthManagerDebug( 9105): [23:27:42.070] API_RETRY: Alpha Vantage Stock Price Update for 0050 - Attempt 1 failed: Attempt to invoke interface method 'int java.lang.CharSequence.length()' on a null object reference
+09-28 23:27:42.071 E/WealthManagerDebug( 9105): [23:27:42.071] ERROR ERROR: Alpha Vantage Stock Price Update for 0050 - Final failure after 1 attempts
+09-28 23:27:42.072 E/WealthManagerDebug( 9105): [23:27:42.071] ERROR ERROR: Exception: Attempt to invoke interface method 'int java.lang.CharSequence.length()' on a null object reference
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): [23:27:42.073] ERROR ERROR: Stack trace: java.lang.NullPointerException: Attempt to invoke interface method 'int java.lang.CharSequence.length()' on a null object reference
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at com.wealthmanager.data.service.MarketDataService$updateStockPrices$result$1.invokeSuspend(MarketDataService.kt:58)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:108)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at android.os.Handler.handleCallback(Handler.java:1041)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at android.os.Handler.dispatchMessage(Handler.java:103)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at android.os.Looper.dispatchMessage(Looper.java:315)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at android.os.Looper.loopOnce(Looper.java:251)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at android.os.Looper.loop(Looper.java:349)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at android.app.ActivityThread.main(ActivityThread.java:9041)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at java.lang.reflect.Method.invoke(Native Method)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+09-28 23:27:42.073 E/WealthManagerDebug( 9105): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:929)
+09-28 23:27:42.074 D/WealthManagerDebug( 9105): [23:27:42.074] MARKET_DATA: Failed to update 0050, keeping existing price
+09-28 23:27:42.074 D/WealthManagerDebug( 9105): [23:27:42.074] MARKET_DATA: Updating apple (US market)
+09-28 23:27:42.075 D/WealthManagerDebug( 9105): [23:27:42.074] API_RETRY: Alpha Vantage Stock Price Update for apple - Attempt 1/3
+09-28 23:27:42.075 D/WealthManagerDebug( 9105): [23:27:42.075] MARKET_DATA: Alpha Vantage API Request - Symbol: apple
+09-28 23:27:42.078 I/okhttp.OkHttpClient( 9105): --> GET https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=apple&apikey=ZHQ6865SM7I0IMML
+09-28 23:27:42.078 I/okhttp.OkHttpClient( 9105): --> END GET
+09-28 23:27:42.423 I/okhttp.OkHttpClient( 9105): <-- 200 https://www.alphavantage.co/query?function=GLOBAL_QUOTE&symbol=apple&apikey=ZHQ6865SM7I0IMML (344ms)
+09-28 23:27:42.424 I/okhttp.OkHttpClient( 9105): date: Sun, 28 Sep 2025 15:27:42 GMT
+09-28 23:27:42.424 I/okhttp.OkHttpClient( 9105): content-type: application/json
+09-28 23:27:42.424 I/okhttp.OkHttpClient( 9105): allow: GET, HEAD, OPTIONS
+09-28 23:27:42.425 I/okhttp.OkHttpClient( 9105): cross-origin-opener-policy: same-origin
+09-28 23:27:42.425 I/okhttp.OkHttpClient( 9105): nel: {"report_to":"heroku-nel","response_headers":["Via"],"max_age":3600,"success_fraction":0.01,"failure_fraction":0.1}
+09-28 23:27:42.425 I/okhttp.OkHttpClient( 9105): referrer-policy: same-origin
+09-28 23:27:42.425 I/okhttp.OkHttpClient( 9105): report-to: {"group":"heroku-nel","endpoints":[{"url":"https://nel.heroku.com/reports?s=Nhd%2BRQznqyor%2FWcXbtctSXJt%2F2%2BkA0J5VwgnO8Hszac%3D\u0026sid=1b10b0ff-8a76-4548-befa-353fc6c6c045\u0026ts=1759073262"}],"max_age":3600}
+09-28 23:27:42.426 I/okhttp.OkHttpClient( 9105): reporting-endpoints: heroku-nel="https://nel.heroku.com/reports?s=Nhd%2BRQznqyor%2FWcXbtctSXJt%2F2%2BkA0J5VwgnO8Hszac%3D&sid=1b10b0ff-8a76-4548-befa-353fc6c6c045&ts=1759073262"
+09-28 23:27:42.426 I/okhttp.OkHttpClient( 9105): server: cloudflare
+09-28 23:27:42.427 I/okhttp.OkHttpClient( 9105): vary: Cookie, Origin
+09-28 23:27:42.427 I/okhttp.OkHttpClient( 9105): via: 2.0 heroku-router
+09-28 23:27:42.427 I/okhttp.OkHttpClient( 9105): x-content-type-options: nosniff
+09-28 23:27:42.427 I/okhttp.OkHttpClient( 9105): x-frame-options: DENY
+09-28 23:27:42.427 I/okhttp.OkHttpClient( 9105): cf-cache-status: DYNAMIC
+09-28 23:27:42.428 I/okhttp.OkHttpClient( 9105): server-timing: cfCacheStatus;desc="DYNAMIC"
+09-28 23:27:42.428 I/okhttp.OkHttpClient( 9105): server-timing: cfEdge;dur=3,cfOrigin;dur=302
+09-28 23:27:42.428 I/okhttp.OkHttpClient( 9105): cf-ray: 986444300ec04a9e-TPE
+09-28 23:27:42.431 I/okhttp.OkHttpClient( 9105): {
+09-28 23:27:42.431 I/okhttp.OkHttpClient( 9105):     "Global Quote": {}
+09-28 23:27:42.431 I/okhttp.OkHttpClient( 9105): }
+09-28 23:27:42.431 I/okhttp.OkHttpClient( 9105): <-- END HTTP (26-byte body)
+09-28 23:27:42.437 D/WealthManagerDebug( 9105): [23:27:42.436] MARKET_DATA: Alpha Vantage API Response received for apple
+09-28 23:27:42.438 D/WealthManagerDebug( 9105): [23:27:42.437] API_RETRY: Other exception: NullPointerException
+09-28 23:27:42.438 D/WealthManagerDebug( 9105): [23:27:42.438] API_RETRY: Alpha Vantage Stock Price Update for apple - Attempt 1 failed: Attempt to invoke interface method 'int java.lang.CharSequence.length()' on a null object reference
+09-28 23:27:42.438 E/WealthManagerDebug( 9105): [23:27:42.438] ERROR ERROR: Alpha Vantage Stock Price Update for apple - Final failure after 1 attempts
+09-28 23:27:42.438 E/WealthManagerDebug( 9105): [23:27:42.438] ERROR ERROR: Exception: Attempt to invoke interface method 'int java.lang.CharSequence.length()' on a null object reference
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): [23:27:42.439] ERROR ERROR: Stack trace: java.lang.NullPointerException: Attempt to invoke interface method 'int java.lang.CharSequence.length()' on a null object reference
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at com.wealthmanager.data.service.MarketDataService$updateStockPrices$result$1.invokeSuspend(MarketDataService.kt:58)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at kotlin.coroutines.jvm.internal.BaseContinuationImpl.resumeWith(ContinuationImpl.kt:33)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at kotlinx.coroutines.DispatchedTask.run(DispatchedTask.kt:108)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at android.os.Handler.handleCallback(Handler.java:1041)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at android.os.Handler.dispatchMessage(Handler.java:103)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at android.os.Looper.dispatchMessage(Looper.java:315)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at android.os.Looper.loopOnce(Looper.java:251)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at android.os.Looper.loop(Looper.java:349)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at android.app.ActivityThread.main(ActivityThread.java:9041)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at java.lang.reflect.Method.invoke(Native Method)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:593)
+09-28 23:27:42.439 E/WealthManagerDebug( 9105): 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:929)
+09-28 23:27:42.439 D/WealthManagerDebug( 9105): [23:27:42.439] MARKET_DATA: Failed to update apple, keeping existing price
+09-28 23:27:42.439 D/WealthManagerDebug( 9105): [23:27:42.439] MARKET_DATA: Stock price update completed for 3 stocks
+09-28 23:27:42.439 D/WealthManagerDebug( 9105): [23:27:42.439] DASHBOARD: Market data update completed
+09-28 23:27:42.440 D/WealthManagerDebug( 9105): [23:27:42.439] API_STATUS: API Success - clearing error state
+09-28 23:27:47.003 D/WealthManagerDebug( 9105): [23:27:47.003] USER_ACTION: Navigate to Assets Button Clicked
+09-28 23:27:47.003 D/WealthManagerDebug( 9105): [23:27:47.003] UI: User clicked FAB to navigate to Assets screen
+09-28 23:27:47.081 D/WealthManagerDebug( 9105): [23:27:47.080] USER_ACTION: Assets Screen Opened
+09-28 23:27:47.082 D/WealthManagerDebug( 9105): [23:27:47.081] UI: Assets screen loaded, starting to load assets
+09-28 23:27:47.082 D/WealthManagerDebug( 9105): [23:27:47.082] ASSETS: Loading assets from repository
+09-28 23:27:47.116 D/WealthManagerDebug( 9105): [23:27:47.116] ASSETS: Assets loaded - Cash: 2, Stock: 3
+09-28 23:27:51.220 D/WealthManagerDebug( 9105): [23:27:51.219] USER_ACTION: Back Button Clicked
+09-28 23:27:51.220 D/WealthManagerDebug( 9105): [23:27:51.220] UI: User clicked back button to return to dashboard
+09-28 23:27:51.372 D/WealthManagerDebug( 9105): [23:27:51.371] USER_ACTION: Dashboard Screen Opened
+09-28 23:27:51.372 D/WealthManagerDebug( 9105): [23:27:51.372] DASHBOARD: Loading portfolio data
+09-28 23:27:51.375 D/WealthManagerDebug( 9105): [23:27:51.375] CHART: PieChartComponent rendered with 5 assets
+09-28 23:27:51.375 D/WealthManagerDebug( 9105): [23:27:51.375] CHART: Total chart value: 499347.31899999996
+09-28 23:27:51.375 D/WealthManagerDebug( 9105): [23:27:51.375] CHART: Asset 0: TWD 586.0 = 586.0 (0%)
+09-28 23:27:51.375 D/WealthManagerDebug( 9105): [23:27:51.375] CHART: Asset 1: TWD 777.0 = 777.0 (0%)
+09-28 23:27:51.376 D/WealthManagerDebug( 9105): [23:27:51.376] CHART: Asset 2: VTI (VTI) = 497984.31899999996 (99%)
+09-28 23:27:51.376 D/WealthManagerDebug( 9105): [23:27:51.376] CHART: Asset 3: 0050 (0050) = 0.0 (0%)
+09-28 23:27:51.376 D/WealthManagerDebug( 9105): [23:27:51.376] CHART: Asset 4: apple (apple) = 0.0 (0%)

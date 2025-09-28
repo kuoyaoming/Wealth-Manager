@@ -2,7 +2,7 @@
 # Auto install APK, start app, record complete logs
 
 param(
-    [string]$ApkPath = "WealthManager-v0.1.5-complete.apk"
+    [string]$ApkPath = "WealthManager_v0.1.6_final.apk"
 )
 
 $PackageName = "com.wealthmanager"
