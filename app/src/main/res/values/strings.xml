@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wealth Manager</string>
+    
+    <!-- Authentication -->
+    <string name="biometric_auth_title">Biometric Authentication</string>
+    <string name="biometric_auth_subtitle">Use your biometric to access your assets</string>
+    <string name="biometric_auth_button">Authenticate</string>
+    <string name="biometric_auth_error">Biometric authentication failed</string>
+    <string name="biometric_auth_error_no_hardware">No biometric hardware available</string>
+    <string name="biometric_auth_error_hw_unavailable">Biometric hardware is currently unavailable</string>
+    <string name="biometric_auth_error_no_biometrics">No biometrics enrolled</string>
+    <string name="biometric_auth_error_user_cancel">Authentication was cancelled</string>
+    <string name="biometric_auth_error_locked_out">Too many failed attempts. Try again later</string>
+    <string name="biometric_auth_error_permanent_lockout">Biometric authentication is permanently locked</string>
+    
+    <!-- Navigation -->
+    <string name="nav_dashboard">Dashboard</string>
+    <string name="nav_assets">Assets</string>
+    <string name="nav_settings">Settings</string>
+    
+    <!-- Dashboard -->
+    <string name="dashboard_title">Portfolio Overview</string>
+    <string name="total_assets">Total Assets</string>
+    <string name="cash_assets">Cash Assets</string>
+    <string name="stock_assets">Stock Assets</string>
+    <string name="refresh_data">Refresh Data</string>
+    
+    <!-- Assets -->
+    <string name="assets_title">Manage Assets</string>
+    <string name="add_cash">Add Cash</string>
+    <string name="add_stock">Add Stock</string>
+    <string name="cash_twd">TWD Cash</string>
+    <string name="cash_usd">USD Cash</string>
+    <string name="stock_tw">Taiwan Stock</string>
+    <string name="stock_us">US Stock</string>
+    
+    <!-- Cash Input -->
+    <string name="cash_amount">Amount</string>
+    <string name="cash_currency">Currency</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    
+    <!-- Stock Input -->
+    <string name="stock_symbol">Stock Symbol</string>
+    <string name="stock_shares">Shares</string>
+    <string name="stock_market">Market</string>
+    <string name="search_stock">Search Stock</string>
+    <string name="stock_price">Current Price</string>
+    <string name="stock_value">Total Value</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">Settings</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="about">About</string>
+    
+    <!-- Common -->
+    <string name="loading">Loading...</string>
+    <string name="error">Error</string>
+    <string name="retry">Retry</string>
+    <string name="delete">Delete</string>
+    <string name="edit">Edit</string>
+    <string name="confirm">Confirm</string>
+    
+    <!-- Error Messages -->
+    <string name="error_network">Network error. Please check your connection</string>
+    <string name="error_api">Failed to fetch market data</string>
+    <string name="error_invalid_amount">Please enter a valid amount</string>
+    <string name="error_invalid_symbol">Please enter a valid stock symbol</string>
+    <string name="error_stock_not_found">Stock not found</string>
+</resources>
