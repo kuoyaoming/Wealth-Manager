@@ -114,19 +114,20 @@ This application is designed to provide a secure and private personal asset trac
 - **Error Handling**: Comprehensive error handling with user-friendly messages
 - **Skip Authentication**: Option to bypass biometric authentication when hardware unavailable
 
-### 🚧 Partially Implemented Features
-- **Market Data Integration**: Network dependencies added but API implementation pending
-- **Exchange Rate Conversion**: Database structure ready but conversion logic needs implementation
-- **Stock Price Updates**: Entity structure exists but real-time price fetching not implemented
-- **Pie Chart Visualization**: UI component exists but chart rendering needs implementation
+### ✅ Recently Implemented Features (v0.1.2)
+- **Market Data Integration**: Complete API service with Yahoo Finance integration
+- **Exchange Rate Conversion**: Real-time USD/TWD rate updates and conversion
+- **Stock Price Updates**: Automatic price fetching and portfolio value updates
+- **Pie Chart Visualization**: Custom Compose Canvas implementation with legend
+- **Stock Search**: Real-time fuzzy search with results display
+- **Network Layer**: Retrofit + OkHttp with comprehensive error handling
 
-### ❌ Pending Features
-- **Google Finance API Integration**: Network service layer needs implementation
-- **Real-time Market Data**: API calls and data fetching logic
-- **Interactive Charts**: Chart library integration and rendering
-- **Stock Search**: Fuzzy search functionality for stock symbols
+### 🚧 Future Enhancements
 - **Price Alerts**: Notification system for price changes
 - **Data Export**: Export portfolio data functionality
+- **Advanced Charts**: More chart types (line, bar charts)
+- **Portfolio Analytics**: Performance tracking and analysis
+- **Social Features**: Share portfolio insights
 
 ## 📱 Getting Started
 
@@ -171,42 +172,65 @@ graph TD
     N --> F
     F --> Q[DashboardViewModel]
     Q --> R[AssetRepository]
+    Q --> MM[MarketDataService]
     R --> S[Room Database]
     S --> T[CashAsset Table]
     S --> U[StockAsset Table]
+    S --> VV[ExchangeRate Table]
     
-    F --> V[Total Assets Card]
-    F --> W[Cash Assets Card]
-    F --> X[Stock Assets Card]
-    F --> Y[Pie Chart Card]
-    F --> Z[Debug Log Button]
+    MM --> WW[MarketDataApi]
+    WW --> XX[Yahoo Finance API]
+    MM --> YY[Update Stock Prices]
+    MM --> ZZ[Update Exchange Rates]
+    MM --> AAA[Search Stocks]
     
-    F --> AA[Add Assets Button]
-    AA --> BB[AssetsScreen]
-    BB --> CC[AssetsViewModel]
-    CC --> R
+    F --> BB[Total Assets Card]
+    F --> CC[Cash Assets Card]
+    F --> DD[Stock Assets Card]
+    F --> EE[PieChartComponent]
+    F --> FF[Debug Log Button]
+    F --> GG[Refresh Button]
     
-    BB --> DD[AddAssetDialog]
-    DD --> EE{Asset Type?}
-    EE -->|Cash| FF[Cash Input Form]
-    EE -->|Stock| GG[Stock Input Form]
-    FF --> HH[Add Cash Asset]
-    GG --> II[Add Stock Asset]
-    HH --> CC
-    II --> CC
+    GG --> HH[Trigger Market Data Update]
+    HH --> MM
     
-    CC --> JJ[Insert to Database]
-    JJ --> S
+    F --> II[Add Assets Button]
+    II --> JJ[AssetsScreen]
+    JJ --> KK[AssetsViewModel]
+    KK --> R
+    KK --> MM
     
-    Z --> KK[DebugLogManager]
-    KK --> LL[Copy Logs to Clipboard]
+    JJ --> LL[AddAssetDialog]
+    LL --> MM{Asset Type?}
+    MM -->|Cash| NN[Cash Input Form]
+    MM -->|Stock| OO[Stock Search & Input]
+    NN --> PP[Add Cash Asset]
+    OO --> QQ[Search Stocks API]
+    QQ --> RR[Display Search Results]
+    RR --> SS[Select Stock]
+    SS --> TT[Add Stock Asset]
+    PP --> KK
+    TT --> KK
+    
+    KK --> UU[Insert to Database]
+    UU --> S
+    
+    EE --> VV[Custom Pie Chart]
+    VV --> WW[Canvas Drawing]
+    VV --> XX[Legend Display]
+    
+    FF --> YY[DebugLogManager]
+    YY --> ZZ[Copy Logs to Clipboard]
     
     style A fill:#e1f5fe
     style E fill:#fff3e0
     style F fill:#e8f5e8
-    style BB fill:#f3e5f5
-    style DD fill:#fce4ec
+    style JJ fill:#f3e5f5
+    style LL fill:#fce4ec
     style S fill:#e0f2f1
+    style MM fill:#fff8e1
+    style WW fill:#e8f5e8
+    style VV fill:#f1f8e9
 ```
 
 ### Component Architecture
@@ -257,13 +281,21 @@ classDiagram
         +loadAssets()
         +addCashAsset()
         +addStockAsset()
+        +searchStocks()
         +uiState: StateFlow
     }
     
     class AddAssetDialog {
         +onAddCash()
         +onAddStock()
+        +onSearchStocks()
         +onDismiss()
+    }
+    
+    class PieChartComponent {
+        +drawPieChart()
+        +LegendItem()
+        +getAssetColor()
     }
     
     class AssetRepository {
@@ -271,18 +303,40 @@ classDiagram
         +getAllStockAssets()
         +insertCashAsset()
         +insertStockAsset()
+        +getExchangeRate()
+    }
+    
+    class MarketDataService {
+        +updateStockPrices()
+        +updateExchangeRates()
+        +searchStocks()
+        +calculateTwdEquivalent()
+    }
+    
+    class MarketDataApi {
+        +getStockQuote()
+        +searchStocks()
+        +getExchangeRate()
+    }
+    
+    class NetworkModule {
+        +provideOkHttpClient()
+        +provideRetrofit()
+        +provideMarketDataApi()
     }
     
     class DebugLogManager {
         +log()
         +logUserAction()
         +logBiometric()
+        +logError()
         +copyLogsToClipboard()
     }
     
     class RoomDatabase {
         +CashAsset Table
         +StockAsset Table
+        +ExchangeRate Table
     }
     
     MainActivity --> WealthManagerNavigation
@@ -292,13 +346,20 @@ classDiagram
     BiometricAuthViewModel --> BiometricAuthManager
     DashboardScreen --> DashboardViewModel
     DashboardScreen --> AssetsScreen
+    DashboardScreen --> PieChartComponent
     AssetsScreen --> AssetsViewModel
     AssetsScreen --> AddAssetDialog
     AssetsViewModel --> AssetRepository
+    AssetsViewModel --> MarketDataService
     DashboardViewModel --> AssetRepository
+    DashboardViewModel --> MarketDataService
     AssetRepository --> RoomDatabase
+    MarketDataService --> MarketDataApi
+    MarketDataService --> AssetRepository
+    NetworkModule --> MarketDataApi
     BiometricAuthScreen --> DebugLogManager
     DashboardScreen --> DebugLogManager
+    MarketDataService --> DebugLogManager
 ```
 
 ### Data Flow
@@ -310,6 +371,8 @@ sequenceDiagram
     participant D as Dashboard
     participant AS as AssetsScreen
     participant DB as Database
+    participant MD as MarketDataService
+    participant API as Yahoo Finance API
     participant DL as DebugLog
     
     U->>A: Launch App
@@ -322,8 +385,15 @@ sequenceDiagram
     A->>D: Navigate to Dashboard
     D->>DL: Log Dashboard Open
     D->>DB: Load Assets
-    DB->>D: Return Asset Data
-    D->>U: Display Portfolio
+    D->>MD: Update Market Data
+    MD->>API: Fetch Stock Prices
+    API->>MD: Return Price Data
+    MD->>API: Fetch Exchange Rates
+    API->>MD: Return Rate Data
+    MD->>DB: Update Stock Prices
+    MD->>DB: Update Exchange Rates
+    DB->>D: Return Updated Assets
+    D->>U: Display Portfolio with Charts
     
     U->>D: Click Add Assets
     D->>DL: Log Navigation
@@ -331,13 +401,29 @@ sequenceDiagram
     AS->>DL: Log Assets Screen Open
     U->>AS: Click Add Button
     AS->>U: Show Add Dialog
+    U->>AS: Search for Stock
+    AS->>MD: Search Stocks API
+    MD->>API: Search Request
+    API->>MD: Search Results
+    MD->>AS: Return Search Results
+    AS->>U: Display Search Results
+    U->>AS: Select Stock
     U->>AS: Fill Asset Form
     AS->>DL: Log Asset Addition
     AS->>DB: Insert Asset
     DB->>AS: Confirm Insert
     AS->>D: Navigate Back
     D->>DB: Refresh Data
+    D->>MD: Update Market Data
     DB->>D: Updated Assets
+    D->>U: Show Updated Portfolio with Charts
+    
+    U->>D: Click Refresh Button
+    D->>MD: Trigger Market Data Update
+    MD->>API: Fetch Latest Data
+    API->>MD: Return Latest Data
+    MD->>DB: Update All Data
+    DB->>D: Updated Portfolio
     D->>U: Show Updated Portfolio
     
     U->>D: Click Debug Button
@@ -348,30 +434,32 @@ sequenceDiagram
 ## 📊 Development Status
 
 ### Current Implementation Status
-- **Core Features**: 80% Complete
-- **UI/UX**: 95% Complete
-- **Data Management**: 90% Complete
-- **Authentication**: 100% Complete
-- **Localization**: 100% Complete
-- **Market Data Integration**: 20% Complete
-- **Chart Visualization**: 30% Complete
+- **Core Features**: 95% Complete ✅
+- **UI/UX**: 100% Complete ✅
+- **Data Management**: 100% Complete ✅
+- **Authentication**: 100% Complete ✅
+- **Localization**: 100% Complete ✅
+- **Market Data Integration**: 90% Complete ✅
+- **Chart Visualization**: 100% Complete ✅
+- **Stock Search**: 100% Complete ✅
+- **Exchange Rate Conversion**: 100% Complete ✅
 
-### Recent Updates (v0.1.1)
-- ✅ Migrated from KAPT to KSP for better performance
-- ✅ Fixed biometric authentication issues
-- ✅ Implemented comprehensive asset management
-- ✅ Added debug logging system
-- ✅ Enhanced error handling and user experience
-- ✅ Added skip authentication option
-- ✅ Improved navigation flow
+### Recent Updates (v0.1.2)
+- ✅ Implemented complete market data integration with Yahoo Finance API
+- ✅ Added real-time stock price updates and portfolio value calculation
+- ✅ Created custom pie chart visualization with Compose Canvas
+- ✅ Implemented intelligent stock search with real-time results
+- ✅ Added automatic exchange rate updates and currency conversion
+- ✅ Enhanced network layer with Retrofit and comprehensive error handling
+- ✅ Improved user experience with responsive charts and search functionality
 
 ### Next Development Priorities
-1. **Market Data API Integration**: Implement Google Finance API or alternative data source
-2. **Real-time Price Updates**: Add automatic price fetching and updates
-3. **Chart Visualization**: Integrate chart library for pie chart rendering
-4. **Stock Search**: Implement fuzzy search for stock symbols
-5. **Exchange Rate Updates**: Add automatic currency conversion
-6. **Performance Optimization**: Optimize database queries and UI rendering
+1. **Price Alerts**: Notification system for price changes
+2. **Advanced Analytics**: Portfolio performance tracking and analysis
+3. **Data Export**: Export portfolio data to CSV/PDF
+4. **Advanced Charts**: Line charts, bar charts for historical data
+5. **Social Features**: Share portfolio insights and achievements
+6. **Performance Optimization**: Advanced caching and data synchronization
 
 ## 📞 Support
 
@@ -379,6 +467,6 @@ For technical support or feature requests, please contact the development team t
 
 ---
 
-**Version**: 0.1.1  
+**Version**: 0.1.2  
 **Last Updated**: 2024  
 **Platform**: Android 6.0+ (API 23+)
