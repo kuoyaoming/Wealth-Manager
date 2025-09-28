@@ -33,6 +33,7 @@ This application is designed to provide a secure and private personal asset trac
 ### Cash Assets
 - **Supported Currencies**: TWD Cash and USD Cash
 - **Operations**: Manual input and real-time adjustment of amounts
+- **Status**: ✅ Fully implemented with AddAssetDialog and database integration
 
 ### Stock Assets
 - **Asset Structure**: stockTicker (symbol), sharesCount (shares), market (TW/US)
@@ -42,6 +43,7 @@ This application is designed to provide a secure and private personal asset trac
   3. App performs fuzzy search via Google Finance API
   4. Dropdown menu displays matching stock symbols and company names
   5. Stock symbols are stored in standard format (e.g., US stocks: AAPL, Taiwan stocks: 2330.TW or 2330)
+- **Status**: 🚧 Basic UI implemented, API integration and search functionality pending
 
 ## 📊 Data Processing & Market Data
 
@@ -49,6 +51,7 @@ This application is designed to provide a secure and private personal asset trac
 - **Data Source**: Google Finance API (preferred) or other viable financial data services
 - **Data Content**: Latest closing prices for all recorded stocks
 - **Update Frequency**: Automatic updates on app startup or user-initiated refresh
+- **Status**: 🚧 Network dependencies added, API implementation pending
 
 ### Currency Conversion & Calculation
 - **Exchange Rate**: Current or latest trading day USD/TWD exchange rate
@@ -57,38 +60,73 @@ This application is designed to provide a secure and private personal asset trac
   ```
   Total Assets = (TWD Cash) + (USD Cash TWD Equivalent) + (All Stocks TWD Equivalent Total Market Value)
   ```
+- **Status**: 🚧 Database structure ready, conversion logic needs implementation
 
 ## 📈 Visualization & Data Presentation
 
 ### Asset Pie Chart
 - **Overview**: Pie chart based on TWD equivalent showing proportion of all asset categories
 - **Chart Information**: Each segment clearly displays asset name, TWD equivalent amount, and percentage
+- **Status**: 🚧 UI component exists, chart rendering needs implementation
 
 ### Detailed List View
 - **Cash Details**: Original currency, original amount, TWD equivalent
 - **Stock Details**: Stock symbol, shares held, last closing price, original currency total market value, TWD equivalent total market value
+- **Status**: ✅ Implemented with Material 3 cards and responsive layout
 
-## 🛠 Technical Requirements
+## 🛠 Technical Implementation
+
+### Architecture & Technologies
+- **Architecture**: MVVM (Model-View-ViewModel) with Clean Architecture principles
+- **UI Framework**: Jetpack Compose with Material 3 design system
+- **Dependency Injection**: Hilt for modern dependency injection
+- **Database**: Room database with local storage
+- **Annotation Processing**: KSP (Kotlin Symbol Processing) for better performance
+- **Navigation**: Navigation Compose for type-safe navigation
+- **State Management**: StateFlow and Compose state management
 
 ### Platform & API
 - **Target Platform**: Android (Material You support, recommended API 31+)
 - **Supported Markets**: Taiwan Stock Exchange (TW) and US Stock Exchange (US)
+- **Minimum SDK**: API 23 (Android 6.0)
+- **Target SDK**: API 34 (Android 14)
 
 ### Data Storage
 - **Local Storage**: All user asset data and app settings stored using Android local storage (Room Database or file system)
 - **No Cloud Sync**: Strictly prohibits any cloud synchronization or data upload to ensure user data remains securely on the device
+- **Database Tables**: 
+  - `cash_assets`: TWD and USD cash holdings
+  - `stock_assets`: Stock investments with market data
+  - `exchange_rates`: Currency conversion rates
 
 ## 🚀 Features
 
-- ✅ Biometric authentication for security
-- ✅ Material You dynamic theming
-- ✅ Auto language detection and switching
-- ✅ Real-time market data integration
-- ✅ Multi-currency support with TWD conversion
-- ✅ Interactive pie chart visualization
-- ✅ Detailed asset breakdown
-- ✅ Local data storage (no cloud dependency)
-- ✅ Support for Taiwan and US stock markets
+### ✅ Implemented Features
+- **Biometric Authentication**: Secure fingerprint/face recognition with fallback options
+- **Material You Design**: Dynamic theming with system color adaptation
+- **Multi-language Support**: Traditional Chinese (zh-TW) and English (en-US) with auto-detection
+- **Asset Management**: Add/edit cash and stock assets with intuitive UI
+- **Local Data Storage**: Room database with no cloud dependency
+- **Debug Logging**: Comprehensive logging system for troubleshooting
+- **Navigation**: Smooth navigation between authentication, dashboard, and asset management
+- **Responsive UI**: Modern Compose UI with Material 3 components
+- **KSP Migration**: Modern Kotlin Symbol Processing for better performance
+- **Error Handling**: Comprehensive error handling with user-friendly messages
+- **Skip Authentication**: Option to bypass biometric authentication when hardware unavailable
+
+### 🚧 Partially Implemented Features
+- **Market Data Integration**: Network dependencies added but API implementation pending
+- **Exchange Rate Conversion**: Database structure ready but conversion logic needs implementation
+- **Stock Price Updates**: Entity structure exists but real-time price fetching not implemented
+- **Pie Chart Visualization**: UI component exists but chart rendering needs implementation
+
+### ❌ Pending Features
+- **Google Finance API Integration**: Network service layer needs implementation
+- **Real-time Market Data**: API calls and data fetching logic
+- **Interactive Charts**: Chart library integration and rendering
+- **Stock Search**: Fuzzy search functionality for stock symbols
+- **Price Alerts**: Notification system for price changes
+- **Data Export**: Export portfolio data functionality
 
 ## 📱 Getting Started
 
@@ -306,6 +344,34 @@ sequenceDiagram
     D->>DL: Copy Logs
     DL->>U: Logs in Clipboard
 ```
+
+## 📊 Development Status
+
+### Current Implementation Status
+- **Core Features**: 80% Complete
+- **UI/UX**: 95% Complete
+- **Data Management**: 90% Complete
+- **Authentication**: 100% Complete
+- **Localization**: 100% Complete
+- **Market Data Integration**: 20% Complete
+- **Chart Visualization**: 30% Complete
+
+### Recent Updates (v0.1.1)
+- ✅ Migrated from KAPT to KSP for better performance
+- ✅ Fixed biometric authentication issues
+- ✅ Implemented comprehensive asset management
+- ✅ Added debug logging system
+- ✅ Enhanced error handling and user experience
+- ✅ Added skip authentication option
+- ✅ Improved navigation flow
+
+### Next Development Priorities
+1. **Market Data API Integration**: Implement Google Finance API or alternative data source
+2. **Real-time Price Updates**: Add automatic price fetching and updates
+3. **Chart Visualization**: Integrate chart library for pie chart rendering
+4. **Stock Search**: Implement fuzzy search for stock symbols
+5. **Exchange Rate Updates**: Add automatic currency conversion
+6. **Performance Optimization**: Optimize database queries and UI rendering
 
 ## 📞 Support
 
