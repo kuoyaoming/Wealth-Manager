@@ -22,6 +22,8 @@ import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
 import com.wealthmanager.ui.responsive.ResponsiveSpacer
 import com.wealthmanager.ui.responsive.ResponsiveSpacerSize
+import com.wealthmanager.data.service.ApiUsageManager
+import com.wealthmanager.ui.dashboard.ApiUsageIndicator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -33,6 +35,7 @@ fun DashboardScreen(
     val context = LocalContext.current
     val debugLogManager = remember { DebugLogManager() }
     val responsiveLayout = rememberResponsiveLayout()
+    val apiUsageManager = viewModel.apiUsageManager
     
     // Check if this is a debug build
     val isDebugBuild = remember {
@@ -113,6 +116,13 @@ fun DashboardScreen(
                         }
                     }
                     
+                    // API使用狀態指示器（僅在debug模式下顯示）
+                    if (isDebugBuild) {
+                        item(span = { GridItemSpan(responsiveLayout.columns) }) {
+                            ApiUsageIndicator(apiUsageManager = apiUsageManager)
+                        }
+                    }
+                    
                     // 總資產卡片（全寬）
                     item(span = { GridItemSpan(responsiveLayout.columns) }) {
                         TotalAssetsCard(
@@ -165,6 +175,13 @@ fun DashboardScreen(
                                 onRetry = { viewModel.retryApiCall() },
                                 onDismiss = { viewModel.dismissApiError() }
                             )
+                        }
+                    }
+                    
+                    // API使用狀態指示器（僅在debug模式下顯示）
+                    if (isDebugBuild) {
+                        item {
+                            ApiUsageIndicator(apiUsageManager = apiUsageManager)
                         }
                     }
                     

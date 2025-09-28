@@ -7,6 +7,7 @@ import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.data.repository.AssetRepository
 import com.wealthmanager.data.service.ApiStatus
 import com.wealthmanager.data.service.ApiStatusManager
+import com.wealthmanager.data.service.ApiUsageManager
 import com.wealthmanager.data.service.MarketDataService
 import com.wealthmanager.debug.DebugLogManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -23,7 +24,8 @@ class DashboardViewModel @Inject constructor(
     private val assetRepository: AssetRepository,
     private val marketDataService: MarketDataService,
     private val debugLogManager: DebugLogManager,
-    private val apiStatusManager: ApiStatusManager
+    private val apiStatusManager: ApiStatusManager,
+    val apiUsageManager: ApiUsageManager
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow(DashboardUiState())

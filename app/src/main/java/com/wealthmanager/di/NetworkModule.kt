@@ -1,6 +1,9 @@
 package com.wealthmanager.di
 
 import com.wealthmanager.data.api.MarketDataApi
+import com.wealthmanager.data.service.ApiRetryManager
+import com.wealthmanager.data.service.ApiStatusManager
+import com.wealthmanager.data.service.ApiUsageManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -47,5 +50,23 @@ object NetworkModule {
     @Singleton
     fun provideMarketDataApi(retrofit: Retrofit): MarketDataApi {
         return retrofit.create(MarketDataApi::class.java)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideApiRetryManager(): ApiRetryManager {
+        return ApiRetryManager()
+    }
+    
+    @Provides
+    @Singleton
+    fun provideApiStatusManager(): ApiStatusManager {
+        return ApiStatusManager()
+    }
+    
+    @Provides
+    @Singleton
+    fun provideApiUsageManager(debugLogManager: com.wealthmanager.debug.DebugLogManager): ApiUsageManager {
+        return ApiUsageManager(debugLogManager)
     }
 }
