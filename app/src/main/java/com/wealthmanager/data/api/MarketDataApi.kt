@@ -5,25 +5,64 @@ import retrofit2.http.Query
 
 interface MarketDataApi {
     
-    @GET("quote")
+    @GET("v8/finance/quote")
     suspend fun getStockQuote(
-        @Query("symbol") symbol: String,
+        @Query("symbols") symbols: String,
         @Query("region") region: String = "US"
-    ): StockQuoteResponse
+    ): YahooQuoteResponse
     
-    @GET("search")
+    @GET("v1/finance/search")
     suspend fun searchStocks(
         @Query("q") query: String,
         @Query("region") region: String = "US"
-    ): StockSearchResponse
+    ): YahooSearchResponse
     
-    @GET("currency")
+    @GET("v1/finance/quote")
     suspend fun getExchangeRate(
-        @Query("from") from: String,
-        @Query("to") to: String
-    ): ExchangeRateResponse
+        @Query("symbols") symbols: String = "USD=X"
+    ): YahooQuoteResponse
 }
 
+// Yahoo Finance API Response Models
+data class YahooQuoteResponse(
+    val quoteResponse: QuoteResponse
+)
+
+data class QuoteResponse(
+    val result: List<YahooQuoteResult>?,
+    val error: YahooError?
+)
+
+data class YahooQuoteResult(
+    val symbol: String,
+    val shortName: String?,
+    val longName: String?,
+    val regularMarketPrice: Double?,
+    val regularMarketChange: Double?,
+    val regularMarketChangePercent: Double?,
+    val currency: String?,
+    val marketState: String?,
+    val exchange: String?
+)
+
+data class YahooSearchResponse(
+    val quotes: List<YahooSearchResult>
+)
+
+data class YahooSearchResult(
+    val symbol: String,
+    val shortName: String?,
+    val longName: String?,
+    val exchange: String?,
+    val marketState: String?
+)
+
+data class YahooError(
+    val code: String,
+    val description: String
+)
+
+// Legacy models for backward compatibility
 data class StockQuoteResponse(
     val symbol: String,
     val shortName: String,

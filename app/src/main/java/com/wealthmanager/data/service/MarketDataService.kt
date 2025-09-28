@@ -29,20 +29,25 @@ class MarketDataService @Inject constructor(
                     val region = if (stock.market == "TW") "TW" else "US"
                     val response = marketDataApi.getStockQuote(stock.symbol, region)
                     
-                    val twdEquivalent = calculateTwdEquivalent(
-                        response.regularMarketPrice,
-                        stock.shares,
-                        response.currency
-                    )
-                    
-                    val updatedStock = stock.copy(
-                        currentPrice = response.regularMarketPrice,
-                        twdEquivalent = twdEquivalent,
-                        lastUpdated = System.currentTimeMillis()
-                    )
-                    
-                    assetRepository.updateStockAsset(updatedStock)
-                    debugLogManager.log("MARKET_DATA", "Updated ${stock.symbol}: Price=${response.regularMarketPrice}, TWD=${twdEquivalent}")
+                    val result = response.quoteResponse.result?.firstOrNull()
+                    if (result != null && result.regularMarketPrice != null) {
+                        val twdEquivalent = calculateTwdEquivalent(
+                            result.regularMarketPrice,
+                            stock.shares,
+                            result.currency ?: "USD"
+                        )
+                        
+                        val updatedStock = stock.copy(
+                            currentPrice = result.regularMarketPrice,
+                            twdEquivalent = twdEquivalent,
+                            lastUpdated = System.currentTimeMillis()
+                        )
+                        
+                        assetRepository.updateStockAsset(updatedStock)
+                        debugLogManager.log("MARKET_DATA", "Updated ${stock.symbol}: Price=${result.regularMarketPrice}, TWD=${twdEquivalent}")
+                    } else {
+                        debugLogManager.logError("No market data found for ${stock.symbol}")
+                    }
                     
                 } catch (e: Exception) {
                     debugLogManager.logError("Failed to update ${stock.symbol}: ${e.message}", e)
@@ -60,17 +65,23 @@ class MarketDataService @Inject constructor(
         try {
             debugLogManager.log("MARKET_DATA", "Starting exchange rate update")
             
-            val response = marketDataApi.getExchangeRate("USD", "TWD")
-            debugLogManager.log("MARKET_DATA", "Received exchange rate: ${response.rate}")
+            val response = marketDataApi.getExchangeRate("USD=X")
+            val result = response.quoteResponse.result?.firstOrNull()
             
-            val exchangeRate = ExchangeRate(
-                currencyPair = "USD_TWD",
-                rate = response.rate,
-                lastUpdated = System.currentTimeMillis()
-            )
-            
-            assetRepository.insertExchangeRate(exchangeRate)
-            debugLogManager.log("MARKET_DATA", "Exchange rate updated: USD/TWD = ${response.rate}")
+            if (result != null && result.regularMarketPrice != null) {
+                debugLogManager.log("MARKET_DATA", "Received exchange rate: ${result.regularMarketPrice}")
+                
+                val exchangeRate = ExchangeRate(
+                    currencyPair = "USD_TWD",
+                    rate = result.regularMarketPrice,
+                    lastUpdated = System.currentTimeMillis()
+                )
+                
+                assetRepository.insertExchangeRate(exchangeRate)
+                debugLogManager.log("MARKET_DATA", "Exchange rate updated: USD/TWD = ${result.regularMarketPrice}")
+            } else {
+                debugLogManager.logError("No exchange rate data found")
+            }
             
         } catch (e: Exception) {
             debugLogManager.logError("Failed to update exchange rates: ${e.message}", e)
@@ -89,10 +100,10 @@ class MarketDataService @Inject constructor(
             val searchResults = response.quotes.map { quote ->
                 StockSearchItem(
                     symbol = quote.symbol,
-                    shortName = quote.shortName,
-                    longName = quote.longName,
-                    exchange = quote.exchange,
-                    marketState = quote.marketState
+                    shortName = quote.shortName ?: "",
+                    longName = quote.longName ?: "",
+                    exchange = quote.exchange ?: "",
+                    marketState = quote.marketState ?: ""
                 )
             }
             
