@@ -15,6 +15,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.wealthmanager.R
 import com.wealthmanager.auth.BiometricStatus
+import com.wealthmanager.debug.DebugLogManager
 
 @Composable
 fun BiometricAuthScreen(
@@ -24,8 +25,10 @@ fun BiometricAuthScreen(
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
+    val debugLogManager = remember { DebugLogManager() }
     
     LaunchedEffect(Unit) {
+        debugLogManager.logUserAction("Biometric Auth Screen Opened")
         viewModel.checkBiometricAvailability(context)
     }
     
@@ -73,7 +76,10 @@ fun BiometricAuthScreen(
                 when (uiState.biometricStatus) {
                     BiometricStatus.AVAILABLE -> {
                         Button(
-                            onClick = { viewModel.authenticate(context) },
+                            onClick = { 
+                                debugLogManager.logUserAction("Biometric Authenticate Button Clicked")
+                                viewModel.authenticate(context) 
+                            },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(stringResource(R.string.biometric_auth_button))
@@ -82,7 +88,10 @@ fun BiometricAuthScreen(
                         Spacer(modifier = Modifier.height(8.dp))
                         
                         TextButton(
-                            onClick = onSkipAuth,
+                            onClick = { 
+                                debugLogManager.logUserAction("Skip Authentication Button Clicked")
+                                onSkipAuth() 
+                            },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text("Skip Authentication")

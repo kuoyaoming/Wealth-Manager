@@ -5,14 +5,18 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Refresh
+import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.wealthmanager.R
+import com.wealthmanager.debug.DebugLogManager
+import javax.inject.Inject
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -21,8 +25,11 @@ fun DashboardScreen(
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    val context = LocalContext.current
+    val debugLogManager = remember { DebugLogManager() }
     
     LaunchedEffect(Unit) {
+        debugLogManager.logUserAction("Dashboard Screen Opened")
         viewModel.loadPortfolioData()
     }
     
@@ -31,15 +38,27 @@ fun DashboardScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.dashboard_title)) },
                 actions = {
-                    IconButton(onClick = { viewModel.refreshData() }) {
+                    IconButton(onClick = { 
+                        debugLogManager.logUserAction("Refresh Data Button Clicked")
+                        viewModel.refreshData() 
+                    }) {
                         Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
+                    }
+                    IconButton(onClick = { 
+                        debugLogManager.logUserAction("Debug Log Button Clicked")
+                        debugLogManager.copyLogsToClipboard(context)
+                    }) {
+                        Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
                     }
                 }
             )
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = onNavigateToAssets
+                onClick = { 
+                    debugLogManager.logUserAction("Navigate to Assets Button Clicked")
+                    onNavigateToAssets() 
+                }
             ) {
                 Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_cash))
             }

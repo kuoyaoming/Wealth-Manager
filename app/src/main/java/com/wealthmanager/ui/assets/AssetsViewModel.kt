@@ -35,6 +35,33 @@ class AssetsViewModel @Inject constructor(
             }.collect { }
         }
     }
+    
+    fun addCashAsset(currency: String, amount: Double) {
+        viewModelScope.launch {
+            val cashAsset = CashAsset(
+                id = System.currentTimeMillis().toString(),
+                currency = currency,
+                amount = amount,
+                twdEquivalent = if (currency == "TWD") amount else amount * 30.0 // Simple conversion
+            )
+            assetRepository.insertCashAsset(cashAsset)
+        }
+    }
+    
+    fun addStockAsset(symbol: String, shares: Double, market: String) {
+        viewModelScope.launch {
+            val stockAsset = StockAsset(
+                id = System.currentTimeMillis().toString(),
+                symbol = symbol,
+                companyName = symbol, // Simple mapping
+                shares = shares.toInt(),
+                market = market,
+                currentPrice = 0.0, // Will be fetched later
+                twdEquivalent = 0.0 // Will be calculated later
+            )
+            assetRepository.insertStockAsset(stockAsset)
+        }
+    }
 }
 
 data class AssetsUiState(
