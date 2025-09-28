@@ -97,7 +97,7 @@ class DashboardViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(isLoading = false)
             } catch (e: Exception) {
                 debugLogManager.logError("Failed to refresh data: ${e.message}", e)
-                apiStatusManager.setApiError("伺服器忙碌，請稍後再試", false)
+                apiStatusManager.setApiError("伺服器忙碌，請稍後再試", isDataStale = true, isRetrying = false)
                 _uiState.value = _uiState.value.copy(isLoading = false)
             }
         }

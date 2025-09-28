@@ -54,14 +54,17 @@ class ApiRetryManager @Inject constructor(
         return when (e) {
             is HttpException -> {
                 val code = e.code()
-                // Retry on 5xx server errors and 429 rate limit
-                code in 500..599 || code == 429
+                debugLogManager.log("API_RETRY", "HTTP Exception: $code")
+                // Retry on 5xx server errors, 429 rate limit, and 408 timeout
+                code in 500..599 || code == 429 || code == 408
             }
             is IOException -> {
+                debugLogManager.log("API_RETRY", "Network IOException: ${e.message}")
                 // Retry on network errors
                 true
             }
             else -> {
+                debugLogManager.log("API_RETRY", "Other exception: ${e::class.simpleName}")
                 // Don't retry on other exceptions
                 false
             }
