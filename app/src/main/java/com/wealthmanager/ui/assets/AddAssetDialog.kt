@@ -196,10 +196,11 @@ fun AddAssetDialog(
                                 modifier = Modifier.fillMaxWidth()
                             )
                             
-                            if (showSearchResults && searchResults.isNotEmpty()) {
+                            // Show search results when available
+                            if (searchResults.isNotEmpty() && showSearchResults) {
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
-                                    text = "Search Results:",
+                                    text = "Search Results (${searchResults.size}):",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -237,6 +238,21 @@ fun AddAssetDialog(
                                             }
                                         }
                                     }
+                                }
+                            } else if (isSearching) {
+                                Spacer(modifier = Modifier.height(8.dp))
+                                Row(
+                                    modifier = Modifier.fillMaxWidth(),
+                                    horizontalArrangement = Arrangement.Center,
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    CircularProgressIndicator(modifier = Modifier.size(16.dp))
+                                    Spacer(modifier = Modifier.width(8.dp))
+                                    Text(
+                                        text = "Searching...",
+                                        style = MaterialTheme.typography.bodySmall,
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    )
                                 }
                             }
                             Spacer(modifier = Modifier.height(16.dp))

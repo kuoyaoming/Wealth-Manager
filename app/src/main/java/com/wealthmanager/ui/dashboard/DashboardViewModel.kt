@@ -73,9 +73,9 @@ class DashboardViewModel @Inject constructor(
                 debugLogManager.log("DASHBOARD", "Updating stock prices")
                 marketDataService.updateStockPrices()
                 
-                debugLogManager.log("DASHBOARD", "Market data update completed, reloading assets")
-                // Reload assets to reflect updated prices
-                observeAssets()
+                debugLogManager.log("DASHBOARD", "Market data update completed")
+                // Don't call observeAssets() again - it's already running
+                // The data will be updated automatically through the existing flow
             } catch (e: Exception) {
                 debugLogManager.logError("Failed to refresh data: ${e.message}", e)
                 _uiState.value = _uiState.value.copy(isLoading = false)

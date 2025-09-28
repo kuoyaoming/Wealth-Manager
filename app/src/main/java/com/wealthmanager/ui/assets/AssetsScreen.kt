@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -34,12 +35,15 @@ fun AssetsScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.assets_title)) },
                 navigationIcon = {
-                    TextButton(onClick = { 
+                    IconButton(onClick = { 
                         debugLogManager.logUserAction("Back Button Clicked")
                         debugLogManager.log("UI", "User clicked back button to return to dashboard")
                         onNavigateBack() 
                     }) {
-                        Text(stringResource(R.string.cancel))
+                        Icon(
+                            imageVector = Icons.Default.ArrowBack,
+                            contentDescription = "Back to Dashboard"
+                        )
                     }
                 }
             )
