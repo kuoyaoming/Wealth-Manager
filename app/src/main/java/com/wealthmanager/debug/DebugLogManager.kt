@@ -59,6 +59,7 @@ class DebugLogManager @Inject constructor() {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("Debug Logs", getAllLogs())
         clipboard.setPrimaryClip(clip)
+        log("DEBUG", "Logs copied to clipboard (${getLogCount()} entries)")
     }
     
     fun clearLogs() {

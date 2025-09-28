@@ -33,7 +33,8 @@ class MarketDataService @Inject constructor(
                             response.regularMarketPrice,
                             stock.shares,
                             response.currency
-                        )
+                        ),
+                        lastUpdated = System.currentTimeMillis()
                     )
                     
                     assetRepository.updateStockAsset(updatedStock)
@@ -55,16 +56,16 @@ class MarketDataService @Inject constructor(
         try {
             debugLogManager.log("MARKET_DATA", "Starting exchange rate update")
             
-            val usdTwdRate = marketDataApi.getExchangeRate("USD", "TWD")
+            val response = marketDataApi.getExchangeRate("USD", "TWD")
             
             val exchangeRate = ExchangeRate(
                 currencyPair = "USD_TWD",
-                rate = usdTwdRate.rate,
+                rate = response.rate,
                 lastUpdated = System.currentTimeMillis()
             )
             
             assetRepository.insertExchangeRate(exchangeRate)
-            debugLogManager.log("MARKET_DATA", "Updated USD/TWD rate: ${usdTwdRate.rate}")
+            debugLogManager.log("MARKET_DATA", "Updated USD/TWD rate: ${response.rate}")
             
         } catch (e: Exception) {
             debugLogManager.logError("Failed to update exchange rates: ${e.message}")
