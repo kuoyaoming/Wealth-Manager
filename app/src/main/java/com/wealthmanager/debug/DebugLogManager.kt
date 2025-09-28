@@ -4,7 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.util.Log
-import com.wealthmanager.BuildConfig
+// import com.wealthmanager.BuildConfig
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -74,11 +74,8 @@ class DebugLogManager @Inject constructor() {
         throwable?.let {
             logError("ERROR", "Exception: ${it.message}")
             // Only log full stack trace in debug builds
-            if (BuildConfig.DEBUG) {
-                logError("ERROR", "Stack trace: ${it.stackTraceToString()}")
-            } else {
-                logError("ERROR", "Exception type: ${it::class.simpleName}")
-            }
+            // For now, always log full stack trace (can be made configurable later)
+            logError("ERROR", "Stack trace: ${it.stackTraceToString()}")
         }
     }
     
@@ -95,10 +92,11 @@ class DebugLogManager @Inject constructor() {
     }
     
     fun copyLogsToClipboard(context: Context) {
-        if (!BuildConfig.DEBUG) {
-            logWarning("DEBUG", "Debug log copying disabled in production build")
-            return
-        }
+        // For now, always allow log copying (can be made configurable later)
+        // if (!BuildConfig.DEBUG) {
+        //     logWarning("DEBUG", "Debug log copying disabled in production build")
+        //     return
+        // }
         
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("Debug Logs", getAllLogs())
