@@ -9,6 +9,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
+import com.wealthmanager.ui.charts.PieChartComponent
 import java.text.NumberFormat
 import java.util.*
 
@@ -144,8 +145,7 @@ fun PieChartCard(
                 ) {
                     CircularProgressIndicator()
                 }
-            } else {
-                // TODO: Implement actual pie chart
+            } else if (assets.isEmpty()) {
                 Box(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -153,11 +153,16 @@ fun PieChartCard(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "Pie Chart Placeholder",
-                        style = MaterialTheme.typography.bodyLarge,
+                        text = "No assets to display",
+                        style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
+            } else {
+                PieChartComponent(
+                    assets = assets,
+                    isLoading = false
+                )
             }
         }
     }
