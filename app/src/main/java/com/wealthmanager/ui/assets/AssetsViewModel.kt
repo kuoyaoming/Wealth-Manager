@@ -26,26 +26,35 @@ class AssetsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(AssetsUiState())
     val uiState: StateFlow<AssetsUiState> = _uiState.asStateFlow()
     
-    fun searchStocks(query: String, market: String) {
-        debugLogManager.log("ASSETS", "Searching stocks: '$query' in market: '$market'")
-        viewModelScope.launch {
-            _uiState.value = _uiState.value.copy(isSearching = true)
-            try {
-                val results = marketDataService.searchStocks(query, market)
-                debugLogManager.log("ASSETS", "Stock search completed: ${results.size} results found")
-                _uiState.value = _uiState.value.copy(
-                    searchResults = results,
-                    isSearching = false
-                )
-            } catch (e: Exception) {
-                debugLogManager.logError("Stock search failed: ${e.message}", e)
-                _uiState.value = _uiState.value.copy(
-                    searchResults = emptyList(),
-                    isSearching = false
-                )
+        fun searchStocks(query: String, market: String) {
+            debugLogManager.log("ASSETS", "=== STARTING STOCK SEARCH IN VIEWMODEL ===")
+            debugLogManager.log("ASSETS", "Searching stocks: '$query' in market: '$market'")
+            debugLogManager.logUserAction("Stock Search Initiated")
+            viewModelScope.launch {
+                _uiState.value = _uiState.value.copy(isSearching = true)
+                debugLogManager.log("ASSETS", "Search state set to loading")
+                try {
+                    debugLogManager.log("ASSETS", "Calling marketDataService.searchStocks")
+                    val results = marketDataService.searchStocks(query, market)
+                    debugLogManager.log("ASSETS", "MarketDataService returned ${results.size} results")
+                    debugLogManager.log("ASSETS", "Stock search completed: ${results.size} results found")
+                    _uiState.value = _uiState.value.copy(
+                        searchResults = results,
+                        isSearching = false
+                    )
+                    debugLogManager.log("ASSETS", "UI state updated with search results")
+                } catch (e: Exception) {
+                    debugLogManager.logError("Stock search failed: ${e.message}", e)
+                    debugLogManager.log("ASSETS", "Exception during stock search: ${e::class.simpleName}")
+                    _uiState.value = _uiState.value.copy(
+                        searchResults = emptyList(),
+                        isSearching = false
+                    )
+                    debugLogManager.log("ASSETS", "UI state updated with empty results due to error")
+                }
+                debugLogManager.log("ASSETS", "=== STOCK SEARCH IN VIEWMODEL COMPLETED ===")
             }
         }
-    }
     
     fun loadAssets() {
         debugLogManager.log("ASSETS", "Loading assets from repository")
@@ -111,6 +120,22 @@ class AssetsViewModel @Inject constructor(
             viewModelScope.launch {
                 assetRepository.deleteStockAsset(asset)
                 debugLogManager.log("ASSETS", "Stock asset deleted successfully")
+            }
+        }
+
+        fun updateCashAsset(asset: CashAsset) {
+            debugLogManager.log("ASSETS", "Updating cash asset: ${asset.currency} ${asset.amount}")
+            viewModelScope.launch {
+                assetRepository.updateCashAsset(asset)
+                debugLogManager.log("ASSETS", "Cash asset updated successfully")
+            }
+        }
+
+        fun updateStockAsset(asset: StockAsset) {
+            debugLogManager.log("ASSETS", "Updating stock asset: ${asset.symbol}")
+            viewModelScope.launch {
+                assetRepository.updateStockAsset(asset)
+                debugLogManager.log("ASSETS", "Stock asset updated successfully")
             }
         }
 }

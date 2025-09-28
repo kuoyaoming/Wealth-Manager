@@ -24,6 +24,8 @@ fun AssetsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showAddDialog by remember { mutableStateOf(false) }
+    var showEditCashDialog by remember { mutableStateOf<CashAsset?>(null) }
+    var showEditStockDialog by remember { mutableStateOf<StockAsset?>(null) }
     val debugLogManager = remember { DebugLogManager() }
     
     LaunchedEffect(Unit) {
@@ -93,7 +95,7 @@ fun AssetsScreen(
                         onEdit = { asset ->
                             debugLogManager.logUserAction("Edit Cash Asset")
                             debugLogManager.log("UI", "User wants to edit cash asset: ${asset.currency} ${asset.amount}")
-                            // TODO: Implement edit dialog
+                            showEditCashDialog = asset
                         },
                         onDelete = { asset ->
                             debugLogManager.logUserAction("Delete Cash Asset")
@@ -128,7 +130,7 @@ fun AssetsScreen(
                         onEdit = { asset ->
                             debugLogManager.logUserAction("Edit Stock Asset")
                             debugLogManager.log("UI", "User wants to edit stock asset: ${asset.symbol}")
-                            // TODO: Implement edit dialog
+                            showEditStockDialog = asset
                         },
                         onDelete = { asset ->
                             debugLogManager.logUserAction("Delete Stock Asset")
@@ -141,23 +143,47 @@ fun AssetsScreen(
         }
     }
     
-    // Add Asset Dialog
-    if (showAddDialog) {
-        AddAssetDialog(
-            onDismiss = { showAddDialog = false },
-            onAddCash = { currency, amount ->
-                viewModel.addCashAsset(currency, amount)
-                showAddDialog = false
-            },
-            onAddStock = { symbol, shares, market ->
-                viewModel.addStockAsset(symbol, shares, market)
-                showAddDialog = false
-            },
-            onSearchStocks = { query, market ->
-                viewModel.searchStocks(query, market)
-            },
-            searchResults = uiState.searchResults,
-            isSearching = uiState.isSearching
-        )
-    }
+        // Add Asset Dialog
+        if (showAddDialog) {
+            AddAssetDialog(
+                onDismiss = { showAddDialog = false },
+                onAddCash = { currency, amount ->
+                    viewModel.addCashAsset(currency, amount)
+                    showAddDialog = false
+                },
+                onAddStock = { symbol, shares, market ->
+                    viewModel.addStockAsset(symbol, shares, market)
+                    showAddDialog = false
+                },
+                onSearchStocks = { query, market ->
+                    viewModel.searchStocks(query, market)
+                },
+                searchResults = uiState.searchResults,
+                isSearching = uiState.isSearching
+            )
+        }
+        
+        // Edit Cash Asset Dialog
+        showEditCashDialog?.let { asset ->
+            EditCashAssetDialog(
+                asset = asset,
+                onDismiss = { showEditCashDialog = null },
+                onSave = { updatedAsset ->
+                    viewModel.updateCashAsset(updatedAsset)
+                    showEditCashDialog = null
+                }
+            )
+        }
+        
+        // Edit Stock Asset Dialog
+        showEditStockDialog?.let { asset ->
+            EditStockAssetDialog(
+                asset = asset,
+                onDismiss = { showEditStockDialog = null },
+                onSave = { updatedAsset ->
+                    viewModel.updateStockAsset(updatedAsset)
+                    showEditStockDialog = null
+                }
+            )
+        }
 }

@@ -17,7 +17,7 @@ interface MarketDataApi {
         @Query("region") region: String = "US"
     ): YahooSearchResponse
     
-    @GET("v1/finance/quote")
+    @GET("v8/finance/quote")
     suspend fun getExchangeRate(
         @Query("symbols") symbols: String = "USD=X"
     ): YahooQuoteResponse
