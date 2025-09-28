@@ -14,6 +14,11 @@
     <string name="biometric_auth_error_locked_out">Too many failed attempts. Try again later</string>
     <string name="biometric_auth_error_permanent_lockout">Biometric authentication is permanently locked</string>
     
+    <!-- Privacy Protection -->
+    <string name="privacy_protection_title">Privacy Protection Notice</string>
+    <string name="privacy_protection_description">Biometric authentication is used to protect your financial data and ensure only you can access your wealth information. Your biometric data never leaves your device and is processed securely by Android\'s hardware security module.</string>
+    <string name="privacy_protection_points">• Your fingerprint/face data is stored securely in your device\'s hardware\n• No biometric data is transmitted or stored by this app\n• Authentication is required to view sensitive financial information\n• You can skip authentication if you prefer, but your data will be less secure</string>
+    
     <!-- Navigation -->
     <string name="nav_dashboard">Dashboard</string>
     <string name="nav_assets">Assets</string>
@@ -87,4 +92,9 @@
     <string name="dialog_edit_stock_asset">Edit Stock Asset</string>
     <string name="dialog_save">Save</string>
     <string name="dialog_cancel">Cancel</string>
+    
+    <!-- About Dialog -->
+    <string name="about_title">About Wealth Manager</string>
+    <string name="about_version">Version 1.0.5</string>
+    <string name="about_description">A comprehensive personal finance management application that helps you track your assets, monitor stock investments, and manage your financial portfolio with real-time market data.</string>
 </resources>

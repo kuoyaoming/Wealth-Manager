@@ -14,6 +14,11 @@
     <string name="biometric_auth_error_locked_out">失敗次數過多，請稍後再試</string>
     <string name="biometric_auth_error_permanent_lockout">生物識別驗證已永久鎖定</string>
     
+    <!-- Privacy Protection -->
+    <string name="privacy_protection_title">隱私保護說明</string>
+    <string name="privacy_protection_description">生物識別驗證用於保護您的財務資料，確保只有您能存取您的財富資訊。您的生物識別資料永遠不會離開您的裝置，並由Android的硬體安全模組安全處理。</string>
+    <string name="privacy_protection_points">• 您的指紋/臉部資料安全儲存在您裝置的硬體中\n• 本應用程式不會傳輸或儲存任何生物識別資料\n• 需要驗證才能查看敏感的財務資訊\n• 如果您願意，可以跳過驗證，但您的資料安全性會降低</string>
+    
     <!-- Navigation -->
     <string name="nav_dashboard">儀表板</string>
     <string name="nav_assets">資產</string>
@@ -69,4 +74,9 @@
     <string name="error_invalid_amount">請輸入有效金額</string>
     <string name="error_invalid_symbol">請輸入有效股票代號</string>
     <string name="error_stock_not_found">找不到股票</string>
+    
+    <!-- About Dialog -->
+    <string name="about_title">關於財富管理</string>
+    <string name="about_version">版本 1.0.5</string>
+    <string name="about_description">一個全面的個人理財管理應用程式，幫助您追蹤資產、監控股票投資，並透過即時市場數據管理您的財務投資組合。</string>
 </resources>
