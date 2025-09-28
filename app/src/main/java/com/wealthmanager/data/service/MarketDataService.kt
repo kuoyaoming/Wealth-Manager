@@ -13,7 +13,8 @@ import javax.inject.Singleton
 class MarketDataService @Inject constructor(
     private val marketDataApi: MarketDataApi,
     private val assetRepository: AssetRepository,
-    private val debugLogManager: DebugLogManager
+    private val debugLogManager: DebugLogManager,
+    private val apiRetryManager: ApiRetryManager
 ) {
     
     suspend fun updateStockPrices() {
@@ -23,45 +24,54 @@ class MarketDataService @Inject constructor(
             val stockAssets = assetRepository.getAllStockAssets().first()
             debugLogManager.log("MARKET_DATA", "Found ${stockAssets.size} stock assets to update")
             
+            if (stockAssets.isEmpty()) {
+                debugLogManager.log("MARKET_DATA", "No stock assets to update, skipping stock price update")
+                return
+            }
+            
             for (stock in stockAssets) {
                 try {
                     debugLogManager.log("MARKET_DATA", "Updating ${stock.symbol} (${stock.market} market)")
-                    val region = if (stock.market == "TW") "TW" else "US"
                     
-                    // Log API request details
-                    debugLogManager.log("MARKET_DATA", "API Request - Symbol: ${stock.symbol}, Region: $region")
+                    val result = apiRetryManager.executeWithRetry(
+                        operation = {
+                            val region = if (stock.market == "TW") "TW" else "US"
+                            debugLogManager.log("MARKET_DATA", "API Request - Symbol: ${stock.symbol}, Region: $region")
+                            
+                            val response = marketDataApi.getStockQuote(stock.symbol, region)
+                            
+                            debugLogManager.log("MARKET_DATA", "API Response received for ${stock.symbol}")
+                            debugLogManager.log("MARKET_DATA", "Response result count: ${response.quoteResponse.result?.size ?: 0}")
+                            
+                            val result = response.quoteResponse.result?.firstOrNull()
+                            if (result != null && result.regularMarketPrice != null) {
+                                debugLogManager.log("MARKET_DATA", "Quote data for ${stock.symbol}: price=${result.regularMarketPrice}, currency=${result.currency}")
+                                result
+                            } else {
+                                throw Exception("No valid price data for ${stock.symbol}")
+                            }
+                        },
+                        operationName = "Stock Price Update for ${stock.symbol}"
+                    )
                     
-                    val response = marketDataApi.getStockQuote(stock.symbol, region)
-                    
-                    // Log full API response
-                    debugLogManager.log("MARKET_DATA", "API Response received for ${stock.symbol}")
-                    debugLogManager.log("MARKET_DATA", "Response result count: ${response.quoteResponse.result?.size ?: 0}")
-                    
-                    val result = response.quoteResponse.result?.firstOrNull()
-                    if (result != null) {
-                        debugLogManager.log("MARKET_DATA", "Quote data for ${stock.symbol}: price=${result.regularMarketPrice}, currency=${result.currency}")
+                    if (result.isSuccess) {
+                        val quoteData = result.getOrThrow()
+                        val twdEquivalent = calculateTwdEquivalent(
+                            quoteData.regularMarketPrice!!,
+                            stock.shares,
+                            quoteData.currency ?: "USD"
+                        )
                         
-                        if (result.regularMarketPrice != null) {
-                            val twdEquivalent = calculateTwdEquivalent(
-                                result.regularMarketPrice,
-                                stock.shares,
-                                result.currency ?: "USD"
-                            )
-                            
-                            val updatedStock = stock.copy(
-                                currentPrice = result.regularMarketPrice,
-                                twdEquivalent = twdEquivalent,
-                                lastUpdated = System.currentTimeMillis()
-                            )
-                            
-                            assetRepository.updateStockAsset(updatedStock)
-                            debugLogManager.log("MARKET_DATA", "Updated ${stock.symbol}: Price=${result.regularMarketPrice}, TWD=${twdEquivalent}")
-                        } else {
-                            debugLogManager.logError("No price data for ${stock.symbol}")
-                        }
+                        val updatedStock = stock.copy(
+                            currentPrice = quoteData.regularMarketPrice,
+                            twdEquivalent = twdEquivalent,
+                            lastUpdated = System.currentTimeMillis()
+                        )
+                        
+                        assetRepository.updateStockAsset(updatedStock)
+                        debugLogManager.log("MARKET_DATA", "Updated ${stock.symbol}: Price=${quoteData.regularMarketPrice}, TWD=${twdEquivalent}")
                     } else {
-                        debugLogManager.logError("No market data found for ${stock.symbol}")
-                        debugLogManager.log("MARKET_DATA", "API returned empty result for ${stock.symbol}")
+                        debugLogManager.log("MARKET_DATA", "Failed to update ${stock.symbol}, keeping existing price")
                     }
                     
                 } catch (e: Exception) {
@@ -80,39 +90,53 @@ class MarketDataService @Inject constructor(
         try {
             debugLogManager.log("MARKET_DATA", "Starting exchange rate update")
             
-            // Log API request details
-            debugLogManager.log("MARKET_DATA", "API Request - Exchange Rate: USD=X")
-            
-            val response = marketDataApi.getExchangeRate("USD=X")
-            
-            // Log full API response
-            debugLogManager.log("MARKET_DATA", "API Response received for exchange rate")
-            debugLogManager.log("MARKET_DATA", "Response result count: ${response.quoteResponse.result?.size ?: 0}")
-            
-            val result = response.quoteResponse.result?.firstOrNull()
-            
-            if (result != null) {
-                debugLogManager.log("MARKET_DATA", "Exchange rate data: price=${result.regularMarketPrice}, currency=${result.currency}")
-                
-                if (result.regularMarketPrice != null) {
-                    val exchangeRate = ExchangeRate(
-                        currencyPair = "USD_TWD",
-                        rate = result.regularMarketPrice,
-                        lastUpdated = System.currentTimeMillis()
-                    )
+            val result = apiRetryManager.executeWithRetry(
+                operation = {
+                    debugLogManager.log("MARKET_DATA", "API Request - Exchange Rate: USD=X")
+                    val response = marketDataApi.getExchangeRate("USD=X")
                     
-                    assetRepository.insertExchangeRate(exchangeRate)
-                    debugLogManager.log("MARKET_DATA", "Exchange rate updated: USD/TWD = ${result.regularMarketPrice}")
-                } else {
-                    debugLogManager.logError("No exchange rate price data found")
-                }
+                    debugLogManager.log("MARKET_DATA", "API Response received for exchange rate")
+                    debugLogManager.log("MARKET_DATA", "Response result count: ${response.quoteResponse.result?.size ?: 0}")
+                    
+                    val result = response.quoteResponse.result?.firstOrNull()
+                    if (result != null && result.regularMarketPrice != null) {
+                        debugLogManager.log("MARKET_DATA", "Exchange rate data: price=${result.regularMarketPrice}, currency=${result.currency}")
+                        result
+                    } else {
+                        throw Exception("No valid exchange rate data received")
+                    }
+                },
+                operationName = "Exchange Rate Update"
+            )
+            
+            if (result.isSuccess) {
+                val rateData = result.getOrThrow()
+                val exchangeRate = ExchangeRate(
+                    currencyPair = "USD_TWD",
+                    rate = rateData.regularMarketPrice!!,
+                    lastUpdated = System.currentTimeMillis()
+                )
+                
+                assetRepository.insertExchangeRate(exchangeRate)
+                debugLogManager.log("MARKET_DATA", "Exchange rate updated: USD/TWD = ${rateData.regularMarketPrice}")
             } else {
-                debugLogManager.logError("No exchange rate data found")
-                debugLogManager.log("MARKET_DATA", "API returned empty result for exchange rate")
+                // Fallback to cached data
+                debugLogManager.log("MARKET_DATA", "API failed, using cached exchange rate")
+                val cachedRate = assetRepository.getExchangeRateSync("USD_TWD")
+                if (cachedRate != null) {
+                    debugLogManager.log("MARKET_DATA", "Using cached rate: ${cachedRate.rate} (last updated: ${cachedRate.lastUpdated})")
+                } else {
+                    debugLogManager.log("MARKET_DATA", "No cached rate available, using default 30.0")
+                }
             }
             
         } catch (e: Exception) {
             debugLogManager.logError("Failed to update exchange rates: ${e.message}", e)
+            // Try to use cached data as fallback
+            val cachedRate = assetRepository.getExchangeRateSync("USD_TWD")
+            if (cachedRate != null) {
+                debugLogManager.log("MARKET_DATA", "Using cached exchange rate as fallback: ${cachedRate.rate}")
+            }
         }
     }
     

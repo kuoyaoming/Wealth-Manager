@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.data.repository.AssetRepository
+import com.wealthmanager.data.service.ApiStatus
+import com.wealthmanager.data.service.ApiStatusManager
 import com.wealthmanager.data.service.MarketDataService
 import com.wealthmanager.debug.DebugLogManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -12,6 +14,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,11 +22,13 @@ import javax.inject.Inject
 class DashboardViewModel @Inject constructor(
     private val assetRepository: AssetRepository,
     private val marketDataService: MarketDataService,
-    private val debugLogManager: DebugLogManager
+    private val debugLogManager: DebugLogManager,
+    private val apiStatusManager: ApiStatusManager
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
+    val apiStatus: StateFlow<ApiStatus> = apiStatusManager.apiStatus
     
     init {
         debugLogManager.log("DASHBOARD", "DashboardViewModel initialized")
@@ -65,22 +70,47 @@ class DashboardViewModel @Inject constructor(
     fun refreshData() {
         debugLogManager.log("DASHBOARD", "Refreshing data - starting market data update")
         _uiState.value = _uiState.value.copy(isLoading = true)
+        apiStatusManager.setRetrying(true)
+        
         viewModelScope.launch {
             try {
+                // Check if we have any assets that need updating
+                val stockAssets = assetRepository.getAllStockAssets().first()
+                val hasStockAssets = stockAssets.isNotEmpty()
+                
+                debugLogManager.log("DASHBOARD", "Asset check - Stock assets: ${stockAssets.size}")
+                
+                // Always update exchange rates (needed for cash conversion)
                 debugLogManager.log("DASHBOARD", "Updating exchange rates")
                 marketDataService.updateExchangeRates()
                 
-                debugLogManager.log("DASHBOARD", "Updating stock prices")
-                marketDataService.updateStockPrices()
+                // Only update stock prices if we have stock assets
+                if (hasStockAssets) {
+                    debugLogManager.log("DASHBOARD", "Updating stock prices for ${stockAssets.size} stocks")
+                    marketDataService.updateStockPrices()
+                } else {
+                    debugLogManager.log("DASHBOARD", "No stock assets found, skipping stock price update")
+                }
                 
                 debugLogManager.log("DASHBOARD", "Market data update completed")
-                // Don't call observeAssets() again - it's already running
-                // The data will be updated automatically through the existing flow
+                apiStatusManager.setApiSuccess()
+                _uiState.value = _uiState.value.copy(isLoading = false)
             } catch (e: Exception) {
                 debugLogManager.logError("Failed to refresh data: ${e.message}", e)
+                apiStatusManager.setApiError("伺服器忙碌，請稍後再試", false)
                 _uiState.value = _uiState.value.copy(isLoading = false)
             }
         }
+    }
+    
+    fun retryApiCall() {
+        debugLogManager.logUserAction("Retry API Call")
+        refreshData()
+    }
+    
+    fun dismissApiError() {
+        debugLogManager.logUserAction("Dismiss API Error")
+        apiStatusManager.clearError()
     }
 }
 
