@@ -14,6 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.wealthmanager.BuildConfig
 import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 
@@ -27,6 +28,9 @@ fun DashboardScreen(
     val context = LocalContext.current
     val debugLogManager = remember { DebugLogManager() }
     
+    // Observe API status
+    val apiStatus by viewModel.apiStatus.collectAsState()
+    
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Dashboard Screen Opened")
         viewModel.loadPortfolioData()
@@ -36,22 +40,26 @@ fun DashboardScreen(
         topBar = {
             TopAppBar(
                 title = { Text(stringResource(R.string.dashboard_title)) },
-                actions = {
-                    IconButton(onClick = { 
-                        debugLogManager.logUserAction("Refresh Data Button Clicked")
-                        debugLogManager.log("UI", "User clicked refresh button to update market data")
-                        viewModel.refreshData() 
-                    }) {
-                        Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
+                    actions = {
+                        IconButton(onClick = { 
+                            debugLogManager.logUserAction("Refresh Data Button Clicked")
+                            debugLogManager.log("UI", "User clicked refresh button to update market data")
+                            viewModel.refreshData() 
+                        }) {
+                            Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
+                        }
+                        
+                        // Only show debug button in debug builds
+                        if (BuildConfig.DEBUG) {
+                            IconButton(onClick = { 
+                                debugLogManager.logUserAction("Debug Log Button Clicked")
+                                debugLogManager.log("UI", "User clicked debug log button to copy logs to clipboard")
+                                debugLogManager.copyLogsToClipboard(context)
+                            }) {
+                                Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
+                            }
+                        }
                     }
-                    IconButton(onClick = { 
-                        debugLogManager.logUserAction("Debug Log Button Clicked")
-                        debugLogManager.log("UI", "User clicked debug log button to copy logs to clipboard")
-                        debugLogManager.copyLogsToClipboard(context)
-                    }) {
-                        Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
-                    }
-                }
             )
         },
         floatingActionButton = {
@@ -65,14 +73,26 @@ fun DashboardScreen(
                 Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_cash))
             }
         }
-    ) { paddingValues ->
-        LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp)
-        ) {
+        ) { paddingValues ->
+            LazyColumn(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(16.dp),
+                verticalArrangement = Arrangement.spacedBy(16.dp)
+            ) {
+                // API Error Banner
+                if (apiStatus.hasError) {
+                    item {
+                        ApiErrorBanner(
+                            errorMessage = apiStatus.errorMessage,
+                            isRetrying = apiStatus.isRetrying,
+                            isDataStale = apiStatus.isDataStale,
+                            onRetry = { viewModel.retryApiCall() },
+                            onDismiss = { viewModel.dismissApiError() }
+                        )
+                    }
+                }
             item {
                 TotalAssetsCard(
                     totalValue = uiState.totalAssets,

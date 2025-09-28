@@ -4,6 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.util.Log
+import com.wealthmanager.BuildConfig
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -27,6 +28,39 @@ class DebugLogManager @Inject constructor() {
         }
     }
     
+    fun logInfo(tag: String, message: String) {
+        val timestamp = dateFormat.format(Date())
+        val logEntry = "[$timestamp] $tag: $message"
+        logs.add(logEntry)
+        Log.i("WealthManagerDebug", logEntry)
+        
+        if (logs.size > 1000) {
+            logs.removeAt(0)
+        }
+    }
+    
+    fun logWarning(tag: String, message: String) {
+        val timestamp = dateFormat.format(Date())
+        val logEntry = "[$timestamp] WARN $tag: $message"
+        logs.add(logEntry)
+        Log.w("WealthManagerDebug", logEntry)
+        
+        if (logs.size > 1000) {
+            logs.removeAt(0)
+        }
+    }
+    
+    fun logError(tag: String, message: String) {
+        val timestamp = dateFormat.format(Date())
+        val logEntry = "[$timestamp] ERROR $tag: $message"
+        logs.add(logEntry)
+        Log.e("WealthManagerDebug", logEntry)
+        
+        if (logs.size > 1000) {
+            logs.removeAt(0)
+        }
+    }
+    
     fun logUserAction(action: String) {
         log("USER_ACTION", action)
     }
@@ -36,10 +70,15 @@ class DebugLogManager @Inject constructor() {
     }
     
     fun logError(error: String, throwable: Throwable? = null) {
-        log("ERROR", error)
+        logError("ERROR", error)
         throwable?.let {
-            log("ERROR", "Exception: ${it.message}")
-            log("ERROR", "Stack trace: ${it.stackTraceToString()}")
+            logError("ERROR", "Exception: ${it.message}")
+            // Only log full stack trace in debug builds
+            if (BuildConfig.DEBUG) {
+                logError("ERROR", "Stack trace: ${it.stackTraceToString()}")
+            } else {
+                logError("ERROR", "Exception type: ${it::class.simpleName}")
+            }
         }
     }
     
@@ -56,6 +95,11 @@ class DebugLogManager @Inject constructor() {
     }
     
     fun copyLogsToClipboard(context: Context) {
+        if (!BuildConfig.DEBUG) {
+            logWarning("DEBUG", "Debug log copying disabled in production build")
+            return
+        }
+        
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("Debug Logs", getAllLogs())
         clipboard.setPrimaryClip(clip)
