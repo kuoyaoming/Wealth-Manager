@@ -1,0 +1,2042 @@
+--------- beginning of main
+09-28 22:53:16.901 D/nativeloader(31598): Configuring clns-9 for other apk /data/app/~~vzyunvyie-gACXB_Qlqe9w==/com.wealthmanager-cVHHY6xmyo_B7VSVae18pA==/base.apk. target_sdk_version=34, uses_libraries=, library_path=/data/app/~~vzyunvyie-gACXB_Qlqe9w==/com.wealthmanager-cVHHY6xmyo_B7VSVae18pA==/lib/arm64, permitted_path=/data:/mnt/expand:/data/user/0/com.wealthmanager
+09-28 22:53:16.910 V/GraphicsEnvironment(31598): Currently set values for:
+09-28 22:53:16.910 V/GraphicsEnvironment(31598):   angle_gl_driver_selection_pkgs=[com.android.angle, com.google.android.apps.tachyon]
+09-28 22:53:16.910 V/GraphicsEnvironment(31598):   angle_gl_driver_selection_values=[angle, native]
+09-28 22:53:16.910 V/GraphicsEnvironment(31598): com.wealthmanager is not listed in per-application setting
+09-28 22:53:16.910 V/GraphicsEnvironment(31598): ANGLE allowlist from config: 
+09-28 22:53:16.910 V/GraphicsEnvironment(31598): com.wealthmanager is not listed in ANGLE allowlist or settings, returning default
+09-28 22:53:16.910 V/GraphicsEnvironment(31598): Neither updatable production driver nor prerelease driver is supported.
+09-28 22:53:16.914 E/FeatureFlagsImplExport(31598): android.os.flagging.AconfigStorageReadException: ERROR_PACKAGE_NOT_FOUND: package com.android.org.conscrypt.net.flags cannot be found on the device
+--------- beginning of system
+09-28 22:53:16.950 I/DisplayManager(31598): Choreographer implicitly registered for the refresh rate.
+09-28 22:53:16.970 E/ashmem  (31598): Pinning is deprecated since Android Q. Please use trim or other methods.
+09-28 22:53:16.990 D/DesktopExperienceFlags(31598): Toggle override initialized to: false
+09-28 22:53:16.990 D/DesktopModeFlags(31598): Toggle override initialized to: OVERRIDE_UNSET
+09-28 22:53:17.038 I/ContentCaptureHelper(31598): Setting logging level to OFF
+09-28 22:53:17.162 W/m.wealthmanager(31598): Method java.lang.Object androidx.compose.runtime.snapshots.SnapshotStateMap.mutate(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 22:53:17.162 W/m.wealthmanager(31598): Common causes for lock verification issues are non-optimized dex code
+09-28 22:53:17.162 W/m.wealthmanager(31598): and incorrect proguard optimizations.
+09-28 22:53:17.162 W/m.wealthmanager(31598): Method void androidx.compose.runtime.snapshots.SnapshotStateMap.update(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 22:53:17.162 W/m.wealthmanager(31598): Method boolean androidx.compose.runtime.snapshots.SnapshotStateMap.removeIf$runtime_release(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 22:53:17.244 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@8bc6f69
+09-28 22:53:17.245 I/HWUI    (31598): Using FreeType backend (prop=Auto)
+09-28 22:53:17.316 W/m.wealthmanager(31598): Method boolean androidx.compose.runtime.snapshots.SnapshotStateList.conditionalUpdate(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 22:53:17.317 W/m.wealthmanager(31598): Method java.lang.Object androidx.compose.runtime.snapshots.SnapshotStateList.mutate(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 22:53:17.317 W/m.wealthmanager(31598): Method void androidx.compose.runtime.snapshots.SnapshotStateList.update(kotlin.jvm.functions.Function1) failed lock verification and will run slower.
+09-28 22:53:17.368 I/m.wealthmanager(31598): hiddenapi: Accessing hidden method Ljava/lang/invoke/MethodHandles$Lookup;-><init>(Ljava/lang/Class;I)V (runtime_flags=0, domain=core-platform, api=unsupported) from Lretrofit2/Platform; (domain=app) using reflection: allowed
+09-28 22:53:17.381 D/WealthManagerDebug(31598): [22:53:17.379] DASHBOARD: DashboardViewModel initialized
+09-28 22:53:17.382 D/WealthManagerDebug(31598): [22:53:17.381] DASHBOARD: Starting to observe assets
+09-28 22:53:17.706 I/NavController(31598): Ignoring popBackStack to route auth as it was not found on the current back stack
+09-28 22:53:17.713 D/WealthManagerDebug(31598): [22:53:17.712] USER_ACTION: Dashboard Screen Opened
+09-28 22:53:17.714 D/WealthManagerDebug(31598): [22:53:17.713] DASHBOARD: Loading portfolio data
+09-28 22:53:17.720 I/Choreographer(31598): Skipped 72 frames!  The application may be doing too much work on its main thread.
+09-28 22:53:17.746 D/WealthManagerDebug(31598): [22:53:17.745] DASHBOARD: DashboardViewModel initialized
+09-28 22:53:17.747 D/WealthManagerDebug(31598): [22:53:17.746] DASHBOARD: Starting to observe assets
+09-28 22:53:17.780 W/WindowOnBackDispatcher(31598): OnBackInvokedCallback is not enabled for the application.
+09-28 22:53:17.780 W/WindowOnBackDispatcher(31598): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+09-28 22:53:17.969 D/WealthManagerDebug(31598): [22:53:17.968] DASHBOARD: Assets updated - Cash: 2, Stock: 1
+09-28 22:53:17.970 D/WealthManagerDebug(31598): [22:53:17.970] DASHBOARD: Total Assets: 3100.1, Cash: 3100.1, Stock: 0.0
+09-28 22:53:17.973 D/ImeBackDispatcher(31598): switch root view (mImeCallbacks.size=0)
+09-28 22:53:17.976 I/HWUI    (31598): Davey! duration=853ms; Flags=0, FrameTimelineVsyncId=67447539, IntendedVsync=153722759413793, Vsync=153723359492897, InputEventId=0, HandleInputStart=153723366110907, AnimationStart=153723366113227, PerformTraversalsStart=153723426124091, DrawStart=153723427561998, FrameDeadline=153723359479970, FrameStartTime=153723365799832, FrameInterval=8334432, WorkloadTarget=16600000, SyncQueued=153723610565538, SyncStart=153723610648831, IssueDrawCommandsStart=153723610883613, SwapBuffers=153723612114448, FrameCompleted=153723612943020, DequeueBufferDuration=13713, QueueBufferDuration=253988, GpuCompleted=153723612943020, SwapBuffersCompleted=153723612426134, DisplayPresentTime=0, CommandSubmissionCompleted=153723612114448, 
+09-28 22:53:17.980 D/WealthManagerDebug(31598): [22:53:17.979] USER_ACTION: Dashboard Screen Opened
+09-28 22:53:17.982 D/WealthManagerDebug(31598): [22:53:17.980] DASHBOARD: Loading portfolio data
+09-28 22:53:17.989 I/Choreographer(31598): Skipped 31 frames!  The application may be doing too much work on its main thread.
+09-28 22:53:18.052 D/WealthManagerDebug(31598): [22:53:18.050] DASHBOARD: Assets updated - Cash: 2, Stock: 1
+09-28 22:53:18.053 D/WealthManagerDebug(31598): [22:53:18.052] DASHBOARD: Total Assets: 3100.1, Cash: 3100.1, Stock: 0.0
+09-28 22:53:18.058 D/InsetsController(31598): hide(ime())
+09-28 22:53:18.059 I/ImeTracker(31598): com.wealthmanager:16bedb0: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-28 22:53:18.062 I/m.wealthmanager(31598): Compiler allocated 4970KB to compile void android.view.ViewRootImpl.performTraversals()
+09-28 22:53:18.299 D/WealthManagerDebug(31598): [22:53:18.297] CHART: PieChartComponent rendered with 3 assets
+09-28 22:53:18.300 D/WealthManagerDebug(31598): [22:53:18.299] CHART: Total chart value: 3100.1
+09-28 22:53:18.301 D/WealthManagerDebug(31598): [22:53:18.300] CHART: Asset 0: TWD 100.1 = 100.1 (3%)
+09-28 22:53:18.302 D/WealthManagerDebug(31598): [22:53:18.301] CHART: Asset 1: USD 100.0 = 3000.0 (96%)
+09-28 22:53:18.303 D/WealthManagerDebug(31598): [22:53:18.302] CHART: Asset 2: apple (apple) = 0.0 (0%)
+09-28 22:53:20.274 D/WealthManagerDebug(31598): [22:53:20.273] USER_ACTION: Navigate to Assets Button Clicked
+09-28 22:53:20.274 D/WealthManagerDebug(31598): [22:53:20.274] UI: User clicked FAB to navigate to Assets screen
+09-28 22:53:20.449 D/WealthManagerDebug(31598): [22:53:20.448] USER_ACTION: Assets Screen Opened
+09-28 22:53:20.449 D/WealthManagerDebug(31598): [22:53:20.449] UI: Assets screen loaded, starting to load assets
+09-28 22:53:20.450 D/WealthManagerDebug(31598): [22:53:20.449] ASSETS: Loading assets from repository
+09-28 22:53:20.504 D/WealthManagerDebug(31598): [22:53:20.503] ASSETS: Assets loaded - Cash: 2, Stock: 1
+09-28 22:53:21.592 D/WealthManagerDebug(31598): [22:53:21.591] USER_ACTION: Edit Cash Asset Clicked
+09-28 22:53:21.592 D/WealthManagerDebug(31598): [22:53:21.592] UI: User clicked edit button for cash asset: USD 100.0
+09-28 22:53:21.593 D/WealthManagerDebug(31598): [22:53:21.592] USER_ACTION: Edit Cash Asset
+09-28 22:53:21.593 D/WealthManagerDebug(31598): [22:53:21.593] UI: User wants to edit cash asset: USD 100.0
+09-28 22:53:21.634 W/WindowOnBackDispatcher(31598): OnBackInvokedCallback is not enabled for the application.
+09-28 22:53:21.634 W/WindowOnBackDispatcher(31598): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+09-28 22:53:21.747 D/CompatChangeReporter(31598): Compat change id reported: 289878283; UID 10361; state: ENABLED
+09-28 22:53:21.788 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@bda4f46
+09-28 22:53:21.859 D/WealthManagerDebug(31598): [22:53:21.858] USER_ACTION: Edit Cash Asset Dialog Opened
+09-28 22:53:21.859 D/WealthManagerDebug(31598): [22:53:21.859] UI: Editing cash asset: USD 100.0
+09-28 22:53:21.948 D/ImeBackDispatcher(31598): switch root view (mImeCallbacks.size=0)
+09-28 22:53:21.955 D/InsetsController(31598): hide(ime())
+09-28 22:53:21.955 I/ImeTracker(31598): com.wealthmanager:18dcbea: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-28 22:53:22.470 D/ProfileInstaller(31598): Installing profile for com.wealthmanager
+09-28 22:53:22.774 D/Compose Focus(31598): Owner FocusChanged(true)
+09-28 22:53:22.832 D/InsetsController(31598): show(ime())
+09-28 22:53:22.832 I/ImeTracker(31598): com.wealthmanager:848c2546: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT_BY_INSETS_API fromUser false
+09-28 22:53:22.833 D/ImeBackDispatcher(31598): Undo preliminary clear (mImeCallbacks.size=0)
+09-28 22:53:22.833 D/InsetsController(31598): Setting requestedVisibleTypes to -1 (was -9)
+09-28 22:53:22.917 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@fd8b9ba
+09-28 22:53:22.977 W/RemoteInputConnectionImpl(31598): requestCursorUpdates on inactive InputConnection
+09-28 22:53:22.979 D/ImeBackDispatcher(31598): Register received callback id=88012994 priority=0
+09-28 22:53:22.979 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): android.view.ImeBackAnimationController@f6ad7c2
+09-28 22:53:22.989 W/InteractionJankMonitor(31598): Initializing without READ_DEVICE_CONFIG permission. enabled=false, interval=1, missedFrameThreshold=3, frameTimeThreshold=64, package=com.wealthmanager
+09-28 22:53:23.017 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:23.068 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:23.070 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:23.219 I/ImeTracker(31598): com.wealthmanager:848c2546: onShown
+09-28 22:53:24.370 D/WealthManagerDebug(31598): [22:53:24.369] UI: User typing amount: 100.09
+09-28 22:53:24.401 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): null
+09-28 22:53:25.083 D/WealthManagerDebug(31598): [22:53:25.083] UI: User typing amount: 100.0
+09-28 22:53:25.276 D/WealthManagerDebug(31598): [22:53:25.275] UI: User typing amount: 100.
+09-28 22:53:25.466 D/WealthManagerDebug(31598): [22:53:25.465] UI: User typing amount: 100
+09-28 22:53:25.758 D/WealthManagerDebug(31598): [22:53:25.757] UI: User typing amount: 10
+09-28 22:53:26.047 D/WealthManagerDebug(31598): [22:53:26.046] UI: User typing amount: 1
+09-28 22:53:26.238 D/WealthManagerDebug(31598): [22:53:26.233] UI: User typing amount: 
+09-28 22:53:26.288 W/m.wealthmanager(31598): Cleared Reference was only reachable from finalizer (only reported once)
+09-28 22:53:26.325 I/m.wealthmanager(31598): Background concurrent mark compact GC freed 14MB AllocSpace bytes, 6(124KB) LOS objects, 79% free, 6224KB/30MB, paused 370us,5.068ms total 91.369ms
+09-28 22:53:27.187 D/WealthManagerDebug(31598): [22:53:27.186] UI: User typing amount: 2
+09-28 22:53:27.787 D/WealthManagerDebug(31598): [22:53:27.786] UI: User typing amount: 20
+09-28 22:53:27.958 D/WealthManagerDebug(31598): [22:53:27.958] UI: User typing amount: 200
+09-28 22:53:28.120 D/WealthManagerDebug(31598): [22:53:28.119] UI: User typing amount: 2000
+09-28 22:53:29.697 D/WealthManagerDebug(31598): [22:53:29.696] USER_ACTION: Save Cash Asset Changes
+09-28 22:53:29.698 D/WealthManagerDebug(31598): [22:53:29.698] UI: Saving cash asset changes: USD 2000.0
+09-28 22:53:29.699 D/WealthManagerDebug(31598): [22:53:29.699] ASSETS: Updating cash asset: USD 2000.0
+09-28 22:53:29.699 D/WealthManagerDebug(31598): [22:53:29.699] REPOSITORY: Updating cash asset: 1759069482619
+09-28 22:53:29.711 D/ImeBackDispatcher(31598): Clear (mImeCallbacks.size=1)
+09-28 22:53:29.712 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@bda4f46
+09-28 22:53:29.712 D/ImeBackDispatcher(31598): switch root view (mImeCallbacks.size=0)
+09-28 22:53:29.712 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): null
+09-28 22:53:29.728 D/HWUI    (31598): endAllActiveAnimators on 0xb400007006ab0500 (UnprojectedRipple) with handle 0xb400006f36aabd40
+09-28 22:53:29.755 D/WealthManagerDebug(31598): [22:53:29.755] REPOSITORY: Cash asset updated successfully
+09-28 22:53:29.756 D/WealthManagerDebug(31598): [22:53:29.756] ASSETS: Cash asset updated successfully
+09-28 22:53:29.757 D/WealthManagerDebug(31598): [22:53:29.757] DASHBOARD: Assets updated - Cash: 2, Stock: 1
+09-28 22:53:29.757 D/WealthManagerDebug(31598): [22:53:29.757] DASHBOARD: Total Assets: 60100.1, Cash: 60100.1, Stock: 0.0
+09-28 22:53:29.758 D/WealthManagerDebug(31598): [22:53:29.758] DASHBOARD: Assets updated - Cash: 2, Stock: 1
+09-28 22:53:29.759 D/WealthManagerDebug(31598): [22:53:29.758] DASHBOARD: Total Assets: 60100.1, Cash: 60100.1, Stock: 0.0
+09-28 22:53:29.765 D/WealthManagerDebug(31598): [22:53:29.764] ASSETS: Assets loaded - Cash: 2, Stock: 1
+09-28 22:53:29.804 I/ImeTracker(31598): com.wealthmanager:48a1d50c: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+09-28 22:53:29.805 I/ImeTracker(31598): com.wealthmanager:48a1d50c: onFailed at PHASE_CLIENT_VIEW_SERVED
+09-28 22:53:29.827 D/ImeBackDispatcher(31598): switch root view (mImeCallbacks.size=0)
+09-28 22:53:29.833 D/InsetsController(31598): hide(ime())
+09-28 22:53:29.833 I/ImeTracker(31598): com.wealthmanager:173182e9: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-28 22:53:29.839 W/RemoteInputConnectionImpl(31598): requestCursorUpdates on inactive InputConnection
+09-28 22:53:29.846 D/ImeBackDispatcher(31598): Unregister received callback id=88012994
+09-28 22:53:29.846 W/ImeBackDispatcher(31598): Ime callback not found. Ignoring unregisterReceivedCallback. callbackId: 88012994 remaining callbacks: 0
+09-28 22:53:29.945 D/ImeBackDispatcher(31598): Register received callback id=88012994 priority=0
+09-28 22:53:29.945 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): android.view.ImeBackAnimationController@3cee8b7
+09-28 22:53:29.960 D/ImeBackDispatcher(31598): Unregister received callback id=88012994
+09-28 22:53:29.960 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@8bc6f69
+09-28 22:53:29.961 I/ImeTracker(31598): system_server:8c52d326: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+09-28 22:53:31.743 D/WealthManagerDebug(31598): [22:53:31.743] USER_ACTION: Add Asset FAB Clicked
+09-28 22:53:31.744 D/WealthManagerDebug(31598): [22:53:31.743] UI: User clicked FAB to open Add Asset dialog
+09-28 22:53:31.777 W/WindowOnBackDispatcher(31598): OnBackInvokedCallback is not enabled for the application.
+09-28 22:53:31.777 W/WindowOnBackDispatcher(31598): Set 'android:enableOnBackInvokedCallback="true"' in the application manifest.
+09-28 22:53:31.876 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@7e6e59a
+09-28 22:53:31.947 D/WealthManagerDebug(31598): [22:53:31.946] USER_ACTION: Add Asset Dialog Opened
+09-28 22:53:32.016 D/ImeBackDispatcher(31598): switch root view (mImeCallbacks.size=0)
+09-28 22:53:32.022 D/InsetsController(31598): hide(ime())
+09-28 22:53:32.022 I/ImeTracker(31598): com.wealthmanager:53079545: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-28 22:53:32.722 D/WealthManagerDebug(31598): [22:53:32.720] USER_ACTION: Stock Tab Selected
+09-28 22:53:32.722 D/WealthManagerDebug(31598): [22:53:32.722] UI: User switched to Stock tab in Add Asset dialog
+09-28 22:53:33.396 D/Compose Focus(31598): Owner FocusChanged(true)
+09-28 22:53:33.433 D/InsetsController(31598): show(ime())
+09-28 22:53:33.434 I/ImeTracker(31598): com.wealthmanager:c28aba37: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT_BY_INSETS_API fromUser false
+09-28 22:53:33.434 D/ImeBackDispatcher(31598): Undo preliminary clear (mImeCallbacks.size=0)
+09-28 22:53:33.434 D/InsetsController(31598): Setting requestedVisibleTypes to -1 (was -9)
+09-28 22:53:33.516 W/RemoteInputConnectionImpl(31598): requestCursorUpdates on inactive InputConnection
+09-28 22:53:33.516 D/ImeBackDispatcher(31598): Register received callback id=88012994 priority=0
+09-28 22:53:33.516 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): android.view.ImeBackAnimationController@f0e98d6
+09-28 22:53:33.543 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:33.599 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:33.619 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:33.777 I/ImeTracker(31598): com.wealthmanager:c28aba37: onShown
+09-28 22:53:34.707 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:34.709 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:34.748 I/ImeTracker(31598): system_server:2a488f91: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+09-28 22:53:35.176 D/WealthManagerDebug(31598): [22:53:35.175] UI: User typing stock symbol: a
+09-28 22:53:35.800 D/WealthManagerDebug(31598): [22:53:35.799] UI: User typing stock symbol: ap
+09-28 22:53:35.990 D/WealthManagerDebug(31598): [22:53:35.990] UI: User typing stock symbol: app
+09-28 22:53:35.991 D/WealthManagerDebug(31598): [22:53:35.991] USER_ACTION: Stock Search Triggered
+09-28 22:53:35.991 D/WealthManagerDebug(31598): [22:53:35.991] UI: Auto-triggering stock search for: app
+09-28 22:53:35.991 D/WealthManagerDebug(31598): [22:53:35.991] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 22:53:35.991 D/WealthManagerDebug(31598): [22:53:35.991] ASSETS: Searching stocks: 'app' in market: 'TW'
+09-28 22:53:35.991 D/WealthManagerDebug(31598): [22:53:35.991] USER_ACTION: Stock Search Initiated
+09-28 22:53:35.993 D/WealthManagerDebug(31598): [22:53:35.992] ASSETS: Search state set to loading
+09-28 22:53:35.994 D/WealthManagerDebug(31598): [22:53:35.993] ASSETS: Calling marketDataService.searchStocks
+09-28 22:53:35.994 D/WealthManagerDebug(31598): [22:53:35.994] MARKET_DATA: === STARTING STOCK SEARCH ===
+09-28 22:53:35.994 D/WealthManagerDebug(31598): [22:53:35.994] MARKET_DATA: Searching stocks: 'app' in market: 'TW'
+09-28 22:53:35.995 D/WealthManagerDebug(31598): [22:53:35.995] MARKET_DATA: Using region: TW for search
+09-28 22:53:35.995 D/WealthManagerDebug(31598): [22:53:35.995] MARKET_DATA: API Request - Query: app, Region: TW
+09-28 22:53:35.995 D/WealthManagerDebug(31598): [22:53:35.995] MARKET_DATA: API URL: https://query1.finance.yahoo.com/v1/finance/search?q=app&region=TW
+09-28 22:53:36.023 I/okhttp.OkHttpClient(31598): --> GET https://query1.finance.yahoo.com/v1/v1/finance/search?q=app&region=TW
+09-28 22:53:36.024 I/okhttp.OkHttpClient(31598): --> END GET
+09-28 22:53:36.215 D/WealthManagerDebug(31598): [22:53:36.213] UI: User typing stock symbol: appl
+09-28 22:53:36.216 D/WealthManagerDebug(31598): [22:53:36.215] USER_ACTION: Stock Search Triggered
+09-28 22:53:36.216 D/WealthManagerDebug(31598): [22:53:36.216] UI: Auto-triggering stock search for: appl
+09-28 22:53:36.216 D/WealthManagerDebug(31598): [22:53:36.216] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 22:53:36.216 D/WealthManagerDebug(31598): [22:53:36.216] ASSETS: Searching stocks: 'appl' in market: 'TW'
+09-28 22:53:36.216 D/WealthManagerDebug(31598): [22:53:36.216] USER_ACTION: Stock Search Initiated
+09-28 22:53:36.219 D/WealthManagerDebug(31598): [22:53:36.218] ASSETS: Search state set to loading
+09-28 22:53:36.219 D/WealthManagerDebug(31598): [22:53:36.219] ASSETS: Calling marketDataService.searchStocks
+09-28 22:53:36.219 D/WealthManagerDebug(31598): [22:53:36.219] MARKET_DATA: === STARTING STOCK SEARCH ===
+09-28 22:53:36.219 D/WealthManagerDebug(31598): [22:53:36.219] MARKET_DATA: Searching stocks: 'appl' in market: 'TW'
+09-28 22:53:36.219 D/WealthManagerDebug(31598): [22:53:36.219] MARKET_DATA: Using region: TW for search
+09-28 22:53:36.219 D/WealthManagerDebug(31598): [22:53:36.219] MARKET_DATA: API Request - Query: appl, Region: TW
+09-28 22:53:36.219 D/WealthManagerDebug(31598): [22:53:36.219] MARKET_DATA: API URL: https://query1.finance.yahoo.com/v1/finance/search?q=appl&region=TW
+09-28 22:53:36.224 I/okhttp.OkHttpClient(31598): --> GET https://query1.finance.yahoo.com/v1/v1/finance/search?q=appl&region=TW
+09-28 22:53:36.224 I/okhttp.OkHttpClient(31598): --> END GET
+09-28 22:53:36.682 I/okhttp.OkHttpClient(31598): <-- 500 https://query1.finance.yahoo.com/v1/v1/finance/search?q=app&region=TW (658ms)
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): date: Sun, 28 Sep 2025 14:53:33 GMT
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): strict-transport-security: max-age=31536000
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): server: ATS
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): content-type: text/html
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): content-language: en
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): content-length: 4477
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): cache-control: max-age=0, private
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): expires: -1
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): age: 0
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): referrer-policy: no-referrer-when-downgrade
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): x-content-type-options: nosniff
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): x-xss-protection: 1; mode=block
+09-28 22:53:36.683 I/okhttp.OkHttpClient(31598): x-frame-options: SAMEORIGIN
+09-28 22:53:36.684 I/okhttp.OkHttpClient(31598): <!DOCTYPE html>
+09-28 22:53:36.684 I/okhttp.OkHttpClient(31598): <html lang="en-us">
+09-28 22:53:36.684 I/okhttp.OkHttpClient(31598):   <head>
+09-28 22:53:36.684 I/okhttp.OkHttpClient(31598):     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+09-28 22:53:36.684 I/okhttp.OkHttpClient(31598):     <meta charset="utf-8">
+09-28 22:53:36.684 I/okhttp.OkHttpClient(31598):     <title>Yahoo</title>
+09-28 22:53:36.684 I/okhttp.OkHttpClient(31598):     <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
+09-28 22:53:36.684 I/okhttp.OkHttpClient(31598):     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):     <style>
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       html {
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       body {
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           background: #fafafc url(https://s.yimg.com/nn/img/sad-panda-201402200631.png) 50% 50%;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           background-size: cover;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           text-align: center;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           font: 300 18px "helvetica neue", helvetica, verdana, tahoma, arial, sans-serif;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       table {
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           width: 100%;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           table-layout: fixed;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           border-collapse: collapse;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           border-spacing: 0;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           border: none;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       h1 {
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           font-size: 42px;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           font-weight: 400;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           color: #400090;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       p {
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           color: #1A1A1A;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       #message-1 {
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           font-weight: bold;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       #message-2 {
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           display: inline-block;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           *display: inline;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           zoom: 1;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           max-width: 17em;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):           _width: 17em;
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       </style>
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       <script>
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       </script>
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):   </head>
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):   <body>
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):   <!-- status code : 500 -->
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):   <!-- Unknown Host -->
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):   <!-- host machine: ats-ncache-api--production-sg3-86868f9764-w7gxb -->
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):   <!-- timestamp: 1759071213.853 -->
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):   <!-- url: https://default.finance-yql-production.finance-k8s.omega.yahoo.com/v1/v1/finance/search?q=app&region=TW-->
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):   <script type="text/javascript">
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):     function buildUrl(url, parameters){
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       var qs = [];
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       for(var key in parameters) {
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):         var value = parameters[key];
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):         qs.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       url = url + "?" + qs.join('&');
+09-28 22:53:36.685 I/okhttp.OkHttpClient(31598):       return url;
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):     function generateBRBMarkup(site) {
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       params.source = 'brb';
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       generateBeaconMarkup(params);
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       var englishHeader = 'Will be right back...';
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       var englishMessage1 = 'Thank you for your patience.';
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       var englishMessage2 = 'Our engineers are working quickly to resolve the issue.';
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       var defaultLogoStyle = '';
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       var siteDataMap = {
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         'default': {
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):           logo: 'https://s.yimg.com/rz/p/yahoo_frontpage_en-US_s_f_p_205x58_frontpage.png',
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):           logoAlt: 'Yahoo Logo',
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):           logoStyle: defaultLogoStyle,
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):           header: englishHeader,
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):           message1: englishMessage1,
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):           message2: englishMessage2
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         }
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       };
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       var siteDetails = siteDataMap['default'];
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       document.write('<table><tbody><tr><td>');
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       document.write('<div id="content">');
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       document.write('<img src="' + siteDetails['logo'] + '" alt="' + siteDetails['logoAlt'] + '" style="' + siteDetails['logoStyle'] + '">');
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       document.write('<h1 style="margin-top:20px;">' + siteDetails['header'] + '</h1>');
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-1">' + siteDetails['message1'] + '</p>');
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-2">' + siteDetails['message2'] + '</p>');
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       document.write('</div>');
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):       document.write('</td></tr></tbody></table>');
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):     function generateBeaconMarkup(params) {
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         document.write('<img src="' + buildUrl('//geo.yahoo.com/b', params) + '" style="display:none;" width="0px" height="0px"/>');
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         var beacon = new Image();
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         beacon.src = buildUrl('//bcn.fp.yahoo.com/p', params);
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):     var hostname = window.location.hostname;
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):     var device = 'smartphone';
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):     var ynet = ('-' === '1');
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):     var time = new Date().getTime();
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):     var params = {
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         s: '1197757129',
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         t: time,
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         err_url: document.URL,
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         err: '500',
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         test: '-',
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         ats_host: 'ats-ncache-api--production-sg3-86868f9764-w7gxb',
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         rid: '-',
+09-28 22:53:36.686 I/okhttp.OkHttpClient(31598):         message: 'Unknown Host'
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):     };
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):     if(ynet) {
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):         document.write('<div style="height: 5px; background-color: red;"></div>');
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):     generateBRBMarkup(hostname, params);
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):   </script>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):   <noscript>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):   <table>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):     <tbody>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):       <tr>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):         <td>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):           <div id="englishContent">
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):             <h1 style="margin-top:20px;">Will be right back...</h1>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):             <p id="message-1">Thank you for your patience.</p>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):             <p id="message-2">Our engineers are working quickly to resolve the issue.</p>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):           </div>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):         </td>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):       </tr>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):     </tbody>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):   </table>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):   </noscript>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598):   </body>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598): </html>
+09-28 22:53:36.687 I/okhttp.OkHttpClient(31598): <-- END HTTP (4477-byte body)
+09-28 22:53:36.689 D/WealthManagerDebug(31598): [22:53:36.689] ERROR: === STOCK SEARCH FAILED ===
+09-28 22:53:36.689 D/WealthManagerDebug(31598): [22:53:36.689] ERROR: Exception: HTTP 500 
+09-28 22:53:36.690 D/WealthManagerDebug(31598): [22:53:36.690] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:36.690 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:36.690 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:36.690 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:36.690 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:36.690 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:36.690 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:36.690 D/WealthManagerDebug(31598): [22:53:36.690] ERROR: Failed to search stocks: HTTP 500 
+09-28 22:53:36.690 D/WealthManagerDebug(31598): [22:53:36.690] ERROR: Exception: HTTP 500 
+09-28 22:53:36.691 D/WealthManagerDebug(31598): [22:53:36.691] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:36.691 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:36.691 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:36.691 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:36.691 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:36.691 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:36.691 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:36.691 D/WealthManagerDebug(31598): [22:53:36.691] MARKET_DATA: Search failed for query: 'app', market: 'TW'
+09-28 22:53:36.694 D/WealthManagerDebug(31598): [22:53:36.694] MARKET_DATA: Exception type: HttpException
+09-28 22:53:36.694 D/WealthManagerDebug(31598): [22:53:36.694] MARKET_DATA: Exception message: HTTP 500 
+09-28 22:53:36.694 D/WealthManagerDebug(31598): [22:53:36.694] ASSETS: MarketDataService returned 0 results
+09-28 22:53:36.694 D/WealthManagerDebug(31598): [22:53:36.694] ASSETS: Stock search completed: 0 results found
+09-28 22:53:36.695 D/WealthManagerDebug(31598): [22:53:36.695] ASSETS: UI state updated with search results
+09-28 22:53:36.695 D/WealthManagerDebug(31598): [22:53:36.695] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 22:53:36.723 I/okhttp.OkHttpClient(31598): <-- 500 https://query1.finance.yahoo.com/v1/v1/finance/search?q=appl&region=TW (498ms)
+09-28 22:53:36.723 I/okhttp.OkHttpClient(31598): date: Sun, 28 Sep 2025 14:53:33 GMT
+09-28 22:53:36.724 I/okhttp.OkHttpClient(31598): strict-transport-security: max-age=31536000
+09-28 22:53:36.724 I/okhttp.OkHttpClient(31598): server: ATS
+09-28 22:53:36.724 I/okhttp.OkHttpClient(31598): content-type: text/html
+09-28 22:53:36.724 I/okhttp.OkHttpClient(31598): content-language: en
+09-28 22:53:36.725 I/okhttp.OkHttpClient(31598): content-length: 4478
+09-28 22:53:36.725 I/okhttp.OkHttpClient(31598): cache-control: max-age=0, private
+09-28 22:53:36.725 I/okhttp.OkHttpClient(31598): expires: -1
+09-28 22:53:36.725 I/okhttp.OkHttpClient(31598): age: 2
+09-28 22:53:36.725 I/okhttp.OkHttpClient(31598): referrer-policy: no-referrer-when-downgrade
+09-28 22:53:36.726 I/okhttp.OkHttpClient(31598): x-content-type-options: nosniff
+09-28 22:53:36.726 I/okhttp.OkHttpClient(31598): x-xss-protection: 1; mode=block
+09-28 22:53:36.726 I/okhttp.OkHttpClient(31598): x-frame-options: SAMEORIGIN
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598): <!DOCTYPE html>
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598): <html lang="en-us">
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598):   <head>
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598):     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598):     <meta charset="utf-8">
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598):     <title>Yahoo</title>
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598):     <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598):     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598):     <style>
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598):       html {
+09-28 22:53:36.729 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):       body {
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           background: #fafafc url(https://s.yimg.com/nn/img/sad-panda-201402200631.png) 50% 50%;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           background-size: cover;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           text-align: center;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           font: 300 18px "helvetica neue", helvetica, verdana, tahoma, arial, sans-serif;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):       table {
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           width: 100%;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           table-layout: fixed;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           border-collapse: collapse;
+09-28 22:53:36.730 I/okhttp.OkHttpClient(31598):           border-spacing: 0;
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):           border: none;
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):       h1 {
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):           font-size: 42px;
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):           font-weight: 400;
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):           color: #400090;
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):       p {
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):           color: #1A1A1A;
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):       #message-1 {
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):           font-weight: bold;
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):       #message-2 {
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):           display: inline-block;
+09-28 22:53:36.731 I/okhttp.OkHttpClient(31598):           *display: inline;
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):           zoom: 1;
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):           max-width: 17em;
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):           _width: 17em;
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):       </style>
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):       <script>
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):       
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):       </script>
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):   </head>
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):   <body>
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):   <!-- status code : 500 -->
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):   <!-- Unknown Host -->
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):   <!-- host machine: ats-ncache-api--production-sg3-86868f9764-6b528 -->
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):   <!-- timestamp: 1759071213.946 -->
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):   <!-- url: https://default.finance-yql-production.finance-k8s.omega.yahoo.com/v1/v1/finance/search?q=appl&region=TW-->
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):   <script type="text/javascript">
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):     function buildUrl(url, parameters){
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):       var qs = [];
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):       for(var key in parameters) {
+09-28 22:53:36.732 I/okhttp.OkHttpClient(31598):         var value = parameters[key];
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):         qs.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):       url = url + "?" + qs.join('&');
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):       return url;
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):     function generateBRBMarkup(site) {
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):       params.source = 'brb';
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):       generateBeaconMarkup(params);
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):       var englishHeader = 'Will be right back...';
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):       var englishMessage1 = 'Thank you for your patience.';
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):       var englishMessage2 = 'Our engineers are working quickly to resolve the issue.';
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):       var defaultLogoStyle = '';
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):       var siteDataMap = {
+09-28 22:53:36.733 I/okhttp.OkHttpClient(31598):         'default': {
+09-28 22:53:36.734 I/okhttp.OkHttpClient(31598):           logo: 'https://s.yimg.com/rz/p/yahoo_frontpage_en-US_s_f_p_205x58_frontpage.png',
+09-28 22:53:36.734 I/okhttp.OkHttpClient(31598):           logoAlt: 'Yahoo Logo',
+09-28 22:53:36.734 I/okhttp.OkHttpClient(31598):           logoStyle: defaultLogoStyle,
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):           header: englishHeader,
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):           message1: englishMessage1,
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):           message2: englishMessage2
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):         }
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):       };
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):       var siteDetails = siteDataMap['default'];
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):       document.write('<table><tbody><tr><td>');
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):       document.write('<div id="content">');
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):       document.write('<img src="' + siteDetails['logo'] + '" alt="' + siteDetails['logoAlt'] + '" style="' + siteDetails['logoStyle'] + '">');
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):       document.write('<h1 style="margin-top:20px;">' + siteDetails['header'] + '</h1>');
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-1">' + siteDetails['message1'] + '</p>');
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-2">' + siteDetails['message2'] + '</p>');
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):       document.write('</div>');
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):       document.write('</td></tr></tbody></table>');
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:36.735 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):     function generateBeaconMarkup(params) {
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):         document.write('<img src="' + buildUrl('//geo.yahoo.com/b', params) + '" style="display:none;" width="0px" height="0px"/>');
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):         var beacon = new Image();
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):         beacon.src = buildUrl('//bcn.fp.yahoo.com/p', params);
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):     var hostname = window.location.hostname;
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):     var device = 'smartphone';
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):     var ynet = ('-' === '1');
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):     var time = new Date().getTime();
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):     var params = {
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):         s: '1197757129',
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):         t: time,
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):         err_url: document.URL,
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):         err: '500',
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):         test: '-',
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):         ats_host: 'ats-ncache-api--production-sg3-86868f9764-6b528',
+09-28 22:53:36.736 I/okhttp.OkHttpClient(31598):         rid: '-',
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):         message: 'Unknown Host'
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):     };
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):     if(ynet) {
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):         document.write('<div style="height: 5px; background-color: red;"></div>');
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):     generateBRBMarkup(hostname, params);
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):   </script>
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):   <noscript>
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):   <table>
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):     <tbody>
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):       <tr>
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):         <td>
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):           <div id="englishContent">
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):             <h1 style="margin-top:20px;">Will be right back...</h1>
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):             <p id="message-1">Thank you for your patience.</p>
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):             <p id="message-2">Our engineers are working quickly to resolve the issue.</p>
+09-28 22:53:36.737 I/okhttp.OkHttpClient(31598):           </div>
+09-28 22:53:36.738 I/okhttp.OkHttpClient(31598):         </td>
+09-28 22:53:36.738 I/okhttp.OkHttpClient(31598):       </tr>
+09-28 22:53:36.738 I/okhttp.OkHttpClient(31598):     </tbody>
+09-28 22:53:36.738 I/okhttp.OkHttpClient(31598):   </table>
+09-28 22:53:36.738 I/okhttp.OkHttpClient(31598):   </noscript>
+09-28 22:53:36.738 I/okhttp.OkHttpClient(31598):   </body>
+09-28 22:53:36.738 I/okhttp.OkHttpClient(31598): </html>
+09-28 22:53:36.738 I/okhttp.OkHttpClient(31598): <-- END HTTP (4478-byte body)
+09-28 22:53:36.866 D/WealthManagerDebug(31598): [22:53:36.865] ERROR: === STOCK SEARCH FAILED ===
+09-28 22:53:36.866 D/WealthManagerDebug(31598): [22:53:36.866] ERROR: Exception: HTTP 500 
+09-28 22:53:36.866 D/WealthManagerDebug(31598): [22:53:36.866] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:36.866 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:36.866 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:36.866 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:36.866 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:36.866 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:36.866 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:36.866 D/WealthManagerDebug(31598): [22:53:36.866] ERROR: Failed to search stocks: HTTP 500 
+09-28 22:53:36.867 D/WealthManagerDebug(31598): [22:53:36.866] ERROR: Exception: HTTP 500 
+09-28 22:53:36.867 D/WealthManagerDebug(31598): [22:53:36.867] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:36.867 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:36.867 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:36.867 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:36.867 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:36.867 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:36.867 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:36.867 D/WealthManagerDebug(31598): [22:53:36.867] MARKET_DATA: Search failed for query: 'appl', market: 'TW'
+09-28 22:53:36.867 D/WealthManagerDebug(31598): [22:53:36.867] MARKET_DATA: Exception type: HttpException
+09-28 22:53:36.867 D/WealthManagerDebug(31598): [22:53:36.867] MARKET_DATA: Exception message: HTTP 500 
+09-28 22:53:36.867 D/WealthManagerDebug(31598): [22:53:36.867] ASSETS: MarketDataService returned 0 results
+09-28 22:53:36.868 D/WealthManagerDebug(31598): [22:53:36.867] ASSETS: Stock search completed: 0 results found
+09-28 22:53:36.868 D/WealthManagerDebug(31598): [22:53:36.868] ASSETS: UI state updated with search results
+09-28 22:53:36.868 D/WealthManagerDebug(31598): [22:53:36.868] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 22:53:37.883 D/WealthManagerDebug(31598): [22:53:37.883] USER_ACTION: Manual Stock Search Clicked
+09-28 22:53:37.884 D/WealthManagerDebug(31598): [22:53:37.884] UI: User clicked manual search button for: appl
+09-28 22:53:37.884 D/WealthManagerDebug(31598): [22:53:37.884] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 22:53:37.884 D/WealthManagerDebug(31598): [22:53:37.884] ASSETS: Searching stocks: 'appl' in market: 'TW'
+09-28 22:53:37.884 D/WealthManagerDebug(31598): [22:53:37.884] USER_ACTION: Stock Search Initiated
+09-28 22:53:37.885 D/WealthManagerDebug(31598): [22:53:37.884] ASSETS: Search state set to loading
+09-28 22:53:37.885 D/WealthManagerDebug(31598): [22:53:37.885] ASSETS: Calling marketDataService.searchStocks
+09-28 22:53:37.885 D/WealthManagerDebug(31598): [22:53:37.885] MARKET_DATA: === STARTING STOCK SEARCH ===
+09-28 22:53:37.886 D/WealthManagerDebug(31598): [22:53:37.885] MARKET_DATA: Searching stocks: 'appl' in market: 'TW'
+09-28 22:53:37.886 D/WealthManagerDebug(31598): [22:53:37.886] MARKET_DATA: Using region: TW for search
+09-28 22:53:37.886 D/WealthManagerDebug(31598): [22:53:37.886] MARKET_DATA: API Request - Query: appl, Region: TW
+09-28 22:53:37.887 D/WealthManagerDebug(31598): [22:53:37.886] MARKET_DATA: API URL: https://query1.finance.yahoo.com/v1/finance/search?q=appl&region=TW
+09-28 22:53:37.890 I/okhttp.OkHttpClient(31598): --> GET https://query1.finance.yahoo.com/v1/v1/finance/search?q=appl&region=TW
+09-28 22:53:37.890 I/okhttp.OkHttpClient(31598): --> END GET
+09-28 22:53:38.057 I/m.wealthmanager(31598): Compiler allocated 9601KB to compile void com.wealthmanager.ui.assets.AddAssetDialogKt$AddAssetDialog$5.invoke(androidx.compose.runtime.Composer, int)
+09-28 22:53:38.132 I/okhttp.OkHttpClient(31598): <-- 500 https://query1.finance.yahoo.com/v1/v1/finance/search?q=appl&region=TW (241ms)
+09-28 22:53:38.132 I/okhttp.OkHttpClient(31598): date: Sun, 28 Sep 2025 14:53:35 GMT
+09-28 22:53:38.132 I/okhttp.OkHttpClient(31598): strict-transport-security: max-age=31536000
+09-28 22:53:38.132 I/okhttp.OkHttpClient(31598): server: ATS
+09-28 22:53:38.132 I/okhttp.OkHttpClient(31598): content-type: text/html
+09-28 22:53:38.132 I/okhttp.OkHttpClient(31598): content-language: en
+09-28 22:53:38.132 I/okhttp.OkHttpClient(31598): content-length: 4478
+09-28 22:53:38.133 I/okhttp.OkHttpClient(31598): cache-control: max-age=0, private
+09-28 22:53:38.133 I/okhttp.OkHttpClient(31598): expires: -1
+09-28 22:53:38.133 I/okhttp.OkHttpClient(31598): age: 0
+09-28 22:53:38.133 I/okhttp.OkHttpClient(31598): referrer-policy: no-referrer-when-downgrade
+09-28 22:53:38.133 I/okhttp.OkHttpClient(31598): x-content-type-options: nosniff
+09-28 22:53:38.133 I/okhttp.OkHttpClient(31598): x-xss-protection: 1; mode=block
+09-28 22:53:38.133 I/okhttp.OkHttpClient(31598): x-frame-options: SAMEORIGIN
+09-28 22:53:38.134 I/okhttp.OkHttpClient(31598): <!DOCTYPE html>
+09-28 22:53:38.134 I/okhttp.OkHttpClient(31598): <html lang="en-us">
+09-28 22:53:38.134 I/okhttp.OkHttpClient(31598):   <head>
+09-28 22:53:38.134 I/okhttp.OkHttpClient(31598):     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+09-28 22:53:38.134 I/okhttp.OkHttpClient(31598):     <meta charset="utf-8">
+09-28 22:53:38.134 I/okhttp.OkHttpClient(31598):     <title>Yahoo</title>
+09-28 22:53:38.134 I/okhttp.OkHttpClient(31598):     <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):     <style>
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       html {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       body {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           background: #fafafc url(https://s.yimg.com/nn/img/sad-panda-201402200631.png) 50% 50%;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           background-size: cover;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           text-align: center;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           font: 300 18px "helvetica neue", helvetica, verdana, tahoma, arial, sans-serif;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       table {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           width: 100%;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           table-layout: fixed;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           border-collapse: collapse;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           border-spacing: 0;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           border: none;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       h1 {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           font-size: 42px;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           font-weight: 400;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           color: #400090;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       p {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           color: #1A1A1A;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       #message-1 {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           font-weight: bold;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       #message-2 {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           display: inline-block;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           *display: inline;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           zoom: 1;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           max-width: 17em;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           _width: 17em;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       </style>
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       <script>
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       </script>
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):   </head>
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):   <body>
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):   <!-- status code : 500 -->
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):   <!-- Unknown Host -->
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):   <!-- host machine: ats-ncache-api--production-sg3-86868f9764-6b528 -->
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):   <!-- timestamp: 1759071215.356 -->
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):   <!-- url: https://default.finance-yql-production.finance-k8s.omega.yahoo.com/v1/v1/finance/search?q=appl&region=TW-->
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):   <script type="text/javascript">
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):     function buildUrl(url, parameters){
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       var qs = [];
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       for(var key in parameters) {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):         var value = parameters[key];
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):         qs.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       url = url + "?" + qs.join('&');
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       return url;
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):     function generateBRBMarkup(site) {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       params.source = 'brb';
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       generateBeaconMarkup(params);
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       var englishHeader = 'Will be right back...';
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       var englishMessage1 = 'Thank you for your patience.';
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       var englishMessage2 = 'Our engineers are working quickly to resolve the issue.';
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       var defaultLogoStyle = '';
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):       var siteDataMap = {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):         'default': {
+09-28 22:53:38.135 I/okhttp.OkHttpClient(31598):           logo: 'https://s.yimg.com/rz/p/yahoo_frontpage_en-US_s_f_p_205x58_frontpage.png',
+09-28 22:53:38.136 I/okhttp.OkHttpClient(31598):           logoAlt: 'Yahoo Logo',
+09-28 22:53:38.136 I/okhttp.OkHttpClient(31598):           logoStyle: defaultLogoStyle,
+09-28 22:53:38.136 I/okhttp.OkHttpClient(31598):           header: englishHeader,
+09-28 22:53:38.136 I/okhttp.OkHttpClient(31598):           message1: englishMessage1,
+09-28 22:53:38.136 I/okhttp.OkHttpClient(31598):           message2: englishMessage2
+09-28 22:53:38.136 I/okhttp.OkHttpClient(31598):         }
+09-28 22:53:38.136 I/okhttp.OkHttpClient(31598):       };
+09-28 22:53:38.136 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598):       var siteDetails = siteDataMap['default'];
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598):       document.write('<table><tbody><tr><td>');
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598):       document.write('<div id="content">');
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598):       document.write('<img src="' + siteDetails['logo'] + '" alt="' + siteDetails['logoAlt'] + '" style="' + siteDetails['logoStyle'] + '">');
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598):       document.write('<h1 style="margin-top:20px;">' + siteDetails['header'] + '</h1>');
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-1">' + siteDetails['message1'] + '</p>');
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-2">' + siteDetails['message2'] + '</p>');
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598):       document.write('</div>');
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598):       document.write('</td></tr></tbody></table>');
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:38.137 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:38.138 I/okhttp.OkHttpClient(31598):     function generateBeaconMarkup(params) {
+09-28 22:53:38.138 I/okhttp.OkHttpClient(31598):         document.write('<img src="' + buildUrl('//geo.yahoo.com/b', params) + '" style="display:none;" width="0px" height="0px"/>');
+09-28 22:53:38.138 I/okhttp.OkHttpClient(31598):         var beacon = new Image();
+09-28 22:53:38.138 I/okhttp.OkHttpClient(31598):         beacon.src = buildUrl('//bcn.fp.yahoo.com/p', params);
+09-28 22:53:38.138 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:38.138 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:38.138 I/okhttp.OkHttpClient(31598):     var hostname = window.location.hostname;
+09-28 22:53:38.138 I/okhttp.OkHttpClient(31598):     var device = 'smartphone';
+09-28 22:53:38.138 I/okhttp.OkHttpClient(31598):     var ynet = ('-' === '1');
+09-28 22:53:38.138 I/okhttp.OkHttpClient(31598):     var time = new Date().getTime();
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):     var params = {
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):         s: '1197757129',
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):         t: time,
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):         err_url: document.URL,
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):         err: '500',
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):         test: '-',
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):         ats_host: 'ats-ncache-api--production-sg3-86868f9764-6b528',
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):         rid: '-',
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):         message: 'Unknown Host'
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):     };
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):     if(ynet) {
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):         document.write('<div style="height: 5px; background-color: red;"></div>');
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:38.139 I/okhttp.OkHttpClient(31598):     generateBRBMarkup(hostname, params);
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):   </script>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):   <noscript>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):   <table>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):     <tbody>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):       <tr>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):         <td>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):           <div id="englishContent">
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):             <h1 style="margin-top:20px;">Will be right back...</h1>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):             <p id="message-1">Thank you for your patience.</p>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):             <p id="message-2">Our engineers are working quickly to resolve the issue.</p>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):           </div>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):         </td>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):       </tr>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):     </tbody>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):   </table>
+09-28 22:53:38.140 I/okhttp.OkHttpClient(31598):   </noscript>
+09-28 22:53:38.141 I/okhttp.OkHttpClient(31598):   </body>
+09-28 22:53:38.141 I/okhttp.OkHttpClient(31598): </html>
+09-28 22:53:38.141 I/okhttp.OkHttpClient(31598): <-- END HTTP (4478-byte body)
+09-28 22:53:38.148 D/WealthManagerDebug(31598): [22:53:38.148] ERROR: === STOCK SEARCH FAILED ===
+09-28 22:53:38.149 D/WealthManagerDebug(31598): [22:53:38.148] ERROR: Exception: HTTP 500 
+09-28 22:53:38.149 D/WealthManagerDebug(31598): [22:53:38.149] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:38.149 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:38.149 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:38.149 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:38.149 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:38.149 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:38.149 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:38.149 D/WealthManagerDebug(31598): [22:53:38.149] ERROR: Failed to search stocks: HTTP 500 
+09-28 22:53:38.149 D/WealthManagerDebug(31598): [22:53:38.149] ERROR: Exception: HTTP 500 
+09-28 22:53:38.150 D/WealthManagerDebug(31598): [22:53:38.150] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:38.150 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:38.150 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:38.150 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:38.150 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:38.150 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:38.150 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:38.150 D/WealthManagerDebug(31598): [22:53:38.150] MARKET_DATA: Search failed for query: 'appl', market: 'TW'
+09-28 22:53:38.150 D/WealthManagerDebug(31598): [22:53:38.150] MARKET_DATA: Exception type: HttpException
+09-28 22:53:38.150 D/WealthManagerDebug(31598): [22:53:38.150] MARKET_DATA: Exception message: HTTP 500 
+09-28 22:53:38.150 D/WealthManagerDebug(31598): [22:53:38.150] ASSETS: MarketDataService returned 0 results
+09-28 22:53:38.150 D/WealthManagerDebug(31598): [22:53:38.150] ASSETS: Stock search completed: 0 results found
+09-28 22:53:38.151 D/WealthManagerDebug(31598): [22:53:38.151] ASSETS: UI state updated with search results
+09-28 22:53:38.151 D/WealthManagerDebug(31598): [22:53:38.151] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 22:53:38.896 D/WealthManagerDebug(31598): [22:53:38.895] USER_ACTION: Manual Stock Search Clicked
+09-28 22:53:38.896 D/WealthManagerDebug(31598): [22:53:38.896] UI: User clicked manual search button for: appl
+09-28 22:53:38.896 D/WealthManagerDebug(31598): [22:53:38.896] ASSETS: === STARTING STOCK SEARCH IN VIEWMODEL ===
+09-28 22:53:38.896 D/WealthManagerDebug(31598): [22:53:38.896] ASSETS: Searching stocks: 'appl' in market: 'TW'
+09-28 22:53:38.896 D/WealthManagerDebug(31598): [22:53:38.896] USER_ACTION: Stock Search Initiated
+09-28 22:53:38.897 D/WealthManagerDebug(31598): [22:53:38.897] ASSETS: Search state set to loading
+09-28 22:53:38.897 D/WealthManagerDebug(31598): [22:53:38.897] ASSETS: Calling marketDataService.searchStocks
+09-28 22:53:38.897 D/WealthManagerDebug(31598): [22:53:38.897] MARKET_DATA: === STARTING STOCK SEARCH ===
+09-28 22:53:38.897 D/WealthManagerDebug(31598): [22:53:38.897] MARKET_DATA: Searching stocks: 'appl' in market: 'TW'
+09-28 22:53:38.897 D/WealthManagerDebug(31598): [22:53:38.897] MARKET_DATA: Using region: TW for search
+09-28 22:53:38.898 D/WealthManagerDebug(31598): [22:53:38.897] MARKET_DATA: API Request - Query: appl, Region: TW
+09-28 22:53:38.898 D/WealthManagerDebug(31598): [22:53:38.898] MARKET_DATA: API URL: https://query1.finance.yahoo.com/v1/finance/search?q=appl&region=TW
+09-28 22:53:38.901 I/okhttp.OkHttpClient(31598): --> GET https://query1.finance.yahoo.com/v1/v1/finance/search?q=appl&region=TW
+09-28 22:53:38.901 I/okhttp.OkHttpClient(31598): --> END GET
+09-28 22:53:39.141 I/okhttp.OkHttpClient(31598): <-- 500 https://query1.finance.yahoo.com/v1/v1/finance/search?q=appl&region=TW (238ms)
+09-28 22:53:39.141 I/okhttp.OkHttpClient(31598): date: Sun, 28 Sep 2025 14:53:36 GMT
+09-28 22:53:39.142 I/okhttp.OkHttpClient(31598): strict-transport-security: max-age=31536000
+09-28 22:53:39.142 I/okhttp.OkHttpClient(31598): server: ATS
+09-28 22:53:39.142 I/okhttp.OkHttpClient(31598): content-type: text/html
+09-28 22:53:39.142 I/okhttp.OkHttpClient(31598): content-language: en
+09-28 22:53:39.143 I/okhttp.OkHttpClient(31598): content-length: 4478
+09-28 22:53:39.143 I/okhttp.OkHttpClient(31598): cache-control: max-age=0, private
+09-28 22:53:39.143 I/okhttp.OkHttpClient(31598): expires: -1
+09-28 22:53:39.143 I/okhttp.OkHttpClient(31598): age: 0
+09-28 22:53:39.143 I/okhttp.OkHttpClient(31598): referrer-policy: no-referrer-when-downgrade
+09-28 22:53:39.143 I/okhttp.OkHttpClient(31598): x-content-type-options: nosniff
+09-28 22:53:39.144 I/okhttp.OkHttpClient(31598): x-xss-protection: 1; mode=block
+09-28 22:53:39.144 I/okhttp.OkHttpClient(31598): x-frame-options: SAMEORIGIN
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598): <!DOCTYPE html>
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598): <html lang="en-us">
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):   <head>
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):     <meta charset="utf-8">
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):     <title>Yahoo</title>
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):     <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):     <style>
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):       html {
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):       body {
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           background: #fafafc url(https://s.yimg.com/nn/img/sad-panda-201402200631.png) 50% 50%;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           background-size: cover;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           text-align: center;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           font: 300 18px "helvetica neue", helvetica, verdana, tahoma, arial, sans-serif;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):       table {
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           width: 100%;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           table-layout: fixed;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           border-collapse: collapse;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           border-spacing: 0;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           border: none;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):       h1 {
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           font-size: 42px;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           font-weight: 400;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):           color: #400090;
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:39.146 I/okhttp.OkHttpClient(31598):       p {
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           color: #1A1A1A;
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       #message-1 {
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           font-weight: bold;
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       #message-2 {
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           display: inline-block;
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           *display: inline;
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           zoom: 1;
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           max-width: 17em;
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           _width: 17em;
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       </style>
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       <script>
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       </script>
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):   </head>
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):   <body>
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):   <!-- status code : 500 -->
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):   <!-- Unknown Host -->
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):   <!-- host machine: ats-ncache-api--production-sg3-86868f9764-6b528 -->
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):   <!-- timestamp: 1759071216.365 -->
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):   <!-- url: https://default.finance-yql-production.finance-k8s.omega.yahoo.com/v1/v1/finance/search?q=appl&region=TW-->
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):   <script type="text/javascript">
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):     function buildUrl(url, parameters){
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       var qs = [];
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       for(var key in parameters) {
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):         var value = parameters[key];
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):         qs.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       url = url + "?" + qs.join('&');
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       return url;
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):     function generateBRBMarkup(site) {
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       params.source = 'brb';
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       generateBeaconMarkup(params);
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       var englishHeader = 'Will be right back...';
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       var englishMessage1 = 'Thank you for your patience.';
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       var englishMessage2 = 'Our engineers are working quickly to resolve the issue.';
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       var defaultLogoStyle = '';
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       var siteDataMap = {
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):         'default': {
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           logo: 'https://s.yimg.com/rz/p/yahoo_frontpage_en-US_s_f_p_205x58_frontpage.png',
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           logoAlt: 'Yahoo Logo',
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           logoStyle: defaultLogoStyle,
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           header: englishHeader,
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           message1: englishMessage1,
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):           message2: englishMessage2
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):         }
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       };
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       var siteDetails = siteDataMap['default'];
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       document.write('<table><tbody><tr><td>');
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       document.write('<div id="content">');
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       document.write('<img src="' + siteDetails['logo'] + '" alt="' + siteDetails['logoAlt'] + '" style="' + siteDetails['logoStyle'] + '">');
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       document.write('<h1 style="margin-top:20px;">' + siteDetails['header'] + '</h1>');
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-1">' + siteDetails['message1'] + '</p>');
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-2">' + siteDetails['message2'] + '</p>');
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       document.write('</div>');
+09-28 22:53:39.147 I/okhttp.OkHttpClient(31598):       document.write('</td></tr></tbody></table>');
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     function generateBeaconMarkup(params) {
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         document.write('<img src="' + buildUrl('//geo.yahoo.com/b', params) + '" style="display:none;" width="0px" height="0px"/>');
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         var beacon = new Image();
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         beacon.src = buildUrl('//bcn.fp.yahoo.com/p', params);
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     var hostname = window.location.hostname;
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     var device = 'smartphone';
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     var ynet = ('-' === '1');
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     var time = new Date().getTime();
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     var params = {
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         s: '1197757129',
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         t: time,
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         err_url: document.URL,
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         err: '500',
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         test: '-',
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         ats_host: 'ats-ncache-api--production-sg3-86868f9764-6b528',
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         rid: '-',
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         message: 'Unknown Host'
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     };
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     if(ynet) {
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         document.write('<div style="height: 5px; background-color: red;"></div>');
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     generateBRBMarkup(hostname, params);
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):   </script>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):   <noscript>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):   <table>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     <tbody>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):       <tr>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         <td>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):           <div id="englishContent">
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):             <h1 style="margin-top:20px;">Will be right back...</h1>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):             <p id="message-1">Thank you for your patience.</p>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):             <p id="message-2">Our engineers are working quickly to resolve the issue.</p>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):           </div>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):         </td>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):       </tr>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):     </tbody>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):   </table>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):   </noscript>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598):   </body>
+09-28 22:53:39.148 I/okhttp.OkHttpClient(31598): </html>
+09-28 22:53:39.149 I/okhttp.OkHttpClient(31598): <-- END HTTP (4478-byte body)
+09-28 22:53:39.151 D/WealthManagerDebug(31598): [22:53:39.150] ERROR: === STOCK SEARCH FAILED ===
+09-28 22:53:39.151 D/WealthManagerDebug(31598): [22:53:39.151] ERROR: Exception: HTTP 500 
+09-28 22:53:39.151 D/WealthManagerDebug(31598): [22:53:39.151] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:39.151 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:39.151 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:39.151 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:39.151 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:39.151 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:39.151 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:39.152 D/WealthManagerDebug(31598): [22:53:39.151] ERROR: Failed to search stocks: HTTP 500 
+09-28 22:53:39.152 D/WealthManagerDebug(31598): [22:53:39.152] ERROR: Exception: HTTP 500 
+09-28 22:53:39.152 D/WealthManagerDebug(31598): [22:53:39.152] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:39.152 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:39.152 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:39.152 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:39.152 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:39.152 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:39.152 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:39.152 D/WealthManagerDebug(31598): [22:53:39.152] MARKET_DATA: Search failed for query: 'appl', market: 'TW'
+09-28 22:53:39.152 D/WealthManagerDebug(31598): [22:53:39.152] MARKET_DATA: Exception type: HttpException
+09-28 22:53:39.152 D/WealthManagerDebug(31598): [22:53:39.152] MARKET_DATA: Exception message: HTTP 500 
+09-28 22:53:39.153 D/WealthManagerDebug(31598): [22:53:39.152] ASSETS: MarketDataService returned 0 results
+09-28 22:53:39.153 D/WealthManagerDebug(31598): [22:53:39.153] ASSETS: Stock search completed: 0 results found
+09-28 22:53:39.153 D/WealthManagerDebug(31598): [22:53:39.153] ASSETS: UI state updated with search results
+09-28 22:53:39.153 D/WealthManagerDebug(31598): [22:53:39.153] ASSETS: === STOCK SEARCH IN VIEWMODEL COMPLETED ===
+09-28 22:53:40.075 D/InsetsController(31598): show(ime())
+09-28 22:53:40.076 I/ImeTracker(31598): com.wealthmanager:30eee0dd: onRequestShow at ORIGIN_CLIENT reason SHOW_SOFT_INPUT_BY_INSETS_API fromUser false
+09-28 22:53:40.077 I/ImeTracker(31598): com.wealthmanager:30eee0dd: onCancelled at PHASE_CLIENT_APPLY_ANIMATION
+09-28 22:53:40.107 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:40.203 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:40.233 W/RecordingIC(31598): requestCursorUpdates is not supported
+09-28 22:53:41.173 D/WealthManagerDebug(31598): [22:53:41.172] UI: User typing stock shares: 9
+09-28 22:53:41.327 D/WealthManagerDebug(31598): [22:53:41.327] UI: User typing stock shares: 99
+09-28 22:53:41.959 D/WealthManagerDebug(31598): [22:53:41.958] USER_ACTION: US Market Selected
+09-28 22:53:41.959 D/WealthManagerDebug(31598): [22:53:41.959] UI: User selected US market for stock
+09-28 22:53:42.671 D/WealthManagerDebug(31598): [22:53:42.670] USER_ACTION: Add Asset Button Clicked
+09-28 22:53:42.671 D/WealthManagerDebug(31598): [22:53:42.671] UI: Adding stock asset: appl, 99 shares, US market
+09-28 22:53:42.672 D/WealthManagerDebug(31598): [22:53:42.672] ASSETS: Adding stock asset: appl, 99.0 shares, market: US
+09-28 22:53:42.673 D/WealthManagerDebug(31598): [22:53:42.672] ASSETS: Stock asset created: appl, 99 shares
+09-28 22:53:42.673 D/WealthManagerDebug(31598): [22:53:42.673] REPOSITORY: Inserting stock asset: appl 99 shares
+09-28 22:53:42.682 D/ImeBackDispatcher(31598): Clear (mImeCallbacks.size=1)
+09-28 22:53:42.683 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): android.view.ViewRootImpl$$ExternalSyntheticLambda12@7e6e59a
+09-28 22:53:42.683 D/ImeBackDispatcher(31598): switch root view (mImeCallbacks.size=0)
+09-28 22:53:42.683 D/WindowOnBackDispatcher(31598): setTopOnBackInvokedCallback (unwrapped): null
+09-28 22:53:42.708 D/HWUI    (31598): endAllActiveAnimators on 0xb400007006af24c0 (UnprojectedRipple) with handle 0xb400006f36ac38f0
+09-28 22:53:42.708 D/HWUI    (31598): endAllActiveAnimators on 0xb400007006a96900 (UnprojectedRipple) with handle 0xb400006f36abd470
+09-28 22:53:42.772 I/ImeTracker(31598): com.wealthmanager:2ed41662: onRequestHide at ORIGIN_CLIENT reason HIDE_SOFT_INPUT fromUser false
+09-28 22:53:42.772 I/ImeTracker(31598): com.wealthmanager:2ed41662: onFailed at PHASE_CLIENT_VIEW_SERVED
+09-28 22:53:42.777 D/WealthManagerDebug(31598): [22:53:42.776] REPOSITORY: Stock asset inserted successfully
+09-28 22:53:42.778 D/WealthManagerDebug(31598): [22:53:42.777] ASSETS: Stock asset inserted to database
+09-28 22:53:42.779 D/WealthManagerDebug(31598): [22:53:42.778] DASHBOARD: Assets updated - Cash: 2, Stock: 2
+09-28 22:53:42.779 D/WealthManagerDebug(31598): [22:53:42.779] DASHBOARD: Total Assets: 60100.1, Cash: 60100.1, Stock: 0.0
+09-28 22:53:42.780 D/WealthManagerDebug(31598): [22:53:42.780] DASHBOARD: Assets updated - Cash: 2, Stock: 2
+09-28 22:53:42.781 D/WealthManagerDebug(31598): [22:53:42.780] DASHBOARD: Total Assets: 60100.1, Cash: 60100.1, Stock: 0.0
+09-28 22:53:42.781 D/WealthManagerDebug(31598): [22:53:42.781] ASSETS: Assets loaded - Cash: 2, Stock: 2
+09-28 22:53:42.887 D/ImeBackDispatcher(31598): switch root view (mImeCallbacks.size=0)
+09-28 22:53:42.897 W/RemoteInputConnectionImpl(31598): requestCursorUpdates on inactive InputConnection
+09-28 22:53:42.898 D/ImeBackDispatcher(31598): Unregister received callback id=88012994
+09-28 22:53:42.898 W/ImeBackDispatcher(31598): Ime callback not found. Ignoring unregisterReceivedCallback. callbackId: 88012994 remaining callbacks: 0
+09-28 22:53:42.902 D/InsetsController(31598): hide(ime())
+09-28 22:53:42.902 I/ImeTracker(31598): com.wealthmanager:2df751ca: onCancelled at PHASE_CLIENT_ALREADY_HIDDEN
+09-28 22:53:42.930 I/ImeTracker(31598): system_server:7231866e: onCancelled at PHASE_CLIENT_ON_CONTROLS_CHANGED
+09-28 22:53:47.854 D/WealthManagerDebug(31598): [22:53:47.853] USER_ACTION: Dashboard Screen Opened
+09-28 22:53:47.855 D/WealthManagerDebug(31598): [22:53:47.854] DASHBOARD: Loading portfolio data
+09-28 22:53:47.857 D/WealthManagerDebug(31598): [22:53:47.857] CHART: PieChartComponent rendered with 4 assets
+09-28 22:53:47.857 D/WealthManagerDebug(31598): [22:53:47.857] CHART: Total chart value: 60100.1
+09-28 22:53:47.857 D/WealthManagerDebug(31598): [22:53:47.857] CHART: Asset 0: TWD 100.1 = 100.1 (0%)
+09-28 22:53:47.858 D/WealthManagerDebug(31598): [22:53:47.857] CHART: Asset 1: USD 2000.0 = 60000.0 (99%)
+09-28 22:53:47.858 D/WealthManagerDebug(31598): [22:53:47.858] CHART: Asset 2: appl (appl) = 0.0 (0%)
+09-28 22:53:47.858 D/WealthManagerDebug(31598): [22:53:47.858] CHART: Asset 3: apple (apple) = 0.0 (0%)
+09-28 22:53:52.650 D/WealthManagerDebug(31598): [22:53:52.649] USER_ACTION: Refresh Data Button Clicked
+09-28 22:53:52.650 D/WealthManagerDebug(31598): [22:53:52.650] UI: User clicked refresh button to update market data
+09-28 22:53:52.650 D/WealthManagerDebug(31598): [22:53:52.650] DASHBOARD: Refreshing data - starting market data update
+09-28 22:53:52.651 D/WealthManagerDebug(31598): [22:53:52.651] DASHBOARD: Updating exchange rates
+09-28 22:53:52.651 D/WealthManagerDebug(31598): [22:53:52.651] MARKET_DATA: Starting exchange rate update
+09-28 22:53:52.651 D/WealthManagerDebug(31598): [22:53:52.651] MARKET_DATA: API Request - Exchange Rate: USD=X
+09-28 22:53:52.657 I/okhttp.OkHttpClient(31598): --> GET https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=USD%3DX
+09-28 22:53:52.657 I/okhttp.OkHttpClient(31598): --> END GET
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): <-- 500 https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=USD%3DX (244ms)
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): date: Sun, 28 Sep 2025 14:53:50 GMT
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): strict-transport-security: max-age=31536000
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): server: ATS
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): content-type: text/html
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): content-language: en
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): content-length: 4476
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): cache-control: max-age=0, private
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): expires: -1
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): age: 0
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): referrer-policy: no-referrer-when-downgrade
+09-28 22:53:52.903 I/okhttp.OkHttpClient(31598): x-content-type-options: nosniff
+09-28 22:53:52.904 I/okhttp.OkHttpClient(31598): x-xss-protection: 1; mode=block
+09-28 22:53:52.904 I/okhttp.OkHttpClient(31598): x-frame-options: SAMEORIGIN
+09-28 22:53:52.905 I/okhttp.OkHttpClient(31598): <!DOCTYPE html>
+09-28 22:53:52.905 I/okhttp.OkHttpClient(31598): <html lang="en-us">
+09-28 22:53:52.905 I/okhttp.OkHttpClient(31598):   <head>
+09-28 22:53:52.905 I/okhttp.OkHttpClient(31598):     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+09-28 22:53:52.905 I/okhttp.OkHttpClient(31598):     <meta charset="utf-8">
+09-28 22:53:52.905 I/okhttp.OkHttpClient(31598):     <title>Yahoo</title>
+09-28 22:53:52.905 I/okhttp.OkHttpClient(31598):     <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
+09-28 22:53:52.905 I/okhttp.OkHttpClient(31598):     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+09-28 22:53:52.905 I/okhttp.OkHttpClient(31598):     <style>
+09-28 22:53:52.905 I/okhttp.OkHttpClient(31598):       html {
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       body {
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           background: #fafafc url(https://s.yimg.com/nn/img/sad-panda-201402200631.png) 50% 50%;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           background-size: cover;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           text-align: center;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           font: 300 18px "helvetica neue", helvetica, verdana, tahoma, arial, sans-serif;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       table {
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           width: 100%;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           table-layout: fixed;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           border-collapse: collapse;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           border-spacing: 0;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           border: none;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       h1 {
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           font-size: 42px;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           font-weight: 400;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           color: #400090;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       p {
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           color: #1A1A1A;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       #message-1 {
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           font-weight: bold;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       #message-2 {
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           display: inline-block;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           *display: inline;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           zoom: 1;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           max-width: 17em;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):           _width: 17em;
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       </style>
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       <script>
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):       </script>
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):   </head>
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):   <body>
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):   <!-- status code : 500 -->
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):   <!-- Unknown Host -->
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):   <!-- host machine: ats-ncache-api--production-sg3-86868f9764-w7gxb -->
+09-28 22:53:52.906 I/okhttp.OkHttpClient(31598):   <!-- timestamp: 1759071230.124 -->
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):   <!-- url: https://default.finance-yql-production.finance-k8s.omega.yahoo.com/v1/v8/finance/quote?symbols=USD%3DX-->
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):   <script type="text/javascript">
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):     function buildUrl(url, parameters){
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       var qs = [];
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       for(var key in parameters) {
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):         var value = parameters[key];
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):         qs.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       url = url + "?" + qs.join('&');
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       return url;
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):     function generateBRBMarkup(site) {
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       params.source = 'brb';
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       generateBeaconMarkup(params);
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       var englishHeader = 'Will be right back...';
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       var englishMessage1 = 'Thank you for your patience.';
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       var englishMessage2 = 'Our engineers are working quickly to resolve the issue.';
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       var defaultLogoStyle = '';
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       var siteDataMap = {
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):         'default': {
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):           logo: 'https://s.yimg.com/rz/p/yahoo_frontpage_en-US_s_f_p_205x58_frontpage.png',
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):           logoAlt: 'Yahoo Logo',
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):           logoStyle: defaultLogoStyle,
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):           header: englishHeader,
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):           message1: englishMessage1,
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):           message2: englishMessage2
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):         }
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       };
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       var siteDetails = siteDataMap['default'];
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       document.write('<table><tbody><tr><td>');
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       document.write('<div id="content">');
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       document.write('<img src="' + siteDetails['logo'] + '" alt="' + siteDetails['logoAlt'] + '" style="' + siteDetails['logoStyle'] + '">');
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       document.write('<h1 style="margin-top:20px;">' + siteDetails['header'] + '</h1>');
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-1">' + siteDetails['message1'] + '</p>');
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-2">' + siteDetails['message2'] + '</p>');
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       document.write('</div>');
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):       document.write('</td></tr></tbody></table>');
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):     function generateBeaconMarkup(params) {
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):         document.write('<img src="' + buildUrl('//geo.yahoo.com/b', params) + '" style="display:none;" width="0px" height="0px"/>');
+09-28 22:53:52.907 I/okhttp.OkHttpClient(31598):         var beacon = new Image();
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         beacon.src = buildUrl('//bcn.fp.yahoo.com/p', params);
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     var hostname = window.location.hostname;
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     var device = 'smartphone';
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     var ynet = ('-' === '1');
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     var time = new Date().getTime();
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     var params = {
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         s: '1197757129',
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         t: time,
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         err_url: document.URL,
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         err: '500',
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         test: '-',
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         ats_host: 'ats-ncache-api--production-sg3-86868f9764-w7gxb',
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         rid: '-',
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         message: 'Unknown Host'
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     };
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     if(ynet) {
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         document.write('<div style="height: 5px; background-color: red;"></div>');
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     generateBRBMarkup(hostname, params);
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):   </script>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):   <noscript>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):   <table>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     <tbody>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):       <tr>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         <td>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):           <div id="englishContent">
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):             <h1 style="margin-top:20px;">Will be right back...</h1>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):             <p id="message-1">Thank you for your patience.</p>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):             <p id="message-2">Our engineers are working quickly to resolve the issue.</p>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):           </div>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):         </td>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):       </tr>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):     </tbody>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):   </table>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):   </noscript>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598):   </body>
+09-28 22:53:52.908 I/okhttp.OkHttpClient(31598): </html>
+09-28 22:53:52.909 I/okhttp.OkHttpClient(31598): <-- END HTTP (4476-byte body)
+09-28 22:53:52.911 D/WealthManagerDebug(31598): [22:53:52.910] ERROR: Failed to update exchange rates: HTTP 500 
+09-28 22:53:52.912 D/WealthManagerDebug(31598): [22:53:52.911] ERROR: Exception: HTTP 500 
+09-28 22:53:52.913 D/WealthManagerDebug(31598): [22:53:52.912] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:52.913 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:52.913 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:52.913 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:52.913 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:52.913 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:52.913 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:52.913 D/WealthManagerDebug(31598): [22:53:52.913] DASHBOARD: Updating stock prices
+09-28 22:53:52.914 D/WealthManagerDebug(31598): [22:53:52.913] MARKET_DATA: Starting stock price update
+09-28 22:53:52.924 D/WealthManagerDebug(31598): [22:53:52.923] MARKET_DATA: Found 2 stock assets to update
+09-28 22:53:52.924 D/WealthManagerDebug(31598): [22:53:52.924] MARKET_DATA: Updating appl (US market)
+09-28 22:53:52.924 D/WealthManagerDebug(31598): [22:53:52.924] MARKET_DATA: API Request - Symbol: appl, Region: US
+09-28 22:53:52.927 I/okhttp.OkHttpClient(31598): --> GET https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=appl&region=US
+09-28 22:53:52.927 I/okhttp.OkHttpClient(31598): --> END GET
+09-28 22:53:53.103 I/okhttp.OkHttpClient(31598): <-- 500 https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=appl&region=US (175ms)
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): date: Sun, 28 Sep 2025 14:53:50 GMT
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): strict-transport-security: max-age=31536000
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): server: ATS
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): content-type: text/html
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): content-language: en
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): content-length: 4483
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): cache-control: max-age=0, private
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): expires: -1
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): age: 0
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): referrer-policy: no-referrer-when-downgrade
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): x-content-type-options: nosniff
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): x-xss-protection: 1; mode=block
+09-28 22:53:53.104 I/okhttp.OkHttpClient(31598): x-frame-options: SAMEORIGIN
+09-28 22:53:53.108 I/okhttp.OkHttpClient(31598): <!DOCTYPE html>
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598): <html lang="en-us">
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):   <head>
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):     <meta charset="utf-8">
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):     <title>Yahoo</title>
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):     <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):     <style>
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):       html {
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.109 I/okhttp.OkHttpClient(31598):       body {
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):           background: #fafafc url(https://s.yimg.com/nn/img/sad-panda-201402200631.png) 50% 50%;
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):           background-size: cover;
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):           text-align: center;
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):           font: 300 18px "helvetica neue", helvetica, verdana, tahoma, arial, sans-serif;
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):       table {
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):           width: 100%;
+09-28 22:53:53.110 I/okhttp.OkHttpClient(31598):           table-layout: fixed;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           border-collapse: collapse;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           border-spacing: 0;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           border: none;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):       h1 {
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           font-size: 42px;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           font-weight: 400;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           color: #400090;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):       p {
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           color: #1A1A1A;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):       #message-1 {
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           font-weight: bold;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):       #message-2 {
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           display: inline-block;
+09-28 22:53:53.111 I/okhttp.OkHttpClient(31598):           *display: inline;
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):           zoom: 1;
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):           max-width: 17em;
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):           _width: 17em;
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):       </style>
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):       <script>
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):       
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):       </script>
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):   </head>
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):   <body>
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):   <!-- status code : 500 -->
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):   <!-- Unknown Host -->
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):   <!-- host machine: ats-ncache-api--production-sg3-86868f9764-27x2m -->
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):   <!-- timestamp: 1759071230.328 -->
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):   <!-- url: https://default.finance-yql-production.finance-k8s.omega.yahoo.com/v1/v8/finance/quote?symbols=appl&region=US-->
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):   <script type="text/javascript">
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):     function buildUrl(url, parameters){
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):       var qs = [];
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):       for(var key in parameters) {
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):         var value = parameters[key];
+09-28 22:53:53.112 I/okhttp.OkHttpClient(31598):         qs.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):       url = url + "?" + qs.join('&');
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):       return url;
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):     function generateBRBMarkup(site) {
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):       params.source = 'brb';
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):       generateBeaconMarkup(params);
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):       var englishHeader = 'Will be right back...';
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):       var englishMessage1 = 'Thank you for your patience.';
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):       var englishMessage2 = 'Our engineers are working quickly to resolve the issue.';
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):       var defaultLogoStyle = '';
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):       var siteDataMap = {
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):         'default': {
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):           logo: 'https://s.yimg.com/rz/p/yahoo_frontpage_en-US_s_f_p_205x58_frontpage.png',
+09-28 22:53:53.113 I/okhttp.OkHttpClient(31598):           logoAlt: 'Yahoo Logo',
+09-28 22:53:53.114 I/okhttp.OkHttpClient(31598):           logoStyle: defaultLogoStyle,
+09-28 22:53:53.114 I/okhttp.OkHttpClient(31598):           header: englishHeader,
+09-28 22:53:53.114 I/okhttp.OkHttpClient(31598):           message1: englishMessage1,
+09-28 22:53:53.114 I/okhttp.OkHttpClient(31598):           message2: englishMessage2
+09-28 22:53:53.114 I/okhttp.OkHttpClient(31598):         }
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       };
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       var siteDetails = siteDataMap['default'];
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       document.write('<table><tbody><tr><td>');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       document.write('<div id="content">');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       document.write('<img src="' + siteDetails['logo'] + '" alt="' + siteDetails['logoAlt'] + '" style="' + siteDetails['logoStyle'] + '">');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       document.write('<h1 style="margin-top:20px;">' + siteDetails['header'] + '</h1>');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-1">' + siteDetails['message1'] + '</p>');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-2">' + siteDetails['message2'] + '</p>');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       document.write('</div>');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       document.write('</td></tr></tbody></table>');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     function generateBeaconMarkup(params) {
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         document.write('<img src="' + buildUrl('//geo.yahoo.com/b', params) + '" style="display:none;" width="0px" height="0px"/>');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         var beacon = new Image();
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         beacon.src = buildUrl('//bcn.fp.yahoo.com/p', params);
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     var hostname = window.location.hostname;
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     var device = 'smartphone';
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     var ynet = ('-' === '1');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     var time = new Date().getTime();
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     var params = {
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         s: '1197757129',
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         t: time,
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         err_url: document.URL,
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         err: '500',
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         test: '-',
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         ats_host: 'ats-ncache-api--production-sg3-86868f9764-27x2m',
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         rid: '-',
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         message: 'Unknown Host'
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     };
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     if(ynet) {
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         document.write('<div style="height: 5px; background-color: red;"></div>');
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     generateBRBMarkup(hostname, params);
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):   </script>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):   <noscript>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):   <table>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     <tbody>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       <tr>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         <td>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):           <div id="englishContent">
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):             <h1 style="margin-top:20px;">Will be right back...</h1>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):             <p id="message-1">Thank you for your patience.</p>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):             <p id="message-2">Our engineers are working quickly to resolve the issue.</p>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):           </div>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):         </td>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):       </tr>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):     </tbody>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):   </table>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):   </noscript>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598):   </body>
+09-28 22:53:53.115 I/okhttp.OkHttpClient(31598): </html>
+09-28 22:53:53.116 I/okhttp.OkHttpClient(31598): <-- END HTTP (4483-byte body)
+09-28 22:53:53.118 D/WealthManagerDebug(31598): [22:53:53.117] ERROR: Failed to update appl: HTTP 500 
+09-28 22:53:53.118 D/WealthManagerDebug(31598): [22:53:53.118] ERROR: Exception: HTTP 500 
+09-28 22:53:53.119 D/WealthManagerDebug(31598): [22:53:53.118] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:53.119 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:53.119 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:53.119 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:53.119 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:53.119 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:53.119 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:53.119 D/WealthManagerDebug(31598): [22:53:53.119] MARKET_DATA: Updating apple (US market)
+09-28 22:53:53.119 D/WealthManagerDebug(31598): [22:53:53.119] MARKET_DATA: API Request - Symbol: apple, Region: US
+09-28 22:53:53.122 I/okhttp.OkHttpClient(31598): --> GET https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=apple&region=US
+09-28 22:53:53.122 I/okhttp.OkHttpClient(31598): --> END GET
+09-28 22:53:53.306 I/okhttp.OkHttpClient(31598): <-- 500 https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=apple&region=US (183ms)
+09-28 22:53:53.306 I/okhttp.OkHttpClient(31598): date: Sun, 28 Sep 2025 14:53:50 GMT
+09-28 22:53:53.307 I/okhttp.OkHttpClient(31598): strict-transport-security: max-age=31536000
+09-28 22:53:53.307 I/okhttp.OkHttpClient(31598): server: ATS
+09-28 22:53:53.307 I/okhttp.OkHttpClient(31598): content-type: text/html
+09-28 22:53:53.307 I/okhttp.OkHttpClient(31598): content-language: en
+09-28 22:53:53.307 I/okhttp.OkHttpClient(31598): content-length: 4484
+09-28 22:53:53.307 I/okhttp.OkHttpClient(31598): cache-control: max-age=0, private
+09-28 22:53:53.308 I/okhttp.OkHttpClient(31598): expires: -1
+09-28 22:53:53.308 I/okhttp.OkHttpClient(31598): age: 0
+09-28 22:53:53.308 I/okhttp.OkHttpClient(31598): referrer-policy: no-referrer-when-downgrade
+09-28 22:53:53.308 I/okhttp.OkHttpClient(31598): x-content-type-options: nosniff
+09-28 22:53:53.308 I/okhttp.OkHttpClient(31598): x-xss-protection: 1; mode=block
+09-28 22:53:53.309 I/okhttp.OkHttpClient(31598): x-frame-options: SAMEORIGIN
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598): <!DOCTYPE html>
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598): <html lang="en-us">
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):   <head>
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):     <meta charset="utf-8">
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):     <title>Yahoo</title>
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):     <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):     <style>
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):       html {
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):       body {
+09-28 22:53:53.312 I/okhttp.OkHttpClient(31598):           background: #fafafc url(https://s.yimg.com/nn/img/sad-panda-201402200631.png) 50% 50%;
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):           background-size: cover;
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):           text-align: center;
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):           font: 300 18px "helvetica neue", helvetica, verdana, tahoma, arial, sans-serif;
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):       table {
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):           width: 100%;
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):           table-layout: fixed;
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):           border-collapse: collapse;
+09-28 22:53:53.314 I/okhttp.OkHttpClient(31598):           border-spacing: 0;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           border: none;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       h1 {
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           font-size: 42px;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           font-weight: 400;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           color: #400090;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       p {
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           color: #1A1A1A;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       #message-1 {
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           font-weight: bold;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       #message-2 {
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           display: inline-block;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           *display: inline;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           zoom: 1;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           max-width: 17em;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           _width: 17em;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       </style>
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       <script>
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       </script>
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):   </head>
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):   <body>
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):   <!-- status code : 500 -->
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):   <!-- Unknown Host -->
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):   <!-- host machine: ats-ncache-api--production-sg3-86868f9764-tf9bz -->
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):   <!-- timestamp: 1759071230.526 -->
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):   <!-- url: https://default.finance-yql-production.finance-k8s.omega.yahoo.com/v1/v8/finance/quote?symbols=apple&region=US-->
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):   <script type="text/javascript">
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):     function buildUrl(url, parameters){
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       var qs = [];
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       for(var key in parameters) {
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):         var value = parameters[key];
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):         qs.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       url = url + "?" + qs.join('&');
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       return url;
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):     function generateBRBMarkup(site) {
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       params.source = 'brb';
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       generateBeaconMarkup(params);
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       var englishHeader = 'Will be right back...';
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       var englishMessage1 = 'Thank you for your patience.';
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       var englishMessage2 = 'Our engineers are working quickly to resolve the issue.';
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       var defaultLogoStyle = '';
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):       var siteDataMap = {
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):         'default': {
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           logo: 'https://s.yimg.com/rz/p/yahoo_frontpage_en-US_s_f_p_205x58_frontpage.png',
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           logoAlt: 'Yahoo Logo',
+09-28 22:53:53.315 I/okhttp.OkHttpClient(31598):           logoStyle: defaultLogoStyle,
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):           header: englishHeader,
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):           message1: englishMessage1,
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):           message2: englishMessage2
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         }
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       };
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       var siteDetails = siteDataMap['default'];
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       document.write('<table><tbody><tr><td>');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       document.write('<div id="content">');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       document.write('<img src="' + siteDetails['logo'] + '" alt="' + siteDetails['logoAlt'] + '" style="' + siteDetails['logoStyle'] + '">');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       document.write('<h1 style="margin-top:20px;">' + siteDetails['header'] + '</h1>');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-1">' + siteDetails['message1'] + '</p>');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-2">' + siteDetails['message2'] + '</p>');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       document.write('</div>');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       document.write('</td></tr></tbody></table>');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     function generateBeaconMarkup(params) {
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         document.write('<img src="' + buildUrl('//geo.yahoo.com/b', params) + '" style="display:none;" width="0px" height="0px"/>');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         var beacon = new Image();
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         beacon.src = buildUrl('//bcn.fp.yahoo.com/p', params);
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     var hostname = window.location.hostname;
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     var device = 'smartphone';
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     var ynet = ('-' === '1');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     var time = new Date().getTime();
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     var params = {
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         s: '1197757129',
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         t: time,
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         err_url: document.URL,
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         err: '500',
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         test: '-',
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         ats_host: 'ats-ncache-api--production-sg3-86868f9764-tf9bz',
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         rid: '-',
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         message: 'Unknown Host'
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     };
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     if(ynet) {
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         document.write('<div style="height: 5px; background-color: red;"></div>');
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     generateBRBMarkup(hostname, params);
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):   </script>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):   <noscript>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):   <table>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     <tbody>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       <tr>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         <td>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):           <div id="englishContent">
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):             <h1 style="margin-top:20px;">Will be right back...</h1>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):             <p id="message-1">Thank you for your patience.</p>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):             <p id="message-2">Our engineers are working quickly to resolve the issue.</p>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):           </div>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):         </td>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):       </tr>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):     </tbody>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):   </table>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):   </noscript>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598):   </body>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598): </html>
+09-28 22:53:53.316 I/okhttp.OkHttpClient(31598): <-- END HTTP (4484-byte body)
+09-28 22:53:53.318 D/WealthManagerDebug(31598): [22:53:53.317] ERROR: Failed to update apple: HTTP 500 
+09-28 22:53:53.318 D/WealthManagerDebug(31598): [22:53:53.318] ERROR: Exception: HTTP 500 
+09-28 22:53:53.319 D/WealthManagerDebug(31598): [22:53:53.319] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:53.319 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:53.319 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:53.319 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:53.319 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:53.319 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:53.319 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:53.319 D/WealthManagerDebug(31598): [22:53:53.319] MARKET_DATA: Stock price update completed for 2 stocks
+09-28 22:53:53.319 D/WealthManagerDebug(31598): [22:53:53.319] DASHBOARD: Market data update completed
+09-28 22:53:53.521 D/WealthManagerDebug(31598): [22:53:53.521] USER_ACTION: Refresh Data Button Clicked
+09-28 22:53:53.522 D/WealthManagerDebug(31598): [22:53:53.522] UI: User clicked refresh button to update market data
+09-28 22:53:53.522 D/WealthManagerDebug(31598): [22:53:53.522] DASHBOARD: Refreshing data - starting market data update
+09-28 22:53:53.523 D/WealthManagerDebug(31598): [22:53:53.522] DASHBOARD: Updating exchange rates
+09-28 22:53:53.523 D/WealthManagerDebug(31598): [22:53:53.523] MARKET_DATA: Starting exchange rate update
+09-28 22:53:53.523 D/WealthManagerDebug(31598): [22:53:53.523] MARKET_DATA: API Request - Exchange Rate: USD=X
+09-28 22:53:53.526 I/okhttp.OkHttpClient(31598): --> GET https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=USD%3DX
+09-28 22:53:53.526 I/okhttp.OkHttpClient(31598): --> END GET
+09-28 22:53:53.755 I/okhttp.OkHttpClient(31598): <-- 500 https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=USD%3DX (228ms)
+09-28 22:53:53.755 I/okhttp.OkHttpClient(31598): date: Sun, 28 Sep 2025 14:53:50 GMT
+09-28 22:53:53.755 I/okhttp.OkHttpClient(31598): strict-transport-security: max-age=31536000
+09-28 22:53:53.755 I/okhttp.OkHttpClient(31598): server: ATS
+09-28 22:53:53.755 I/okhttp.OkHttpClient(31598): content-type: text/html
+09-28 22:53:53.755 I/okhttp.OkHttpClient(31598): content-language: en
+09-28 22:53:53.756 I/okhttp.OkHttpClient(31598): content-length: 4476
+09-28 22:53:53.756 I/okhttp.OkHttpClient(31598): cache-control: max-age=0, private
+09-28 22:53:53.756 I/okhttp.OkHttpClient(31598): expires: -1
+09-28 22:53:53.756 I/okhttp.OkHttpClient(31598): age: 3
+09-28 22:53:53.756 I/okhttp.OkHttpClient(31598): referrer-policy: no-referrer-when-downgrade
+09-28 22:53:53.756 I/okhttp.OkHttpClient(31598): x-content-type-options: nosniff
+09-28 22:53:53.756 I/okhttp.OkHttpClient(31598): x-xss-protection: 1; mode=block
+09-28 22:53:53.756 I/okhttp.OkHttpClient(31598): x-frame-options: SAMEORIGIN
+09-28 22:53:53.757 I/okhttp.OkHttpClient(31598): <!DOCTYPE html>
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598): <html lang="en-us">
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):   <head>
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):     <meta charset="utf-8">
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):     <title>Yahoo</title>
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):     <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):     <style>
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       html {
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       body {
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           background: #fafafc url(https://s.yimg.com/nn/img/sad-panda-201402200631.png) 50% 50%;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           background-size: cover;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           text-align: center;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           font: 300 18px "helvetica neue", helvetica, verdana, tahoma, arial, sans-serif;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       table {
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           width: 100%;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           table-layout: fixed;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           border-collapse: collapse;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           border-spacing: 0;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           border: none;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       h1 {
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           font-size: 42px;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           font-weight: 400;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           color: #400090;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       p {
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           color: #1A1A1A;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       #message-1 {
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           font-weight: bold;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       #message-2 {
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           display: inline-block;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           *display: inline;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           zoom: 1;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           max-width: 17em;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):           _width: 17em;
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       </style>
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       <script>
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):       </script>
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):   </head>
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):   <body>
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):   <!-- status code : 500 -->
+09-28 22:53:53.758 I/okhttp.OkHttpClient(31598):   <!-- Unknown Host -->
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):   <!-- host machine: ats-ncache-api--production-sg3-86868f9764-w7gxb -->
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):   <!-- timestamp: 1759071230.981 -->
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):   <!-- url: https://default.finance-yql-production.finance-k8s.omega.yahoo.com/v1/v8/finance/quote?symbols=USD%3DX-->
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):   <script type="text/javascript">
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     function buildUrl(url, parameters){
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       var qs = [];
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       for(var key in parameters) {
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         var value = parameters[key];
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         qs.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       url = url + "?" + qs.join('&');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       return url;
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     function generateBRBMarkup(site) {
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       params.source = 'brb';
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       generateBeaconMarkup(params);
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       var englishHeader = 'Will be right back...';
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       var englishMessage1 = 'Thank you for your patience.';
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       var englishMessage2 = 'Our engineers are working quickly to resolve the issue.';
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       var defaultLogoStyle = '';
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       var siteDataMap = {
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         'default': {
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):           logo: 'https://s.yimg.com/rz/p/yahoo_frontpage_en-US_s_f_p_205x58_frontpage.png',
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):           logoAlt: 'Yahoo Logo',
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):           logoStyle: defaultLogoStyle,
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):           header: englishHeader,
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):           message1: englishMessage1,
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):           message2: englishMessage2
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         }
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       };
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       var siteDetails = siteDataMap['default'];
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       document.write('<table><tbody><tr><td>');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       document.write('<div id="content">');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       document.write('<img src="' + siteDetails['logo'] + '" alt="' + siteDetails['logoAlt'] + '" style="' + siteDetails['logoStyle'] + '">');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       document.write('<h1 style="margin-top:20px;">' + siteDetails['header'] + '</h1>');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-1">' + siteDetails['message1'] + '</p>');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-2">' + siteDetails['message2'] + '</p>');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       document.write('</div>');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):       document.write('</td></tr></tbody></table>');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     function generateBeaconMarkup(params) {
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         document.write('<img src="' + buildUrl('//geo.yahoo.com/b', params) + '" style="display:none;" width="0px" height="0px"/>');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         var beacon = new Image();
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         beacon.src = buildUrl('//bcn.fp.yahoo.com/p', params);
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     var hostname = window.location.hostname;
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     var device = 'smartphone';
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     var ynet = ('-' === '1');
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     var time = new Date().getTime();
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     var params = {
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         s: '1197757129',
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         t: time,
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         err_url: document.URL,
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         err: '500',
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         test: '-',
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         ats_host: 'ats-ncache-api--production-sg3-86868f9764-w7gxb',
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         rid: '-',
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):         message: 'Unknown Host'
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     };
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.759 I/okhttp.OkHttpClient(31598):     if(ynet) {
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):         document.write('<div style="height: 5px; background-color: red;"></div>');
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):     generateBRBMarkup(hostname, params);
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):   </script>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):   <noscript>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):   <table>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):     <tbody>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):       <tr>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):         <td>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):           <div id="englishContent">
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):             <h1 style="margin-top:20px;">Will be right back...</h1>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):             <p id="message-1">Thank you for your patience.</p>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):             <p id="message-2">Our engineers are working quickly to resolve the issue.</p>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):           </div>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):         </td>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):       </tr>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):     </tbody>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):   </table>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):   </noscript>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598):   </body>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598): </html>
+09-28 22:53:53.760 I/okhttp.OkHttpClient(31598): <-- END HTTP (4476-byte body)
+09-28 22:53:53.762 D/WealthManagerDebug(31598): [22:53:53.762] ERROR: Failed to update exchange rates: HTTP 500 
+09-28 22:53:53.763 D/WealthManagerDebug(31598): [22:53:53.763] ERROR: Exception: HTTP 500 
+09-28 22:53:53.764 D/WealthManagerDebug(31598): [22:53:53.763] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:53.764 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:53.764 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:53.764 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:53.764 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:53.764 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:53.764 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:53.764 D/WealthManagerDebug(31598): [22:53:53.764] DASHBOARD: Updating stock prices
+09-28 22:53:53.764 D/WealthManagerDebug(31598): [22:53:53.764] MARKET_DATA: Starting stock price update
+09-28 22:53:53.773 D/WealthManagerDebug(31598): [22:53:53.773] MARKET_DATA: Found 2 stock assets to update
+09-28 22:53:53.773 D/WealthManagerDebug(31598): [22:53:53.773] MARKET_DATA: Updating appl (US market)
+09-28 22:53:53.774 D/WealthManagerDebug(31598): [22:53:53.774] MARKET_DATA: API Request - Symbol: appl, Region: US
+09-28 22:53:53.776 I/okhttp.OkHttpClient(31598): --> GET https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=appl&region=US
+09-28 22:53:53.776 I/okhttp.OkHttpClient(31598): --> END GET
+09-28 22:53:53.955 I/okhttp.OkHttpClient(31598): <-- 500 https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=appl&region=US (178ms)
+09-28 22:53:53.955 I/okhttp.OkHttpClient(31598): date: Sun, 28 Sep 2025 14:53:51 GMT
+09-28 22:53:53.955 I/okhttp.OkHttpClient(31598): strict-transport-security: max-age=31536000
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): server: ATS
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): content-type: text/html
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): content-language: en
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): content-length: 4483
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): cache-control: max-age=0, private
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): expires: -1
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): age: 0
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): referrer-policy: no-referrer-when-downgrade
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): x-content-type-options: nosniff
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): x-xss-protection: 1; mode=block
+09-28 22:53:53.956 I/okhttp.OkHttpClient(31598): x-frame-options: SAMEORIGIN
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598): <!DOCTYPE html>
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598): <html lang="en-us">
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):   <head>
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):     <meta charset="utf-8">
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):     <title>Yahoo</title>
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):     <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):     <style>
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):       html {
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):       body {
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):           background: #fafafc url(https://s.yimg.com/nn/img/sad-panda-201402200631.png) 50% 50%;
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):           background-size: cover;
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):           text-align: center;
+09-28 22:53:53.957 I/okhttp.OkHttpClient(31598):           font: 300 18px "helvetica neue", helvetica, verdana, tahoma, arial, sans-serif;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       table {
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           width: 100%;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           table-layout: fixed;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           border-collapse: collapse;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           border-spacing: 0;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           border: none;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       h1 {
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           font-size: 42px;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           font-weight: 400;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           color: #400090;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       p {
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           color: #1A1A1A;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       #message-1 {
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           font-weight: bold;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       #message-2 {
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           display: inline-block;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           *display: inline;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           zoom: 1;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           max-width: 17em;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):           _width: 17em;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       </style>
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       <script>
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       </script>
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):   </head>
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):   <body>
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):   <!-- status code : 500 -->
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):   <!-- Unknown Host -->
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):   <!-- host machine: ats-ncache-api--production-sg3-86868f9764-27x2m -->
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):   <!-- timestamp: 1759071231.180 -->
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):   <!-- url: https://default.finance-yql-production.finance-k8s.omega.yahoo.com/v1/v8/finance/quote?symbols=appl&region=US-->
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):   <script type="text/javascript">
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):     function buildUrl(url, parameters){
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       var qs = [];
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       for(var key in parameters) {
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):         var value = parameters[key];
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):         qs.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       url = url + "?" + qs.join('&');
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       return url;
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):     function generateBRBMarkup(site) {
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       params.source = 'brb';
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       generateBeaconMarkup(params);
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       var englishHeader = 'Will be right back...';
+09-28 22:53:53.958 I/okhttp.OkHttpClient(31598):       var englishMessage1 = 'Thank you for your patience.';
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       var englishMessage2 = 'Our engineers are working quickly to resolve the issue.';
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       var defaultLogoStyle = '';
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       var siteDataMap = {
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         'default': {
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):           logo: 'https://s.yimg.com/rz/p/yahoo_frontpage_en-US_s_f_p_205x58_frontpage.png',
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):           logoAlt: 'Yahoo Logo',
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):           logoStyle: defaultLogoStyle,
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):           header: englishHeader,
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):           message1: englishMessage1,
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):           message2: englishMessage2
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         }
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       };
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       var siteDetails = siteDataMap['default'];
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       document.write('<table><tbody><tr><td>');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       document.write('<div id="content">');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       document.write('<img src="' + siteDetails['logo'] + '" alt="' + siteDetails['logoAlt'] + '" style="' + siteDetails['logoStyle'] + '">');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       document.write('<h1 style="margin-top:20px;">' + siteDetails['header'] + '</h1>');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-1">' + siteDetails['message1'] + '</p>');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-2">' + siteDetails['message2'] + '</p>');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       document.write('</div>');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       document.write('</td></tr></tbody></table>');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     function generateBeaconMarkup(params) {
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         document.write('<img src="' + buildUrl('//geo.yahoo.com/b', params) + '" style="display:none;" width="0px" height="0px"/>');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         var beacon = new Image();
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         beacon.src = buildUrl('//bcn.fp.yahoo.com/p', params);
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     var hostname = window.location.hostname;
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     var device = 'smartphone';
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     var ynet = ('-' === '1');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     var time = new Date().getTime();
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     var params = {
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         s: '1197757129',
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         t: time,
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         err_url: document.URL,
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         err: '500',
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         test: '-',
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         ats_host: 'ats-ncache-api--production-sg3-86868f9764-27x2m',
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         rid: '-',
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         message: 'Unknown Host'
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     };
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     if(ynet) {
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         document.write('<div style="height: 5px; background-color: red;"></div>');
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     generateBRBMarkup(hostname, params);
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):   </script>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):   <noscript>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):   <table>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     <tbody>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       <tr>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         <td>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):           <div id="englishContent">
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):             <h1 style="margin-top:20px;">Will be right back...</h1>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):             <p id="message-1">Thank you for your patience.</p>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):             <p id="message-2">Our engineers are working quickly to resolve the issue.</p>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):           </div>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):         </td>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):       </tr>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):     </tbody>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):   </table>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):   </noscript>
+09-28 22:53:53.959 I/okhttp.OkHttpClient(31598):   </body>
+09-28 22:53:53.960 I/okhttp.OkHttpClient(31598): </html>
+09-28 22:53:53.960 I/okhttp.OkHttpClient(31598): <-- END HTTP (4483-byte body)
+09-28 22:53:53.962 D/WealthManagerDebug(31598): [22:53:53.961] ERROR: Failed to update appl: HTTP 500 
+09-28 22:53:53.963 D/WealthManagerDebug(31598): [22:53:53.962] ERROR: Exception: HTTP 500 
+09-28 22:53:53.963 D/WealthManagerDebug(31598): [22:53:53.963] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:53.963 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:53.963 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:53.963 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:53.963 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:53.963 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:53.963 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:53.964 D/WealthManagerDebug(31598): [22:53:53.963] MARKET_DATA: Updating apple (US market)
+09-28 22:53:53.964 D/WealthManagerDebug(31598): [22:53:53.964] MARKET_DATA: API Request - Symbol: apple, Region: US
+09-28 22:53:53.967 I/okhttp.OkHttpClient(31598): --> GET https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=apple&region=US
+09-28 22:53:53.967 I/okhttp.OkHttpClient(31598): --> END GET
+09-28 22:53:54.139 I/okhttp.OkHttpClient(31598): <-- 500 https://query1.finance.yahoo.com/v1/v8/finance/quote?symbols=apple&region=US (172ms)
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): date: Sun, 28 Sep 2025 14:53:51 GMT
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): strict-transport-security: max-age=31536000
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): server: ATS
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): content-type: text/html
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): content-language: en
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): content-length: 4484
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): cache-control: max-age=0, private
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): expires: -1
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): age: 0
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): referrer-policy: no-referrer-when-downgrade
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): x-content-type-options: nosniff
+09-28 22:53:54.140 I/okhttp.OkHttpClient(31598): x-xss-protection: 1; mode=block
+09-28 22:53:54.141 I/okhttp.OkHttpClient(31598): x-frame-options: SAMEORIGIN
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598): <!DOCTYPE html>
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598): <html lang="en-us">
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):   <head>
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):     <meta http-equiv="content-type" content="text/html; charset=UTF-8">
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):     <meta charset="utf-8">
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):     <title>Yahoo</title>
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):     <meta name="viewport" content="width=device-width,initial-scale=1,minimal-ui">
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):     <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):     <style>
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):       html {
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):       body {
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):           background: #fafafc url(https://s.yimg.com/nn/img/sad-panda-201402200631.png) 50% 50%;
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):           background-size: cover;
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):           text-align: center;
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):           font: 300 18px "helvetica neue", helvetica, verdana, tahoma, arial, sans-serif;
+09-28 22:53:54.142 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       table {
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           height: 100%;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           width: 100%;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           table-layout: fixed;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           border-collapse: collapse;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           border-spacing: 0;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           border: none;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       h1 {
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           font-size: 42px;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           font-weight: 400;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           color: #400090;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       p {
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           color: #1A1A1A;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       #message-1 {
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           font-weight: bold;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           margin: 0;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       #message-2 {
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           display: inline-block;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           *display: inline;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           zoom: 1;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           max-width: 17em;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):           _width: 17em;
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       </style>
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       <script>
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       </script>
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):   </head>
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):   <body>
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):   <!-- status code : 500 -->
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):   <!-- Unknown Host -->
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):   <!-- host machine: ats-ncache-api--production-sg3-86868f9764-tf9bz -->
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):   <!-- timestamp: 1759071231.361 -->
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):   <!-- url: https://default.finance-yql-production.finance-k8s.omega.yahoo.com/v1/v8/finance/quote?symbols=apple&region=US-->
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):   <script type="text/javascript">
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):     function buildUrl(url, parameters){
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       var qs = [];
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):       for(var key in parameters) {
+09-28 22:53:54.143 I/okhttp.OkHttpClient(31598):         var value = parameters[key];
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):         qs.push(encodeURIComponent(key) + "=" + encodeURIComponent(value));
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       }
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       url = url + "?" + qs.join('&');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       return url;
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):     function generateBRBMarkup(site) {
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       params.source = 'brb';
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       generateBeaconMarkup(params);
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       var englishHeader = 'Will be right back...';
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       var englishMessage1 = 'Thank you for your patience.';
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       var englishMessage2 = 'Our engineers are working quickly to resolve the issue.';
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       var defaultLogoStyle = '';
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       var siteDataMap = {
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):         'default': {
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):           logo: 'https://s.yimg.com/rz/p/yahoo_frontpage_en-US_s_f_p_205x58_frontpage.png',
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):           logoAlt: 'Yahoo Logo',
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):           logoStyle: defaultLogoStyle,
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):           header: englishHeader,
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):           message1: englishMessage1,
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):           message2: englishMessage2
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):         }
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       };
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       var siteDetails = siteDataMap['default'];
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       document.write('<table><tbody><tr><td>');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       document.write('<div id="content">');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       document.write('<img src="' + siteDetails['logo'] + '" alt="' + siteDetails['logoAlt'] + '" style="' + siteDetails['logoStyle'] + '">');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       document.write('<h1 style="margin-top:20px;">' + siteDetails['header'] + '</h1>');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-1">' + siteDetails['message1'] + '</p>');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       document.write('<p id="message-2">' + siteDetails['message2'] + '</p>');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       document.write('</div>');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):       document.write('</td></tr></tbody></table>');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):     function generateBeaconMarkup(params) {
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):         document.write('<img src="' + buildUrl('//geo.yahoo.com/b', params) + '" style="display:none;" width="0px" height="0px"/>');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):         var beacon = new Image();
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):         beacon.src = buildUrl('//bcn.fp.yahoo.com/p', params);
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):     var hostname = window.location.hostname;
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):     var device = 'smartphone';
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):     var ynet = ('-' === '1');
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):     var time = new Date().getTime();
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):     var params = {
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):         s: '1197757129',
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):         t: time,
+09-28 22:53:54.144 I/okhttp.OkHttpClient(31598):         err_url: document.URL,
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):         err: '500',
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):         test: '-',
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):         ats_host: 'ats-ncache-api--production-sg3-86868f9764-tf9bz',
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):         rid: '-',
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):         message: 'Unknown Host'
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):     };
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):     if(ynet) {
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):         document.write('<div style="height: 5px; background-color: red;"></div>');
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):     }
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):     generateBRBMarkup(hostname, params);
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598): 
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):   </script>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):   <noscript>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):   <table>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):     <tbody>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):       <tr>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):         <td>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):           <div id="englishContent">
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):             <h1 style="margin-top:20px;">Will be right back...</h1>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):             <p id="message-1">Thank you for your patience.</p>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):             <p id="message-2">Our engineers are working quickly to resolve the issue.</p>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):           </div>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):         </td>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):       </tr>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):     </tbody>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):   </table>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):   </noscript>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598):   </body>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598): </html>
+09-28 22:53:54.145 I/okhttp.OkHttpClient(31598): <-- END HTTP (4484-byte body)
+09-28 22:53:54.150 D/WealthManagerDebug(31598): [22:53:54.149] ERROR: Failed to update apple: HTTP 500 
+09-28 22:53:54.150 D/WealthManagerDebug(31598): [22:53:54.150] ERROR: Exception: HTTP 500 
+09-28 22:53:54.151 D/WealthManagerDebug(31598): [22:53:54.150] ERROR: Stack trace: retrofit2.HttpException: HTTP 500 
+09-28 22:53:54.151 D/WealthManagerDebug(31598): 	at retrofit2.KotlinExtensions$await$2$2.onResponse(KotlinExtensions.kt:53)
+09-28 22:53:54.151 D/WealthManagerDebug(31598): 	at retrofit2.OkHttpCall$1.onResponse(OkHttpCall.java:161)
+09-28 22:53:54.151 D/WealthManagerDebug(31598): 	at okhttp3.internal.connection.RealCall$AsyncCall.run(RealCall.kt:519)
+09-28 22:53:54.151 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1156)
+09-28 22:53:54.151 D/WealthManagerDebug(31598): 	at java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:651)
+09-28 22:53:54.151 D/WealthManagerDebug(31598): 	at java.lang.Thread.run(Thread.java:1119)
+09-28 22:53:54.151 D/WealthManagerDebug(31598): [22:53:54.151] MARKET_DATA: Stock price update completed for 2 stocks
+09-28 22:53:54.151 D/WealthManagerDebug(31598): [22:53:54.151] DASHBOARD: Market data update completed
+09-28 22:53:54.371 D/WealthManagerDebug(31598): [22:53:54.370] USER_ACTION: Debug Log Button Clicked
+09-28 22:53:54.371 D/WealthManagerDebug(31598): [22:53:54.371] UI: User clicked debug log button to copy logs to clipboard
+09-28 22:53:54.376 D/WealthManagerDebug(31598): [22:53:54.376] DEBUG: Logs copied to clipboard (7 entries)
