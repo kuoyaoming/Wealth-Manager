@@ -121,12 +121,12 @@ class MarketDataService @Inject constructor(
                 debugLogManager.log("MARKET_DATA", "Exchange rate updated: USD/TWD = ${rateData.regularMarketPrice}")
             } else {
                 // Fallback to cached data
-                debugLogManager.log("MARKET_DATA", "API failed, using cached exchange rate")
+                debugLogManager.logWarning("MARKET_DATA", "API failed, using cached exchange rate")
                 val cachedRate = assetRepository.getExchangeRateSync("USD_TWD")
                 if (cachedRate != null) {
-                    debugLogManager.log("MARKET_DATA", "Using cached rate: ${cachedRate.rate} (last updated: ${cachedRate.lastUpdated})")
+                    debugLogManager.logWarning("MARKET_DATA", "Using cached rate: ${cachedRate.rate} (last updated: ${cachedRate.lastUpdated})")
                 } else {
-                    debugLogManager.log("MARKET_DATA", "No cached rate available, using default 30.0")
+                    debugLogManager.logWarning("MARKET_DATA", "No cached rate available, using default 30.0")
                 }
             }
             
@@ -135,7 +135,7 @@ class MarketDataService @Inject constructor(
             // Try to use cached data as fallback
             val cachedRate = assetRepository.getExchangeRateSync("USD_TWD")
             if (cachedRate != null) {
-                debugLogManager.log("MARKET_DATA", "Using cached exchange rate as fallback: ${cachedRate.rate}")
+                debugLogManager.logWarning("MARKET_DATA", "Using cached exchange rate as fallback: ${cachedRate.rate}")
             }
         }
     }

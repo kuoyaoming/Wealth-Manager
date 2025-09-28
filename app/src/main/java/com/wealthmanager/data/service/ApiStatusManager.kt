@@ -15,12 +15,13 @@ class ApiStatusManager @Inject constructor(
     private val _apiStatus = MutableStateFlow(ApiStatus())
     val apiStatus: StateFlow<ApiStatus> = _apiStatus.asStateFlow()
     
-    fun setApiError(error: String, isRetrying: Boolean = false) {
-        debugLogManager.logWarning("API_STATUS", "API Error: $error, Retrying: $isRetrying")
+    fun setApiError(error: String, isDataStale: Boolean = false, isRetrying: Boolean = false) {
+        debugLogManager.logWarning("API_STATUS", "API Error: $error, Data Stale: $isDataStale, Retrying: $isRetrying")
         _apiStatus.value = ApiStatus(
             hasError = true,
             errorMessage = error,
             isRetrying = isRetrying,
+            isDataStale = isDataStale,
             lastErrorTime = System.currentTimeMillis()
         )
     }
@@ -31,6 +32,7 @@ class ApiStatusManager @Inject constructor(
             hasError = false,
             errorMessage = "",
             isRetrying = false,
+            isDataStale = false,
             lastErrorTime = 0L
         )
     }
@@ -50,8 +52,6 @@ data class ApiStatus(
     val hasError: Boolean = false,
     val errorMessage: String = "",
     val isRetrying: Boolean = false,
+    val isDataStale: Boolean = false,
     val lastErrorTime: Long = 0L
-) {
-    val isDataStale: Boolean
-        get() = hasError && (System.currentTimeMillis() - lastErrorTime) > 300000 // 5 minutes
-}
+)
