@@ -2,11 +2,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <!-- Internet permission for market data -->
-    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Internet permission for market data - Android 14 compatible -->
+    <uses-permission android:name="android.permission.INTERNET" 
+        android:usesPermissionFlags="neverForLocation" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     
-    <!-- Biometric permission -->
+    <!-- Biometric permission - Android 14 requires explicit declaration -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     
@@ -28,7 +29,8 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:theme="@style/Theme.WealthManager"
-        tools:targetApi="31">
+        android:exported="false"
+        tools:targetApi="36">
         
         <activity
             android:name=".MainActivity"

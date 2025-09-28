@@ -55,7 +55,7 @@ class ApiRetryManager @Inject constructor(
         return Result.failure(lastException ?: Exception("Unknown error"))
     }
     
-    private fun shouldRetryException(e: Exception, attempt: Int): Boolean {
+    private fun shouldRetryException(e: Exception, @Suppress("UNUSED_PARAMETER") attempt: Int): Boolean {
         return when (e) {
             is HttpException -> {
                 val code = e.code()

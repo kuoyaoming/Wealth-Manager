@@ -32,7 +32,8 @@ fun AboutDialog(
     onDismiss: () -> Unit,
     firstLaunchManager: FirstLaunchManager? = null
 ) {
-    val context = LocalContext.current
+    // Context is available but not currently used in this dialog
+    // val context = LocalContext.current
     
     Dialog(
         onDismissRequest = onDismiss,

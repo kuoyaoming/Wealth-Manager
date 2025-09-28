@@ -14,6 +14,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 
 private val DarkColorScheme = darkColorScheme(
     primary = Purple80,
@@ -47,8 +48,16 @@ fun WealthManagerTheme(
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
-            window.statusBarColor = colorScheme.primary.toArgb()
-            WindowCompat.getInsetsController(window, view).isAppearanceLightStatusBars = darkTheme
+            val insetsController = WindowCompat.getInsetsController(window, view)
+            
+            // Use modern API for status bar color
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                @Suppress("DEPRECATION")
+                window.statusBarColor = colorScheme.primary.toArgb()
+            }
+            
+            // Set status bar appearance
+            insetsController.isAppearanceLightStatusBars = !darkTheme
         }
     }
 
