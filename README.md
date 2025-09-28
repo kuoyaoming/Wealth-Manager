@@ -40,34 +40,36 @@ This application is designed to provide a secure and private personal asset trac
 - **Adding Process**:
   1. User selects market (Taiwan or US stocks)
   2. User inputs stock name or symbol
-  3. App performs fuzzy search via Google Finance API
-  4. Dropdown menu displays matching stock symbols and company names
+  3. App performs intelligent search via Alpha Vantage SYMBOL_SEARCH API
+  4. Dropdown menu displays matching stock symbols and company names with match scores
   5. Stock symbols are stored in standard format (e.g., US stocks: AAPL, Taiwan stocks: 2330.TW or 2330)
-- **Status**: 🚧 Basic UI implemented, API integration and search functionality pending
+- **Status**: ✅ Fully implemented with Alpha Vantage search integration
 
 ## 📊 Data Processing & Market Data
 
 ### Market Data & APIs
-- **Data Source**: Google Finance API (preferred) or other viable financial data services
-- **Data Content**: Latest closing prices for all recorded stocks
+- **Data Source**: Alpha Vantage API with comprehensive financial data services
+- **API Key**: ZHQ6865SM7I0IMML (configured for production use)
+- **Data Content**: Real-time stock prices, exchange rates, and company information
 - **Update Frequency**: Automatic updates on app startup or user-initiated refresh
-- **Status**: 🚧 Network dependencies added, API implementation pending
+- **Status**: ✅ Fully implemented with Alpha Vantage integration
 
 ### Currency Conversion & Calculation
-- **Exchange Rate**: Current or latest trading day USD/TWD exchange rate
+- **Exchange Rate**: Real-time USD/TWD exchange rate from Alpha Vantage
 - **Unified Currency**: All assets (USD cash and US stocks) converted to TWD equivalent
 - **Total Asset Calculation**: 
   ```
   Total Assets = (TWD Cash) + (USD Cash TWD Equivalent) + (All Stocks TWD Equivalent Total Market Value)
   ```
-- **Status**: 🚧 Database structure ready, conversion logic needs implementation
+- **Status**: ✅ Fully implemented with real-time conversion
 
 ## 📈 Visualization & Data Presentation
 
 ### Asset Pie Chart
-- **Overview**: Pie chart based on TWD equivalent showing proportion of all asset categories
+- **Overview**: Interactive pie chart based on TWD equivalent showing proportion of all asset categories
 - **Chart Information**: Each segment clearly displays asset name, TWD equivalent amount, and percentage
-- **Status**: 🚧 UI component exists, chart rendering needs implementation
+- **Custom Implementation**: Built with Compose Canvas for optimal performance and Material 3 design
+- **Status**: ✅ Fully implemented with custom Compose Canvas rendering
 
 ### Detailed List View
 - **Cash Details**: Original currency, original amount, TWD equivalent
@@ -114,13 +116,23 @@ This application is designed to provide a secure and private personal asset trac
 - **Error Handling**: Comprehensive error handling with user-friendly messages
 - **Skip Authentication**: Option to bypass biometric authentication when hardware unavailable
 
-### ✅ Recently Implemented Features (v0.1.2)
-- **Market Data Integration**: Complete API service with Yahoo Finance integration
-- **Exchange Rate Conversion**: Real-time USD/TWD rate updates and conversion
-- **Stock Price Updates**: Automatic price fetching and portfolio value updates
-- **Pie Chart Visualization**: Custom Compose Canvas implementation with legend
-- **Stock Search**: Real-time fuzzy search with results display
-- **Network Layer**: Retrofit + OkHttp with comprehensive error handling
+### ✅ Recently Implemented Features (v0.1.5)
+- **Alpha Vantage API Integration**: Complete migration from Yahoo Finance to Alpha Vantage API
+- **Enhanced Stock Search**: Intelligent search with match scoring and regional filtering
+- **Improved Error Handling**: Exponential backoff, retry logic, and fallback to cached data
+- **Production Safety**: Debug features disabled in production builds with BuildConfig detection
+- **Optimized Logging**: Proper log levels (ERROR/WARN/INFO) with limited stack traces in production
+- **Smart Market State**: Automatic market state determination based on timezone
+- **Enhanced UX**: Clear error messages, retry buttons, and stale data indicators
+
+### 🔧 Technical Improvements (v0.1.5)
+- **API Migration**: Complete migration from Yahoo Finance to Alpha Vantage API
+- **Error Handling**: Exponential backoff with maximum retry limits and intelligent fallback
+- **Production Safety**: BuildConfig-based debug feature control and sensitive data protection
+- **Logging Optimization**: Proper log levels (ERROR/WARN/INFO) with production-safe stack traces
+- **Performance**: Short-circuit logic for empty asset collections to reduce unnecessary API calls
+- **User Experience**: Clear error messages, retry buttons, and stale data indicators
+- **Market Intelligence**: Smart market state determination and regional exchange mapping
 
 ### 🚧 Future Enhancements
 - **Price Alerts**: Notification system for price changes
@@ -179,7 +191,7 @@ graph TD
     S --> VV[ExchangeRate Table]
     
     MM --> WW[MarketDataApi]
-    WW --> XX[Yahoo Finance API]
+    WW --> XX[Alpha Vantage API]
     MM --> YY[Update Stock Prices]
     MM --> ZZ[Update Exchange Rates]
     MM --> AAA[Search Stocks]
@@ -391,7 +403,7 @@ sequenceDiagram
     participant AS as AssetsScreen
     participant DB as Database
     participant MD as MarketDataService
-    participant API as Yahoo Finance API
+    participant API as Alpha Vantage API
     participant DL as DebugLog
     
     U->>A: Launch App
@@ -463,14 +475,15 @@ sequenceDiagram
 - **Stock Search**: 100% Complete ✅
 - **Exchange Rate Conversion**: 100% Complete ✅
 
-### Recent Updates (v0.1.2)
-- ✅ Implemented complete market data integration with Yahoo Finance API
-- ✅ Added real-time stock price updates and portfolio value calculation
-- ✅ Created custom pie chart visualization with Compose Canvas
-- ✅ Implemented intelligent stock search with real-time results
-- ✅ Added automatic exchange rate updates and currency conversion
-- ✅ Enhanced network layer with Retrofit and comprehensive error handling
-- ✅ Improved user experience with responsive charts and search functionality
+### Recent Updates (v0.1.5)
+- ✅ Migrated to Alpha Vantage API for more stable and comprehensive market data
+- ✅ Enhanced stock search with intelligent matching and regional filtering
+- ✅ Implemented robust error handling with exponential backoff and retry logic
+- ✅ Added production safety with BuildConfig-based debug feature control
+- ✅ Optimized logging system with proper levels and production-safe stack traces
+- ✅ Improved user experience with clear error messages and retry mechanisms
+- ✅ Added smart market state determination based on timezone and trading hours
+- ✅ Enhanced API error handling with fallback to cached data and stale data indicators
 
 ### Next Development Priorities
 1. **Price Alerts**: Notification system for price changes
@@ -486,6 +499,6 @@ For technical support or feature requests, please contact the development team t
 
 ---
 
-**Version**: 0.1.2  
+**Version**: 0.1.5  
 **Last Updated**: 2024  
 **Platform**: Android 6.0+ (API 23+)
