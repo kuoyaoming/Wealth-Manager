@@ -71,6 +71,42 @@ fun BiometricAuthScreen(
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 
+                Spacer(modifier = Modifier.height(16.dp))
+                
+                // Privacy Protection Notice
+                Card(
+                    modifier = Modifier.fillMaxWidth(),
+                    colors = CardDefaults.cardColors(
+                        containerColor = MaterialTheme.colorScheme.primaryContainer
+                    ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                ) {
+                    Column(
+                        modifier = Modifier.padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Text(
+                            text = stringResource(R.string.privacy_protection_title),
+                            style = MaterialTheme.typography.titleSmall,
+                            fontWeight = FontWeight.Bold,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                        
+                        Text(
+                            text = stringResource(R.string.privacy_protection_description),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
+                            textAlign = TextAlign.Center
+                        )
+                        
+                        Text(
+                            text = stringResource(R.string.privacy_protection_points),
+                            style = MaterialTheme.typography.bodySmall,
+                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                        )
+                    }
+                }
+                
                 Spacer(modifier = Modifier.height(24.dp))
                 
                 when (uiState.biometricStatus) {
