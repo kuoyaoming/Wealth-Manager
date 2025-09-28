@@ -10,6 +10,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 import com.wealthmanager.ui.charts.PieChartComponent
+import com.wealthmanager.ui.responsive.rememberResponsiveLayout
 import java.text.NumberFormat
 import java.util.*
 
@@ -18,12 +19,16 @@ fun TotalAssetsCard(
     totalValue: Double,
     isLoading: Boolean
 ) {
+    val responsiveLayout = rememberResponsiveLayout()
+    
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = if (responsiveLayout.isTablet) 6.dp else 4.dp
+        )
     ) {
         Column(
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(responsiveLayout.paddingLarge),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
@@ -32,10 +37,12 @@ fun TotalAssetsCard(
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
             
-            Spacer(modifier = Modifier.height(8.dp))
+            Spacer(modifier = Modifier.height(responsiveLayout.paddingMedium))
             
             if (isLoading) {
-                CircularProgressIndicator()
+                CircularProgressIndicator(
+                    modifier = Modifier.size(if (responsiveLayout.isTablet) 40.dp else 32.dp)
+                )
             } else {
                 Text(
                     text = "NT$ ${formatCurrency(totalValue)}",
@@ -53,14 +60,18 @@ fun CashAssetsCard(
     cashValue: Double,
     isLoading: Boolean
 ) {
+    val responsiveLayout = rememberResponsiveLayout()
+    
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = if (responsiveLayout.isTablet) 4.dp else 2.dp
+        )
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(responsiveLayout.paddingLarge),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -70,7 +81,9 @@ fun CashAssetsCard(
             )
             
             if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+                CircularProgressIndicator(
+                    modifier = Modifier.size(if (responsiveLayout.isTablet) 24.dp else 20.dp)
+                )
             } else {
                 Text(
                     text = "NT$ ${formatCurrency(cashValue)}",
@@ -88,14 +101,18 @@ fun StockAssetsCard(
     stockValue: Double,
     isLoading: Boolean
 ) {
+    val responsiveLayout = rememberResponsiveLayout()
+    
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(
+            defaultElevation = if (responsiveLayout.isTablet) 4.dp else 2.dp
+        )
     ) {
         Row(
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(16.dp),
+                .padding(responsiveLayout.paddingLarge),
             horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically
         ) {
@@ -105,7 +122,9 @@ fun StockAssetsCard(
             )
             
             if (isLoading) {
-                CircularProgressIndicator(modifier = Modifier.size(20.dp))
+                CircularProgressIndicator(
+                    modifier = Modifier.size(if (responsiveLayout.isTablet) 24.dp else 20.dp)
+                )
             } else {
                 Text(
                     text = "NT$ ${formatCurrency(stockValue)}",
