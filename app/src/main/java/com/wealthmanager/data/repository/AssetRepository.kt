@@ -6,6 +6,7 @@ import com.wealthmanager.data.dao.StockAssetDao
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.ExchangeRate
 import com.wealthmanager.data.entity.StockAsset
+import com.wealthmanager.debug.DebugLogManager
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -14,7 +15,8 @@ import javax.inject.Singleton
 class AssetRepository @Inject constructor(
     private val cashAssetDao: CashAssetDao,
     private val stockAssetDao: StockAssetDao,
-    private val exchangeRateDao: ExchangeRateDao
+    private val exchangeRateDao: ExchangeRateDao,
+    private val debugLogManager: DebugLogManager
 ) {
     
     // Cash Assets
@@ -25,13 +27,29 @@ class AssetRepository @Inject constructor(
     
     suspend fun getCashAssetById(id: String): CashAsset? = cashAssetDao.getCashAssetById(id)
     
-    suspend fun insertCashAsset(cashAsset: CashAsset) = cashAssetDao.insertCashAsset(cashAsset)
+    suspend fun insertCashAsset(cashAsset: CashAsset) {
+        debugLogManager.log("REPOSITORY", "Inserting cash asset: ${cashAsset.currency} ${cashAsset.amount}")
+        cashAssetDao.insertCashAsset(cashAsset)
+        debugLogManager.log("REPOSITORY", "Cash asset inserted successfully")
+    }
     
-    suspend fun updateCashAsset(cashAsset: CashAsset) = cashAssetDao.updateCashAsset(cashAsset)
+    suspend fun updateCashAsset(cashAsset: CashAsset) {
+        debugLogManager.log("REPOSITORY", "Updating cash asset: ${cashAsset.id}")
+        cashAssetDao.updateCashAsset(cashAsset)
+        debugLogManager.log("REPOSITORY", "Cash asset updated successfully")
+    }
     
-    suspend fun deleteCashAsset(cashAsset: CashAsset) = cashAssetDao.deleteCashAsset(cashAsset)
+    suspend fun deleteCashAsset(cashAsset: CashAsset) {
+        debugLogManager.log("REPOSITORY", "Deleting cash asset: ${cashAsset.id}")
+        cashAssetDao.deleteCashAsset(cashAsset)
+        debugLogManager.log("REPOSITORY", "Cash asset deleted successfully")
+    }
     
-    suspend fun deleteCashAssetById(id: String) = cashAssetDao.deleteCashAssetById(id)
+    suspend fun deleteCashAssetById(id: String) {
+        debugLogManager.log("REPOSITORY", "Deleting cash asset by ID: $id")
+        cashAssetDao.deleteCashAssetById(id)
+        debugLogManager.log("REPOSITORY", "Cash asset deleted by ID successfully")
+    }
     
     suspend fun getTotalCashValueInTWD(): Double? = cashAssetDao.getTotalCashValueInTWD()
     
@@ -46,13 +64,29 @@ class AssetRepository @Inject constructor(
     suspend fun getStockAssetBySymbol(symbol: String): StockAsset? = 
         stockAssetDao.getStockAssetBySymbol(symbol)
     
-    suspend fun insertStockAsset(stockAsset: StockAsset) = stockAssetDao.insertStockAsset(stockAsset)
+    suspend fun insertStockAsset(stockAsset: StockAsset) {
+        debugLogManager.log("REPOSITORY", "Inserting stock asset: ${stockAsset.symbol} ${stockAsset.shares} shares")
+        stockAssetDao.insertStockAsset(stockAsset)
+        debugLogManager.log("REPOSITORY", "Stock asset inserted successfully")
+    }
     
-    suspend fun updateStockAsset(stockAsset: StockAsset) = stockAssetDao.updateStockAsset(stockAsset)
+    suspend fun updateStockAsset(stockAsset: StockAsset) {
+        debugLogManager.log("REPOSITORY", "Updating stock asset: ${stockAsset.symbol}")
+        stockAssetDao.updateStockAsset(stockAsset)
+        debugLogManager.log("REPOSITORY", "Stock asset updated successfully")
+    }
     
-    suspend fun deleteStockAsset(stockAsset: StockAsset) = stockAssetDao.deleteStockAsset(stockAsset)
+    suspend fun deleteStockAsset(stockAsset: StockAsset) {
+        debugLogManager.log("REPOSITORY", "Deleting stock asset: ${stockAsset.symbol}")
+        stockAssetDao.deleteStockAsset(stockAsset)
+        debugLogManager.log("REPOSITORY", "Stock asset deleted successfully")
+    }
     
-    suspend fun deleteStockAssetById(id: String) = stockAssetDao.deleteStockAssetById(id)
+    suspend fun deleteStockAssetById(id: String) {
+        debugLogManager.log("REPOSITORY", "Deleting stock asset by ID: $id")
+        stockAssetDao.deleteStockAssetById(id)
+        debugLogManager.log("REPOSITORY", "Stock asset deleted by ID successfully")
+    }
     
     suspend fun getTotalStockValueInTWD(): Double? = stockAssetDao.getTotalStockValueInTWD()
     
@@ -62,14 +96,23 @@ class AssetRepository @Inject constructor(
     suspend fun getExchangeRateSync(currencyPair: String): ExchangeRate? = 
         exchangeRateDao.getExchangeRateSync(currencyPair)
     
-    suspend fun insertExchangeRate(exchangeRate: ExchangeRate) = 
+    suspend fun insertExchangeRate(exchangeRate: ExchangeRate) {
+        debugLogManager.log("REPOSITORY", "Inserting exchange rate: ${exchangeRate.currencyPair} = ${exchangeRate.rate}")
         exchangeRateDao.insertExchangeRate(exchangeRate)
+        debugLogManager.log("REPOSITORY", "Exchange rate inserted successfully")
+    }
     
-    suspend fun updateExchangeRate(exchangeRate: ExchangeRate) = 
+    suspend fun updateExchangeRate(exchangeRate: ExchangeRate) {
+        debugLogManager.log("REPOSITORY", "Updating exchange rate: ${exchangeRate.currencyPair}")
         exchangeRateDao.updateExchangeRate(exchangeRate)
+        debugLogManager.log("REPOSITORY", "Exchange rate updated successfully")
+    }
     
-    suspend fun deleteExchangeRate(exchangeRate: ExchangeRate) = 
+    suspend fun deleteExchangeRate(exchangeRate: ExchangeRate) {
+        debugLogManager.log("REPOSITORY", "Deleting exchange rate: ${exchangeRate.currencyPair}")
         exchangeRateDao.deleteExchangeRate(exchangeRate)
+        debugLogManager.log("REPOSITORY", "Exchange rate deleted successfully")
+    }
     
     // Exchange Rate Flow
     fun getExchangeRate(currencyPair: String): Flow<ExchangeRate> = 

@@ -16,6 +16,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.ui.dashboard.AssetItem
+import com.wealthmanager.debug.DebugLogManager
 import kotlin.math.*
 
 @Composable
@@ -24,6 +25,15 @@ fun PieChartComponent(
     isLoading: Boolean,
     modifier: Modifier = Modifier
 ) {
+    val debugLogManager = remember { DebugLogManager() }
+    
+    LaunchedEffect(assets.size) {
+        debugLogManager.log("CHART", "PieChartComponent rendered with ${assets.size} assets")
+        if (assets.isNotEmpty()) {
+            val totalValue = assets.sumOf { it.value }
+            debugLogManager.log("CHART", "Total chart value: $totalValue")
+        }
+    }
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
