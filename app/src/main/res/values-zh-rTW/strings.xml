@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">財富管理</string>
+    
+    <!-- Authentication -->
+    <string name="biometric_auth_title">生物識別驗證</string>
+    <string name="biometric_auth_subtitle">使用您的生物識別來存取資產</string>
+    <string name="biometric_auth_button">驗證</string>
+    <string name="biometric_auth_error">生物識別驗證失敗</string>
+    <string name="biometric_auth_error_no_hardware">無生物識別硬體可用</string>
+    <string name="biometric_auth_error_hw_unavailable">生物識別硬體目前無法使用</string>
+    <string name="biometric_auth_error_no_biometrics">未註冊生物識別</string>
+    <string name="biometric_auth_error_user_cancel">驗證已取消</string>
+    <string name="biometric_auth_error_locked_out">失敗次數過多，請稍後再試</string>
+    <string name="biometric_auth_error_permanent_lockout">生物識別驗證已永久鎖定</string>
+    
+    <!-- Navigation -->
+    <string name="nav_dashboard">儀表板</string>
+    <string name="nav_assets">資產</string>
+    <string name="nav_settings">設定</string>
+    
+    <!-- Dashboard -->
+    <string name="dashboard_title">投資組合概覽</string>
+    <string name="total_assets">總資產</string>
+    <string name="cash_assets">現金資產</string>
+    <string name="stock_assets">股票資產</string>
+    <string name="refresh_data">刷新數據</string>
+    
+    <!-- Assets -->
+    <string name="assets_title">管理資產</string>
+    <string name="add_cash">新增現金</string>
+    <string name="add_stock">新增股票</string>
+    <string name="cash_twd">台幣現金</string>
+    <string name="cash_usd">美金現金</string>
+    <string name="stock_tw">台股</string>
+    <string name="stock_us">美股</string>
+    
+    <!-- Cash Input -->
+    <string name="cash_amount">金額</string>
+    <string name="cash_currency">幣別</string>
+    <string name="save">儲存</string>
+    <string name="cancel">取消</string>
+    
+    <!-- Stock Input -->
+    <string name="stock_symbol">股票代號</string>
+    <string name="stock_shares">股數</string>
+    <string name="stock_market">市場</string>
+    <string name="search_stock">搜尋股票</string>
+    <string name="stock_price">目前價格</string>
+    <string name="stock_value">總價值</string>
+    
+    <!-- Settings -->
+    <string name="settings_title">設定</string>
+    <string name="language">語言</string>
+    <string name="theme">主題</string>
+    <string name="about">關於</string>
+    
+    <!-- Common -->
+    <string name="loading">載入中...</string>
+    <string name="error">錯誤</string>
+    <string name="retry">重試</string>
+    <string name="delete">刪除</string>
+    <string name="edit">編輯</string>
+    <string name="confirm">確認</string>
+    
+    <!-- Error Messages -->
+    <string name="error_network">網路錯誤，請檢查您的連線</string>
+    <string name="error_api">無法取得市場數據</string>
+    <string name="error_invalid_amount">請輸入有效金額</string>
+    <string name="error_invalid_symbol">請輸入有效股票代號</string>
+    <string name="error_stock_not_found">找不到股票</string>
+</resources>
