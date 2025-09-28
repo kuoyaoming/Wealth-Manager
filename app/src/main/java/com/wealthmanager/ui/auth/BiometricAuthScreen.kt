@@ -19,6 +19,7 @@ import com.wealthmanager.auth.BiometricStatus
 @Composable
 fun BiometricAuthScreen(
     onAuthSuccess: () -> Unit,
+    onSkipAuth: () -> Unit = {},
     viewModel: BiometricAuthViewModel = hiltViewModel()
 ) {
     val context = LocalContext.current
@@ -77,6 +78,15 @@ fun BiometricAuthScreen(
                         ) {
                             Text(stringResource(R.string.biometric_auth_button))
                         }
+                        
+                        Spacer(modifier = Modifier.height(8.dp))
+                        
+                        TextButton(
+                            onClick = onSkipAuth,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Skip Authentication")
+                        }
                     }
                     BiometricStatus.NO_HARDWARE -> {
                         Text(
@@ -85,6 +95,15 @@ fun BiometricAuthScreen(
                             color = MaterialTheme.colorScheme.error,
                             textAlign = TextAlign.Center
                         )
+                        
+                        Spacer(modifier = Modifier.height(16.dp))
+                        
+                        Button(
+                            onClick = onSkipAuth,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Continue Without Biometric")
+                        }
                     }
                     BiometricStatus.HW_UNAVAILABLE -> {
                         Text(
@@ -93,6 +112,15 @@ fun BiometricAuthScreen(
                             color = MaterialTheme.colorScheme.error,
                             textAlign = TextAlign.Center
                         )
+                        
+                        Spacer(modifier = Modifier.height(16.dp))
+                        
+                        Button(
+                            onClick = onSkipAuth,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Continue Without Biometric")
+                        }
                     }
                     BiometricStatus.NONE_ENROLLED -> {
                         Text(
@@ -101,6 +129,15 @@ fun BiometricAuthScreen(
                             color = MaterialTheme.colorScheme.error,
                             textAlign = TextAlign.Center
                         )
+                        
+                        Spacer(modifier = Modifier.height(16.dp))
+                        
+                        Button(
+                            onClick = onSkipAuth,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Continue Without Biometric")
+                        }
                     }
                     BiometricStatus.UNKNOWN_ERROR -> {
                         Text(
@@ -109,6 +146,15 @@ fun BiometricAuthScreen(
                             color = MaterialTheme.colorScheme.error,
                             textAlign = TextAlign.Center
                         )
+                        
+                        Spacer(modifier = Modifier.height(16.dp))
+                        
+                        Button(
+                            onClick = onSkipAuth,
+                            modifier = Modifier.fillMaxWidth()
+                        ) {
+                            Text("Continue Without Biometric")
+                        }
                     }
                 }
                 
