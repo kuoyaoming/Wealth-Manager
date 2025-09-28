@@ -19,12 +19,18 @@ fun WealthManagerNavigation(
     
     NavHost(
         navController = navController,
-        startDestination = if (isAuthenticated) "dashboard" else "auth",
+        startDestination = "auth",
         modifier = modifier
     ) {
         composable("auth") {
             BiometricAuthScreen(
                 onAuthSuccess = {
+                    isAuthenticated = true
+                    navController.navigate("dashboard") {
+                        popUpTo("auth") { inclusive = true }
+                    }
+                },
+                onSkipAuth = {
                     isAuthenticated = true
                     navController.navigate("dashboard") {
                         popUpTo("auth") { inclusive = true }
