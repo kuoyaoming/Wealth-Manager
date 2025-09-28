@@ -69,4 +69,22 @@
     <string name="error_invalid_amount">Please enter a valid amount</string>
     <string name="error_invalid_symbol">Please enter a valid stock symbol</string>
     <string name="error_stock_not_found">Stock not found</string>
+    
+    <!-- API Error Messages -->
+    <string name="api_error_server_busy">Server busy, please try again later</string>
+    <string name="api_error_data_stale">Data may be outdated</string>
+    <string name="api_error_connection_issue">Connection issue</string>
+    <string name="api_error_show_cached_data">Showing last updated data, click retry to get latest information</string>
+    
+    <!-- Input Validation -->
+    <string name="validation_enter_valid_number">Please enter a valid number</string>
+    <string name="validation_enter_valid_shares">Please enter valid number of shares</string>
+    <string name="validation_search_minimum_chars">Please enter at least 3 characters to search</string>
+    <string name="validation_no_matching_stock">No matching stock found, please check if the stock symbol is correct</string>
+    
+    <!-- Dialog Messages -->
+    <string name="dialog_edit_cash_asset">Edit Cash Asset</string>
+    <string name="dialog_edit_stock_asset">Edit Stock Asset</string>
+    <string name="dialog_save">Save</string>
+    <string name="dialog_cancel">Cancel</string>
 </resources>
