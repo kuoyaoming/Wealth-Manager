@@ -19,7 +19,7 @@ class DebugLogManager @Inject constructor() {
         val timestamp = dateFormat.format(Date())
         val logEntry = "[$timestamp] $tag: $message"
         logs.add(logEntry)
-        Log.d(tag, message)
+        Log.d("WealthManagerDebug", logEntry)
         
         // Keep only last 1000 logs to prevent memory issues
         if (logs.size > 1000) {

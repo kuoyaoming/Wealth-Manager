@@ -118,6 +118,7 @@ class MarketDataService @Inject constructor(
     
     suspend fun searchStocks(query: String, market: String): List<StockSearchItem> {
         return try {
+            debugLogManager.log("MARKET_DATA", "=== STARTING STOCK SEARCH ===")
             debugLogManager.log("MARKET_DATA", "Searching stocks: '$query' in market: '$market'")
             
             val region = if (market == "TW") "TW" else "US"
@@ -125,6 +126,7 @@ class MarketDataService @Inject constructor(
             
             // Log API request details
             debugLogManager.log("MARKET_DATA", "API Request - Query: $query, Region: $region")
+            debugLogManager.log("MARKET_DATA", "API URL: https://query1.finance.yahoo.com/v1/finance/search?q=$query&region=$region")
             
             val response = marketDataApi.searchStocks(query, region)
             
@@ -148,11 +150,15 @@ class MarketDataService @Inject constructor(
             }
             
             debugLogManager.log("MARKET_DATA", "Stock search completed: ${searchResults.size} results processed")
+            debugLogManager.log("MARKET_DATA", "=== STOCK SEARCH COMPLETED ===")
             searchResults
             
         } catch (e: Exception) {
+            debugLogManager.logError("=== STOCK SEARCH FAILED ===", e)
             debugLogManager.logError("Failed to search stocks: ${e.message}", e)
             debugLogManager.log("MARKET_DATA", "Search failed for query: '$query', market: '$market'")
+            debugLogManager.log("MARKET_DATA", "Exception type: ${e::class.simpleName}")
+            debugLogManager.log("MARKET_DATA", "Exception message: ${e.message}")
             emptyList()
         }
     }

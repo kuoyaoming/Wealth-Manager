@@ -212,6 +212,15 @@ graph TD
     PP --> KK
     TT --> KK
     
+    KK --> UUU[EditAssetDialog]
+    UUU --> VVV{Asset Type?}
+    VVV -->|Cash| WWW[Edit Cash Form]
+    VVV -->|Stock| XXX[Edit Stock Form]
+    WWW --> YYY[Update Cash Asset]
+    XXX --> ZZZ[Update Stock Asset]
+    YYY --> KK
+    ZZZ --> KK
+    
     KK --> UU[Insert to Database]
     UU --> S
     
@@ -290,6 +299,16 @@ classDiagram
         +onAddStock()
         +onSearchStocks()
         +onDismiss()
+    }
+    
+    class EditCashAssetDialog {
+        +onDismiss()
+        +onSave()
+    }
+    
+    class EditStockAssetDialog {
+        +onDismiss()
+        +onSave()
     }
     
     class PieChartComponent {
