@@ -198,18 +198,42 @@ class MarketDataService @Inject constructor(
             debugLogManager.log("MARKET_DATA", "API Response - Raw matches count: ${bestMatches?.size ?: 0}")
             
             if (bestMatches != null) {
-                // Log each match for debugging
+                // Log each match for debugging with Alpha Vantage specific fields
                 bestMatches.forEachIndexed { index, match ->
-                    debugLogManager.log("MARKET_DATA", "Match $index: symbol=${match.symbol}, name=${match.name}")
+                    debugLogManager.log("MARKET_DATA", "Match $index: symbol=${match.symbol}, name=${match.name}, type=${match.type}, region=${match.region}, currency=${match.currency}, matchScore=${match.matchScore}")
                 }
                 
-                val searchResults = bestMatches.map { match ->
+                // Sort by match score (higher is better) and take top results
+                val sortedMatches = bestMatches.sortedByDescending { match ->
+                    match.matchScore.toDoubleOrNull() ?: 0.0
+                }.take(10) // Limit to top 10 results
+                
+                val searchResults = sortedMatches.map { match ->
+                    // Parse company name to extract short and long names
+                    val companyName = match.name
+                    val shortName = if (companyName.length > 30) {
+                        companyName.substring(0, 30) + "..."
+                    } else {
+                        companyName
+                    }
+                    
+                    // Use type and region to determine exchange
+                    val exchange = when {
+                        match.region.contains("United States") -> "NASDAQ/NYSE"
+                        match.region.contains("Europe") -> "LSE/EPA"
+                        match.region.contains("Asia") -> "TSE/HKEX"
+                        else -> match.region
+                    }
+                    
+                    // Determine market state based on timezone and current time
+                    val marketState = determineMarketState(match.timezone)
+                    
                     StockSearchItem(
                         symbol = match.symbol,
-                        shortName = match.name,
-                        longName = match.name, // Alpha Vantage doesn't separate short/long names
-                        exchange = match.region, // Using region as exchange
-                        marketState = "OPEN" // Alpha Vantage doesn't provide market state
+                        shortName = shortName,
+                        longName = companyName,
+                        exchange = exchange,
+                        marketState = marketState
                     )
                 }
                 
@@ -228,6 +252,34 @@ class MarketDataService @Inject constructor(
             debugLogManager.log("MARKET_DATA", "Exception type: ${e::class.simpleName}")
             debugLogManager.log("MARKET_DATA", "Exception message: ${e.message}")
             emptyList()
+        }
+    }
+    
+    private fun determineMarketState(timezone: String): String {
+        return try {
+            val currentTime = System.currentTimeMillis()
+            val timeZone = java.util.TimeZone.getTimeZone(timezone)
+            val hour = timeZone.getOffset(currentTime) / (1000 * 60 * 60)
+            
+            // Simple market state determination based on timezone
+            when {
+                timezone.contains("America") -> {
+                    val localHour = (hour + 8) % 24 // Convert to local time
+                    if (localHour in 9..16) "OPEN" else "CLOSED"
+                }
+                timezone.contains("Europe") -> {
+                    val localHour = (hour + 8) % 24
+                    if (localHour in 8..16) "OPEN" else "CLOSED"
+                }
+                timezone.contains("Asia") -> {
+                    val localHour = (hour + 8) % 24
+                    if (localHour in 9..15) "OPEN" else "CLOSED"
+                }
+                else -> "UNKNOWN"
+            }
+        } catch (e: Exception) {
+            debugLogManager.logWarning("MARKET_DATA", "Failed to determine market state for timezone: $timezone")
+            "UNKNOWN"
         }
     }
     
