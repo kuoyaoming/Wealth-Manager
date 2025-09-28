@@ -10,7 +10,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.ui.Modifier
-import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+// import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.wealthmanager.ui.navigation.WealthManagerNavigation
 import com.wealthmanager.ui.theme.WealthManagerTheme
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,7 +21,7 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         
         // Install splash screen
-        installSplashScreen()
+        // installSplashScreen()
         
         enableEdgeToEdge()
         
