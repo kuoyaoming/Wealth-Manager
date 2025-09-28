@@ -39,7 +39,7 @@ class DashboardViewModel @Inject constructor(
                     totalAssets = totalAssets,
                     cashAssets = totalCash,
                     stockAssets = totalStock,
-                    assets = cashAssets + stockAssets.map { it.toAssetItem() },
+                    assets = cashAssets.map { it.toAssetItem() } + stockAssets.map { it.toAssetItem() },
                     isLoading = false
                 )
             }.collect { }
@@ -77,6 +77,14 @@ private fun StockAsset.toAssetItem(): AssetItem {
     return AssetItem(
         id = id,
         name = "$companyName ($symbol)",
+        value = twdEquivalent
+    )
+}
+
+private fun CashAsset.toAssetItem(): AssetItem {
+    return AssetItem(
+        id = id,
+        name = "$currency $amount",
         value = twdEquivalent
     )
 }
