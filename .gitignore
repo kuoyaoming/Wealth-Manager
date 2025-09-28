@@ -13,9 +13,8 @@ captures/
 .externalNativeBuild/
 .cxx/
 *.aab
-# Allow APK files in release directory
-!GitHub/release/apk/*.apk
-*.apk
+# Allow APK files in project root for testing
+!*.apk
 output-metadata.json
 
 # IntelliJ
