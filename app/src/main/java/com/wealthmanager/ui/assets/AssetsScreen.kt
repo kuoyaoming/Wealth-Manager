@@ -19,6 +19,7 @@ fun AssetsScreen(
     viewModel: AssetsViewModel = hiltViewModel()
 ) {
     val uiState by viewModel.uiState.collectAsState()
+    var showAddDialog by remember { mutableStateOf(false) }
     
     LaunchedEffect(Unit) {
         viewModel.loadAssets()
@@ -37,7 +38,7 @@ fun AssetsScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { /* TODO: Show add asset dialog */ }
+                onClick = { showAddDialog = true }
             ) {
                 Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_cash))
             }
@@ -104,5 +105,20 @@ fun AssetsScreen(
                 }
             }
         }
+    }
+    
+    // Add Asset Dialog
+    if (showAddDialog) {
+        AddAssetDialog(
+            onDismiss = { showAddDialog = false },
+            onAddCash = { currency, amount ->
+                viewModel.addCashAsset(currency, amount)
+                showAddDialog = false
+            },
+            onAddStock = { symbol, shares, market ->
+                viewModel.addStockAsset(symbol, shares, market)
+                showAddDialog = false
+            }
+        )
     }
 }
