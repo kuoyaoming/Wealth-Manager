@@ -98,7 +98,7 @@ fun ApiUsageIndicator(
             ) {
                 // 每日使用量進度條
                 LinearProgressIndicator(
-                    progress = usageStats.dailyUsagePercent / 100f,
+                    progress = { usageStats.dailyUsagePercent / 100f },
                     modifier = Modifier.width(60.dp),
                     color = color,
                     trackColor = MaterialTheme.colorScheme.surface
@@ -151,7 +151,7 @@ fun CompactApiUsageIndicator(
         )
         
         LinearProgressIndicator(
-            progress = usageStats.dailyUsagePercent / 100f,
+            progress = { usageStats.dailyUsagePercent / 100f },
             modifier = Modifier.width(40.dp),
             color = color,
             trackColor = MaterialTheme.colorScheme.surface

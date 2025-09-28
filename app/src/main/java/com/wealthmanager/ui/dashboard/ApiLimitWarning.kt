@@ -124,7 +124,7 @@ fun ApiLimitWarning(
                 }
                 
                 LinearProgressIndicator(
-                    progress = usageStats.dailyUsagePercent / 100f,
+                    progress = { usageStats.dailyUsagePercent / 100f },
                     modifier = Modifier.fillMaxWidth(),
                     color = if (usageStats.isAtLimit) 
                         MaterialTheme.colorScheme.error 
@@ -217,7 +217,7 @@ fun CompactApiLimitWarning(
         )
         
         LinearProgressIndicator(
-            progress = usageStats.dailyUsagePercent / 100f,
+            progress = { usageStats.dailyUsagePercent / 100f },
             modifier = Modifier.width(40.dp),
             color = color,
             trackColor = MaterialTheme.colorScheme.surface
