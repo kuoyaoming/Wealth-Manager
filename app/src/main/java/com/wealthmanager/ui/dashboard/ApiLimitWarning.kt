@@ -40,7 +40,7 @@ fun ApiLimitWarning(
         )
         usageStats.isNearLimit -> Triple(
             "API使用量接近限制",
-            "今日API使用量已達${usageStats.dailyUsagePercent.toInt()}%，剩餘${usageStats.getRemainingRequestsToday()}次請求。",
+            "今日API使用量已達${usageStats.dailyUsagePercent.toInt()}%，剩餘${usageStats.requestsToday}次請求。",
             "查看使用詳情"
         )
         else -> return

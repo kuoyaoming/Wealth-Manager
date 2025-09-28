@@ -40,7 +40,7 @@ class MarketDataService @Inject constructor(
                     
                     // 檢查API使用限制
                     if (!apiUsageManager.canMakeRequest()) {
-                        debugLogManager.logWarning("API rate limit reached, skipping ${stock.symbol}")
+                        debugLogManager.logWarning("API rate limit reached, skipping ${stock.symbol}", "MARKET_DATA")
                         continue
                     }
                     
@@ -117,7 +117,7 @@ class MarketDataService @Inject constructor(
             
             // 檢查API使用限制
             if (!apiUsageManager.canMakeRequest()) {
-                debugLogManager.logWarning("API rate limit reached, skipping exchange rate update")
+                debugLogManager.logWarning("API rate limit reached, skipping exchange rate update", "MARKET_DATA")
                 return
             }
             
@@ -197,7 +197,7 @@ class MarketDataService @Inject constructor(
             
             // 檢查API使用限制
             if (!apiUsageManager.canMakeRequest()) {
-                debugLogManager.logWarning("API rate limit reached, cannot search stocks")
+                debugLogManager.logWarning("API rate limit reached, cannot search stocks", "MARKET_DATA")
                 return emptyList()
             }
             
