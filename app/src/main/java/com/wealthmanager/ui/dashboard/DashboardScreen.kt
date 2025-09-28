@@ -14,7 +14,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.wealthmanager.BuildConfig
+// import com.wealthmanager.BuildConfig
 import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 
@@ -49,15 +49,13 @@ fun DashboardScreen(
                             Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
                         }
                         
-                        // Only show debug button in debug builds
-                        if (BuildConfig.DEBUG) {
-                            IconButton(onClick = { 
-                                debugLogManager.logUserAction("Debug Log Button Clicked")
-                                debugLogManager.log("UI", "User clicked debug log button to copy logs to clipboard")
-                                debugLogManager.copyLogsToClipboard(context)
-                            }) {
-                                Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
-                            }
+                        // Always show debug button for now (can be made configurable later)
+                        IconButton(onClick = { 
+                            debugLogManager.logUserAction("Debug Log Button Clicked")
+                            debugLogManager.log("UI", "User clicked debug log button to copy logs to clipboard")
+                            debugLogManager.copyLogsToClipboard(context)
+                        }) {
+                            Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
                         }
                     }
             )
