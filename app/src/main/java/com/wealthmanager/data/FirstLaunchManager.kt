@@ -6,8 +6,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 首次開啟APP檢測管理器
- * 用於檢測是否為首次開啟APP，並管理相關狀態
+ * First Launch Detection Manager
+ * Used to detect if this is the first time opening the app and manage related states
  */
 @Singleton
 class FirstLaunchManager @Inject constructor(
@@ -25,14 +25,14 @@ class FirstLaunchManager @Inject constructor(
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
     
     /**
-     * 檢查是否為首次開啟APP
+     * Check if this is the first time launching the app
      */
     fun isFirstLaunch(): Boolean {
         return sharedPreferences.getBoolean(KEY_FIRST_LAUNCH, true)
     }
     
     /**
-     * 標記首次開啟已完成
+     * Mark first launch as completed
      */
     fun markFirstLaunchCompleted() {
         sharedPreferences.edit()
@@ -41,7 +41,7 @@ class FirstLaunchManager @Inject constructor(
     }
     
     /**
-     * 檢查是否需要顯示關於視窗
+     * Check if the about dialog should be shown
      */
     fun shouldShowAboutDialog(): Boolean {
         val currentVersion = getCurrentAppVersion()
@@ -51,7 +51,7 @@ class FirstLaunchManager @Inject constructor(
     }
     
     /**
-     * 標記關於視窗已顯示
+     * Mark the about dialog as shown
      */
     fun markAboutDialogShown() {
         val currentVersion = getCurrentAppVersion()
@@ -62,7 +62,7 @@ class FirstLaunchManager @Inject constructor(
     }
     
     /**
-     * 獲取當前APP版本
+     * Get current app version
      */
     private fun getCurrentAppVersion(): String {
         return try {
@@ -74,7 +74,7 @@ class FirstLaunchManager @Inject constructor(
     }
     
     /**
-     * 重置首次開啟狀態（用於測試）
+     * Reset first launch state (for testing)
      */
     fun resetFirstLaunch() {
         sharedPreferences.edit()
