@@ -61,7 +61,11 @@ fun AddAssetDialog(
                             .weight(1f)
                             .selectable(
                                 selected = selectedTab == 0,
-                                onClick = { selectedTab = 0 },
+                                onClick = { 
+                                    debugLogManager.logUserAction("Cash Tab Selected")
+                                    debugLogManager.log("UI", "User switched to Cash tab in Add Asset dialog")
+                                    selectedTab = 0 
+                                },
                                 role = Role.Tab
                             )
                     ) {
@@ -76,7 +80,11 @@ fun AddAssetDialog(
                             .weight(1f)
                             .selectable(
                                 selected = selectedTab == 1,
-                                onClick = { selectedTab = 1 },
+                                onClick = { 
+                                    debugLogManager.logUserAction("Stock Tab Selected")
+                                    debugLogManager.log("UI", "User switched to Stock tab in Add Asset dialog")
+                                    selectedTab = 1 
+                                },
                                 role = Role.Tab
                             )
                     ) {
@@ -101,7 +109,11 @@ fun AddAssetDialog(
                                         .weight(1f)
                                         .selectable(
                                             selected = cashCurrency == "TWD",
-                                            onClick = { cashCurrency = "TWD" },
+                                            onClick = { 
+                                                debugLogManager.logUserAction("TWD Currency Selected")
+                                                debugLogManager.log("UI", "User selected TWD currency for cash asset")
+                                                cashCurrency = "TWD" 
+                                            },
                                             role = Role.RadioButton
                                         )
                                 ) {
@@ -116,7 +128,11 @@ fun AddAssetDialog(
                                         .weight(1f)
                                         .selectable(
                                             selected = cashCurrency == "USD",
-                                            onClick = { cashCurrency = "USD" },
+                                            onClick = { 
+                                                debugLogManager.logUserAction("USD Currency Selected")
+                                                debugLogManager.log("UI", "User selected USD currency for cash asset")
+                                                cashCurrency = "USD" 
+                                            },
                                             role = Role.RadioButton
                                         )
                                 ) {
@@ -132,7 +148,10 @@ fun AddAssetDialog(
                             Spacer(modifier = Modifier.height(8.dp))
                             OutlinedTextField(
                                 value = cashAmount,
-                                onValueChange = { cashAmount = it },
+                                onValueChange = { 
+                                    debugLogManager.log("UI", "User typing cash amount: $it")
+                                    cashAmount = it 
+                                },
                                 placeholder = { Text("Enter amount") },
                                 modifier = Modifier.fillMaxWidth()
                             )
@@ -145,9 +164,12 @@ fun AddAssetDialog(
                             OutlinedTextField(
                                 value = stockSymbol,
                                 onValueChange = { 
+                                    debugLogManager.log("UI", "User typing stock symbol: $it")
                                     stockSymbol = it
                                     searchQuery = it
                                     if (it.length > 2) {
+                                        debugLogManager.logUserAction("Stock Search Triggered")
+                                        debugLogManager.log("UI", "Auto-triggering stock search for: $it")
                                         onSearchStocks(it, stockMarket)
                                         showSearchResults = true
                                     } else {
@@ -160,6 +182,8 @@ fun AddAssetDialog(
                                         CircularProgressIndicator(modifier = Modifier.size(20.dp))
                                     } else {
                                         IconButton(onClick = { 
+                                            debugLogManager.logUserAction("Manual Stock Search Clicked")
+                                            debugLogManager.log("UI", "User clicked manual search button for: $searchQuery")
                                             if (searchQuery.isNotEmpty()) {
                                                 onSearchStocks(searchQuery, stockMarket)
                                                 showSearchResults = true
@@ -191,6 +215,8 @@ fun AddAssetDialog(
                                                 .fillMaxWidth()
                                                 .padding(vertical = 2.dp),
                                             onClick = {
+                                                debugLogManager.logUserAction("Stock Selected from Search")
+                                                debugLogManager.log("UI", "User selected stock: ${result.symbol} - ${result.longName}")
                                                 stockSymbol = result.symbol
                                                 showSearchResults = false
                                             }
@@ -218,7 +244,10 @@ fun AddAssetDialog(
                             Spacer(modifier = Modifier.height(8.dp))
                             OutlinedTextField(
                                 value = stockShares,
-                                onValueChange = { stockShares = it },
+                                onValueChange = { 
+                                    debugLogManager.log("UI", "User typing stock shares: $it")
+                                    stockShares = it 
+                                },
                                 placeholder = { Text("Enter number of shares") },
                                 modifier = Modifier.fillMaxWidth()
                             )
@@ -231,7 +260,11 @@ fun AddAssetDialog(
                                         .weight(1f)
                                         .selectable(
                                             selected = stockMarket == "TW",
-                                            onClick = { stockMarket = "TW" },
+                                            onClick = { 
+                                                debugLogManager.logUserAction("Taiwan Market Selected")
+                                                debugLogManager.log("UI", "User selected Taiwan market for stock")
+                                                stockMarket = "TW" 
+                                            },
                                             role = Role.RadioButton
                                         )
                                 ) {
@@ -246,7 +279,11 @@ fun AddAssetDialog(
                                         .weight(1f)
                                         .selectable(
                                             selected = stockMarket == "US",
-                                            onClick = { stockMarket = "US" },
+                                            onClick = { 
+                                                debugLogManager.logUserAction("US Market Selected")
+                                                debugLogManager.log("UI", "User selected US market for stock")
+                                                stockMarket = "US" 
+                                            },
                                             role = Role.RadioButton
                                         )
                                 ) {
@@ -265,17 +302,24 @@ fun AddAssetDialog(
         confirmButton = {
             TextButton(
                 onClick = {
+                    debugLogManager.logUserAction("Add Asset Button Clicked")
                     when (selectedTab) {
                         0 -> {
+                            debugLogManager.log("UI", "Adding cash asset: $cashCurrency $cashAmount")
                             val amount = cashAmount.toDoubleOrNull()
                             if (amount != null && amount > 0) {
                                 onAddCash(cashCurrency, amount)
+                            } else {
+                                debugLogManager.log("UI", "Invalid cash amount: $cashAmount")
                             }
                         }
                         1 -> {
+                            debugLogManager.log("UI", "Adding stock asset: $stockSymbol, $stockShares shares, $stockMarket market")
                             val shares = stockShares.toDoubleOrNull()
                             if (stockSymbol.isNotEmpty() && shares != null && shares > 0) {
                                 onAddStock(stockSymbol, shares, stockMarket)
+                            } else {
+                                debugLogManager.log("UI", "Invalid stock data: symbol=$stockSymbol, shares=$stockShares")
                             }
                         }
                     }
@@ -285,7 +329,11 @@ fun AddAssetDialog(
             }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) {
+            TextButton(onClick = { 
+                debugLogManager.logUserAction("Cancel Asset Dialog")
+                debugLogManager.log("UI", "User cancelled Add Asset dialog")
+                onDismiss() 
+            }) {
                 Text("Cancel")
             }
         }

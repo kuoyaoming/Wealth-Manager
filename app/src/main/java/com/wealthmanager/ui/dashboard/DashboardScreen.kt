@@ -39,12 +39,14 @@ fun DashboardScreen(
                 actions = {
                     IconButton(onClick = { 
                         debugLogManager.logUserAction("Refresh Data Button Clicked")
+                        debugLogManager.log("UI", "User clicked refresh button to update market data")
                         viewModel.refreshData() 
                     }) {
                         Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
                     }
                     IconButton(onClick = { 
                         debugLogManager.logUserAction("Debug Log Button Clicked")
+                        debugLogManager.log("UI", "User clicked debug log button to copy logs to clipboard")
                         debugLogManager.copyLogsToClipboard(context)
                     }) {
                         Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
@@ -56,6 +58,7 @@ fun DashboardScreen(
             FloatingActionButton(
                 onClick = { 
                     debugLogManager.logUserAction("Navigate to Assets Button Clicked")
+                    debugLogManager.log("UI", "User clicked FAB to navigate to Assets screen")
                     onNavigateToAssets() 
                 }
             ) {

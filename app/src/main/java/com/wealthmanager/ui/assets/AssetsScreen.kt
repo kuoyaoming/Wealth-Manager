@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.wealthmanager.R
+import com.wealthmanager.debug.DebugLogManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -20,8 +21,11 @@ fun AssetsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showAddDialog by remember { mutableStateOf(false) }
+    val debugLogManager = remember { DebugLogManager() }
     
     LaunchedEffect(Unit) {
+        debugLogManager.logUserAction("Assets Screen Opened")
+        debugLogManager.log("UI", "Assets screen loaded, starting to load assets")
         viewModel.loadAssets()
     }
     
@@ -30,7 +34,11 @@ fun AssetsScreen(
             TopAppBar(
                 title = { Text(stringResource(R.string.assets_title)) },
                 navigationIcon = {
-                    TextButton(onClick = onNavigateBack) {
+                    TextButton(onClick = { 
+                        debugLogManager.logUserAction("Back Button Clicked")
+                        debugLogManager.log("UI", "User clicked back button to return to dashboard")
+                        onNavigateBack() 
+                    }) {
                         Text(stringResource(R.string.cancel))
                     }
                 }
@@ -38,7 +46,11 @@ fun AssetsScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { showAddDialog = true }
+                onClick = { 
+                    debugLogManager.logUserAction("Add Asset FAB Clicked")
+                    debugLogManager.log("UI", "User clicked FAB to open Add Asset dialog")
+                    showAddDialog = true 
+                }
             ) {
                 Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_cash))
             }

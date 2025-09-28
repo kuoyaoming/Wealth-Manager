@@ -78,6 +78,7 @@ fun BiometricAuthScreen(
                         Button(
                             onClick = { 
                                 debugLogManager.logUserAction("Biometric Authenticate Button Clicked")
+                                debugLogManager.log("UI", "User clicked biometric authenticate button")
                                 viewModel.authenticate(context) 
                             },
                             modifier = Modifier.fillMaxWidth()
@@ -90,6 +91,7 @@ fun BiometricAuthScreen(
                         TextButton(
                             onClick = { 
                                 debugLogManager.logUserAction("Skip Authentication Button Clicked")
+                                debugLogManager.log("UI", "User clicked skip authentication button")
                                 onSkipAuth() 
                             },
                             modifier = Modifier.fillMaxWidth()
@@ -108,7 +110,11 @@ fun BiometricAuthScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         
                         Button(
-                            onClick = onSkipAuth,
+                            onClick = { 
+                                debugLogManager.logUserAction("Continue Without Biometric (No Hardware)")
+                                debugLogManager.log("UI", "User clicked continue without biometric - no hardware available")
+                                onSkipAuth() 
+                            },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text("Continue Without Biometric")
@@ -125,7 +131,11 @@ fun BiometricAuthScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         
                         Button(
-                            onClick = onSkipAuth,
+                            onClick = { 
+                                debugLogManager.logUserAction("Continue Without Biometric (HW Unavailable)")
+                                debugLogManager.log("UI", "User clicked continue without biometric - hardware unavailable")
+                                onSkipAuth() 
+                            },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text("Continue Without Biometric")
@@ -142,7 +152,11 @@ fun BiometricAuthScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         
                         Button(
-                            onClick = onSkipAuth,
+                            onClick = { 
+                                debugLogManager.logUserAction("Continue Without Biometric (None Enrolled)")
+                                debugLogManager.log("UI", "User clicked continue without biometric - no biometrics enrolled")
+                                onSkipAuth() 
+                            },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text("Continue Without Biometric")
@@ -159,7 +173,11 @@ fun BiometricAuthScreen(
                         Spacer(modifier = Modifier.height(16.dp))
                         
                         Button(
-                            onClick = onSkipAuth,
+                            onClick = { 
+                                debugLogManager.logUserAction("Continue Without Biometric (Unknown Error)")
+                                debugLogManager.log("UI", "User clicked continue without biometric - unknown error occurred")
+                                onSkipAuth() 
+                            },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text("Continue Without Biometric")

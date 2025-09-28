@@ -32,6 +32,9 @@ fun PieChartComponent(
         if (assets.isNotEmpty()) {
             val totalValue = assets.sumOf { it.value }
             debugLogManager.log("CHART", "Total chart value: $totalValue")
+            assets.forEachIndexed { index, asset ->
+                debugLogManager.log("CHART", "Asset $index: ${asset.name} = ${asset.value} (${(asset.value/totalValue*100).toInt()}%)")
+            }
         }
     }
     Card(
