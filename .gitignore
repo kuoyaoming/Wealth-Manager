@@ -13,6 +13,8 @@ captures/
 .externalNativeBuild/
 .cxx/
 *.aab
+# Allow APK files in release directory
+!GitHub/release/apk/*.apk
 *.apk
 output-metadata.json
 
