@@ -74,8 +74,21 @@ class DebugLogManager @Inject constructor() {
         throwable?.let {
             logError("ERROR", "Exception: ${it.message}")
             // Only log full stack trace in debug builds
-            // For now, always log full stack trace (can be made configurable later)
-            logError("ERROR", "Stack trace: ${it.stackTraceToString()}")
+            if (isDebugBuild()) {
+                logError("ERROR", "Stack trace: ${it.stackTraceToString()}")
+            } else {
+                logError("ERROR", "Exception type: ${it::class.simpleName}")
+            }
+        }
+    }
+    
+    private fun isDebugBuild(): Boolean {
+        return try {
+            // Try to access BuildConfig.DEBUG
+            Class.forName("com.wealthmanager.BuildConfig").getField("DEBUG").getBoolean(null)
+        } catch (e: Exception) {
+            // If BuildConfig is not available, assume debug
+            true
         }
     }
     
@@ -92,11 +105,10 @@ class DebugLogManager @Inject constructor() {
     }
     
     fun copyLogsToClipboard(context: Context) {
-        // For now, always allow log copying (can be made configurable later)
-        // if (!BuildConfig.DEBUG) {
-        //     logWarning("DEBUG", "Debug log copying disabled in production build")
-        //     return
-        // }
+        if (!isDebugBuild()) {
+            logWarning("DEBUG", "Debug log copying disabled in production build")
+            return
+        }
         
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("Debug Logs", getAllLogs())

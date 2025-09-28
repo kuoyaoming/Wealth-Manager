@@ -34,7 +34,12 @@ class ApiRetryManager @Inject constructor(
                 lastException = e
                 val shouldRetry = shouldRetryException(e, attempt)
                 
-                debugLogManager.log("API_RETRY", "$operationName - Attempt $attempt failed: ${e.message}")
+                if (e is HttpException) {
+                    val code = e.code()
+                    debugLogManager.logWarning("API_RETRY", "$operationName - HTTP $code on attempt $attempt: ${e.message}")
+                } else {
+                    debugLogManager.log("API_RETRY", "$operationName - Attempt $attempt failed: ${e.message}")
+                }
                 
                 if (!shouldRetry || attempt == MAX_RETRIES) {
                     debugLogManager.logError("$operationName - Final failure after $attempt attempts", e)

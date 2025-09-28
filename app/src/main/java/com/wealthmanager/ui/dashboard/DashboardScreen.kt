@@ -28,6 +28,15 @@ fun DashboardScreen(
     val context = LocalContext.current
     val debugLogManager = remember { DebugLogManager() }
     
+    // Check if this is a debug build
+    val isDebugBuild = remember {
+        try {
+            Class.forName("com.wealthmanager.BuildConfig").getField("DEBUG").getBoolean(null)
+        } catch (e: Exception) {
+            true // Assume debug if BuildConfig is not available
+        }
+    }
+    
     // Observe API status
     val apiStatus by viewModel.apiStatus.collectAsState()
     
@@ -49,13 +58,15 @@ fun DashboardScreen(
                             Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
                         }
                         
-                        // Always show debug button for now (can be made configurable later)
-                        IconButton(onClick = { 
-                            debugLogManager.logUserAction("Debug Log Button Clicked")
-                            debugLogManager.log("UI", "User clicked debug log button to copy logs to clipboard")
-                            debugLogManager.copyLogsToClipboard(context)
-                        }) {
-                            Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
+                        // Only show debug button in debug builds
+                        if (isDebugBuild) {
+                            IconButton(onClick = { 
+                                debugLogManager.logUserAction("Debug Log Button Clicked")
+                                debugLogManager.log("UI", "User clicked debug log button to copy logs to clipboard")
+                                debugLogManager.copyLogsToClipboard(context)
+                            }) {
+                                Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
+                            }
                         }
                     }
             )
