@@ -112,6 +112,6 @@ For technical support or feature requests, please contact the development team t
 
 ---
 
-**Version**: 2.0  
+**Version**: 0.1.1  
 **Last Updated**: 2024  
 **Platform**: Android 6.0+ (API 23+)
