@@ -5,6 +5,8 @@ import androidx.lifecycle.viewModelScope
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.data.repository.AssetRepository
+import com.wealthmanager.data.service.MarketDataService
+import com.wealthmanager.data.service.StockSearchItem
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,11 +17,30 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AssetsViewModel @Inject constructor(
-    private val assetRepository: AssetRepository
+    private val assetRepository: AssetRepository,
+    private val marketDataService: MarketDataService
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow(AssetsUiState())
     val uiState: StateFlow<AssetsUiState> = _uiState.asStateFlow()
+    
+    fun searchStocks(query: String, market: String) {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isSearching = true)
+            try {
+                val results = marketDataService.searchStocks(query, market)
+                _uiState.value = _uiState.value.copy(
+                    searchResults = results,
+                    isSearching = false
+                )
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(
+                    searchResults = emptyList(),
+                    isSearching = false
+                )
+            }
+        }
+    }
     
     fun loadAssets() {
         viewModelScope.launch {
@@ -67,5 +88,7 @@ class AssetsViewModel @Inject constructor(
 data class AssetsUiState(
     val cashAssets: List<CashAsset> = emptyList(),
     val stockAssets: List<StockAsset> = emptyList(),
-    val isLoading: Boolean = true
+    val isLoading: Boolean = true,
+    val searchResults: List<StockSearchItem> = emptyList(),
+    val isSearching: Boolean = false
 )

@@ -11,7 +11,10 @@ interface ExchangeRateDao {
     fun getAllExchangeRates(): Flow<List<ExchangeRate>>
     
     @Query("SELECT * FROM exchange_rates WHERE currencyPair = :currencyPair")
-    suspend fun getExchangeRate(currencyPair: String): ExchangeRate?
+    suspend fun getExchangeRateSync(currencyPair: String): ExchangeRate?
+    
+    @Query("SELECT * FROM exchange_rates WHERE currencyPair = :currencyPair")
+    fun getExchangeRate(currencyPair: String): Flow<ExchangeRate>
     
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertExchangeRate(exchangeRate: ExchangeRate)

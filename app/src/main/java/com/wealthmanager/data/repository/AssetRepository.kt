@@ -59,8 +59,8 @@ class AssetRepository @Inject constructor(
     // Exchange Rates
     fun getAllExchangeRates(): Flow<List<ExchangeRate>> = exchangeRateDao.getAllExchangeRates()
     
-    suspend fun getExchangeRate(currencyPair: String): ExchangeRate? = 
-        exchangeRateDao.getExchangeRate(currencyPair)
+    suspend fun getExchangeRateSync(currencyPair: String): ExchangeRate? = 
+        exchangeRateDao.getExchangeRateSync(currencyPair)
     
     suspend fun insertExchangeRate(exchangeRate: ExchangeRate) = 
         exchangeRateDao.insertExchangeRate(exchangeRate)
@@ -70,4 +70,8 @@ class AssetRepository @Inject constructor(
     
     suspend fun deleteExchangeRate(exchangeRate: ExchangeRate) = 
         exchangeRateDao.deleteExchangeRate(exchangeRate)
+    
+    // Exchange Rate Flow
+    fun getExchangeRate(currencyPair: String): Flow<ExchangeRate> = 
+        exchangeRateDao.getExchangeRate(currencyPair)
 }

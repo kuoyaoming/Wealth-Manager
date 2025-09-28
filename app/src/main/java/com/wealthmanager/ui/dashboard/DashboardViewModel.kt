@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.data.repository.AssetRepository
+import com.wealthmanager.data.service.MarketDataService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -15,7 +16,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
-    private val assetRepository: AssetRepository
+    private val assetRepository: AssetRepository,
+    private val marketDataService: MarketDataService
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow(DashboardUiState())
@@ -53,8 +55,18 @@ class DashboardViewModel @Inject constructor(
     
     fun refreshData() {
         _uiState.value = _uiState.value.copy(isLoading = true)
-        // TODO: Implement market data refresh
-        _uiState.value = _uiState.value.copy(isLoading = false)
+        viewModelScope.launch {
+            try {
+                // Update exchange rates first
+                marketDataService.updateExchangeRates()
+                // Then update stock prices
+                marketDataService.updateStockPrices()
+                // Reload assets to reflect updated prices
+                observeAssets()
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(isLoading = false)
+            }
+        }
     }
 }
 
