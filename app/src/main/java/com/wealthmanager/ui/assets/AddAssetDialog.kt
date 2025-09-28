@@ -18,6 +18,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 import com.wealthmanager.data.service.StockSearchItem
+import com.wealthmanager.debug.DebugLogManager
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -30,6 +31,7 @@ fun AddAssetDialog(
     searchResults: List<StockSearchItem> = emptyList(),
     isSearching: Boolean = false
 ) {
+    val debugLogManager = remember { DebugLogManager() }
     var selectedTab by remember { mutableStateOf(0) }
     var cashCurrency by remember { mutableStateOf("TWD") }
     var cashAmount by remember { mutableStateOf("") }
@@ -38,6 +40,10 @@ fun AddAssetDialog(
     var stockMarket by remember { mutableStateOf("TW") }
     var searchQuery by remember { mutableStateOf("") }
     var showSearchResults by remember { mutableStateOf(false) }
+    
+    LaunchedEffect(Unit) {
+        debugLogManager.logUserAction("Add Asset Dialog Opened")
+    }
     
     AlertDialog(
         onDismissRequest = onDismiss,

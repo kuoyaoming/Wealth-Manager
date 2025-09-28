@@ -6,6 +6,7 @@ import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.data.repository.AssetRepository
 import com.wealthmanager.data.service.MarketDataService
+import com.wealthmanager.debug.DebugLogManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -17,25 +18,32 @@ import javax.inject.Inject
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val assetRepository: AssetRepository,
-    private val marketDataService: MarketDataService
+    private val marketDataService: MarketDataService,
+    private val debugLogManager: DebugLogManager
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
     
     init {
+        debugLogManager.log("DASHBOARD", "DashboardViewModel initialized")
         observeAssets()
     }
     
     private fun observeAssets() {
+        debugLogManager.log("DASHBOARD", "Starting to observe assets")
         viewModelScope.launch {
             combine(
                 assetRepository.getAllCashAssets(),
                 assetRepository.getAllStockAssets()
             ) { cashAssets, stockAssets ->
+                debugLogManager.log("DASHBOARD", "Assets updated - Cash: ${cashAssets.size}, Stock: ${stockAssets.size}")
+                
                 val totalCash = cashAssets.sumOf { it.twdEquivalent }
                 val totalStock = stockAssets.sumOf { it.twdEquivalent }
                 val totalAssets = totalCash + totalStock
+                
+                debugLogManager.log("DASHBOARD", "Total Assets: $totalAssets, Cash: $totalCash, Stock: $totalStock")
                 
                 _uiState.value = _uiState.value.copy(
                     totalAssets = totalAssets,
@@ -49,21 +57,27 @@ class DashboardViewModel @Inject constructor(
     }
     
     fun loadPortfolioData() {
+        debugLogManager.log("DASHBOARD", "Loading portfolio data")
         _uiState.value = _uiState.value.copy(isLoading = true)
         // Data will be loaded through the observeAssets() flow
     }
     
     fun refreshData() {
+        debugLogManager.log("DASHBOARD", "Refreshing data - starting market data update")
         _uiState.value = _uiState.value.copy(isLoading = true)
         viewModelScope.launch {
             try {
-                // Update exchange rates first
+                debugLogManager.log("DASHBOARD", "Updating exchange rates")
                 marketDataService.updateExchangeRates()
-                // Then update stock prices
+                
+                debugLogManager.log("DASHBOARD", "Updating stock prices")
                 marketDataService.updateStockPrices()
+                
+                debugLogManager.log("DASHBOARD", "Market data update completed, reloading assets")
                 // Reload assets to reflect updated prices
                 observeAssets()
             } catch (e: Exception) {
+                debugLogManager.logError("Failed to refresh data: ${e.message}", e)
                 _uiState.value = _uiState.value.copy(isLoading = false)
             }
         }
