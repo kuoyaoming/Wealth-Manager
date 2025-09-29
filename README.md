@@ -17,25 +17,50 @@ A modern personal finance tracker built with Jetpack Compose. Features biometric
 
 ## 📱 Screenshots
 
-### Portfolio Overview
-![Portfolio Overview](docs/screenshots/portfolio-overview.png)
-*Comprehensive portfolio overview with asset distribution charts and real-time valuations*
+<div align="center">
 
-### Asset Management
-![Asset Management](docs/screenshots/asset-management.png)
-*Easy management of cash and stock assets with intuitive interface*
+### Portfolio Overview & Asset Management
+<table>
+<tr>
+<td width="50%">
+<img src="docs/screenshots/portfolio-overview.png" alt="Portfolio Overview" width="100%"/>
+<p align="center"><em>Comprehensive portfolio overview with asset distribution charts and real-time valuations</em></p>
+</td>
+<td width="50%">
+<img src="docs/screenshots/asset-management.png" alt="Asset Management" width="100%"/>
+<p align="center"><em>Easy management of cash and stock assets with intuitive interface</em></p>
+</td>
+</tr>
+</table>
 
-### Biometric Authentication
-![Biometric Authentication](docs/screenshots/biometric-auth.png)
-*Secure biometric authentication with privacy protection notice*
-
-### Add Assets
-![Add Assets](docs/screenshots/add-assets.png)
-*Smart asset addition with real-time stock search and symbol lookup*
+### Biometric Authentication & Add Assets
+<table>
+<tr>
+<td width="50%">
+<img src="docs/screenshots/biometric-auth.png" alt="Biometric Authentication" width="100%"/>
+<p align="center"><em>Secure biometric authentication with privacy protection notice</em></p>
+</td>
+<td width="50%">
+<img src="docs/screenshots/add-assets.png" alt="Add Assets" width="100%"/>
+<p align="center"><em>Smart asset addition with real-time stock search and symbol lookup</em></p>
+</td>
+</tr>
+</table>
 
 ### About & Privacy
-![About Wealth Manager](docs/screenshots/about-app.png)
-*Transparent privacy policy and third-party API usage information*
+<table>
+<tr>
+<td width="50%">
+<img src="docs/screenshots/about-app.png" alt="About Wealth Manager" width="100%"/>
+<p align="center"><em>Transparent privacy policy and third-party API usage information</em></p>
+</td>
+<td width="50%">
+<!-- Empty cell for better layout -->
+</td>
+</tr>
+</table>
+
+</div>
 
 ## Security
 

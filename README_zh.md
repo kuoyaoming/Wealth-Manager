@@ -17,25 +17,50 @@
 
 ## 📱 應用程式截圖
 
-### 投資組合概覽
-![投資組合概覽](docs/screenshots/portfolio-overview.png)
-*完整的投資組合概覽，包含資產分佈圖表和即時估值*
+<div align="center">
 
-### 資產管理
-![資產管理](docs/screenshots/asset-management.png)
-*直觀的現金和股票資產管理介面*
+### 投資組合概覽 & 資產管理
+<table>
+<tr>
+<td width="50%">
+<img src="docs/screenshots/portfolio-overview.png" alt="投資組合概覽" width="100%"/>
+<p align="center"><em>完整的投資組合概覽，包含資產分佈圖表和即時估值</em></p>
+</td>
+<td width="50%">
+<img src="docs/screenshots/asset-management.png" alt="資產管理" width="100%"/>
+<p align="center"><em>直觀的現金和股票資產管理介面</em></p>
+</td>
+</tr>
+</table>
 
-### 生物識別認證
-![生物識別認證](docs/screenshots/biometric-auth.png)
-*安全的生物識別認證，包含隱私保護說明*
-
-### 新增資產
-![新增資產](docs/screenshots/add-assets.png)
-*智能資產新增功能，支援即時股票搜尋和代碼查詢*
+### 生物識別認證 & 新增資產
+<table>
+<tr>
+<td width="50%">
+<img src="docs/screenshots/biometric-auth.png" alt="生物識別認證" width="100%"/>
+<p align="center"><em>安全的生物識別認證，包含隱私保護說明</em></p>
+</td>
+<td width="50%">
+<img src="docs/screenshots/add-assets.png" alt="新增資產" width="100%"/>
+<p align="center"><em>智能資產新增功能，支援即時股票搜尋和代碼查詢</em></p>
+</td>
+</tr>
+</table>
 
 ### 關於與隱私
-![關於 Wealth Manager](docs/screenshots/about-app.png)
-*透明的隱私政策和第三方 API 使用資訊*
+<table>
+<tr>
+<td width="50%">
+<img src="docs/screenshots/about-app.png" alt="關於 Wealth Manager" width="100%"/>
+<p align="center"><em>透明的隱私政策和第三方 API 使用資訊</em></p>
+</td>
+<td width="50%">
+<!-- 空白欄位以保持版面整齊 -->
+</td>
+</tr>
+</table>
+
+</div>
 
 ## 安全特性
 
