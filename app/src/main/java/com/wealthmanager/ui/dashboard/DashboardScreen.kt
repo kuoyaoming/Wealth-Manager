@@ -8,7 +8,6 @@ import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.BugReport
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -17,37 +16,35 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import androidx.navigation.NavHostController
 import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
-import com.wealthmanager.data.service.ApiUsageManager
-import com.wealthmanager.ui.dashboard.ApiUsageIndicator
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
     onNavigateToAssets: () -> Unit,
-    viewModel: DashboardViewModel = hiltViewModel()
+    viewModel: DashboardViewModel = hiltViewModel(),
+    navController: NavHostController? = null
 ) {
     val uiState by viewModel.uiState.collectAsState()
-    val context = LocalContext.current
     val debugLogManager = remember { DebugLogManager() }
     val responsiveLayout = rememberResponsiveLayout()
-    val apiUsageManager = viewModel.apiUsageManager
     
-    val isDebugBuild = remember {
-        try {
-            Class.forName("com.wealthmanager.BuildConfig").getField("DEBUG").getBoolean(null)
-        } catch (e: Exception) {
-            true
-        }
-    }
     
     val apiStatus by viewModel.apiStatus.collectAsState()
     
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Dashboard Screen Opened")
+        // Only load local data, do not trigger API calls
         viewModel.loadPortfolioData()
+    }
+    
+    // Listen for navigation return events
+    LaunchedEffect(navController) {
+        // Trigger smart loading when returning from Assets
+        viewModel.onReturnFromAssets()
     }
     
     Scaffold(
@@ -61,16 +58,6 @@ fun DashboardScreen(
                         viewModel.refreshData() 
                     }) {
                         Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
-                    }
-                    
-                    if (isDebugBuild) {
-                        IconButton(onClick = { 
-                            debugLogManager.logUserAction("Debug Log Button Clicked")
-                            debugLogManager.log("UI", "User clicked debug log button to copy logs to clipboard")
-                            debugLogManager.copyLogsToClipboard(context)
-                        }) {
-                            Icon(Icons.Default.BugReport, contentDescription = "Copy Debug Logs")
-                        }
                     }
                 }
             )
@@ -87,118 +74,53 @@ fun DashboardScreen(
             }
         }
     ) { paddingValues ->
-        if (responsiveLayout.columns > 1) {
-            LazyVerticalGrid(
-                columns = GridCells.Fixed(responsiveLayout.columns),
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(responsiveLayout.paddingLarge),
-                verticalArrangement = Arrangement.spacedBy(responsiveLayout.cardSpacing),
-                horizontalArrangement = Arrangement.spacedBy(responsiveLayout.gridSpacing)
-            ) {
-                if (apiStatus.hasError) {
-                    item(span = { GridItemSpan(responsiveLayout.columns) }) {
-                        ApiErrorBanner(
-                            errorMessage = apiStatus.errorMessage,
-                            isRetrying = apiStatus.isRetrying,
-                            isDataStale = apiStatus.isDataStale,
-                            onRetry = { viewModel.retryApiCall() },
-                            onDismiss = { viewModel.dismissApiError() }
-                        )
-                    }
-                }
-                
-                if (isDebugBuild) {
-                    item(span = { GridItemSpan(responsiveLayout.columns) }) {
-                        ApiUsageIndicator(apiUsageManager = apiUsageManager)
-                    }
-                }
-                
-                item(span = { GridItemSpan(responsiveLayout.columns) }) {
-                    TotalAssetsCard(
-                        totalValue = uiState.totalAssets,
-                        isLoading = uiState.isLoading
-                    )
-                }
-                
+        // Always use LazyColumn for consistent layout
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(responsiveLayout.paddingLarge),
+            verticalArrangement = Arrangement.spacedBy(responsiveLayout.cardSpacing)
+        ) {
+            if (apiStatus.hasError) {
                 item {
-                    CashAssetsCard(
-                        cashValue = uiState.cashAssets,
-                        isLoading = uiState.isLoading
+                    ApiErrorBanner(
+                        errorMessage = apiStatus.errorMessage,
+                        isRetrying = apiStatus.isRetrying,
+                        isDataStale = apiStatus.isDataStale,
+                        onRetry = { viewModel.retryApiCall() },
+                        onDismiss = { viewModel.dismissApiError() }
                     )
-                }
-                
-                item {
-                    StockAssetsCard(
-                        stockValue = uiState.stockAssets,
-                        isLoading = uiState.isLoading
-                    )
-                }
-                
-                if (uiState.assets.isNotEmpty()) {
-                    item(span = { GridItemSpan(responsiveLayout.columns) }) {
-                        PieChartCard(
-                            assets = uiState.assets,
-                            isLoading = uiState.isLoading
-                        )
-                    }
                 }
             }
-        } else {
-            LazyColumn(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(responsiveLayout.paddingLarge),
-                verticalArrangement = Arrangement.spacedBy(responsiveLayout.cardSpacing)
-            ) {
-                if (apiStatus.hasError) {
-                    item {
-                        ApiErrorBanner(
-                            errorMessage = apiStatus.errorMessage,
-                            isRetrying = apiStatus.isRetrying,
-                            isDataStale = apiStatus.isDataStale,
-                            onRetry = { viewModel.retryApiCall() },
-                            onDismiss = { viewModel.dismissApiError() }
-                        )
-                    }
-                }
-                
-                if (isDebugBuild) {
-                    item {
-                        ApiUsageIndicator(apiUsageManager = apiUsageManager)
-                    }
-                }
-                
+            
+            item {
+                TotalAssetsCard(
+                    totalValue = uiState.totalAssets,
+                    isLoading = uiState.isLoading
+                )
+            }
+            
+            item {
+                CashAssetsCard(
+                    cashValue = uiState.cashAssets,
+                    isLoading = uiState.isLoading
+                )
+            }
+            
+            item {
+                StockAssetsCard(
+                    stockValue = uiState.stockAssets,
+                    isLoading = uiState.isLoading
+                )
+            }
+            
+            if (uiState.assets.isNotEmpty()) {
                 item {
-                    TotalAssetsCard(
-                        totalValue = uiState.totalAssets,
+                    PieChartCard(
+                        assets = uiState.assets,
                         isLoading = uiState.isLoading
                     )
-                }
-                
-                item {
-                    CashAssetsCard(
-                        cashValue = uiState.cashAssets,
-                        isLoading = uiState.isLoading
-                    )
-                }
-                
-                item {
-                    StockAssetsCard(
-                        stockValue = uiState.stockAssets,
-                        isLoading = uiState.isLoading
-                    )
-                }
-                
-                if (uiState.assets.isNotEmpty()) {
-                    item {
-                        PieChartCard(
-                            assets = uiState.assets,
-                            isLoading = uiState.isLoading
-                        )
-                    }
                 }
             }
         }

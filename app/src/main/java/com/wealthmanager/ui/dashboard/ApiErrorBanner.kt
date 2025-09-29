@@ -11,6 +11,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.wealthmanager.R
 
 @Composable
 fun ApiErrorBanner(
@@ -45,7 +47,7 @@ fun ApiErrorBanner(
             
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = if (isDataStale) "資料可能過期" else "連線問題",
+                    text = if (isDataStale) stringResource(R.string.api_error_data_stale) else stringResource(R.string.api_error_connection_issue),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onErrorContainer
@@ -53,7 +55,7 @@ fun ApiErrorBanner(
                 
                 Text(
                     text = if (isDataStale) {
-                        "顯示上次更新的資料，點擊重試以獲取最新資訊"
+                        stringResource(R.string.api_error_show_cached_data)
                     } else {
                         errorMessage
                     },
@@ -78,7 +80,7 @@ fun ApiErrorBanner(
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
-                        Text("重試")
+                        Text(stringResource(R.string.api_error_retry))
                     }
                     
                     IconButton(onClick = onDismiss) {

@@ -64,6 +64,9 @@ class AssetRepository @Inject constructor(
     suspend fun getStockAssetBySymbol(symbol: String): StockAsset? = 
         stockAssetDao.getStockAssetBySymbol(symbol)
     
+    suspend fun getStockAssetSync(symbol: String): StockAsset? = 
+        stockAssetDao.getStockAssetBySymbol(symbol)
+    
     suspend fun insertStockAsset(stockAsset: StockAsset) {
         debugLogManager.log("REPOSITORY", "Inserting stock asset: ${stockAsset.symbol} ${stockAsset.shares} shares")
         stockAssetDao.insertStockAsset(stockAsset)

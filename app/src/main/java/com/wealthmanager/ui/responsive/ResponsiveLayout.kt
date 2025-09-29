@@ -35,7 +35,7 @@ data class ResponsiveLayout(
     val screenHeight: Dp,
     val isLandscape: Boolean
 ) {
-    // 螢幕類型判斷
+    // Screen type detection
     val isTablet: Boolean
         get() = screenWidth >= 600.dp || screenHeight >= 600.dp
     
@@ -45,7 +45,7 @@ data class ResponsiveLayout(
     val isLargeScreen: Boolean
         get() = screenWidth >= 840.dp || screenHeight >= 840.dp
     
-    // 動態間距
+    // Dynamic spacing
     val paddingSmall: Dp
         get() = if (isTablet) 8.dp else 4.dp
     
@@ -58,7 +58,7 @@ data class ResponsiveLayout(
     val paddingExtraLarge: Dp
         get() = if (isTablet) 32.dp else 24.dp
     
-    // 動態字體大小
+    // Dynamic font size
     val titleLargeSize: Dp
         get() = if (isTablet) 28.dp else 24.dp
     
@@ -71,15 +71,15 @@ data class ResponsiveLayout(
     val bodyMediumSize: Dp
         get() = if (isTablet) 16.dp else 14.dp
     
-    // 卡片間距
+    // Card spacing
     val cardSpacing: Dp
         get() = if (isTablet) 16.dp else 12.dp
     
-    // 圖表高度
+    // Chart height
     val chartHeight: Dp
         get() = if (isTablet) 300.dp else 200.dp
     
-    // 對話框寬度
+    // Dialog width
     val dialogWidth: Dp
         get() = when {
             isLargeScreen -> 600.dp
@@ -87,7 +87,7 @@ data class ResponsiveLayout(
             else -> screenWidth * 0.9f
         }
     
-    // 對話框高度
+    // Dialog height
     val dialogHeight: Dp
         get() = when {
             isLargeScreen -> 500.dp
@@ -95,7 +95,7 @@ data class ResponsiveLayout(
             else -> screenHeight * 0.8f
         }
     
-    // 列數配置
+    // Column configuration
     val columns: Int
         get() = when {
             isLargeScreen && isLandscape -> 3
@@ -104,7 +104,7 @@ data class ResponsiveLayout(
             else -> 1
         }
     
-    // 網格間距
+    // Grid spacing
     val gridSpacing: Dp
         get() = if (isTablet) 16.dp else 8.dp
 }
@@ -165,7 +165,7 @@ fun ResponsiveGrid(
     val responsiveLayout = rememberResponsiveLayout()
     
     if (responsiveLayout.columns > 1) {
-        // 使用網格佈局
+        // Use grid layout
         LazyVerticalGrid(
             columns = androidx.compose.foundation.lazy.grid.GridCells.Fixed(responsiveLayout.columns),
             modifier = modifier,
@@ -175,7 +175,7 @@ fun ResponsiveGrid(
             item { content() }
         }
     } else {
-        // 單列佈局
+        // Single column layout
         Column(
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(responsiveLayout.cardSpacing)

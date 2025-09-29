@@ -151,12 +151,12 @@ fun AssetsScreen(
                     viewModel.addCashAsset(currency, amount)
                     showAddDialog = false
                 },
-                onAddStock = { symbol, shares, market ->
-                    viewModel.addStockAsset(symbol, shares, market)
+                onAddStock = { symbol, shares ->
+                    viewModel.addStockAsset(symbol, shares)
                     showAddDialog = false
                 },
-                onSearchStocks = { query, market ->
-                    viewModel.searchStocks(query, market)
+                onSearchStocks = { query, _ ->
+                    viewModel.searchStocks(query)
                 },
                 searchResults = uiState.searchResults,
                 isSearching = uiState.isSearching

@@ -19,7 +19,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
-import com.wealthmanager.data.service.StockSearchItem
+import com.wealthmanager.data.model.StockSearchItem
 import com.wealthmanager.debug.DebugLogManager
 import kotlinx.coroutines.delay
 
@@ -28,7 +28,7 @@ import kotlinx.coroutines.delay
 fun AddAssetDialog(
     onDismiss: () -> Unit,
     onAddCash: (String, Double) -> Unit,
-    onAddStock: (String, Double, String) -> Unit,
+    onAddStock: (String, Double) -> Unit,
     onSearchStocks: (String, String) -> Unit = { _, _ -> },
     searchResults: List<StockSearchItem> = emptyList(),
     isSearching: Boolean = false
@@ -39,13 +39,23 @@ fun AddAssetDialog(
     var cashAmount by remember { mutableStateOf("") }
         var stockSymbol by remember { mutableStateOf("") }
         var stockShares by remember { mutableStateOf("") }
-        var stockMarket by remember { mutableStateOf("TW") }
         var searchQuery by remember { mutableStateOf("") }
         var showSearchResults by remember { mutableStateOf(false) }
         var searchError by remember { mutableStateOf("") }
+        var pendingSearchQuery by remember { mutableStateOf("") }
     
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Add Asset Dialog Opened")
+    }
+    
+    // Immediate search logic - triggers search without delay
+    LaunchedEffect(pendingSearchQuery) {
+        if (pendingSearchQuery.isNotEmpty()) {
+            debugLogManager.log("UI", "Immediately triggering search for: $pendingSearchQuery")
+            debugLogManager.logUserAction("Immediate Stock Search Triggered")
+            onSearchStocks(pendingSearchQuery, "")
+            showSearchResults = true
+        }
     }
     
     AlertDialog(
@@ -153,13 +163,16 @@ fun AddAssetDialog(
                                 value = cashAmount,
                                 onValueChange = { 
                                     debugLogManager.log("UI", "User typing cash amount: $it")
-                                    cashAmount = it 
+                                    // Allow decimal input for cash amounts
+                                    if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
+                                        cashAmount = it
+                                    }
                                 },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                placeholder = { Text("Enter amount") },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                                placeholder = { Text("Enter amount (e.g., 1000.50)") },
                                 isError = cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null,
                                 supportingText = if (cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null) {
-                                    { Text("請輸入有效的數字", color = MaterialTheme.colorScheme.error) }
+                                    { Text("Please enter a valid number", color = MaterialTheme.colorScheme.error) }
                                 } else null,
                                 modifier = Modifier.fillMaxWidth()
                             )
@@ -177,17 +190,19 @@ fun AddAssetDialog(
                                         searchQuery = it
                                         searchError = "" // Clear previous errors
                                         
-                                        if (it.length > 2) {
-                                            debugLogManager.logUserAction("Stock Search Triggered")
-                                            debugLogManager.log("UI", "Auto-triggering stock search for: $it")
-                                            onSearchStocks(it, stockMarket)
-                                            showSearchResults = true
+                                        if (it.isNotEmpty()) {
+                                            // Update pending search query, trigger immediate search
+                                            pendingSearchQuery = it
+                                            debugLogManager.log("UI", "Updated pending search query: $it (will search immediately)")
                                         } else {
+                                            // Clear search related state
+                                            pendingSearchQuery = ""
                                             showSearchResults = false
-                                            searchError = if (it.isNotEmpty()) "請輸入至少3個字符進行搜索" else ""
+                                            searchError = ""
+                                            debugLogManager.log("UI", "Cleared search query and results")
                                         }
                                     },
-                                placeholder = { Text("e.g., AAPL, TSMC") },
+                                placeholder = { Text("e.g., VT, AAPL, TSMC") },
                                 trailingIcon = {
                                     if (isSearching) {
                                         CircularProgressIndicator(modifier = Modifier.size(20.dp))
@@ -196,7 +211,7 @@ fun AddAssetDialog(
                                             debugLogManager.logUserAction("Manual Stock Search Clicked")
                                             debugLogManager.log("UI", "User clicked manual search button for: $searchQuery")
                                             if (searchQuery.isNotEmpty()) {
-                                                onSearchStocks(searchQuery, stockMarket)
+                                                onSearchStocks(searchQuery, "")
                                                 showSearchResults = true
                                             }
                                         }) {
@@ -276,7 +291,7 @@ fun AddAssetDialog(
                             } else if (showSearchResults && searchResults.isEmpty() && !isSearching) {
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
-                                    text = "未找到匹配的股票，請檢查股票代號是否正確",
+                                    text = "No matching stocks found, please check the symbol",
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.error
                                 )
@@ -294,53 +309,10 @@ fun AddAssetDialog(
                                 placeholder = { Text("Enter number of shares") },
                                 isError = stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null,
                                 supportingText = if (stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null) {
-                                    { Text("請輸入有效的股數", color = MaterialTheme.colorScheme.error) }
+                                    { Text("Please enter a valid number of shares", color = MaterialTheme.colorScheme.error) }
                                 } else null,
                                 modifier = Modifier.fillMaxWidth()
                             )
-                            Spacer(modifier = Modifier.height(16.dp))
-                            Text("Market")
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Row {
-                                Row(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .selectable(
-                                            selected = stockMarket == "TW",
-                                            onClick = { 
-                                                debugLogManager.logUserAction("Taiwan Market Selected")
-                                                debugLogManager.log("UI", "User selected Taiwan market for stock")
-                                                stockMarket = "TW" 
-                                            },
-                                            role = Role.RadioButton
-                                        )
-                                ) {
-                                    RadioButton(
-                                        selected = stockMarket == "TW",
-                                        onClick = null
-                                    )
-                                    Text("Taiwan", modifier = Modifier.padding(start = 8.dp))
-                                }
-                                Row(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .selectable(
-                                            selected = stockMarket == "US",
-                                            onClick = { 
-                                                debugLogManager.logUserAction("US Market Selected")
-                                                debugLogManager.log("UI", "User selected US market for stock")
-                                                stockMarket = "US" 
-                                            },
-                                            role = Role.RadioButton
-                                        )
-                                ) {
-                                    RadioButton(
-                                        selected = stockMarket == "US",
-                                        onClick = null
-                                    )
-                                    Text("US", modifier = Modifier.padding(start = 8.dp))
-                                }
-                            }
                         }
                     }
                 }
@@ -350,7 +322,7 @@ fun AddAssetDialog(
             TextButton(
                 onClick = {
                     debugLogManager.logUserAction("Add Asset Button Clicked")
-                    when (selectedTab) {
+                        when (selectedTab) {
                         0 -> {
                             debugLogManager.log("UI", "Adding cash asset: $cashCurrency $cashAmount")
                             val amount = cashAmount.toDoubleOrNull()
@@ -361,10 +333,10 @@ fun AddAssetDialog(
                             }
                         }
                         1 -> {
-                            debugLogManager.log("UI", "Adding stock asset: $stockSymbol, $stockShares shares, $stockMarket market")
+                            debugLogManager.log("UI", "Adding stock asset: $stockSymbol, $stockShares shares")
                             val shares = stockShares.toDoubleOrNull()
                             if (stockSymbol.isNotEmpty() && shares != null && shares > 0) {
-                                onAddStock(stockSymbol, shares, stockMarket)
+                                onAddStock(stockSymbol, shares)
                             } else {
                                 debugLogManager.log("UI", "Invalid stock data: symbol=$stockSymbol, shares=$stockShares")
                             }

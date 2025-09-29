@@ -8,10 +8,10 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * Alpha Vantage API 使用管理器
- * 根據官方文檔限制：
- * - 免費版本：每分鐘最多5次請求，每天最多500次請求
- * - 付費版本：每分鐘最多120次請求，每天最多30,000次請求
+ * Alpha Vantage API Usage Manager
+ * Based on official documentation limits:
+ * - Free tier: Maximum 5 requests per minute, 500 requests per day
+ * - Premium tier: Maximum 120 requests per minute, 30,000 requests per day
  */
 @Singleton
 class ApiUsageManager @Inject constructor(
@@ -19,31 +19,31 @@ class ApiUsageManager @Inject constructor(
 ) {
     
     companion object {
-        // Alpha Vantage 免費版本限制
+        // Alpha Vantage free tier limits
         private const val FREE_TIER_REQUESTS_PER_MINUTE = 5
         private const val FREE_TIER_REQUESTS_PER_DAY = 500
         
-        // 付費版本限制（如果升級）
+        // Premium tier limits (if upgraded)
         private const val PREMIUM_TIER_REQUESTS_PER_MINUTE = 120
         private const val PREMIUM_TIER_REQUESTS_PER_DAY = 30000
         
-        // 請求間隔（毫秒）
-        private const val MIN_REQUEST_INTERVAL_MS = 12000L // 12秒間隔，確保不超過每分鐘5次
-        private const val PREMIUM_MIN_REQUEST_INTERVAL_MS = 500L // 付費版本500毫秒間隔
+        // Request intervals (milliseconds)
+        private const val MIN_REQUEST_INTERVAL_MS = 12000L // 12 second interval to ensure not exceeding 5 per minute
+        private const val PREMIUM_MIN_REQUEST_INTERVAL_MS = 500L // Premium tier 500ms interval
     }
     
-    // 計數器
+    // Counters
     private val requestsThisMinute = AtomicInteger(0)
     private val requestsToday = AtomicInteger(0)
     private val lastRequestTime = AtomicLong(0L)
     private val lastMinuteReset = AtomicLong(System.currentTimeMillis())
     private val lastDayReset = AtomicLong(System.currentTimeMillis())
     
-    // API 版本（預設為免費版本）
+    // API tier (default to free tier)
     private var isPremiumTier = false
     
     /**
-     * 設置API版本
+     * Set API tier
      */
     fun setPremiumTier(isPremium: Boolean) {
         isPremiumTier = isPremium
@@ -51,27 +51,27 @@ class ApiUsageManager @Inject constructor(
     }
     
     /**
-     * 檢查是否可以發送請求
+     * Check if request can be made
      */
     suspend fun canMakeRequest(): Boolean {
         val currentTime = System.currentTimeMillis()
         
-        // 檢查是否需要重置計數器
+        // Check if counters need to be reset
         resetCountersIfNeeded(currentTime)
         
-        // 檢查每日限制
+        // Check daily limit
         if (requestsToday.get() >= getDailyLimit()) {
             debugLogManager.logWarning("Daily API limit reached: ${requestsToday.get()}/${getDailyLimit()}", "API_USAGE")
             return false
         }
         
-        // 檢查每分鐘限制
+        // Check minute limit
         if (requestsThisMinute.get() >= getMinuteLimit()) {
             debugLogManager.logWarning("Minute API limit reached: ${requestsThisMinute.get()}/${getMinuteLimit()}", "API_USAGE")
             return false
         }
         
-        // 檢查請求間隔
+        // Check request interval
         val timeSinceLastRequest = currentTime - lastRequestTime.get()
         val minInterval = getMinRequestInterval()
         
@@ -85,7 +85,7 @@ class ApiUsageManager @Inject constructor(
     }
     
     /**
-     * 記錄API請求
+     * Record API request
      */
     fun recordRequest() {
         val currentTime = System.currentTimeMillis()
@@ -97,21 +97,21 @@ class ApiUsageManager @Inject constructor(
     }
     
     /**
-     * 獲取剩餘請求次數
+     * Get remaining requests today
      */
     fun getRemainingRequestsToday(): Int {
         return maxOf(0, getDailyLimit() - requestsToday.get())
     }
     
     /**
-     * 獲取剩餘請求次數（本分鐘）
+     * Get remaining requests this minute
      */
     fun getRemainingRequestsThisMinute(): Int {
         return maxOf(0, getMinuteLimit() - requestsThisMinute.get())
     }
     
     /**
-     * 獲取使用統計
+     * Get usage statistics
      */
     fun getUsageStats(): ApiUsageStats {
         return ApiUsageStats(
@@ -125,18 +125,18 @@ class ApiUsageManager @Inject constructor(
     }
     
     /**
-     * 重置計數器（如果需要）
+     * Reset counters if needed
      */
     private fun resetCountersIfNeeded(currentTime: Long) {
-        // 檢查是否需要重置每分鐘計數器
-        if (currentTime - lastMinuteReset.get() >= 60000L) { // 60秒
+        // Check if minute counter needs to be reset
+        if (currentTime - lastMinuteReset.get() >= 60000L) { // 60 seconds
             requestsThisMinute.set(0)
             lastMinuteReset.set(currentTime)
             debugLogManager.log("API_USAGE", "Minute counter reset")
         }
         
-        // 檢查是否需要重置每日計數器
-        if (currentTime - lastDayReset.get() >= 86400000L) { // 24小時
+        // Check if daily counter needs to be reset
+        if (currentTime - lastDayReset.get() >= 86400000L) { // 24 hours
             requestsToday.set(0)
             lastDayReset.set(currentTime)
             debugLogManager.log("API_USAGE", "Daily counter reset")
@@ -157,7 +157,7 @@ class ApiUsageManager @Inject constructor(
 }
 
 /**
- * API使用統計數據
+ * API usage statistics data
  */
 data class ApiUsageStats(
     val requestsThisMinute: Int,

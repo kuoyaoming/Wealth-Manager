@@ -75,6 +75,13 @@
     <string name="error_invalid_symbol">請輸入有效股票代號</string>
     <string name="error_stock_not_found">找不到股票</string>
     
+    <!-- API Error Messages -->
+    <string name="api_error_server_busy">伺服器忙碌，請稍後再試</string>
+    <string name="api_error_data_stale">資料可能過期</string>
+    <string name="api_error_connection_issue">連線問題</string>
+    <string name="api_error_show_cached_data">顯示上次更新的資料，點擊重試以獲取最新資訊</string>
+    <string name="api_error_retry">重試</string>
+    
     <!-- About Dialog -->
     <string name="about_title">關於財富管理</string>
     <string name="about_version">版本 1.0.5</string>

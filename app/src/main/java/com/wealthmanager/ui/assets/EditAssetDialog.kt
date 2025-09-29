@@ -76,13 +76,16 @@ fun EditCashAssetDialog(
                     value = amount,
                     onValueChange = {
                         debugLogManager.log("UI", "User typing amount: $it")
-                        amount = it
+                        // Allow decimal input for cash amounts
+                        if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
+                            amount = it
+                        }
                     },
-                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    placeholder = { Text("Enter amount") },
+                    keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
+                    placeholder = { Text("Enter amount (e.g., 1000.50)") },
                     isError = amount.isNotEmpty() && amount.toDoubleOrNull() == null,
                     supportingText = if (amount.isNotEmpty() && amount.toDoubleOrNull() == null) {
-                        { Text("請輸入有效的數字", color = MaterialTheme.colorScheme.error) }
+                        { Text("Please enter a valid number", color = MaterialTheme.colorScheme.error) }
                     } else null,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -94,10 +97,11 @@ fun EditCashAssetDialog(
                     debugLogManager.logUserAction("Save Cash Asset Changes")
                     val newAmount = amount.toDoubleOrNull()
                     if (newAmount != null && newAmount > 0) {
+                        val twdEquivalent = if (currency == "TWD") newAmount else (newAmount * 30.0)
                         val updatedAsset = asset.copy(
                             currency = currency,
                             amount = newAmount,
-                            twdEquivalent = if (currency == "TWD") newAmount else newAmount * 30.0
+                            twdEquivalent = twdEquivalent
                         )
                         debugLogManager.log("UI", "Saving cash asset changes: $currency $newAmount")
                         onSave(updatedAsset)
@@ -130,7 +134,6 @@ fun EditStockAssetDialog(
 ) {
     val debugLogManager = remember { DebugLogManager() }
     var shares by remember { mutableStateOf(asset.shares.toString()) }
-    var market by remember { mutableStateOf(asset.market) }
     
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Edit Stock Asset Dialog Opened")
@@ -157,44 +160,10 @@ fun EditStockAssetDialog(
                     placeholder = { Text("Enter shares") },
                     isError = shares.isNotEmpty() && shares.toIntOrNull() == null,
                     supportingText = if (shares.isNotEmpty() && shares.toIntOrNull() == null) {
-                        { Text("請輸入有效的股數", color = MaterialTheme.colorScheme.error) }
+                        { Text("Please enter a valid number of shares", color = MaterialTheme.colorScheme.error) }
                     } else null,
                     modifier = Modifier.fillMaxWidth()
                 )
-                Spacer(modifier = Modifier.height(16.dp))
-                Text("Market")
-                Spacer(modifier = Modifier.height(8.dp))
-                Row(
-                    modifier = Modifier.fillMaxWidth().selectableGroup(),
-                    horizontalArrangement = Arrangement.SpaceAround
-                ) {
-                    listOf("TW", "US").forEach { text ->
-                        Row(
-                            Modifier
-                                .selectable(
-                                    selected = (text == market),
-                                    onClick = {
-                                        debugLogManager.logUserAction("Market Changed to $text")
-                                        debugLogManager.log("UI", "User changed market to $text")
-                                        market = text
-                                    },
-                                    role = Role.RadioButton
-                                )
-                                .padding(horizontal = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = (text == market),
-                                onClick = null
-                            )
-                            Text(
-                                text = text,
-                                style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier.padding(start = 8.dp)
-                            )
-                        }
-                    }
-                }
             }
         },
         confirmButton = {
@@ -205,9 +174,9 @@ fun EditStockAssetDialog(
                     if (newShares != null && newShares > 0) {
                         val updatedAsset = asset.copy(
                             shares = newShares,
-                            market = market
+                            market = "GLOBAL"  // Fixed to GLOBAL market
                         )
-                        debugLogManager.log("UI", "Saving stock asset changes: $newShares shares, $market market")
+                        debugLogManager.log("UI", "Saving stock asset changes: $newShares shares")
                         onSave(updatedAsset)
                     } else {
                         debugLogManager.log("UI", "Invalid shares: $shares")
