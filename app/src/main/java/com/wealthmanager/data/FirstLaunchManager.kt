@@ -42,23 +42,29 @@ class FirstLaunchManager @Inject constructor(
     
     /**
      * Check if the about dialog should be shown
+     * Only show on first launch, not on version updates
      */
     fun shouldShowAboutDialog(): Boolean {
-        val currentVersion = getCurrentAppVersion()
-        val lastShownVersion = sharedPreferences.getString(KEY_APP_VERSION, "")
-        
-        return isFirstLaunch() || currentVersion != lastShownVersion
+        // Only show on first launch, not afterwards
+        return isFirstLaunch()
     }
     
     /**
      * Mark the about dialog as shown
      */
     fun markAboutDialogShown() {
-        val currentVersion = getCurrentAppVersion()
+        // Mark first launch as completed, no longer show About dialog
+        markFirstLaunchCompleted()
         sharedPreferences.edit()
-            .putString(KEY_APP_VERSION, currentVersion)
             .putBoolean(KEY_ABOUT_DIALOG_SHOWN, true)
             .apply()
+    }
+    
+    /**
+     * Check if the about dialog has been shown before
+     */
+    fun hasAboutDialogBeenShown(): Boolean {
+        return sharedPreferences.getBoolean(KEY_ABOUT_DIALOG_SHOWN, false)
     }
     
     /**

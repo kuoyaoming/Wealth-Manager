@@ -108,10 +108,3 @@ data class StockSearchItem(
     val exchange: String,
     val marketState: String
 )
-
-data class ExchangeRateResponse(
-    val from: String,
-    val to: String,
-    val rate: Double,
-    val timestamp: Long
-)

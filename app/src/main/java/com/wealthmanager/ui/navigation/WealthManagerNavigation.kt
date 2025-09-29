@@ -62,7 +62,8 @@ fun WealthManagerNavigation(
             DashboardScreen(
                 onNavigateToAssets = {
                     navController.navigate("assets")
-                }
+                },
+                navController = navController
             )
         }
         

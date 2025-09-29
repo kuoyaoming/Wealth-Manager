@@ -76,11 +76,11 @@ fun AboutDialog(
                 Spacer(modifier = Modifier.height(16.dp))
                 
                 // Content
-            Column(
-                modifier = Modifier
-                    .weight(1f)
-                    .verticalScroll(rememberScrollState())
-            ) {
+                Column(
+                    modifier = Modifier
+                        .weight(1f)
+                        .verticalScroll(rememberScrollState())
+                ) {
                     // App Version and Info
                     AppVersionSection()
                     

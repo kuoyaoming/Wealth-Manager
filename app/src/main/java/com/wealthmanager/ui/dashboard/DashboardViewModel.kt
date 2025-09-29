@@ -25,7 +25,6 @@ class DashboardViewModel @Inject constructor(
     private val marketDataService: MarketDataService,
     private val debugLogManager: DebugLogManager,
     private val apiStatusManager: ApiStatusManager,
-    val apiUsageManager: ApiUsageManager
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow(DashboardUiState())
@@ -65,8 +64,27 @@ class DashboardViewModel @Inject constructor(
     
     fun loadPortfolioData() {
         debugLogManager.log("DASHBOARD", "Loading portfolio data")
-        _uiState.value = _uiState.value.copy(isLoading = true)
-        // Data will be loaded through the observeAssets() flow
+        // Do not set isLoading = true, let observeAssets() naturally load data
+        // Only set loading state when market data update is needed
+    }
+    
+    fun onReturnFromAssets() {
+        debugLogManager.log("DASHBOARD", "Returned from Assets screen - checking if data needs refresh")
+        // When returning from Assets, only check if update is needed, do not force refresh
+        viewModelScope.launch {
+            try {
+                val stockAssets = assetRepository.getAllStockAssets().first()
+                if (stockAssets.isNotEmpty()) {
+                    debugLogManager.log("DASHBOARD", "Has stock assets, checking if refresh is needed")
+                    // Can add smarter check logic here, such as checking if data is expired
+                    // Temporarily no auto refresh, let user manually refresh
+                } else {
+                    debugLogManager.log("DASHBOARD", "No stock assets, no need to refresh")
+                }
+            } catch (e: Exception) {
+                debugLogManager.logError("Error checking assets on return: ${e.message}", e)
+            }
+        }
     }
     
     fun refreshData() {
@@ -82,16 +100,13 @@ class DashboardViewModel @Inject constructor(
                 
                 debugLogManager.log("DASHBOARD", "Asset check - Stock assets: ${stockAssets.size}")
                 
-                // Always update exchange rates (needed for cash conversion)
-                debugLogManager.log("DASHBOARD", "Updating exchange rates")
-                marketDataService.updateExchangeRates()
-                
-                // Only update stock prices if we have stock assets
+                // Smart update: only update market data when needed
                 if (hasStockAssets) {
-                    debugLogManager.log("DASHBOARD", "Updating stock prices for ${stockAssets.size} stocks")
+                    debugLogManager.log("DASHBOARD", "Updating exchange rates and stock prices")
+                    marketDataService.updateExchangeRates()
                     marketDataService.updateStockPrices()
                 } else {
-                    debugLogManager.log("DASHBOARD", "No stock assets found, skipping stock price update")
+                    debugLogManager.log("DASHBOARD", "No stock assets found, skipping market data update")
                 }
                 
                 debugLogManager.log("DASHBOARD", "Market data update completed")
@@ -99,7 +114,7 @@ class DashboardViewModel @Inject constructor(
                 _uiState.value = _uiState.value.copy(isLoading = false)
             } catch (e: Exception) {
                 debugLogManager.logError("Failed to refresh data: ${e.message}", e)
-                apiStatusManager.setApiError("伺服器忙碌，請稍後再試", isDataStale = true, isRetrying = false)
+                apiStatusManager.setApiError("Server busy, please try again later", isDataStale = true, isRetrying = false)
                 _uiState.value = _uiState.value.copy(isLoading = false)
             }
         }

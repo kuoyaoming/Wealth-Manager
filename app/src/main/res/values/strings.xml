@@ -80,12 +80,23 @@
     <string name="api_error_data_stale">Data may be outdated</string>
     <string name="api_error_connection_issue">Connection issue</string>
     <string name="api_error_show_cached_data">Showing last updated data, click retry to get latest information</string>
+    <string name="api_error_retry">Retry</string>
     
     <!-- Input Validation -->
     <string name="validation_enter_valid_number">Please enter a valid number</string>
     <string name="validation_enter_valid_shares">Please enter valid number of shares</string>
     <string name="validation_search_minimum_chars">Please enter at least 3 characters to search</string>
     <string name="validation_no_matching_stock">No matching stock found, please check if the stock symbol is correct</string>
+    
+    <!-- Search Error Messages -->
+    <string name="search_error_api_limit">API 請求已達每日限制，請明天再試</string>
+    <string name="search_error_stock_not_found">找不到此股票代碼，請檢查是否正確</string>
+    <string name="search_error_network">網路連線問題，請檢查網路設定</string>
+    <string name="search_error_server">伺服器暫時無法使用，請稍後再試</string>
+    <string name="search_error_invalid_api_key">API 金鑰無效，請聯繫技術支援</string>
+    <string name="search_error_unknown">發生未知錯誤，請重新啟動應用程式</string>
+    <string name="search_error_invalid_query">請輸入至少 2 個字符進行搜索</string>
+    <string name="search_error_api_limit_reached">API 請求已達每日限制，請明天再試</string>
     
     <!-- Dialog Messages -->
     <string name="dialog_edit_cash_asset">Edit Cash Asset</string>

@@ -4,7 +4,7 @@ import android.content.ClipData
 import android.content.ClipboardManager
 import android.content.Context
 import android.util.Log
-// import com.wealthmanager.BuildConfig
+import com.wealthmanager.BuildConfig
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -16,7 +16,13 @@ class DebugLogManager @Inject constructor() {
     private val logs = mutableListOf<String>()
     private val dateFormat = SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault())
     
+    // Control detailed logging switches
+    private val isVerboseLoggingEnabled = BuildConfig.DEBUG
+    private val isMarketDataVerboseEnabled = false // Default off for market data detailed logging
+    
     fun log(tag: String, message: String) {
+        if (!isVerboseLoggingEnabled) return
+        
         val timestamp = dateFormat.format(Date())
         val logEntry = "[$timestamp] $tag: $message"
         logs.add(logEntry)
@@ -33,6 +39,36 @@ class DebugLogManager @Inject constructor() {
         val logEntry = "[$timestamp] $tag: $message"
         logs.add(logEntry)
         Log.i("WealthManagerDebug", logEntry)
+        
+        if (logs.size > 1000) {
+            logs.removeAt(0)
+        }
+    }
+    
+    /**
+     * 專門用於市場數據的 logging，減少詳細記錄
+     */
+    fun logMarketData(action: String, message: String) {
+        val timestamp = dateFormat.format(Date())
+        val logEntry = "[$timestamp] MARKET_DATA: $action - $message"
+        logs.add(logEntry)
+        Log.i("WealthManagerDebug", logEntry)
+        
+        if (logs.size > 1000) {
+            logs.removeAt(0)
+        }
+    }
+    
+    /**
+     * 詳細的市場數據 logging（僅在需要時啟用）
+     */
+    fun logMarketDataVerbose(action: String, message: String) {
+        if (!isMarketDataVerboseEnabled) return
+        
+        val timestamp = dateFormat.format(Date())
+        val logEntry = "[$timestamp] MARKET_DATA_VERBOSE: $action - $message"
+        logs.add(logEntry)
+        Log.d("WealthManagerDebug", logEntry)
         
         if (logs.size > 1000) {
             logs.removeAt(0)
@@ -83,13 +119,7 @@ class DebugLogManager @Inject constructor() {
     }
     
     private fun isDebugBuild(): Boolean {
-        return try {
-            // Try to access BuildConfig.DEBUG
-            Class.forName("com.wealthmanager.BuildConfig").getField("DEBUG").getBoolean(null)
-        } catch (e: Exception) {
-            // If BuildConfig is not available, assume debug
-            true
-        }
+        return BuildConfig.DEBUG
     }
     
     fun logBiometric(status: String, details: String = "") {

@@ -1,16 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Base application theme. -->
+    <!-- Base application theme with 120Hz optimization -->
     <style name="Theme.WealthManager" parent="android:Theme.Material.Light">
-        <!-- Primary brand color. -->
+        <!-- Primary brand color -->
         <item name="android:colorPrimary">@color/md_theme_light_primary</item>
         <item name="android:colorPrimaryDark">@color/md_theme_light_primaryContainer</item>
         <item name="android:colorAccent">@color/md_theme_light_secondary</item>
-        <!-- Background colors. -->
+        
+        <!-- Background colors -->
         <item name="android:colorBackground">@color/md_theme_light_background</item>
         <item name="android:windowBackground">@color/md_theme_light_background</item>
-        <!-- Status bar color. -->
+        
+        <!-- Status bar color -->
         <item name="android:statusBarColor">@color/md_theme_light_primary</item>
-        <!-- Customize your theme here. -->
+        
+        <!-- 120Hz 優化配置 -->
+        <item name="android:windowIsTranslucent">false</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowActionBar">false</item>
+        <item name="android:windowFullscreen">false</item>
+        <item name="android:windowContentOverlay">@null</item>
+        <item name="android:windowAnimationStyle">@style/WindowAnimationTransition120Hz</item>
+        
+        <!-- 120Hz 特定優化 -->
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:windowLightNavigationBar">true</item>
+    </style>
+    
+    <!-- 120Hz 動畫樣式 -->
+    <style name="WindowAnimationTransition120Hz">
+        <item name="android:windowEnterAnimation">@anim/slide_in_right_120hz</item>
+        <item name="android:windowExitAnimation">@anim/slide_out_left_120hz</item>
+    </style>
+    
+    <!-- 120Hz 對話框主題 -->
+    <style name="Theme.WealthManager.Dialog" parent="Theme.WealthManager">
+        <item name="android:windowAnimationStyle">@style/DialogAnimation120Hz</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowBackground">@android:color/transparent</item>
+    </style>
+    
+    <!-- 120Hz 對話框動畫 -->
+    <style name="DialogAnimation120Hz">
+        <item name="android:windowEnterAnimation">@anim/dialog_enter_120hz</item>
+        <item name="android:windowExitAnimation">@anim/dialog_exit_120hz</item>
     </style>
 </resources>

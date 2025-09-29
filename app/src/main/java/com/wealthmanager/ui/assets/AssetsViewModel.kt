@@ -4,9 +4,12 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
+import com.wealthmanager.data.model.SearchResult
+import com.wealthmanager.data.model.NoResultsReason
+import com.wealthmanager.data.model.SearchErrorType
+import com.wealthmanager.data.model.StockSearchItem
 import com.wealthmanager.data.repository.AssetRepository
 import com.wealthmanager.data.service.MarketDataService
-import com.wealthmanager.data.service.StockSearchItem
 import com.wealthmanager.debug.DebugLogManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -26,29 +29,63 @@ class AssetsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow(AssetsUiState())
     val uiState: StateFlow<AssetsUiState> = _uiState.asStateFlow()
     
-        fun searchStocks(query: String, market: String) {
+        fun searchStocks(query: String) {
             debugLogManager.log("ASSETS", "=== STARTING STOCK SEARCH IN VIEWMODEL ===")
-            debugLogManager.log("ASSETS", "Searching stocks: '$query' in market: '$market'")
+            debugLogManager.log("ASSETS", "Searching stocks: '$query'")
             debugLogManager.logUserAction("Stock Search Initiated")
             viewModelScope.launch {
                 _uiState.value = _uiState.value.copy(isSearching = true)
                 debugLogManager.log("ASSETS", "Search state set to loading")
                 try {
                     debugLogManager.log("ASSETS", "Calling marketDataService.searchStocks")
-                    val results = marketDataService.searchStocks(query, market)
-                    debugLogManager.log("ASSETS", "MarketDataService returned ${results.size} results")
-                    debugLogManager.log("ASSETS", "Stock search completed: ${results.size} results found")
-                    _uiState.value = _uiState.value.copy(
-                        searchResults = results,
-                        isSearching = false
-                    )
+                    marketDataService.searchStocks(query, "US").collect { searchResult: SearchResult ->
+                        when (searchResult) {
+                            is SearchResult.Success -> {
+                                debugLogManager.log("ASSETS", "Search successful: ${searchResult.results.size} results found")
+                                _uiState.value = _uiState.value.copy(
+                                    searchResults = searchResult.results,
+                                    isSearching = false,
+                                    searchError = if (searchResult.results.isEmpty()) "找不到此股票代碼，請檢查是否正確" else ""
+                                )
+                            }
+                            is SearchResult.NoResults -> {
+                                debugLogManager.log("ASSETS", "No results found: ${searchResult.reason}")
+                                _uiState.value = _uiState.value.copy(
+                                    searchResults = emptyList(),
+                                    isSearching = false,
+                                    searchError = when (searchResult.reason) {
+                                        NoResultsReason.STOCK_NOT_FOUND -> "找不到此股票代碼，請檢查是否正確"
+                                        NoResultsReason.API_LIMIT_REACHED -> "API 請求已達每日限制，請明天再試"
+                                        NoResultsReason.NETWORK_ERROR -> "網路連線問題，請檢查網路設定"
+                                        NoResultsReason.INVALID_QUERY -> "請輸入至少 2 個字符進行搜索"
+                                        NoResultsReason.SERVER_ERROR -> "伺服器暫時無法使用，請稍後再試"
+                                    }
+                                )
+                            }
+                            is SearchResult.Error -> {
+                                debugLogManager.logError("Search error: ${searchResult.errorType}", Exception("Search failed"))
+                                _uiState.value = _uiState.value.copy(
+                                    searchResults = emptyList(),
+                                    isSearching = false,
+                                    searchError = when (searchResult.errorType) {
+                                        SearchErrorType.API_LIMIT -> "API 請求已達每日限制，請明天再試"
+                                        SearchErrorType.NETWORK_ERROR -> "網路連線問題，請檢查網路設定"
+                                        SearchErrorType.SERVER_ERROR -> "伺服器暫時無法使用，請稍後再試"
+                                        SearchErrorType.INVALID_API_KEY -> "API 金鑰無效，請聯繫技術支援"
+                                        SearchErrorType.UNKNOWN_ERROR -> "發生未知錯誤，請重新啟動應用程式"
+                                    }
+                                )
+                            }
+                        }
+                    }
                     debugLogManager.log("ASSETS", "UI state updated with search results")
                 } catch (e: Exception) {
                     debugLogManager.logError("Stock search failed: ${e.message}", e)
                     debugLogManager.log("ASSETS", "Exception during stock search: ${e::class.simpleName}")
                     _uiState.value = _uiState.value.copy(
                         searchResults = emptyList(),
-                        isSearching = false
+                        isSearching = false,
+                        searchError = "發生未知錯誤，請重新啟動應用程式"
                     )
                     debugLogManager.log("ASSETS", "UI state updated with empty results due to error")
                 }
@@ -76,7 +113,7 @@ class AssetsViewModel @Inject constructor(
     fun addCashAsset(currency: String, amount: Double) {
         debugLogManager.log("ASSETS", "Adding cash asset: $currency $amount")
         viewModelScope.launch {
-            val twdEquivalent = if (currency == "TWD") amount else amount * 30.0 // Simple conversion
+            val twdEquivalent = if (currency == "TWD") amount else (amount * 30.0).toInt().toDouble() // Simple conversion, rounded to integer
             val cashAsset = CashAsset(
                 id = System.currentTimeMillis().toString(),
                 currency = currency,
@@ -89,19 +126,28 @@ class AssetsViewModel @Inject constructor(
         }
     }
     
-        fun addStockAsset(symbol: String, shares: Double, market: String) {
-            debugLogManager.log("ASSETS", "Adding stock asset: $symbol, $shares shares, market: $market")
+        fun addStockAsset(symbol: String, shares: Double) {
+            debugLogManager.log("ASSETS", "Adding stock asset: $symbol, $shares shares")
             viewModelScope.launch {
+                // Determine if it's a Taiwan stock
+                val isTaiwanStock = symbol.endsWith(".TW", ignoreCase = true) ||
+                                  symbol.endsWith(".T", ignoreCase = true) ||
+                                  symbol.matches(Regex("^\\d{4}$"))
+                
+                val currency = if (isTaiwanStock) "TWD" else "USD"
+                debugLogManager.log("ASSETS", "Stock currency determined: $currency for $symbol")
+                
                 val stockAsset = StockAsset(
                     id = System.currentTimeMillis().toString(),
                     symbol = symbol,
                     companyName = symbol, // Simple mapping
                     shares = shares.toInt(),
-                    market = market,
+                    market = "GLOBAL",
                     currentPrice = 0.0, // Will be fetched later
+                    originalCurrency = currency, // Set correct currency
                     twdEquivalent = 0.0 // Will be calculated later
                 )
-                debugLogManager.log("ASSETS", "Stock asset created: $symbol, ${shares.toInt()} shares")
+                debugLogManager.log("ASSETS", "Stock asset created: $symbol, ${shares.toInt()} shares, currency: $currency")
                 assetRepository.insertStockAsset(stockAsset)
                 debugLogManager.log("ASSETS", "Stock asset inserted to database")
             }
@@ -145,5 +191,6 @@ data class AssetsUiState(
     val stockAssets: List<StockAsset> = emptyList(),
     val isLoading: Boolean = true,
     val searchResults: List<StockSearchItem> = emptyList(),
-    val isSearching: Boolean = false
+    val isSearching: Boolean = false,
+    val searchError: String = ""
 )

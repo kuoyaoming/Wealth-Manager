@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <!-- Internet permission for market data - Android 14 compatible -->
+    <uses-permission android:name="android.permission.INTERNET" 
+        android:usesPermissionFlags="neverForLocation" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    
+    <!-- Biometric permission - Android 14 requires explicit declaration -->
+    <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
+    
+    <!-- 高刷新率相關權限 -->
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+    
+    <!-- 硬體加速支援 -->
+    <uses-feature 
+        android:name="android.hardware.type.touchscreen" 
+        android:required="true" />
+    <uses-feature 
+        android:name="android.hardware.screen.portrait" 
+        android:required="false" />
+    <uses-feature 
+        android:name="android.hardware.screen.landscape" 
+        android:required="false" />
+    
+    <!-- Optional biometric hardware -->
+    <uses-feature 
+        android:name="android.hardware.fingerprint" 
+        android:required="false" />
+    <uses-feature 
+        android:name="android.hardware.biometrics" 
+        android:required="false" />
+
+    <application
+        android:name=".WealthManagerApplication"
+        android:allowBackup="true"
+        android:dataExtractionRules="@xml/data_extraction_rules"
+        android:fullBackupContent="@xml/backup_rules"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:theme="@style/Theme.WealthManager"
+        android:exported="false"
+        android:hardwareAccelerated="true"
+        android:largeHeap="true"
+        tools:targetApi="36">
+        
+        <!-- 120Hz 優化的 MainActivity -->
+        <activity
+            android:name=".MainActivity120Hz"
+            android:exported="true"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.WealthManager"
+            android:windowSoftInputMode="adjustResize"
+            android:supportsPictureInPicture="false"
+            android:resizeableActivity="true"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="unspecified"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout">
+            
+            <!-- 啟用高刷新率模式 -->
+            <meta-data
+                android:name="android.window.PROPERTY_ACTIVITY_EMBEDDING_SPLITS_ENABLED"
+                android:value="true" />
+            <meta-data
+                android:name="android.window.PROPERTY_ACTIVITY_EMBEDDING_ALLOW_SPLIT_PLACEHOLDER"
+                android:value="true" />
+            
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+        
+        <!-- 原始 MainActivity 作為備用 -->
+        <activity
+            android:name=".MainActivity"
+            android:exported="false"
+            android:label="@string/app_name"
+            android:theme="@style/Theme.WealthManager"
+            android:windowSoftInputMode="adjustResize"
+            android:hardwareAccelerated="true"
+            android:launchMode="singleTop"
+            android:screenOrientation="unspecified"
+            android:configChanges="orientation|screenSize|keyboardHidden|screenLayout">
+        </activity>
+        
+    </application>
+
+</manifest>
