@@ -12,8 +12,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code of Conduct
 - Changelog documentation
 
+## [1.1.0] - 2025-01-30
+
+### Added
+- 🌐 **Multi-language Support**
+  - English and Traditional Chinese language options
+  - Language switching in Settings page
+  - Automatic app restart when language changes
+  - Localized UI strings and content descriptions
+
 ### Changed
-- Updated GitHub repository links in documentation
+- 🔧 **Language Management**
+  - Unified dynamic coloring across all interfaces
+  - Consistent theming with system preferences
+  - Improved language switching user experience
+  - Direct app restart without user confirmation
+
+### Fixed
+- 🐛 **Dashboard Stock Price Updates**
+  - Fixed stock price query functionality on homepage
+  - Corrected refresh button to trigger market data updates
+  - Resolved dashboard data loading issues
+
+### Technical Improvements
+- 📝 **Code Quality**
+  - All comments and logs converted to English
+  - Unified code formatting and structure
+  - Improved error handling for locale management
+  - Enhanced application startup stability
 
 ## [1.0.0] - 2025-01-XX
 
@@ -110,6 +136,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Release Date | Key Features |
 |---------|-------------|--------------|
+| 1.1.0   | 2025-01-30  | Multi-language support, improved UX |
 | 1.0.0   | 2025-01-XX  | Complete feature set, production ready |
 | 0.1.6   | 2024-XX-XX  | Play Store optimization |
 | 0.1.0   | 2024-XX-XX  | Initial release |

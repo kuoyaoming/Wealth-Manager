@@ -28,6 +28,8 @@ enum class SearchErrorType {
     NETWORK_ERROR,             // Network error
     SERVER_ERROR,              // Server error
     INVALID_API_KEY,           // Invalid API key
+    AUTHENTICATION_ERROR,      // Authentication error (401)
+    RATE_LIMIT_ERROR,          // Rate limit error (429)
     UNKNOWN_ERROR              // Unknown error
 }
 

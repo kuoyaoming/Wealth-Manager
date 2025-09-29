@@ -93,44 +93,33 @@ class MainActivity120Hz : FragmentActivity() {
      * Enable high refresh rate mode
      */
     private fun enableHighRefreshRate() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-            try {
-                val display = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                    display
-                } else {
-                    @Suppress("DEPRECATION")
-                    windowManager.defaultDisplay
-                }
+        try {
+            val display = display
+            
+            display?.let { d ->
+                val refreshRates = d.supportedModes.map { it.refreshRate }
+                val maxRefreshRate = refreshRates.maxOrNull() ?: 60f
+                currentRefreshRate = maxRefreshRate
                 
-                display?.let { d ->
-                    val refreshRates = d.supportedModes.map { it.refreshRate }
-                    val maxRefreshRate = refreshRates.maxOrNull() ?: 60f
-                    currentRefreshRate = maxRefreshRate
-                    
-                    // Remove screen refresh log
-                    
-                    // Set performance monitor refresh rate
-                    performanceMonitor.setCurrentRefreshRate(currentRefreshRate)
-                    
-                    if (maxRefreshRate >= 120f) {
-                        // Set high refresh rate mode
-                        window.attributes = window.attributes.apply {
-                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
-                                preferredDisplayModeId = d.supportedModes
-                                    .find { it.refreshRate >= 120f }?.modeId ?: 0
-                            }
-                        }
-                        isHighRefreshRateEnabled = true
-                        // Remove screen refresh log
-                    } else {
-                        // Remove screen refresh log
-                    }
-                }
-            } catch (e: Exception) {
                 // Remove screen refresh log
+                
+                // Set performance monitor refresh rate
+                performanceMonitor.setCurrentRefreshRate(currentRefreshRate)
+                
+                if (maxRefreshRate >= 120f) {
+                    // Set high refresh rate mode
+                    window.attributes = window.attributes.apply {
+                        preferredDisplayModeId = d.supportedModes
+                            .find { it.refreshRate >= 120f }?.modeId ?: 0
+                    }
+                    isHighRefreshRateEnabled = true
+                    // Remove screen refresh log
+                } else {
+                    // Remove screen refresh log
+                }
             }
-        } else {
-            // Remove screen refresh log
+        } catch (e: Exception) {
+            // Handle exception silently
         }
     }
     

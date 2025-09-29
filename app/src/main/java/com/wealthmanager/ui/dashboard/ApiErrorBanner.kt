@@ -13,6 +13,8 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.res.stringResource
 import com.wealthmanager.R
+import com.wealthmanager.haptic.HapticFeedbackManager
+import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 
 @Composable
 fun ApiErrorBanner(
@@ -23,6 +25,7 @@ fun ApiErrorBanner(
     onDismiss: () -> Unit,
     modifier: Modifier = Modifier
 ) {
+    val (hapticManager, view) = rememberHapticFeedbackWithView()
     Card(
         modifier = modifier.fillMaxWidth(),
         colors = CardDefaults.cardColors(
@@ -38,7 +41,7 @@ fun ApiErrorBanner(
         ) {
             Icon(
                 imageVector = Icons.Default.Warning,
-                contentDescription = "Warning",
+                contentDescription = stringResource(R.string.cd_warning),
                 tint = MaterialTheme.colorScheme.error,
                 modifier = Modifier.size(24.dp)
             )
@@ -72,21 +75,27 @@ fun ApiErrorBanner(
             } else {
                 Row {
                     TextButton(
-                        onClick = onRetry
+                        onClick = {
+                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                            onRetry()
+                        }
                     ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
-                            contentDescription = "Retry",
+                            contentDescription = stringResource(R.string.cd_retry),
                             modifier = Modifier.size(18.dp)
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(stringResource(R.string.api_error_retry))
                     }
                     
-                    IconButton(onClick = onDismiss) {
+                    IconButton(onClick = {
+                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                        onDismiss()
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Dismiss",
+                            contentDescription = stringResource(R.string.cd_dismiss),
                             tint = MaterialTheme.colorScheme.onErrorContainer
                         )
                     }

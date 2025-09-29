@@ -72,6 +72,8 @@ class AssetsViewModel @Inject constructor(
                                         SearchErrorType.NETWORK_ERROR -> "Network connection issue, please check network settings"
                                         SearchErrorType.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
                                         SearchErrorType.INVALID_API_KEY -> "Invalid API key, please contact technical support"
+                                        SearchErrorType.AUTHENTICATION_ERROR -> "API authentication failed, please check API key settings"
+                                        SearchErrorType.RATE_LIMIT_ERROR -> "Request rate limit exceeded, please try again later"
                                         SearchErrorType.UNKNOWN_ERROR -> "Unknown error occurred, please restart the application"
                                     }
                                 )

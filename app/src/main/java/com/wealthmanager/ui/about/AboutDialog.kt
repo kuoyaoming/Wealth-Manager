@@ -21,6 +21,8 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.wealthmanager.R
 import com.wealthmanager.data.FirstLaunchManager
+import com.wealthmanager.haptic.HapticFeedbackManager
+import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 import javax.inject.Inject
 
 /**
@@ -34,6 +36,7 @@ fun AboutDialog(
 ) {
     // Context is available but not currently used in this dialog
     // val context = LocalContext.current
+    val (hapticManager, view) = rememberHapticFeedbackWithView()
     
     Dialog(
         onDismissRequest = onDismiss,
@@ -65,10 +68,13 @@ fun AboutDialog(
                         fontWeight = FontWeight.Bold
                     )
                     
-                    IconButton(onClick = onDismiss) {
+                    IconButton(onClick = {
+                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                        onDismiss()
+                    }) {
                         Icon(
                             imageVector = Icons.Default.Close,
-                            contentDescription = "Close"
+                            contentDescription = stringResource(R.string.cd_close)
                         )
                     }
                 }
@@ -104,12 +110,16 @@ fun AboutDialog(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
                 ) {
-                    TextButton(onClick = onDismiss) {
+                    TextButton(onClick = {
+                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                        onDismiss()
+                    }) {
                         Text("Later")
                     }
                     
                     Button(
                         onClick = {
+                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
                             firstLaunchManager?.markAboutDialogShown()
                             onDismiss()
                         }

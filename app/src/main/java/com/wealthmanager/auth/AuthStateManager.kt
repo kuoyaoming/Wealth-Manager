@@ -14,6 +14,7 @@ class AuthStateManager @Inject constructor(
     
     private val AUTH_KEY = "is_authenticated"
     private val AUTH_TIMESTAMP_KEY = "auth_timestamp"
+    private val BIOMETRIC_ENABLED_KEY = "biometric_enabled"
     private val AUTH_SESSION_TIMEOUT = 24 * 60 * 60 * 1000L // 24 hours in milliseconds
     
     fun setAuthenticated(isAuthenticated: Boolean) {
@@ -43,6 +44,21 @@ class AuthStateManager @Inject constructor(
             remove(AUTH_TIMESTAMP_KEY)
             apply()
         }
+    }
+
+    fun setBiometricEnabled(enabled: Boolean) {
+        prefs.edit().apply {
+            putBoolean(BIOMETRIC_ENABLED_KEY, enabled)
+            if (!enabled) {
+                remove(AUTH_KEY)
+                remove(AUTH_TIMESTAMP_KEY)
+            }
+            apply()
+        }
+    }
+
+    fun isBiometricEnabled(): Boolean {
+        return prefs.getBoolean(BIOMETRIC_ENABLED_KEY, true)
     }
     
     fun getAuthTimestamp(): Long {

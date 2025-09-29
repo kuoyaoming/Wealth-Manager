@@ -19,6 +19,7 @@ import com.wealthmanager.data.service.ApiProviderService
 import com.wealthmanager.data.repository.AssetRepository
 import com.wealthmanager.utils.NumberFormatter
 import com.wealthmanager.data.service.TwseCacheManager
+import com.wealthmanager.debug.ApiDiagnostic
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -199,15 +200,25 @@ object NetworkModule {
 
     @Provides
     @Singleton
+    fun provideApiDiagnostic(
+        @ApplicationContext context: Context,
+        debugLogManager: com.wealthmanager.debug.DebugLogManager
+    ): ApiDiagnostic {
+        return ApiDiagnostic(context, debugLogManager)
+    }
+    
+    @Provides
+    @Singleton
     fun provideApiProviderService(
         finnhubApi: FinnhubApi,
         twseApi: TwseApi,
         exchangeRateApi: ExchangeRateApi,
         twseDataParser: TwseDataParser,
         twseCacheManager: TwseCacheManager,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager
+        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+        apiDiagnostic: ApiDiagnostic
     ): ApiProviderService {
-        return ApiProviderService(finnhubApi, twseApi, exchangeRateApi, twseDataParser, twseCacheManager, debugLogManager)
+        return ApiProviderService(finnhubApi, twseApi, exchangeRateApi, twseDataParser, twseCacheManager, debugLogManager, apiDiagnostic)
     }
     
     @Provides

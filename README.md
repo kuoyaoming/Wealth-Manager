@@ -10,7 +10,7 @@ A modern personal finance tracker built with Jetpack Compose. Features biometric
 - 💰 **Portfolio Tracking** - Cash and stock investment management with CRUD operations
 - 📊 **Real-time Market Data** - Live prices via Finnhub API, TWSE API, and Exchange Rate API
 - 🎨 **Material You** - Dynamic theming with responsive design
-- 🌍 **Multi-language Support** - English & Traditional Chinese with auto-detection
+- 🌍 **Multi-language Support** - English & Traditional Chinese with instant switching
 - 📱 **Android 16** - Latest Android features with 120Hz performance optimization
 - ⚡ **Performance Monitoring** - Real-time performance tracking and optimization
 - 🗄️ **Smart Caching** - Intelligent cache management with offline support

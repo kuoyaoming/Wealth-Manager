@@ -17,6 +17,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.wealthmanager.R
 import com.wealthmanager.auth.BiometricStatus
 import com.wealthmanager.debug.DebugLogManager
+import com.wealthmanager.haptic.HapticFeedbackManager
+import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 
 @Composable
 fun BiometricAuthScreen(
@@ -27,6 +29,7 @@ fun BiometricAuthScreen(
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
     val debugLogManager = remember { DebugLogManager() }
+    val (hapticManager, view) = rememberHapticFeedbackWithView()
     
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Biometric Auth Screen Opened")
@@ -116,6 +119,7 @@ fun BiometricAuthScreen(
                             onClick = { 
                                 debugLogManager.logUserAction("Biometric Authenticate Button Clicked")
                                 debugLogManager.log("UI", "User clicked biometric authenticate button")
+                                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
                                 viewModel.authenticate(context) 
                             },
                             modifier = Modifier.fillMaxWidth()
@@ -129,6 +133,7 @@ fun BiometricAuthScreen(
                             onClick = { 
                                 debugLogManager.logUserAction("Skip Authentication Button Clicked")
                                 debugLogManager.log("UI", "User clicked skip authentication button")
+                                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                                 onSkipAuth() 
                             },
                             modifier = Modifier.fillMaxWidth()

@@ -14,6 +14,7 @@ import com.wealthmanager.data.model.SearchResult
 import com.wealthmanager.data.model.StockSearchItem
 import com.wealthmanager.data.model.NoResultsReason
 import com.wealthmanager.debug.DebugLogManager
+import com.wealthmanager.debug.ApiDiagnostic
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -26,7 +27,8 @@ class ApiProviderService @Inject constructor(
     private val exchangeRateApi: ExchangeRateApi,
     private val twseDataParser: TwseDataParser,
     private val twseCacheManager: TwseCacheManager,
-    private val debugLogManager: DebugLogManager
+    private val debugLogManager: DebugLogManager,
+    private val apiDiagnostic: ApiDiagnostic
 ) {
     
     companion object {
@@ -46,11 +48,54 @@ class ApiProviderService @Inject constructor(
     suspend fun searchStocks(query: String, market: String): Flow<SearchResult> = flow {
         try {
             debugLogManager.log("API_PROVIDER", "Searching stocks: '$query' in market: '$market'")
+            debugLogManager.log("API_PROVIDER", "Using API key: ${FINNHUB_API_KEY.take(8)}...")
+            
+            // 執行診斷檢查
+            val diagnostic = apiDiagnostic.runDiagnostic()
+            if (!diagnostic.isHealthy) {
+                debugLogManager.logError("API_PROVIDER", "API diagnostic failed: Network=${diagnostic.networkStatus.isConnected}, API Key=${diagnostic.apiKeyStatus.finnhubKeyValid}, Finnhub=${diagnostic.finnhubStatus.isReachable}")
+                
+                when {
+                    !diagnostic.networkStatus.isConnected -> {
+                        emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.NETWORK_ERROR))
+                        return@flow
+                    }
+                    !diagnostic.apiKeyStatus.finnhubKeyValid -> {
+                        emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.AUTHENTICATION_ERROR))
+                        return@flow
+                    }
+                    !diagnostic.finnhubStatus.isReachable -> {
+                        emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.SERVER_ERROR))
+                        return@flow
+                    }
+                }
+            }
+            
             val response = finnhubApi.searchStocks(query, FINNHUB_API_KEY)
+            debugLogManager.log("API_PROVIDER", "Finnhub response received: ${response.result.size} results")
             emit(processFinnhubSearchResults(response.result))
         } catch (e: Exception) {
             debugLogManager.logError("Finnhub search failed for '$query': ${e.message}", e)
-            emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.NETWORK_ERROR))
+            
+            // 更詳細的錯誤分析
+            when {
+                e.message?.contains("401") == true -> {
+                    debugLogManager.logError("API_PROVIDER", "API key authentication failed")
+                    emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.AUTHENTICATION_ERROR))
+                }
+                e.message?.contains("429") == true -> {
+                    debugLogManager.logError("API_PROVIDER", "API rate limit exceeded")
+                    emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.RATE_LIMIT_ERROR))
+                }
+                e.message?.contains("timeout") == true -> {
+                    debugLogManager.logError("API_PROVIDER", "Request timeout")
+                    emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.NETWORK_ERROR))
+                }
+                else -> {
+                    debugLogManager.logError("API_PROVIDER", "Unknown error: ${e.message}")
+                    emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.NETWORK_ERROR))
+                }
+            }
         }
     }
     

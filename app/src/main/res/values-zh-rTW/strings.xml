@@ -16,8 +16,11 @@
     
     <!-- Privacy Protection -->
     <string name="privacy_protection_title">隱私保護說明</string>
-    <string name="privacy_protection_description">生物識別驗證用於保護您的財務資料，確保只有您能存取您的財富資訊。您的生物識別資料永遠不會離開您的裝置，並由Android的硬體安全模組安全處理。</string>
-    <string name="privacy_protection_points">• 您的指紋/臉部資料安全儲存在您裝置的硬體中\n• 本應用程式不會傳輸或儲存任何生物識別資料\n• 需要驗證才能查看敏感的財務資訊\n• 如果您願意，可以跳過驗證，但您的資料安全性會降低</string>
+    <string name="privacy_protection_description">生物識別驗證用於保護您的財務資料，確保只有您能存取您的財富資訊。您的生物識別資料永遠不會離開您的裝置，並由 Android 硬體安全模組安全處理。</string>
+    <string name="privacy_protection_points">1. 您的指紋/臉部資料安全儲存在裝置的硬體中。
+2. 本應用程式不會傳輸或儲存任何生物識別資料。
+3. 需要驗證才能查看敏感的財務資訊。
+4. 若選擇跳過驗證，資料安全性將降低。</string>
     
     <!-- Navigation -->
     <string name="nav_dashboard">儀表板</string>
@@ -86,4 +89,8 @@
     <string name="about_title">關於財富管理</string>
     <string name="about_version">版本 1.0.5</string>
     <string name="about_description">一個全面的個人理財管理應用程式，幫助您追蹤資產、監控股票投資，並透過即時市場數據管理您的財務投資組合。</string>
+
+    <string name="language_option_english">English</string>
+    <string name="language_option_traditional_chinese">繁體中文</string>
+    <string name="language_change_requires_restart">切換語言需重新啟動應用程式後生效。</string>
 </resources>

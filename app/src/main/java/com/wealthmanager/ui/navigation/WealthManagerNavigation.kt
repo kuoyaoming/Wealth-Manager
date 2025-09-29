@@ -1,17 +1,22 @@
 package com.wealthmanager.ui.navigation
 
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wealthmanager.auth.AuthStateManager
 import com.wealthmanager.ui.auth.BiometricAuthScreen
-import com.wealthmanager.ui.dashboard.DashboardScreen
 import com.wealthmanager.ui.assets.AssetsScreen
-import androidx.hilt.navigation.compose.hiltViewModel
-import androidx.compose.ui.platform.LocalContext
+import com.wealthmanager.ui.dashboard.DashboardScreen
+import com.wealthmanager.ui.settings.SettingsScreen
 
 @Composable
 fun WealthManagerNavigation(
@@ -63,12 +68,23 @@ fun WealthManagerNavigation(
                 onNavigateToAssets = {
                     navController.navigate("assets")
                 },
+                onNavigateToSettings = {
+                    navController.navigate("settings")
+                },
                 navController = navController
             )
         }
         
         composable("assets") {
             AssetsScreen(
+                onNavigateBack = {
+                    navController.popBackStack()
+                }
+            )
+        }
+
+        composable("settings") {
+            SettingsScreen(
                 onNavigateBack = {
                     navController.popBackStack()
                 }

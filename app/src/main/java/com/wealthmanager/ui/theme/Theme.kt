@@ -36,7 +36,7 @@ fun WealthManagerTheme(
     content: @Composable () -> Unit
 ) {
     val colorScheme = when {
-        dynamicColor && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S -> {
+        dynamicColor -> {
             val context = LocalContext.current
             if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
         }
@@ -51,10 +51,7 @@ fun WealthManagerTheme(
             val insetsController = WindowCompat.getInsetsController(window, view)
             
             // Use modern API for status bar color
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-                @Suppress("DEPRECATION")
-                window.statusBarColor = colorScheme.primary.toArgb()
-            }
+            window.statusBarColor = colorScheme.primary.toArgb()
             
             // Set status bar appearance
             insetsController.isAppearanceLightStatusBars = !darkTheme

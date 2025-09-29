@@ -21,6 +21,8 @@ import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 import com.wealthmanager.data.model.StockSearchItem
 import com.wealthmanager.debug.DebugLogManager
+import com.wealthmanager.haptic.HapticFeedbackManager
+import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,6 +36,7 @@ fun AddAssetDialog(
     isSearching: Boolean = false
 ) {
     val debugLogManager = remember { DebugLogManager() }
+    val (hapticManager, view) = rememberHapticFeedbackWithView()
     var selectedTab by remember { mutableStateOf(0) }
     var cashCurrency by remember { mutableStateOf("TWD") }
     var cashAmount by remember { mutableStateOf("") }
@@ -210,12 +213,13 @@ fun AddAssetDialog(
                                         IconButton(onClick = { 
                                             debugLogManager.logUserAction("Manual Stock Search Clicked")
                                             debugLogManager.log("UI", "User clicked manual search button for: $searchQuery")
+                                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                                             if (searchQuery.isNotEmpty()) {
                                                 onSearchStocks(searchQuery, "")
                                                 showSearchResults = true
                                             }
                                         }) {
-                                            Icon(Icons.Default.Search, contentDescription = "Search")
+                                            Icon(Icons.Default.Search, contentDescription = stringResource(R.string.cd_search))
                                         }
                                     }
                                 },
@@ -244,6 +248,7 @@ fun AddAssetDialog(
                                             onClick = {
                                                 debugLogManager.logUserAction("Stock Selected from Search")
                                                 debugLogManager.log("UI", "User selected stock: ${result.symbol} - ${result.longName}")
+                                                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                                                 stockSymbol = result.symbol
                                                 showSearchResults = false
                                                 searchError = ""
@@ -322,6 +327,7 @@ fun AddAssetDialog(
             TextButton(
                 onClick = {
                     debugLogManager.logUserAction("Add Asset Button Clicked")
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
                         when (selectedTab) {
                         0 -> {
                             debugLogManager.log("UI", "Adding cash asset: $cashCurrency $cashAmount")
@@ -351,6 +357,7 @@ fun AddAssetDialog(
             TextButton(onClick = { 
                 debugLogManager.logUserAction("Cancel Asset Dialog")
                 debugLogManager.log("UI", "User cancelled Add Asset dialog")
+                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                 onDismiss() 
             }) {
                 Text("Cancel")

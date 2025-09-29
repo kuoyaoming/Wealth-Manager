@@ -41,6 +41,8 @@ object SearchResultHandler {
                     SearchErrorType.NETWORK_ERROR -> stringResource(R.string.search_error_network)
                     SearchErrorType.SERVER_ERROR -> stringResource(R.string.search_error_server)
                     SearchErrorType.INVALID_API_KEY -> stringResource(R.string.search_error_invalid_api_key)
+                    SearchErrorType.AUTHENTICATION_ERROR -> stringResource(R.string.search_error_authentication)
+                    SearchErrorType.RATE_LIMIT_ERROR -> stringResource(R.string.search_error_rate_limit)
                     SearchErrorType.UNKNOWN_ERROR -> stringResource(R.string.search_error_unknown)
                 }
             }

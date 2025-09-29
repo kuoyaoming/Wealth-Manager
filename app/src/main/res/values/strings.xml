@@ -1,36 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Wealth Manager</string>
-    
+
     <!-- Authentication -->
     <string name="biometric_auth_title">Biometric Authentication</string>
-    <string name="biometric_auth_subtitle">Use your biometric to access your assets</string>
+    <string name="biometric_auth_subtitle">Use your biometric data to access your assets</string>
     <string name="biometric_auth_button">Authenticate</string>
     <string name="biometric_auth_error">Biometric authentication failed</string>
     <string name="biometric_auth_error_no_hardware">No biometric hardware available</string>
     <string name="biometric_auth_error_hw_unavailable">Biometric hardware is currently unavailable</string>
     <string name="biometric_auth_error_no_biometrics">No biometrics enrolled</string>
     <string name="biometric_auth_error_user_cancel">Authentication was cancelled</string>
-    <string name="biometric_auth_error_locked_out">Too many failed attempts. Try again later</string>
+    <string name="biometric_auth_error_locked_out">Too many failed attempts. Try again later.</string>
     <string name="biometric_auth_error_permanent_lockout">Biometric authentication is permanently locked</string>
-    
+
     <!-- Privacy Protection -->
     <string name="privacy_protection_title">Privacy Protection Notice</string>
-    <string name="privacy_protection_description">Biometric authentication is used to protect your financial data and ensure only you can access your wealth information. Your biometric data never leaves your device and is processed securely by Android\'s hardware security module.</string>
-    <string name="privacy_protection_points">• Your fingerprint/face data is stored securely in your device\'s hardware\n• No biometric data is transmitted or stored by this app\n• Authentication is required to view sensitive financial information\n• You can skip authentication if you prefer, but your data will be less secure</string>
-    
+    <string name="privacy_protection_description">Biometric authentication protects your financial data and ensures only you can access your wealth information. Your biometric data never leaves your device and is processed securely by the Android hardware security module.</string>
+    <string name="privacy_protection_points">1. Your fingerprint or face data is stored securely in your device hardware.
+2. The app never transmits or stores biometric data.
+3. Authentication is required to access sensitive financial information.
+4. You may skip authentication, but your data will be less secure.</string>
+
     <!-- Navigation -->
     <string name="nav_dashboard">Dashboard</string>
     <string name="nav_assets">Assets</string>
     <string name="nav_settings">Settings</string>
-    
+
     <!-- Dashboard -->
     <string name="dashboard_title">Portfolio Overview</string>
     <string name="total_assets">Total Assets</string>
     <string name="cash_assets">Cash Assets</string>
     <string name="stock_assets">Stock Assets</string>
     <string name="refresh_data">Refresh Data</string>
-    
+
     <!-- Assets -->
     <string name="assets_title">Manage Assets</string>
     <string name="add_cash">Add Cash</string>
@@ -39,13 +42,13 @@
     <string name="cash_usd">USD Cash</string>
     <string name="stock_tw">Taiwan Stock</string>
     <string name="stock_us">US Stock</string>
-    
+
     <!-- Cash Input -->
     <string name="cash_amount">Amount</string>
     <string name="cash_currency">Currency</string>
     <string name="save">Save</string>
     <string name="cancel">Cancel</string>
-    
+
     <!-- Stock Input -->
     <string name="stock_symbol">Stock Symbol</string>
     <string name="stock_shares">Shares</string>
@@ -53,13 +56,41 @@
     <string name="search_stock">Search Stock</string>
     <string name="stock_price">Current Price</string>
     <string name="stock_value">Total Value</string>
-    
+
     <!-- Settings -->
     <string name="settings_title">Settings</string>
-    <string name="language">Language</string>
-    <string name="theme">Theme</string>
-    <string name="about">About</string>
-    
+    <string name="settings_financial_backup_title">Financial Backup</string>
+    <string name="settings_financial_backup_desc">Decide whether your financial data should be included in Android Auto Backup.</string>
+    <string name="settings_biometric_title">Biometric Login</string>
+    <string name="settings_biometric_desc">If disabled, biometric login is not required next time. To enable it again, visit the login screen and authenticate.</string>
+    <string name="settings_status_enabled">Enabled</string>
+    <string name="settings_status_disabled">Disabled</string>
+    <string name="settings_view">View</string>
+    <string name="backup_warning_title">Backup Safety Reminder</string>
+    <string name="backup_warning_message">Your financial data will be included in Android Auto Backup.&#x0a;&#x0a;Make sure you use a strong password and two-factor authentication. You can disable this feature anytime in Settings.</string>
+    <string name="enable_backup_confirm">Enable Backup</string>
+    <string name="settings_about_title">About Wealth Manager</string>
+    <string name="settings_about_desc">View the application version and learn how your data is used.</string>
+    <string name="settings_haptic_title">Haptic Feedback Settings</string>
+    <string name="settings_haptic_enable">Enable haptic feedback</string>
+    <string name="settings_haptic_enable_desc">Provide haptic feedback for button interactions</string>
+    <string name="settings_haptic_sound_enable">Enable sound feedback</string>
+    <string name="settings_haptic_sound_desc">Play sounds when interacting with the app</string>
+    <string name="settings_haptic_intensity">Haptic intensity</string>
+    <string name="settings_haptic_intensity_light">Light</string>
+    <string name="settings_haptic_intensity_medium">Medium</string>
+    <string name="settings_haptic_intensity_strong">Strong</string>
+    <string name="settings_haptic_intensity_confirm">Confirm</string>
+    <string name="settings_haptic_test_title">Test Haptic Feedback</string>
+    <string name="settings_haptic_test_desc">Tap the buttons below to preview each intensity</string>
+
+    <!-- Language -->
+    <string name="settings_language_title">Language</string>
+    <string name="settings_language_desc">Choose the language used across the app.</string>
+    <string name="language_option_english">English</string>
+    <string name="language_option_traditional_chinese">Traditional Chinese</string>
+    <string name="language_change_requires_restart">Language will apply after restarting the app.</string>
+
     <!-- Common -->
     <string name="loading">Loading...</string>
     <string name="error">Error</string>
@@ -67,45 +98,61 @@
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="confirm">Confirm</string>
-    
+
     <!-- Error Messages -->
-    <string name="error_network">Network error. Please check your connection</string>
-    <string name="error_api">Failed to fetch market data</string>
-    <string name="error_invalid_amount">Please enter a valid amount</string>
-    <string name="error_invalid_symbol">Please enter a valid stock symbol</string>
-    <string name="error_stock_not_found">Stock not found</string>
-    
+    <string name="error_network">Network error. Please check your connection.</string>
+    <string name="error_api">Failed to fetch market data.</string>
+    <string name="error_invalid_amount">Please enter a valid amount.</string>
+    <string name="error_invalid_symbol">Please enter a valid stock symbol.</string>
+    <string name="error_stock_not_found">Stock not found.</string>
+
     <!-- API Error Messages -->
-    <string name="api_error_server_busy">Server busy, please try again later</string>
-    <string name="api_error_data_stale">Data may be outdated</string>
-    <string name="api_error_connection_issue">Connection issue</string>
-    <string name="api_error_show_cached_data">Showing last updated data, click retry to get latest information</string>
+    <string name="api_error_server_busy">Server busy, please try again later.</string>
+    <string name="api_error_data_stale">Data may be outdated.</string>
+    <string name="api_error_connection_issue">Connection issue.</string>
+    <string name="api_error_show_cached_data">Showing the last updated data. Tap retry to fetch the latest information.</string>
     <string name="api_error_retry">Retry</string>
-    
+
     <!-- Input Validation -->
-    <string name="validation_enter_valid_number">Please enter a valid number</string>
-    <string name="validation_enter_valid_shares">Please enter valid number of shares</string>
-    <string name="validation_search_minimum_chars">Please enter at least 3 characters to search</string>
-    <string name="validation_no_matching_stock">No matching stock found, please check if the stock symbol is correct</string>
-    
+    <string name="validation_enter_valid_number">Please enter a valid number.</string>
+    <string name="validation_enter_valid_shares">Please enter a valid number of shares.</string>
+    <string name="validation_search_minimum_chars">Please enter at least 3 characters to search.</string>
+    <string name="validation_no_matching_stock">No matching stock found. Please verify the symbol.</string>
+
     <!-- Search Error Messages -->
-    <string name="search_error_api_limit">API 請求已達每日限制，請明天再試</string>
-    <string name="search_error_stock_not_found">找不到此股票代碼，請檢查是否正確</string>
-    <string name="search_error_network">網路連線問題，請檢查網路設定</string>
-    <string name="search_error_server">伺服器暫時無法使用，請稍後再試</string>
-    <string name="search_error_invalid_api_key">API 金鑰無效，請聯繫技術支援</string>
-    <string name="search_error_unknown">發生未知錯誤，請重新啟動應用程式</string>
-    <string name="search_error_invalid_query">請輸入至少 2 個字符進行搜索</string>
-    <string name="search_error_api_limit_reached">API 請求已達每日限制，請明天再試</string>
-    
+    <string name="search_error_api_limit">API request limit reached. Please try again tomorrow.</string>
+    <string name="search_error_stock_not_found">Stock code not found. Please verify the symbol.</string>
+    <string name="search_error_network">Network connection issue. Please check your settings.</string>
+    <string name="search_error_server">Server temporarily unavailable. Please try again later.</string>
+    <string name="search_error_invalid_api_key">Invalid API key. Please contact technical support.</string>
+    <string name="search_error_authentication">API authentication failed. Please verify the key.</string>
+    <string name="search_error_rate_limit">Request rate limit exceeded. Please try again later.</string>
+    <string name="search_error_unknown">Unknown error occurred. Please restart the app.</string>
+    <string name="search_error_invalid_query">Please enter at least 2 characters to search.</string>
+    <string name="search_error_api_limit_reached">API request limit reached. Please try again tomorrow.</string>
+
     <!-- Dialog Messages -->
     <string name="dialog_edit_cash_asset">Edit Cash Asset</string>
     <string name="dialog_edit_stock_asset">Edit Stock Asset</string>
     <string name="dialog_save">Save</string>
     <string name="dialog_cancel">Cancel</string>
-    
+
     <!-- About Dialog -->
     <string name="about_title">About Wealth Manager</string>
     <string name="about_version">Version 1.0.0</string>
-    <string name="about_description">A comprehensive personal finance management application that helps you track your assets, monitor stock investments, and manage your financial portfolio with real-time market data. Features include biometric authentication, multi-currency support, and secure local data storage.</string>
+    <string name="about_description">A comprehensive personal finance app that helps you track assets, monitor stock investments, and manage your financial portfolio with real-time market data. Features include biometric authentication, multi-currency support, and secure local storage.</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_open_settings">Open settings</string>
+    <string name="cd_add_asset">Add asset</string>
+    <string name="cd_back_to_dashboard">Back to dashboard</string>
+    <string name="cd_warning">Warning</string>
+    <string name="cd_retry">Retry action</string>
+    <string name="cd_dismiss">Dismiss</string>
+    <string name="cd_close">Close dialog</string>
+    <string name="cd_search">Search</string>
+    <string name="cd_edit_cash_asset">Edit cash asset</string>
+    <string name="cd_delete_cash_asset">Delete cash asset</string>
+    <string name="cd_edit_stock_asset">Edit stock asset</string>
+    <string name="cd_delete_stock_asset">Delete stock asset</string>
 </resources>

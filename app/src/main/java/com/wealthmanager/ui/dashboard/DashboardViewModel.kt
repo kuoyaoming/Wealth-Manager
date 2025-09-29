@@ -64,8 +64,7 @@ class DashboardViewModel @Inject constructor(
     
     fun loadPortfolioData() {
         debugLogManager.log("DASHBOARD", "Loading portfolio data")
-        // Do not set isLoading = true, let observeAssets() naturally load data
-        // Only set loading state when market data update is needed
+        refreshData()
     }
     
     fun onReturnFromAssets() {
