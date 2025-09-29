@@ -51,7 +51,12 @@ class CacheManager @Inject constructor(
         debugLogManager.log("CACHE", "Starting to get stock price: $symbol")
         
         val memoryKey = "stock_$symbol"
-        val memoryEntry = memoryCache[memoryKey] as? CacheEntry<StockAsset>
+        val memoryEntry = memoryCache[memoryKey]?.let { entry ->
+            if (entry.data is StockAsset) {
+                @Suppress("UNCHECKED_CAST")
+                entry as CacheEntry<StockAsset>
+            } else null
+        }
         
         if (memoryEntry != null) {
             val smartExpiryTime = smartCacheStrategy.getCacheExpiryTime(memoryKey)
@@ -87,7 +92,12 @@ class CacheManager @Inject constructor(
         debugLogManager.log("CACHE", "Starting to get exchange rate: $currencyPair")
         
         val memoryKey = "exchange_$currencyPair"
-        val memoryEntry = memoryCache[memoryKey] as? CacheEntry<ExchangeRate>
+        val memoryEntry = memoryCache[memoryKey]?.let { entry ->
+            if (entry.data is ExchangeRate) {
+                @Suppress("UNCHECKED_CAST")
+                entry as CacheEntry<ExchangeRate>
+            } else null
+        }
         
         if (memoryEntry != null && !memoryEntry.isExpired(EXCHANGE_RATE_CACHE_EXPIRY_MS)) {
             debugLogManager.log("CACHE", "Using memory cache: $currencyPair")
@@ -131,7 +141,7 @@ class CacheManager @Inject constructor(
     }
     
     fun cleanupExpiredCache() {
-        val currentTime = System.currentTimeMillis()
+        // val currentTime = System.currentTimeMillis()
         val expiredKeys = memoryCache.filter { (_, entry) ->
             entry.isExpired(STOCK_CACHE_EXPIRY_MS)
         }.keys

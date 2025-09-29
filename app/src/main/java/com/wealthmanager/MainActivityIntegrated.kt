@@ -1,5 +1,6 @@
 package com.wealthmanager
 
+import android.content.ComponentCallbacks2
 import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
@@ -231,16 +232,26 @@ class MainActivityIntegrated : FragmentActivity() {
         Log.d("MainActivity", "onTrimMemory called with level: $level")
         
         when (level) {
-            TRIM_MEMORY_RUNNING_CRITICAL -> {
-                Log.w("MainActivity", "Critical memory pressure")
-                appHealthMonitor.recordError("Critical memory pressure")
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE -> {
+                Log.w("MainActivity", "Memory pressure detected - level: $level")
+                appHealthMonitor.recordError("Memory pressure: $level")
+                System.gc()
             }
-            TRIM_MEMORY_RUNNING_LOW -> {
-                Log.w("MainActivity", "Low memory pressure")
-                appHealthMonitor.recordError("Low memory pressure")
+            ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
+                Log.d("MainActivity", "UI hidden - release non-essential resources")
             }
-            TRIM_MEMORY_RUNNING_MODERATE -> {
+            ComponentCallbacks2.TRIM_MEMORY_BACKGROUND -> {
+                Log.d("MainActivity", "App moved to background - release resources")
+            }
+            ComponentCallbacks2.TRIM_MEMORY_MODERATE -> {
                 Log.d("MainActivity", "Moderate memory pressure")
+            }
+            ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> {
+                Log.w("MainActivity", "Complete memory pressure - release all non-essential resources")
+                appHealthMonitor.recordError("Complete memory pressure")
+                System.gc()
             }
         }
     }

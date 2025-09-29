@@ -7,50 +7,50 @@ plugins {
 }
 
 android {
-    namespace 'com.wealthmanager'
-    compileSdk 36
+    namespace = 'com.wealthmanager'
+    compileSdk = 36
 
     defaultConfig {
-        applicationId "com.wealthmanager"
-        minSdk 36
-        targetSdk 36
-        versionCode 6
-        versionName "1.0.0"
+        applicationId = "com.wealthmanager"
+        minSdk = 36
+        targetSdk = 36
+        versionCode = 6
+        versionName = "1.0.0"
 
-        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
-            useSupportLibrary true
+            useSupportLibrary = true
         }
         
         // API Keys from local.properties (secure)
-        buildConfigField "String", "FINNHUB_API_KEY", "\"${project.hasProperty("FINNHUB_API_KEY") ? project.property("FINNHUB_API_KEY") : ""}\""
-        buildConfigField "String", "EXCHANGE_RATE_API_KEY", "\"${project.hasProperty("EXCHANGE_RATE_API_KEY") ? project.property("EXCHANGE_RATE_API_KEY") : ""}\""
+        buildConfigField("String", "FINNHUB_API_KEY", "\"${project.hasProperty("FINNHUB_API_KEY") ? project.property("FINNHUB_API_KEY") : ""}\"")
+        buildConfigField("String", "EXCHANGE_RATE_API_KEY", "\"${project.hasProperty("EXCHANGE_RATE_API_KEY") ? project.property("EXCHANGE_RATE_API_KEY") : ""}\"")
     }
 
     buildTypes {
         release {
             // Enables code-related app optimization.
-            minifyEnabled true
+            minifyEnabled = true
             
             // Enables resource shrinking.
-            shrinkResources true
+            shrinkResources = true
             
             // Default file with automatically generated optimization rules.
-            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+            proguardFiles = [getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro']
         }
         debug {
-            minifyEnabled false
-            debuggable true
+            minifyEnabled = false
+            debuggable = true
             // Enable debug symbols for JNI libraries
             ndk {
-                debugSymbolLevel 'FULL'
+                debugSymbolLevel = 'FULL'
             }
         }
     }
     
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_17
-        targetCompatibility JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     
     kotlinOptions {
@@ -58,22 +58,22 @@ android {
     }
     
     buildFeatures {
-        compose true
-        viewBinding true
-        buildConfig true
+        compose = true
+        viewBinding = true
+        buildConfig = true
     }
     
     composeOptions {
-        kotlinCompilerExtensionVersion '1.5.3'
+        kotlinCompilerExtensionVersion = '1.5.15'
     }
     
     packagingOptions {
         resources {
-            excludes += '/META-INF/{AL2.0,LGPL2.1}'
+            excludes += ['/META-INF/{AL2.0,LGPL2.1}']
         }
     }
     
-    buildToolsVersion '36.1.0'
+    buildToolsVersion = '36.1.0'
 }
 
 dependencies {

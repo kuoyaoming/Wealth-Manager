@@ -149,13 +149,13 @@ private fun AppVersionSection() {
             }
             
             Text(
-                text = "Wealth Manager v1.0.5",
+                text = "Wealth Manager v1.0.0",
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium
             )
             
             Text(
-                text = "A comprehensive personal finance management application that helps you track your assets, monitor stock investments, and manage your financial portfolio with real-time market data.",
+                text = "A comprehensive personal finance management application that helps you track your assets, monitor stock investments, and manage your financial portfolio with real-time market data. Features include biometric authentication, multi-currency support, and secure local data storage.",
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -226,10 +226,18 @@ private fun ThirdPartyApiSection() {
             )
             
             Text(
-                text = "• Alpha Vantage API: For real-time stock prices and market data\n" +
-                        "  - Rate limit: 5 requests per minute, 500 requests per day (free tier)\n" +
-                        "  - Data: Stock quotes, exchange rates, stock search\n" +
+                text = "• Finnhub API: For real-time stock prices and market data\n" +
+                        "  - Rate limit: 60 requests per minute (free tier)\n" +
+                        "  - Data: Stock quotes, stock search, forex rates\n" +
                         "  - Privacy: Only stock symbols and market data are transmitted\n\n" +
+                        "• Exchange Rate API: For currency conversion rates\n" +
+                        "  - Rate limit: 1000 requests per month (free tier)\n" +
+                        "  - Data: Real-time exchange rates for multiple currencies\n" +
+                        "  - Privacy: Only currency codes are transmitted\n\n" +
+                        "• TWSE API: For Taiwan stock market data\n" +
+                        "  - Public API with no rate limits\n" +
+                        "  - Data: Taiwan stock prices and market information\n" +
+                        "  - Privacy: Only stock symbols are transmitted\n\n" +
                         "• Android Biometric API: For secure authentication\n" +
                         "  - Handled by Android's secure hardware\n" +
                         "  - No biometric data is stored or transmitted",

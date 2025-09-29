@@ -82,7 +82,7 @@ class SmartCacheStrategy @Inject constructor(
      * Check if cache should be used
      */
     fun shouldUseCache(key: String, lastUpdateTime: Long): Boolean {
-        val stats = accessStats[key] ?: return true
+        // val stats = accessStats[key] ?: return true
         val currentTime = System.currentTimeMillis()
         val timeSinceUpdate = currentTime - lastUpdateTime
         val cacheExpiry = getCacheExpiryTime(key)

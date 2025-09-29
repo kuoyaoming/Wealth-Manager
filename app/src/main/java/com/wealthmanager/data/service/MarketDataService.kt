@@ -86,7 +86,7 @@ class MarketDataService @Inject constructor(
                     )
                     
                     if (result.isSuccess) {
-                        val quoteData = result.getOrThrow() as StockQuoteData
+                        val quoteData = result.getOrThrow()
                         val price = quoteData.price
                         
                         val currency = if (isTaiwanStock(stock.symbol)) "TWD" else "USD"
@@ -210,7 +210,7 @@ class MarketDataService @Inject constructor(
             )
             
             if (result.isSuccess) {
-                val rateData = result.getOrThrow() as ExchangeRateData
+                val rateData = result.getOrThrow()
                 val exchangeRate = ExchangeRate(
                     currencyPair = "USD_TWD",
                     rate = rateData.rate,
