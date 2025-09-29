@@ -14,13 +14,17 @@ android {
         applicationId "com.wealthmanager"
         minSdk 36
         targetSdk 36
-        versionCode 5
-        versionName "0.1.10"
+        versionCode 6
+        versionName "1.0.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary true
         }
+        
+        // API Keys from local.properties (secure)
+        buildConfigField "String", "FINNHUB_API_KEY", "\"${project.hasProperty("FINNHUB_API_KEY") ? project.property("FINNHUB_API_KEY") : ""}\""
+        buildConfigField "String", "EXCHANGE_RATE_API_KEY", "\"${project.hasProperty("EXCHANGE_RATE_API_KEY") ? project.property("EXCHANGE_RATE_API_KEY") : ""}\""
     }
 
     buildTypes {
@@ -56,6 +60,7 @@ android {
     buildFeatures {
         compose true
         viewBinding true
+        buildConfig true
     }
     
     composeOptions {

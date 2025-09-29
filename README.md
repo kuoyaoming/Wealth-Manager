@@ -22,6 +22,37 @@ A modern personal finance tracker built with Jetpack Compose. Features biometric
 - **No cloud sync** - Complete privacy protection
 - **Session management** - Automatic authentication state management
 
+## 🔐 Security Configuration
+
+### Quick Setup
+
+1. **Run setup script**:
+   ```bash
+   # Windows PowerShell (recommended)
+   .\docs\setup\setup-dev.ps1
+   
+   # Windows Command Prompt
+   .\docs\setup\setup-dev.bat
+   
+   # Linux/Mac
+   ./docs/setup/setup-dev.sh
+   ```
+
+2. **Follow the setup guide**: [API Setup Guide](docs/api/API_SETUP.md)
+
+### Security Features
+
+- ✅ **Local-only storage** - All data encrypted on device
+- ✅ **No API keys in source code** - Keys stored securely in local.properties
+- ✅ **Biometric authentication** - No passwords required
+- ✅ **No cloud sync** - Complete privacy protection
+
+### Documentation
+
+- 📖 [Security Policy](docs/security/SECURITY.md) - Complete security guidelines
+- 🛠️ [API Setup Guide](docs/api/API_SETUP.md) - Detailed API configuration
+- 👥 [Contributing Guide](docs/development/CONTRIBUTING.md) - Development guidelines
+
 ## Asset Management
 
 - **Cash tracking** - TWD and USD support
@@ -218,7 +249,7 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
-**Version**: 0.1.10  
+**Version**: 1.0.0  
 **Last Updated**: 2025  
 **Android Support**: 16+ (API 36)  
 **Build Status**: Production Ready

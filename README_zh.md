@@ -22,6 +22,37 @@
 - **無雲端同步** - 完全隱私保護
 - **會話管理** - 自動認證狀態管理
 
+## 🔐 安全配置
+
+### 快速設定
+
+1. **執行設定腳本**:
+   ```bash
+   # Windows PowerShell (推薦)
+   .\docs\setup\setup-dev.ps1
+   
+   # Windows Command Prompt
+   .\docs\setup\setup-dev.bat
+   
+   # Linux/Mac
+   ./docs/setup/setup-dev.sh
+   ```
+
+2. **遵循設定指南**: [API 設定指南](docs/api/API_SETUP.md)
+
+### 安全功能
+
+- ✅ **本地儲存** - 所有數據加密儲存在裝置上
+- ✅ **程式碼中無 API 金鑰** - 金鑰安全儲存在 local.properties
+- ✅ **生物識別認證** - 無需密碼
+- ✅ **無雲端同步** - 完全隱私保護
+
+### 文件
+
+- 📖 [安全政策](docs/security/SECURITY.md) - 完整安全指南
+- 🛠️ [API 設定指南](docs/api/API_SETUP.md) - 詳細 API 配置
+- 👥 [貢獻指南](docs/development/CONTRIBUTING.md) - 開發指南
+
 ## 資產管理
 
 - **現金追蹤** - 支援 TWD 和 USD
@@ -218,7 +249,7 @@ MIT License - 詳見 [LICENSE](LICENSE) 檔案
 
 ---
 
-**版本**: 0.1.10  
+**版本**: 1.0.0  
 **最後更新**: 2025  
 **Android 支援**: 16+ (API 36)  
 **建置狀態**: 生產就緒
