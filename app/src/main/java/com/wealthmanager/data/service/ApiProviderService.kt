@@ -1,5 +1,6 @@
 package com.wealthmanager.data.service
 
+import com.wealthmanager.BuildConfig
 import com.wealthmanager.data.api.FinnhubApi
 import com.wealthmanager.data.api.FinnhubQuoteResponse
 import com.wealthmanager.data.api.FinnhubSearchResponse
@@ -29,8 +30,9 @@ class ApiProviderService @Inject constructor(
 ) {
     
     companion object {
-        private const val FINNHUB_API_KEY = "d3d1ge9r01qmnfgfn4lgd3d1ge9r01qmnfgfn4m0"
-        private const val EXCHANGE_RATE_API_KEY = "7b5a247a5c1690934ff0b6a4"
+        // API keys are now loaded from BuildConfig for security
+        private val FINNHUB_API_KEY = BuildConfig.FINNHUB_API_KEY
+        private val EXCHANGE_RATE_API_KEY = BuildConfig.EXCHANGE_RATE_API_KEY
     }
     
     suspend fun getStockQuote(symbol: String): Result<StockQuoteData> {
