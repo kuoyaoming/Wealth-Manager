@@ -136,7 +136,7 @@ A modern personal finance tracker built with Jetpack Compose. Features biometric
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/wealth-manager.git
+git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
 # Build the project
 ./gradlew assembleDebug

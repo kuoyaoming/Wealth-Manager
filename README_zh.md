@@ -136,7 +136,7 @@
 
 ```bash
 # 複製專案
-git clone https://github.com/yourusername/wealth-manager.git
+git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
 # 建置專案
 ./gradlew assembleDebug
