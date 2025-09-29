@@ -42,7 +42,7 @@ class MainActivity120Hz : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        Log.d("MainActivity120Hz", "onCreate called")
+        // Remove screen refresh log
         
         enableEdgeToEdge()
         
@@ -89,7 +89,7 @@ class MainActivity120Hz : FragmentActivity() {
     }
     
     /**
-     * 啟用高刷新率模式
+     * Enable high refresh rate mode
      */
     private fun enableHighRefreshRate() {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.R) {
@@ -106,8 +106,7 @@ class MainActivity120Hz : FragmentActivity() {
                     val maxRefreshRate = refreshRates.maxOrNull() ?: 60f
                     currentRefreshRate = maxRefreshRate
                     
-                    Log.d("MainActivity120Hz", "支援的刷新率: $refreshRates")
-                    Log.d("MainActivity120Hz", "當前刷新率: $currentRefreshRate Hz")
+                    // Remove screen refresh log
                     
                     // Set performance monitor refresh rate
                     performanceMonitor.setCurrentRefreshRate(currentRefreshRate)
@@ -121,21 +120,21 @@ class MainActivity120Hz : FragmentActivity() {
                             }
                         }
                         isHighRefreshRateEnabled = true
-                        Log.d("MainActivity120Hz", "已啟用 120Hz 模式")
+                        // Remove screen refresh log
                     } else {
-                        Log.d("MainActivity120Hz", "設備不支援 120Hz，使用標準刷新率")
+                        // Remove screen refresh log
                     }
                 }
             } catch (e: Exception) {
-                Log.e("MainActivity120Hz", "啟用高刷新率失敗", e)
+                // Remove screen refresh log
             }
         } else {
-            Log.d("MainActivity120Hz", "Android 版本不支援高刷新率 API")
+            // Remove screen refresh log
         }
     }
     
     /**
-     * 處理觸控事件，針對 120Hz 優化
+     * Handle touch events, optimized for 120Hz
      */
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return try {
@@ -148,31 +147,31 @@ class MainActivity120Hz : FragmentActivity() {
                     val result = super.onTouchEvent(event)
                     return result
                 } else {
-                    Log.w("MainActivity120Hz", "Touch event at invalid position: x=${event.x}, y=${event.y}")
+                    // Remove screen refresh log
                     return false
                 }
             }
             false
         } catch (e: Exception) {
-            Log.e("MainActivity120Hz", "Error handling touch event", e)
+            // Remove screen refresh log
             false
         }
     }
     
     /**
-     * 配置輸入事件處理
+     * Configure input event handling
      */
     private fun setupInputEventHandling() {
         try {
             // Simplified input event handling, not overriding Window.Callback
-            Log.d("MainActivity120Hz", "Input event handling configured for 120Hz")
+            // Remove screen refresh log
         } catch (e: Exception) {
-            Log.e("MainActivity120Hz", "Error setting up input event handling", e)
+            // Remove screen refresh log
         }
     }
     
     /**
-     * 檢查觸控位置是否有效
+     * Check if touch position is valid
      */
     private fun isValidTouchPosition(x: Float, y: Float): Boolean {
         return try {
@@ -187,72 +186,72 @@ class MainActivity120Hz : FragmentActivity() {
                              y >= margin && y <= (height - margin)
 
                 if (!isValid) {
-                    Log.d("MainActivity120Hz", "Touch position out of bounds: x=$x, y=$y, width=$width, height=$height")
+                    // Remove screen refresh log
                 }
                 isValid
             } else {
                 // If unable to get window info, allow touch but log warning
-                Log.w("MainActivity120Hz", "Cannot get window decor view, allowing touch")
+                // Remove screen refresh log
                 true
             }
         } catch (e: Exception) {
-            Log.e("MainActivity120Hz", "Error checking touch position", e)
+            // Remove screen refresh log
             true // Allow touch when error occurs
         }
     }
     
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("MainActivity120Hz", "onDestroy called")
+        // Remove screen refresh log
 
         // Stop performance monitoring
         performanceMonitor.stopMonitoring()
     }
     
     /**
-     * 處理低記憶體情況
+     * Handle low memory situation
      */
     override fun onLowMemory() {
         super.onLowMemory()
-        Log.w("MainActivity120Hz", "onLowMemory called - 觸發記憶體優化")
+        // Remove screen refresh log
 
         // Trigger memory cleanup
         System.gc()
 
         // Log performance issues
         val stats = performanceMonitor.getPerformanceStats()
-        Log.w("MainActivity120Hz", "效能統計: $stats")
+        // Remove screen refresh log
     }
     
     /**
-     * 處理記憶體修剪
+     * Handle memory trimming
      */
     override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)
-        Log.d("MainActivity120Hz", "onTrimMemory called with level: $level")
+        // Remove screen refresh log
 
         when (level) {
             TRIM_MEMORY_RUNNING_CRITICAL -> {
-                Log.w("MainActivity120Hz", "嚴重記憶體壓力 - 觸發緊急清理")
+                // Remove screen refresh log
                 System.gc()
             }
             TRIM_MEMORY_RUNNING_LOW -> {
-                Log.w("MainActivity120Hz", "低記憶體壓力 - 觸發清理")
+                // Remove screen refresh log
                 System.gc()
             }
             TRIM_MEMORY_RUNNING_MODERATE -> {
-                Log.d("MainActivity120Hz", "中等記憶體壓力")
+                // Remove screen refresh log
             }
         }
     }
     
     /**
-     * 獲取當前刷新率
+     * Get current refresh rate
      */
     fun getCurrentRefreshRate(): Float = currentRefreshRate
     
     /**
-     * 是否啟用高刷新率
+     * Whether high refresh rate is enabled
      */
     fun isHighRefreshRateEnabled(): Boolean = isHighRefreshRateEnabled
 }

@@ -8,7 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 專門處理 API 錯誤的分類和恢復策略
+ * Specialized API error classification and recovery strategy handler
  */
 @Singleton
 class ApiErrorHandler @Inject constructor(
@@ -16,7 +16,7 @@ class ApiErrorHandler @Inject constructor(
 ) {
     
     /**
-     * API 錯誤類型枚舉
+     * API error type enumeration
      */
     sealed class ApiErrorType {
         object NetworkError : ApiErrorType()
@@ -28,7 +28,7 @@ class ApiErrorHandler @Inject constructor(
     }
     
     /**
-     * 錯誤恢復策略
+     * Error recovery strategy
      */
     data class ErrorRecoveryStrategy(
         val shouldRetry: Boolean,
@@ -38,7 +38,7 @@ class ApiErrorHandler @Inject constructor(
     )
     
     /**
-     * 分析錯誤並返回錯誤類型
+     * Analyze error and return error type
      */
     fun analyzeError(exception: Exception): ApiErrorType {
         return when (exception) {
@@ -87,7 +87,7 @@ class ApiErrorHandler @Inject constructor(
     }
     
     /**
-     * 根據錯誤類型獲取恢復策略
+     * Get recovery strategy based on error type
      */
     fun getRecoveryStrategy(errorType: ApiErrorType): ErrorRecoveryStrategy {
         return when (errorType) {
@@ -95,57 +95,57 @@ class ApiErrorHandler @Inject constructor(
                 shouldRetry = true,
                 retryDelayMs = 2000L,
                 maxRetries = 3,
-                fallbackAction = "使用快取資料"
+                fallbackAction = "Use cached data"
             )
             ApiErrorType.RateLimitError -> ErrorRecoveryStrategy(
                 shouldRetry = true,
                 retryDelayMs = 60000L, // 1 minute
                 maxRetries = 2,
-                fallbackAction = "使用快取資料並延遲下次更新"
+                fallbackAction = "Use cached data and delay next update"
             )
             ApiErrorType.ServerError -> ErrorRecoveryStrategy(
                 shouldRetry = true,
                 retryDelayMs = 5000L,
                 maxRetries = 3,
-                fallbackAction = "使用快取資料"
+                fallbackAction = "Use cached data"
             )
             ApiErrorType.InvalidApiCall -> ErrorRecoveryStrategy(
                 shouldRetry = false,
                 retryDelayMs = 0L,
                 maxRetries = 0,
-                fallbackAction = "檢查 API 金鑰和參數"
+                fallbackAction = "Check API key and parameters"
             )
             ApiErrorType.DataValidationError -> ErrorRecoveryStrategy(
                 shouldRetry = false,
                 retryDelayMs = 0L,
                 maxRetries = 0,
-                fallbackAction = "使用快取資料"
+                fallbackAction = "Use cached data"
             )
             ApiErrorType.UnknownError -> ErrorRecoveryStrategy(
                 shouldRetry = true,
                 retryDelayMs = 3000L,
                 maxRetries = 2,
-                fallbackAction = "使用快取資料"
+                fallbackAction = "Use cached data"
             )
         }
     }
     
     /**
-     * 獲取使用者友善的錯誤訊息
+     * Get user-friendly error message
      */
     fun getUserFriendlyMessage(errorType: ApiErrorType): String {
         return when (errorType) {
-            ApiErrorType.NetworkError -> "網路連線不穩定，請檢查網路設定"
-            ApiErrorType.RateLimitError -> "請求過於頻繁，請稍後再試"
-            ApiErrorType.ServerError -> "伺服器暫時無法使用，請稍後再試"
-            ApiErrorType.InvalidApiCall -> "API 設定有誤，請聯繫技術支援"
-            ApiErrorType.DataValidationError -> "資料格式異常，使用快取資料"
-            ApiErrorType.UnknownError -> "發生未知錯誤，請重新啟動應用程式"
+            ApiErrorType.NetworkError -> "Network connection unstable, please check network settings"
+            ApiErrorType.RateLimitError -> "Too many requests, please try again later"
+            ApiErrorType.ServerError -> "Server temporarily unavailable, please try again later"
+            ApiErrorType.InvalidApiCall -> "API configuration error, please contact technical support"
+            ApiErrorType.DataValidationError -> "Data format abnormal, using cached data"
+            ApiErrorType.UnknownError -> "Unknown error occurred, please restart the application"
         }
     }
     
     /**
-     * 記錄錯誤統計
+     * Log error statistics
      */
     fun logErrorStats(errorType: ApiErrorType, operation: String, duration: Long) {
         val stats = mapOf(

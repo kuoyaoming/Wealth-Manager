@@ -6,8 +6,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 簡單的API提供者測試類別
- * 用於驗證Finnhub備援功能是否正常運作
+ * Simple API provider test class
+ * Used to verify if Finnhub fallback functionality works properly
  */
 @Singleton
 class ApiProviderTest @Inject constructor(
@@ -16,7 +16,7 @@ class ApiProviderTest @Inject constructor(
 ) {
     
     /**
-     * 測試股票報價功能
+     * Test stock quote functionality
      */
     suspend fun testStockQuote(symbol: String = "AAPL"): Boolean {
         return try {
@@ -38,7 +38,7 @@ class ApiProviderTest @Inject constructor(
     }
     
     /**
-     * 測試股票搜尋功能
+     * Test stock search functionality
      */
     suspend fun testStockSearch(query: String = "Apple"): Boolean {
         return try {
@@ -69,7 +69,7 @@ class ApiProviderTest @Inject constructor(
     }
     
     /**
-     * 測試匯率功能
+     * Test exchange rate functionality
      */
     suspend fun testExchangeRate(): Boolean {
         return try {
@@ -91,7 +91,7 @@ class ApiProviderTest @Inject constructor(
     }
     
     /**
-     * 執行所有測試
+     * Run all tests
      */
     suspend fun runAllTests(): Boolean {
         debugLogManager.log("API_TEST", "Starting API Provider tests...")

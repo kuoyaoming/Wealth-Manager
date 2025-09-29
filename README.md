@@ -1,140 +1,244 @@
 # Wealth Manager
 
-一個使用 Jetpack Compose 建構的現代個人理財追蹤應用程式。具備生物識別安全、本地資產管理、即時市場數據和智能 API 切換功能。
+A modern personal finance tracker built with Jetpack Compose. Features biometric security, local asset management, real-time market data, and intelligent API switching with performance optimization.
 
-## 主要功能
+**Language**: [English](README.md) | [繁體中文](README_zh.md)
 
-- 🔐 **生物識別安全** - 指紋/臉部識別認證
-- 💰 **投資組合追蹤** - 現金和股票投資管理
-- 📊 **即時市場數據** - 透過 Finnhub API 和 Alpha Vantage 備援
-- 🎨 **Material You** - 動態主題設計
-- 🌍 **多語言支援** - 英文和繁體中文
-- 📱 **Android 16** - 最新 Android 功能
+## Features
 
-## 安全特性
+- 🔐 **Biometric Security** - Fingerprint/face recognition authentication with 24-hour session timeout
+- 💰 **Portfolio Tracking** - Cash and stock investment management with CRUD operations
+- 📊 **Real-time Market Data** - Live prices via Finnhub API, TWSE API, and Exchange Rate API
+- 🎨 **Material You** - Dynamic theming with responsive design
+- 🌍 **Multi-language Support** - English & Traditional Chinese with auto-detection
+- 📱 **Android 16** - Latest Android features with 120Hz performance optimization
+- ⚡ **Performance Monitoring** - Real-time performance tracking and optimization
+- 🗄️ **Smart Caching** - Intelligent cache management with offline support
 
-- **本地儲存** - 所有數據加密儲存在裝置上
-- **生物識別認證** - 無需密碼，24小時會話超時
-- **無雲端同步** - 完全隱私保護
-- **會話管理** - 自動認證狀態管理
+## Security
 
-## 資產管理
+- **Local-only storage** - All data encrypted on device
+- **Biometric authentication** - No passwords required, 24-hour session timeout
+- **No cloud sync** - Complete privacy protection
+- **Session management** - Automatic authentication state management
 
-- **現金追蹤** - 支援 TWD 和 USD
-- **股票投資組合** - 台灣和美國市場
-- **智能搜尋** - 即時股票代碼搜尋和匹配
-- **資產編輯** - 完整的 CRUD 操作
-- **即時價格更新** - 自動和手動刷新
+## Asset Management
 
-## 市場數據
+- **Cash tracking** - TWD and USD support
+- **Stock portfolio** - Taiwan and US markets
+- **Smart search** - Real-time stock symbol search and matching
+- **Asset editing** - Complete CRUD operations
+- **Real-time price updates** - Automatic and manual refresh
 
-- **Finnhub API** - 主要數據源，支援美股和台股即時價格
-- **Alpha Vantage API** - 備援數據源，自動故障轉移
-- **TWSE API** - 台灣股票交易所數據整合
-- **智能 API 切換** - 自動故障轉移確保數據可用性
-- **匯率轉換** - 自動計算 TWD 等值
-- **快取支援** - 離線時使用快取數據
+## Market Data
 
-## 技術架構
+- **Finnhub API** - Primary data source for US and international stock prices
+- **TWSE API** - Taiwan Stock Exchange data integration with real-time quotes
+- **Exchange Rate API** - Real-time USD/TWD exchange rate conversion
+- **Smart API switching** - Automatic failover ensures data availability
+- **Request deduplication** - Prevents duplicate API calls for better performance
+- **Cache support** - Intelligent caching with offline data availability
+- **Error recovery** - Automatic retry mechanisms and error handling
+
+## Tech Stack
 
 - **UI**: Jetpack Compose + Material 3
-- **架構模式**: MVVM + Repository Pattern
-- **依賴注入**: Hilt
-- **資料庫**: Room (本地加密儲存)
-- **網路**: Retrofit + OkHttp
-- **認證**: Android Biometric API
-- **程式語言**: Kotlin
-- **目標平台**: Android 16 (API 36)
-- **響應式設計**: 自適應佈局系統
+- **Architecture**: MVVM + Repository Pattern
+- **Dependency Injection**: Hilt
+- **Database**: Room (local encrypted storage)
+- **Networking**: Retrofit + OkHttp with logging
+- **Authentication**: Android Biometric API
+- **Language**: Kotlin
+- **Target**: Android 16 (API 36)
+- **Responsive Design**: Adaptive layout system
+- **Performance**: 120Hz optimization with memory management
+- **Caching**: Smart cache strategy with TWSE data parser
 
-## 安裝說明
+## Installation
 
 ```bash
-# 複製專案
+# Clone the repository
 git clone https://github.com/yourusername/wealth-manager.git
 
-# 建置專案
+# Build the project
 ./gradlew assembleDebug
 
-# 安裝到裝置
+# Install on device
 ./gradlew installDebug
 ```
 
-## 系統需求
+## Requirements
 
 - Android 16+ (API 36)
-- 生物識別認證 (建議)
-- 網路連線 (市場數據)
-- 最少 100MB 儲存空間
+- Biometric authentication (recommended)
+- Internet connection (market data)
+- Minimum 100MB storage space
 
-## 應用程式架構
+## Application Architecture
 
+```mermaid
+graph TB
+    subgraph "UI Layer"
+        A[Compose UI]
+        B[Navigation]
+        C[Material 3]
+        D[Responsive Design]
+    end
+    
+    subgraph "Business Logic Layer"
+        E[ViewModels]
+        F[Use Cases]
+        G[Managers]
+        H[Authentication]
+    end
+    
+    subgraph "Data Layer"
+        I[Repository]
+        J[Room DB]
+        K[API Service]
+        L[Cache Management]
+    end
+    
+    A --> E
+    B --> E
+    C --> E
+    D --> E
+    E --> I
+    F --> I
+    G --> I
+    H --> I
+    I --> J
+    I --> K
+    I --> L
 ```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   UI 層         │    │   業務邏輯層     │    │   資料層        │
-│                 │    │                 │    │                 │
-│ • Compose UI    │◄──►│ • ViewModels    │◄──►│ • Repository    │
-│ • Navigation    │    │ • Use Cases     │    │ • Room DB       │
-│ • Material 3    │    │ • Managers      │    │ • API Service   │
-│ • 響應式設計     │    │ • 認證管理      │    │ • 快取管理      │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+
+## Core Modules
+
+```mermaid
+graph LR
+    subgraph "🔐 Authentication"
+        A1[BiometricAuthManager]
+        A2[AuthStateManager]
+        A3[BiometricAuthScreen]
+    end
+    
+    subgraph "💰 Asset Management"
+        B1[AssetsScreen]
+        B2[AddAssetDialog]
+        B3[EditAssetDialog]
+        B4[CashAsset/StockAsset]
+    end
+    
+    subgraph "📊 Market Data"
+        C1[MarketDataService]
+        C2[ApiProviderService]
+        C3[FinnhubApi/TwseApi]
+        C4[CacheManager]
+    end
+    
+    subgraph "🎨 User Interface"
+        D1[DashboardScreen]
+        D2[WealthManagerNavigation]
+        D3[Responsive Layout]
+        D4[Material You]
+    end
+    
+    A1 --> B1
+    A2 --> B1
+    B1 --> C1
+    C1 --> D1
+    D1 --> A3
 ```
 
-## 核心功能模組
+### 🔐 Authentication System
+- **BiometricAuthManager** - Biometric authentication management with error handling
+- **AuthStateManager** - Session state management (24-hour timeout)
+- **BiometricAuthScreen** - Authentication interface with skip option
 
-### 🔐 認證系統
-- **BiometricAuthManager** - 生物識別認證管理
-- **AuthStateManager** - 會話狀態管理 (24小時超時)
-- **BiometricAuthScreen** - 認證介面
+### 💰 Asset Management
+- **AssetsScreen** - Asset list management with search functionality
+- **AddAssetDialog** - Add asset dialog with stock search
+- **EditAssetDialog** - Edit asset functionality for cash and stocks
+- **CashAsset/StockAsset** - Cash/stock entities with market support
 
-### 💰 資產管理
-- **AssetsScreen** - 資產列表管理
-- **AddAssetDialog** - 新增資產對話框
-- **EditAssetDialog** - 編輯資產功能
-- **CashAsset/StockAsset** - 現金/股票實體
+### 📊 Market Data
+- **MarketDataService** - Market data service with retry mechanisms
+- **ApiProviderService** - API provider service with failover
+- **FinnhubApi/TwseApi** - Multi-API integration with caching
+- **CacheManager** - Data cache management with smart strategies
+- **TwseDataParser** - Taiwan stock data parsing and validation
 
-### 📊 市場數據
-- **MarketDataService** - 市場數據服務
-- **ApiProviderService** - API 提供者服務
-- **FinnhubApi/TwseApi** - 多 API 整合
-- **CacheManager** - 數據快取管理
+### 🎨 User Interface
+- **DashboardScreen** - Main dashboard with portfolio overview
+- **WealthManagerNavigation** - Navigation system with authentication flow
+- **Responsive Layout** - Adaptive design for different screen sizes
+- **Material You** - Dynamic theming with performance optimization
+- **PerformanceMonitor120Hz** - Real-time performance tracking
 
-### 🎨 使用者介面
-- **DashboardScreen** - 主儀表板
-- **WealthManagerNavigation** - 導航系統
-- **響應式佈局** - 自適應設計
-- **Material You** - 動態主題
+## Data Flow Architecture
 
-## 開發貢獻
+```mermaid
+graph TD
+    A[User Interface] --> B[ViewModel]
+    B --> C[Repository]
+    C --> D[Room Database]
+    C --> E[API Provider Service]
+    
+    E --> F[Finnhub API]
+    E --> G[Alpha Vantage API]
+    E --> H[TWSE API]
+    
+    F --> I[Cache Management]
+    G --> I
+    H --> I
+    
+    I --> J[Market Data Service]
+    J --> K[Asset Updates]
+    K --> D
+    
+    L[Biometric Auth] --> M[Auth State Management]
+    M --> A
+    
+    N[Offline Mode] --> I
+    I --> O[Local Cache Data]
+    O --> A
+```
 
-1. Fork 專案
-2. 建立功能分支 (`git checkout -b feature/amazing-feature`)
-3. 提交變更 (`git commit -m 'Add amazing feature'`)
-4. 推送到分支 (`git push origin feature/amazing-feature`)
-5. 開啟 Pull Request
+## Contributing
 
-## 授權條款
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/amazing-feature`)
+3. Commit your changes (`git commit -m 'Add amazing feature'`)
+4. Push to the branch (`git push origin feature/amazing-feature`)
+5. Open a Pull Request
 
-MIT License - 詳見 [LICENSE](LICENSE) 檔案
+## License
+
+MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
-**版本**: 0.1.10  
-**最後更新**: 2025  
-**Android 支援**: 16+ (API 36)  
-**建置狀態**: 生產就緒
+**Version**: 0.1.10  
+**Last Updated**: 2025  
+**Android Support**: 16+ (API 36)  
+**Build Status**: Production Ready
 
-## 開發狀態
+## Development Status
 
-### ✅ 已完成功能
-- 生物識別認證系統
-- 資產管理 (現金/股票)
-- 即時市場數據整合
-- 多 API 故障轉移
-- 響應式 UI 設計
-- 多語言支援
+### ✅ Completed Features
+- Biometric authentication system with 24-hour session timeout
+- Asset management (cash/stocks) with CRUD operations
+- Real-time market data integration (Finnhub, TWSE, Exchange Rate APIs)
+- Multi-API failover with request deduplication
+- Responsive UI design with Material 3 theming
+- Multi-language support (English/Traditional Chinese)
+- Performance monitoring and 120Hz optimization
+- Smart caching system with offline support
+- Error recovery and retry mechanisms
+- Debug logging and performance tracking
 
-### 🚧 開發中功能
-- 投資組合視覺化圖表
-- 進階分析功能
-- 數據匯出功能
+### 🚧 In Development
+- Portfolio visualization charts
+- Advanced analytics features
+- Data export functionality
+- Enhanced chart components

@@ -1,8 +1,8 @@
 package com.wealthmanager
 
 /**
- * 臨時的 BuildConfig 替代方案
- * 等 Gradle 生成真正的 BuildConfig 後，這個文件可以被刪除
+ * Temporary BuildConfig alternative
+ * This file can be deleted after Gradle generates the real BuildConfig
  */
 object BuildConfig {
     const val DEBUG = true

@@ -12,8 +12,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 120Hz 優化的效能監控器
- * 針對高刷新率螢幕進行優化
+ * 120Hz optimized performance monitor
+ * Optimized for high refresh rate screens
  */
 @Singleton
 class PerformanceMonitor120Hz @Inject constructor(
@@ -54,13 +54,13 @@ class PerformanceMonitor120Hz @Inject constructor(
     private var currentRefreshRate = 60f
     
     /**
-     * 開始效能監控
+     * Start performance monitoring
      */
     fun startMonitoring() {
         if (isMonitoring) return
         
         isMonitoring = true
-        debugLogManager.log("PERFORMANCE_120HZ", "開始 120Hz 效能監控")
+        // Remove screen refresh log
         
         performanceScope.launch {
             while (isMonitoring) {
@@ -72,15 +72,15 @@ class PerformanceMonitor120Hz @Inject constructor(
     }
     
     /**
-     * 停止效能監控
+     * Stop performance monitoring
      */
     fun stopMonitoring() {
         isMonitoring = false
-        debugLogManager.log("PERFORMANCE_120HZ", "停止 120Hz 效能監控")
+        // Remove screen refresh log
     }
     
     /**
-     * 監控主線程效能
+     * Monitor main thread performance
      */
     private suspend fun monitorMainThreadPerformance() {
         val startTime = System.currentTimeMillis()
@@ -97,17 +97,17 @@ class PerformanceMonitor120Hz @Inject constructor(
         // 120Hz threshold check
         if (blockTime > MAIN_THREAD_BLOCK_THRESHOLD_MS) {
             mainThreadBlockCount.incrementAndGet()
-            debugLogManager.log("PERFORMANCE_120HZ", "主線程阻塞: ${blockTime}ms (120Hz 閾值: ${MAIN_THREAD_BLOCK_THRESHOLD_MS}ms)")
+            // Remove screen refresh log
             
             if (blockTime > CRITICAL_BLOCK_THRESHOLD_MS) {
                 criticalBlockCount.incrementAndGet()
-                debugLogManager.log("PERFORMANCE_120HZ", "嚴重主線程阻塞: ${blockTime}ms")
+                // Remove screen refresh log
             }
         }
     }
     
     /**
-     * 監控幀率
+     * Monitor frame rate
      */
     private suspend fun monitorFrameRate() {
         // Simulate frame rate monitoring
@@ -116,22 +116,22 @@ class PerformanceMonitor120Hz @Inject constructor(
         
         if (currentFrameTime > expectedFrameTime * 1.5) {
             frameDropCount.incrementAndGet()
-            debugLogManager.log("PERFORMANCE_120HZ", "檢測到掉幀，當前刷新率: ${currentRefreshRate}Hz")
+            // Remove screen refresh log
         } else {
             highRefreshRateFrameCount.incrementAndGet()
         }
     }
     
     /**
-     * 設置當前刷新率
+     * Set current refresh rate
      */
     fun setCurrentRefreshRate(refreshRate: Float) {
         currentRefreshRate = refreshRate
-        debugLogManager.log("PERFORMANCE_120HZ", "刷新率設置為: ${refreshRate}Hz")
+        // Remove screen refresh log
     }
     
     /**
-     * 獲取效能統計
+     * Get performance statistics
      */
     fun getPerformanceStats(): PerformanceStats120Hz {
         return PerformanceStats120Hz(
@@ -145,14 +145,14 @@ class PerformanceMonitor120Hz @Inject constructor(
     }
     
     /**
-     * 檢查是否支援高刷新率
+     * Check if high refresh rate is supported
      */
     fun isHighRefreshRateSupported(): Boolean {
         return currentRefreshRate >= 120f
     }
     
     /**
-     * 獲取建議的動畫持續時間
+     * Get recommended animation duration
      */
     fun getRecommendedAnimationDuration(): Int {
         return if (isHighRefreshRateSupported()) {
@@ -164,7 +164,7 @@ class PerformanceMonitor120Hz @Inject constructor(
 }
 
 /**
- * 120Hz 效能統計數據
+ * 120Hz performance statistics data
  */
 data class PerformanceStats120Hz(
     val frameDropCount: Long,

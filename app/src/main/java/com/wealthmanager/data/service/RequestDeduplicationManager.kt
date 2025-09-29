@@ -8,8 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 智能請求去重管理器
- * 防止重複的 API 請求，提升效能
+ * Request deduplication manager
  */
 @Singleton
 class RequestDeduplicationManager @Inject constructor(
@@ -17,17 +16,12 @@ class RequestDeduplicationManager @Inject constructor(
 ) {
     
     companion object {
-        // Request deduplication time window (ms)
-        private const val DEDUPLICATION_WINDOW_MS = 30_000L // 30s
-        // Maximum concurrent requests
+        private const val DEDUPLICATION_WINDOW_MS = 30_000L
         private const val MAX_CONCURRENT_REQUESTS = 3
     }
     
-    // Ongoing requests
     private val ongoingRequests = ConcurrentHashMap<String, OngoingRequest>()
-    // Request mutex
     private val requestMutex = Mutex()
-    // Concurrent request counter
     private var concurrentRequestCount = 0
     
     /**
@@ -40,7 +34,7 @@ class RequestDeduplicationManager @Inject constructor(
     )
     
     /**
-     * 請求結果
+     * Request result
      */
     sealed class RequestResult<T> {
         data class Success<T>(val data: T) : RequestResult<T>()
@@ -49,7 +43,7 @@ class RequestDeduplicationManager @Inject constructor(
     }
     
     /**
-     * 執行去重請求
+     * Execute deduplicated request
      */
     suspend fun <T> executeDeduplicatedRequest(
         requestKey: String,
@@ -64,7 +58,7 @@ class RequestDeduplicationManager @Inject constructor(
             if (existingRequest != null) {
                 val timeSinceStart = System.currentTimeMillis() - existingRequest.startTime
                 if (timeSinceStart < DEDUPLICATION_WINDOW_MS) {
-                    debugLogManager.log("REQUEST_DEDUP", "重複請求被攔截: $requestKey (進行中: ${timeSinceStart}ms)")
+                    debugLogManager.log("REQUEST_DEDUP", "Duplicate request intercepted: $requestKey (in progress: ${timeSinceStart}ms)")
                     return RequestResult.Duplicate(existingRequest.requestId)
                 } else {
                     // Clean up expired requests
@@ -74,7 +68,7 @@ class RequestDeduplicationManager @Inject constructor(
             
             // Check concurrent request limit
             if (concurrentRequestCount >= MAX_CONCURRENT_REQUESTS) {
-                debugLogManager.logWarning("REQUEST_DEDUP", "達到最大並發請求限制: $concurrentRequestCount")
+                debugLogManager.logWarning("REQUEST_DEDUP", "Reached maximum concurrent request limit: $concurrentRequestCount")
                 return RequestResult.Failure(Exception("Too many concurrent requests"))
             }
             
@@ -83,33 +77,33 @@ class RequestDeduplicationManager @Inject constructor(
             ongoingRequests[requestKey] = newRequest
             concurrentRequestCount++
             
-            debugLogManager.log("REQUEST_DEDUP", "開始執行請求: $requestKey (ID: $requestId)")
+            debugLogManager.log("REQUEST_DEDUP", "Starting request execution: $requestKey (ID: $requestId)")
             
             try {
                 val result = operation()
-                debugLogManager.log("REQUEST_DEDUP", "請求成功完成: $requestKey")
+                debugLogManager.log("REQUEST_DEDUP", "Request completed successfully: $requestKey")
                 RequestResult.Success(result)
             } catch (e: Exception) {
-                debugLogManager.logError("請求失敗: $requestKey", e)
+                debugLogManager.logError("Request failed: $requestKey", e)
                 RequestResult.Failure(e)
             } finally {
                 // Clean up request records
                 ongoingRequests.remove(requestKey)
                 concurrentRequestCount--
-                debugLogManager.log("REQUEST_DEDUP", "請求清理完成: $requestKey")
+                debugLogManager.log("REQUEST_DEDUP", "Request cleanup completed: $requestKey")
             }
         }
     }
     
     /**
-     * 生成請求 ID
+     * Generate request ID
      */
     private fun generateRequestId(requestKey: String, requestType: String): String {
         return "${requestType}_${requestKey}_${System.currentTimeMillis()}"
     }
     
     /**
-     * 獲取當前統計
+     * Get current statistics
      */
     fun getStats(): RequestStats {
         return RequestStats(
@@ -120,7 +114,7 @@ class RequestDeduplicationManager @Inject constructor(
     }
     
     /**
-     * 清理過期請求
+     * Clean up expired requests
      */
     suspend fun cleanupExpiredRequests() {
         val currentTime = System.currentTimeMillis()
@@ -129,7 +123,7 @@ class RequestDeduplicationManager @Inject constructor(
         }
         
         if (expiredRequests.isNotEmpty()) {
-            debugLogManager.log("REQUEST_DEDUP", "清理過期請求: ${expiredRequests.size} 個")
+            debugLogManager.log("REQUEST_DEDUP", "Clean up expired requests: ${expiredRequests.size} items")
             expiredRequests.keys.forEach { key ->
                 ongoingRequests.remove(key)
                 concurrentRequestCount--
@@ -138,7 +132,7 @@ class RequestDeduplicationManager @Inject constructor(
     }
     
     /**
-     * 請求統計
+     * Request statistics
      */
     data class RequestStats(
         val ongoingRequests: Int,

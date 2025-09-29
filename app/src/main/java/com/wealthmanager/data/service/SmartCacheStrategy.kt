@@ -8,8 +8,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 智能快取策略管理器
- * 根據數據類型和訪問模式動態調整快取策略
+ * Smart cache strategy manager
  */
 @Singleton
 class SmartCacheStrategy @Inject constructor(
@@ -17,22 +16,15 @@ class SmartCacheStrategy @Inject constructor(
 ) {
     
     companion object {
-        // Cache strategy types
-        private const val AGGRESSIVE_CACHE_MS = 2 * 60 * 1000L // 2 minutes
-        private const val NORMAL_CACHE_MS = 5 * 60 * 1000L // 5 minutes
-        private const val CONSERVATIVE_CACHE_MS = 15 * 60 * 1000L // 15 minutes
-        
-        // Access frequency thresholds
-        private const val HIGH_FREQUENCY_THRESHOLD = 5 // 5 times/minute
-        private const val MEDIUM_FREQUENCY_THRESHOLD = 2 // 2 times/minute
+        private const val AGGRESSIVE_CACHE_MS = 2 * 60 * 1000L
+        private const val NORMAL_CACHE_MS = 5 * 60 * 1000L
+        private const val CONSERVATIVE_CACHE_MS = 15 * 60 * 1000L
+        private const val HIGH_FREQUENCY_THRESHOLD = 5
+        private const val MEDIUM_FREQUENCY_THRESHOLD = 2
     }
     
-    // Data access statistics
     private val accessStats = ConcurrentHashMap<String, DataAccessStats>()
     
-    /**
-     * Data access statistics
-     */
     data class DataAccessStats(
         val key: String,
         var accessCount: Int = 0,
@@ -61,7 +53,7 @@ class SmartCacheStrategy @Inject constructor(
     }
     
     /**
-     * 快取策略枚舉
+     * Cache strategy enumeration
      */
     enum class CacheStrategy {
         AGGRESSIVE,  // Aggressive cache - high frequency access
@@ -70,7 +62,7 @@ class SmartCacheStrategy @Inject constructor(
     }
     
     /**
-     * 獲取智能快取時間
+     * Get smart cache time
      */
     fun getCacheExpiryTime(key: String): Long {
         val stats = accessStats.getOrPut(key) { DataAccessStats(key) }
@@ -82,12 +74,12 @@ class SmartCacheStrategy @Inject constructor(
             CacheStrategy.CONSERVATIVE -> CONSERVATIVE_CACHE_MS
         }
         
-        debugLogManager.log("SMART_CACHE", "快取策略: $key -> ${stats.cacheStrategy} (${expiryTime}ms)")
+        debugLogManager.log("SMART_CACHE", "Cache strategy: $key -> ${stats.cacheStrategy} (${expiryTime}ms)")
         return expiryTime
     }
     
     /**
-     * 檢查是否應該使用快取
+     * Check if cache should be used
      */
     fun shouldUseCache(key: String, lastUpdateTime: Long): Boolean {
         val stats = accessStats[key] ?: return true
@@ -98,14 +90,14 @@ class SmartCacheStrategy @Inject constructor(
         val shouldCache = timeSinceUpdate < cacheExpiry
         
         if (!shouldCache) {
-            debugLogManager.log("SMART_CACHE", "快取過期: $key (${timeSinceUpdate}ms > ${cacheExpiry}ms)")
+            debugLogManager.log("SMART_CACHE", "Cache expired: $key (${timeSinceUpdate}ms > ${cacheExpiry}ms)")
         }
         
         return shouldCache
     }
     
     /**
-     * 預測數據需求
+     * Predict data requirements
      */
     fun predictDataNeed(key: String): Flow<Boolean> = flow {
         val stats = accessStats[key] ?: return@flow emit(false)
@@ -117,12 +109,12 @@ class SmartCacheStrategy @Inject constructor(
             else -> false
         }
         
-        debugLogManager.log("SMART_CACHE", "預測數據需求: $key -> $shouldPreload")
+        debugLogManager.log("SMART_CACHE", "Predict data requirements: $key -> $shouldPreload")
         emit(shouldPreload)
     }
     
     /**
-     * 獲取快取統計
+     * Get cache statistics
      */
     fun getCacheStats(): CacheStats {
         val totalKeys = accessStats.size
@@ -139,7 +131,7 @@ class SmartCacheStrategy @Inject constructor(
     }
     
     /**
-     * 清理舊的統計數據
+     * Clean up old statistics data
      */
     fun cleanupOldStats() {
         val currentTime = System.currentTimeMillis()
@@ -150,7 +142,7 @@ class SmartCacheStrategy @Inject constructor(
         }
         
         if (oldStats.isNotEmpty()) {
-            debugLogManager.log("SMART_CACHE", "清理舊統計數據: ${oldStats.size} 個")
+            debugLogManager.log("SMART_CACHE", "Clean up old statistics: ${oldStats.size} items")
             oldStats.keys.forEach { key ->
                 accessStats.remove(key)
             }
@@ -158,7 +150,7 @@ class SmartCacheStrategy @Inject constructor(
     }
     
     /**
-     * 快取統計
+     * Cache statistics
      */
     data class CacheStats(
         val totalKeys: Int,

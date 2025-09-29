@@ -8,6 +8,7 @@ import com.wealthmanager.data.service.ApiErrorHandler
 import com.wealthmanager.data.service.DataValidator
 import com.wealthmanager.data.service.RequestDeduplicationManager
 import com.wealthmanager.data.service.ApiRetryManager
+import com.wealthmanager.utils.NumberFormatter
 import com.wealthmanager.data.entity.ExchangeRate
 import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.data.model.SearchResult
@@ -32,35 +33,30 @@ class MarketDataService @Inject constructor(
     private val apiErrorHandler: ApiErrorHandler,
     private val dataValidator: DataValidator,
     private val requestDeduplicationManager: RequestDeduplicationManager,
-    private val apiRetryManager: ApiRetryManager
+    private val apiRetryManager: ApiRetryManager,
+    private val numberFormatter: NumberFormatter
 ) {
     
     
     suspend fun updateStockPrices() {
         try {
-            debugLogManager.log("MARKET_DATA", "Starting stock price update with API Provider Service")
-            
+            debugLogManager.log("MARKET_DATA", "Starting stock price update")
             val stockAssets = assetRepository.getAllStockAssets().first()
-            debugLogManager.log("MARKET_DATA", "Found ${stockAssets.size} stock assets to update")
             
             if (stockAssets.isEmpty()) {
-                debugLogManager.log("MARKET_DATA", "No stock assets to update, skipping stock price update")
+                debugLogManager.log("MARKET_DATA", "No stock assets to update")
                 return
             }
             
             for (stock in stockAssets) {
                 try {
-                    debugLogManager.log("MARKET_DATA", "Updating ${stock.symbol} (${stock.market} market)")
-                    
                     val result = apiRetryManager.executeWithFallback(
                         operation = {
-                            debugLogManager.log("MARKET_DATA", "API Provider Request - Symbol: ${stock.symbol}")
-                            
                             val quoteResult = apiProviderService.getStockQuote(stock.symbol)
                             
                             if (quoteResult.isSuccess) {
                                 val quoteData = quoteResult.getOrThrow()
-                                debugLogManager.log("MARKET_DATA", "Quote data for ${stock.symbol}: price=${quoteData.price} (Provider: ${quoteData.provider})")
+                                debugLogManager.log("MARKET_DATA", "Quote data for ${stock.symbol}: price=${quoteData.price}")
                                 quoteData
                             } else {
                                 throw Exception("API Provider failed: ${quoteResult.exceptionOrNull()?.message}")
@@ -68,11 +64,8 @@ class MarketDataService @Inject constructor(
                         },
                         fallbackOperation = {
                             debugLogManager.logWarning("MARKET_DATA", "API Provider failed for ${stock.symbol}, using cached data")
-                            // Use cached data as fallback strategy
                             val cachedStock = runBlocking { assetRepository.getStockAssetSync(stock.symbol) }
                             if (cachedStock != null) {
-                                debugLogManager.logWarning("MARKET_DATA", "Using cached data for ${stock.symbol}")
-                                // Return a simulated StockQuoteData object
                                 StockQuoteData(
                                     symbol = stock.symbol,
                                     price = cachedStock.currentPrice,
@@ -96,9 +89,7 @@ class MarketDataService @Inject constructor(
                         val quoteData = result.getOrThrow() as StockQuoteData
                         val price = quoteData.price
                         
-                        // Determine currency based on stock code
                         val currency = if (isTaiwanStock(stock.symbol)) "TWD" else "USD"
-                        debugLogManager.log("MARKET_DATA", "Stock ${stock.symbol} currency: $currency")
                         
                         val twdEquivalent = calculateTwdEquivalent(price, stock.shares, currency)
                         
@@ -108,18 +99,17 @@ class MarketDataService @Inject constructor(
                             lastUpdated = System.currentTimeMillis()
                         )
                         
-                        // Validate updated stock data
                         val validationResult = dataValidator.validateStockData(updatedStock)
                         if (validationResult is DataValidator.ValidationResult.Valid) {
                             assetRepository.updateStockAsset(updatedStock)
-                            debugLogManager.log("MARKET_DATA", "Updated ${stock.symbol}: Price=$price, TWD=$twdEquivalent (Provider: ${quoteData.provider})")
+                            debugLogManager.log("MARKET_DATA", "Updated ${stock.symbol}: Price=$price, TWD=$twdEquivalent")
                         } else {
                             val errorReason = if (validationResult is DataValidator.ValidationResult.Invalid) {
                                 validationResult.reason
                             } else {
-                                "未知驗證錯誤"
+                                "Unknown validation error"
                             }
-                            debugLogManager.logWarning("MARKET_DATA", "股票資料驗證失敗: $errorReason")
+                            debugLogManager.logWarning("MARKET_DATA", "Stock data validation failed: $errorReason")
                         }
                     } else {
                         debugLogManager.log("MARKET_DATA", "Failed to update ${stock.symbol}, keeping existing price")
@@ -130,19 +120,14 @@ class MarketDataService @Inject constructor(
                 }
             }
             
-            debugLogManager.log("MARKET_DATA", "Stock price update completed for ${stockAssets.size} stocks")
+            debugLogManager.log("MARKET_DATA", "Stock price update completed")
             
         } catch (e: Exception) {
             debugLogManager.logError("Failed to update stock prices: ${e.message}", e)
         }
     }
     
-    /**
-     * 驗證 API 回應
-     */
     private fun validateApiResponse(response: Any, symbol: String) {
-        // This needs to be implemented based on actual API response type
-        // Temporarily using reflection to check error messages
         try {
             val responseClass = response::class.java
             val errorMessageField = responseClass.getDeclaredField("errorMessage")
@@ -169,12 +154,7 @@ class MarketDataService @Inject constructor(
         }
     }
     
-    /**
-     * 創建模擬的 GlobalQuote 物件（用於降級策略）
-     */
     private fun createMockGlobalQuote(stock: StockAsset): Any {
-        // This needs to be implemented based on actual GlobalQuote class
-        // Temporarily return an object containing cached data
         return object {
             val price = stock.currentPrice.toString()
             val change = "0.00"
@@ -187,9 +167,6 @@ class MarketDataService @Inject constructor(
         }
     }
     
-    /**
-     * 創建模擬的 ExchangeRate 物件（用於降級策略）
-     */
     private fun createMockExchangeRate(cachedRate: ExchangeRate): Any {
         return object {
             val exchangeRate = cachedRate.rate.toString()
@@ -201,17 +178,15 @@ class MarketDataService @Inject constructor(
     
     suspend fun updateExchangeRates() {
         try {
-            debugLogManager.log("MARKET_DATA", "Starting exchange rate update with API Provider Service")
+            debugLogManager.log("MARKET_DATA", "Starting exchange rate update")
             
             val result = apiRetryManager.executeWithFallback(
                 operation = {
-                    debugLogManager.log("MARKET_DATA", "API Provider Request - Exchange Rate: USD to TWD")
-                    
                     val rateResult = apiProviderService.getExchangeRate("USD", "TWD")
                     
                     if (rateResult.isSuccess) {
                         val rateData = rateResult.getOrThrow()
-                        debugLogManager.log("MARKET_DATA", "Exchange rate data: USD/TWD = ${rateData.rate} (Provider: ${rateData.provider})")
+                        debugLogManager.log("MARKET_DATA", "Exchange rate data: USD/TWD = ${rateData.rate}")
                         rateData
                     } else {
                         throw Exception("API Provider failed: ${rateResult.exceptionOrNull()?.message}")
@@ -219,11 +194,8 @@ class MarketDataService @Inject constructor(
                 },
                 fallbackOperation = {
                     debugLogManager.logWarning("MARKET_DATA", "API Provider failed for exchange rate, using cached data")
-                    // Use cached data as fallback strategy
                     val cachedRate = runBlocking { assetRepository.getExchangeRateSync("USD_TWD") }
                     if (cachedRate != null) {
-                        debugLogManager.logWarning("MARKET_DATA", "Using cached exchange rate: ${cachedRate.rate}")
-                        // Return a simulated ExchangeRateData object
                         ExchangeRateData(
                             fromCurrency = "USD",
                             toCurrency = "TWD",
@@ -246,13 +218,12 @@ class MarketDataService @Inject constructor(
                 )
                 
                 assetRepository.insertExchangeRate(exchangeRate)
-                debugLogManager.log("MARKET_DATA", "Exchange rate updated: USD/TWD = ${rateData.rate} (Provider: ${rateData.provider})")
+                debugLogManager.log("MARKET_DATA", "Exchange rate updated: USD/TWD = ${rateData.rate}")
             } else {
-                // Fallback to cached data
                 debugLogManager.logWarning("MARKET_DATA", "API Provider failed, using cached exchange rate")
                 val cachedRate = runBlocking { assetRepository.getExchangeRateSync("USD_TWD") }
                 if (cachedRate != null) {
-                    debugLogManager.logWarning("MARKET_DATA", "Using cached rate: ${cachedRate.rate} (last updated: ${cachedRate.lastUpdated})")
+                    debugLogManager.logWarning("MARKET_DATA", "Using cached rate: ${cachedRate.rate}")
                 } else {
                     debugLogManager.logWarning("MARKET_DATA", "No cached rate available, using default 30.0")
                 }
@@ -260,7 +231,6 @@ class MarketDataService @Inject constructor(
             
         } catch (e: Exception) {
             debugLogManager.logError("Failed to update exchange rates: ${e.message}", e)
-            // Try to use cached data as fallback
             val cachedRate = runBlocking { assetRepository.getExchangeRateSync("USD_TWD") }
             if (cachedRate != null) {
                 debugLogManager.logWarning("MARKET_DATA", "Using cached exchange rate as fallback: ${cachedRate.rate}")
@@ -272,14 +242,11 @@ class MarketDataService @Inject constructor(
         try {
             debugLogManager.logMarketData("SEARCH", "Searching stocks: '$query' in market: '$market'")
             
-            // Check if query is valid
             if (query.isBlank() || query.length < 2) {
                 debugLogManager.logWarning("Invalid search query: '$query'", "MARKET_DATA")
                 emit(SearchResult.NoResults(NoResultsReason.INVALID_QUERY))
                 return@flow
             }
-            
-            // Use API provider service for search
             apiProviderService.searchStocks(query, market).collect { result ->
                 emit(result)
             }
@@ -291,9 +258,6 @@ class MarketDataService @Inject constructor(
         }
     }
     
-    /**
-     * 分析 API 錯誤訊息
-     */
     private fun analyzeApiErrorMessage(errorMessage: String): SearchErrorType {
         return when {
             errorMessage.contains("limit", ignoreCase = true) || 
@@ -317,9 +281,6 @@ class MarketDataService @Inject constructor(
         }
     }
     
-    /**
-     * 分析 API 注意事項
-     */
     private fun analyzeApiNote(note: String): SearchErrorType {
         return when {
             note.contains("limit", ignoreCase = true) ||
@@ -337,9 +298,6 @@ class MarketDataService @Inject constructor(
         }
     }
     
-    /**
-     * 分析例外錯誤
-     */
     private fun analyzeException(exception: Exception): SearchErrorType {
         return when (exception) {
             is java.net.UnknownHostException,
@@ -364,10 +322,9 @@ class MarketDataService @Inject constructor(
             val timeZone = java.util.TimeZone.getTimeZone(timezone)
             val hour = timeZone.getOffset(currentTime) / (1000 * 60 * 60)
             
-            // Simple market state determination based on timezone
             when {
                 timezone.contains("America") -> {
-                    val localHour = (hour + 8) % 24 // Convert to local time
+                    val localHour = (hour + 8) % 24
                     if (localHour in 9..16) "OPEN" else "CLOSED"
                 }
                 timezone.contains("Europe") -> {
@@ -388,28 +345,18 @@ class MarketDataService @Inject constructor(
     
     private suspend fun calculateTwdEquivalent(
         price: Double,
-        shares: Int,
+        shares: Double,
         currency: String
     ): Double {
-        debugLogManager.log("MARKET_DATA", "Calculating TWD equivalent: $price * $shares in $currency")
-        
         return if (currency == "TWD") {
-            val result = price * shares
-            debugLogManager.log("MARKET_DATA", "TWD calculation: $result (already in TWD)")
-            result
+            price * shares
         } else {
-            // Get USD to TWD exchange rate
             val exchangeRate = runBlocking { assetRepository.getExchangeRateSync("USD_TWD") }
             val rate = exchangeRate?.rate ?: 30.0
-            val result = price * shares * rate
-            debugLogManager.log("MARKET_DATA", "USD calculation: $result (rate: $rate)")
-            result
+            price * shares * rate
         }
     }
     
-    /**
-     * 判斷是否為台股
-     */
     private fun isTaiwanStock(symbol: String): Boolean {
         return symbol.endsWith(".TW", ignoreCase = true) ||
                symbol.endsWith(".T", ignoreCase = true) ||

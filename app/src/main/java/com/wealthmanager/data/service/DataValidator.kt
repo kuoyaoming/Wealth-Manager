@@ -7,95 +7,89 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 資料驗證和清理服務
+ * Data validation service
  */
 @Singleton
 class DataValidator @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
     
-    /**
-     * 驗證結果
-     */
     sealed class ValidationResult {
         object Valid : ValidationResult()
         data class Invalid(val reason: String) : ValidationResult()
     }
     
-    /**
-     * 驗證股票資料
-     */
     fun validateStockData(stock: StockAsset): ValidationResult {
         return when {
             stock.symbol.isBlank() -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "股票代碼為空")
-                ValidationResult.Invalid("股票代碼不能為空")
+                debugLogManager.logWarning("DATA_VALIDATION", "Stock symbol is empty")
+                ValidationResult.Invalid("Stock symbol cannot be empty")
             }
             stock.symbol.length < 1 || stock.symbol.length > 10 -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "股票代碼長度異常: ${stock.symbol}")
-                ValidationResult.Invalid("股票代碼長度必須在1-10個字元之間")
+                debugLogManager.logWarning("DATA_VALIDATION", "Stock symbol length abnormal: ${stock.symbol}")
+                ValidationResult.Invalid("Stock symbol length must be between 1-10 characters")
             }
             stock.currentPrice <= 0 -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "股票價格異常: ${stock.currentPrice}")
-                ValidationResult.Invalid("股票價格必須大於0")
+                debugLogManager.logWarning("DATA_VALIDATION", "Stock price abnormal: ${stock.currentPrice}")
+                ValidationResult.Invalid("Stock price must be greater than 0")
             }
             stock.currentPrice > 1000000 -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "股票價格過高: ${stock.currentPrice}")
-                ValidationResult.Invalid("股票價格異常高，請檢查資料")
+                debugLogManager.logWarning("DATA_VALIDATION", "Stock price too high: ${stock.currentPrice}")
+                ValidationResult.Invalid("Stock price abnormally high, please check data")
             }
             stock.lastUpdated <= 0 -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "更新時間異常: ${stock.lastUpdated}")
-                ValidationResult.Invalid("更新時間異常")
+                debugLogManager.logWarning("DATA_VALIDATION", "Update time abnormal: ${stock.lastUpdated}")
+                ValidationResult.Invalid("Update time abnormal")
             }
             stock.lastUpdated > System.currentTimeMillis() + 60000 -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "更新時間在未來: ${stock.lastUpdated}")
-                ValidationResult.Invalid("更新時間不能是未來時間")
+                debugLogManager.logWarning("DATA_VALIDATION", "Update time in future: ${stock.lastUpdated}")
+                ValidationResult.Invalid("Update time cannot be in the future")
             }
             else -> {
-                debugLogManager.log("DATA_VALIDATION", "股票資料驗證通過: ${stock.symbol}")
+                debugLogManager.log("DATA_VALIDATION", "Stock data validation passed: ${stock.symbol}")
                 ValidationResult.Valid
             }
         }
     }
     
     /**
-     * 驗證匯率資料
+     * Validate exchange rate data
      */
     fun validateExchangeRateData(exchangeRate: ExchangeRate): ValidationResult {
         return when {
             exchangeRate.currencyPair.isBlank() -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "貨幣對為空")
-                ValidationResult.Invalid("貨幣對不能為空")
+                debugLogManager.logWarning("DATA_VALIDATION", "Currency pair is empty")
+                ValidationResult.Invalid("Currency pair cannot be empty")
             }
             !exchangeRate.currencyPair.contains("_") -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "貨幣對格式錯誤: ${exchangeRate.currencyPair}")
-                ValidationResult.Invalid("貨幣對格式必須為 'FROM_TO'")
+                debugLogManager.logWarning("DATA_VALIDATION", "Currency pair format error: ${exchangeRate.currencyPair}")
+                ValidationResult.Invalid("Currency pair format must be 'FROM_TO'")
             }
             exchangeRate.rate <= 0 -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "匯率異常: ${exchangeRate.rate}")
-                ValidationResult.Invalid("匯率必須大於0")
+                debugLogManager.logWarning("DATA_VALIDATION", "Exchange rate abnormal: ${exchangeRate.rate}")
+                ValidationResult.Invalid("Exchange rate must be greater than 0")
             }
             exchangeRate.rate > 1000 -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "匯率過高: ${exchangeRate.rate}")
-                ValidationResult.Invalid("匯率異常高，請檢查資料")
+                debugLogManager.logWarning("DATA_VALIDATION", "Exchange rate too high: ${exchangeRate.rate}")
+                ValidationResult.Invalid("Exchange rate abnormally high, please check data")
             }
             exchangeRate.lastUpdated <= 0 -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "更新時間異常: ${exchangeRate.lastUpdated}")
-                ValidationResult.Invalid("更新時間異常")
+                debugLogManager.logWarning("DATA_VALIDATION", "Update time abnormal: ${exchangeRate.lastUpdated}")
+                ValidationResult.Invalid("Update time abnormal")
             }
             exchangeRate.lastUpdated > System.currentTimeMillis() + 60000 -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "更新時間在未來: ${exchangeRate.lastUpdated}")
-                ValidationResult.Invalid("更新時間不能是未來時間")
+                debugLogManager.logWarning("DATA_VALIDATION", "Update time in future: ${exchangeRate.lastUpdated}")
+                ValidationResult.Invalid("Update time cannot be in the future")
             }
             else -> {
-                debugLogManager.log("DATA_VALIDATION", "匯率資料驗證通過: ${exchangeRate.currencyPair}")
+                debugLogManager.log("DATA_VALIDATION", "Exchange rate data validation passed: ${exchangeRate.currencyPair}")
                 ValidationResult.Valid
             }
         }
     }
     
     /**
-     * 清理和標準化股票代碼
+     * Clean and standardize stock symbol
      */
     fun sanitizeStockSymbol(symbol: String): String {
         return symbol
@@ -106,7 +100,7 @@ class DataValidator @Inject constructor(
     }
     
     /**
-     * 清理和標準化價格資料
+     * Clean and standardize price data
      */
     fun sanitizePrice(price: String): Double? {
         return try {
@@ -116,25 +110,25 @@ class DataValidator @Inject constructor(
                 .trim()
             
             if (cleanedPrice.isBlank()) {
-                debugLogManager.logWarning("DATA_VALIDATION", "價格字串為空")
+                debugLogManager.logWarning("DATA_VALIDATION", "Price string is empty")
                 null
             } else {
                 val parsedPrice = cleanedPrice.toDouble()
                 if (parsedPrice.isNaN() || parsedPrice.isInfinite()) {
-                    debugLogManager.logWarning("DATA_VALIDATION", "價格解析失敗: $price")
+                    debugLogManager.logWarning("DATA_VALIDATION", "Price parsing failed: $price")
                     null
                 } else {
                     parsedPrice
                 }
             }
         } catch (e: Exception) {
-            debugLogManager.logWarning("DATA_VALIDATION", "價格清理失敗: $price - ${e.message}")
+            debugLogManager.logWarning("DATA_VALIDATION", "Price cleanup failed: $price - ${e.message}")
             null
         }
     }
     
     /**
-     * 清理和標準化匯率資料
+     * Clean and standardize exchange rate data
      */
     fun sanitizeExchangeRate(rate: String): Double? {
         return try {
@@ -144,64 +138,64 @@ class DataValidator @Inject constructor(
                 .trim()
             
             if (cleanedRate.isBlank()) {
-                debugLogManager.logWarning("DATA_VALIDATION", "匯率字串為空")
+                debugLogManager.logWarning("DATA_VALIDATION", "Exchange rate string is empty")
                 null
             } else {
                 val parsedRate = cleanedRate.toDouble()
                 if (parsedRate.isNaN() || parsedRate.isInfinite()) {
-                    debugLogManager.logWarning("DATA_VALIDATION", "匯率解析失敗: $rate")
+                    debugLogManager.logWarning("DATA_VALIDATION", "Exchange rate parsing failed: $rate")
                     null
                 } else {
                     parsedRate
                 }
             }
         } catch (e: Exception) {
-            debugLogManager.logWarning("DATA_VALIDATION", "匯率清理失敗: $rate - ${e.message}")
+            debugLogManager.logWarning("DATA_VALIDATION", "Exchange rate cleanup failed: $rate - ${e.message}")
             null
         }
     }
     
     /**
-     * 驗證 API 回應資料
+     * Validate API response data
      */
     fun validateApiResponse(response: String, dataType: String): ValidationResult {
         return when {
             response.isBlank() -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "$dataType API 回應為空")
-                ValidationResult.Invalid("API 回應為空")
+                debugLogManager.logWarning("DATA_VALIDATION", "$dataType API response is empty")
+                ValidationResult.Invalid("API response is empty")
             }
             response.length > 100000 -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "$dataType API 回應過大: ${response.length}")
-                ValidationResult.Invalid("API 回應過大")
+                debugLogManager.logWarning("DATA_VALIDATION", "$dataType API response too large: ${response.length}")
+                ValidationResult.Invalid("API response too large")
             }
             response.contains("\u0000") -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "$dataType API 回應包含 null 字元")
-                ValidationResult.Invalid("API 回應包含無效字元")
+                debugLogManager.logWarning("DATA_VALIDATION", "$dataType API response contains null characters")
+                ValidationResult.Invalid("API response contains invalid characters")
             }
             response.contains("error") && response.contains("message") -> {
-                debugLogManager.logWarning("DATA_VALIDATION", "$dataType API 回應包含錯誤訊息")
-                ValidationResult.Invalid("API 回應包含錯誤")
+                debugLogManager.logWarning("DATA_VALIDATION", "$dataType API response contains error message")
+                ValidationResult.Invalid("API response contains error")
             }
             else -> {
-                debugLogManager.log("DATA_VALIDATION", "$dataType API 回應驗證通過")
+                debugLogManager.log("DATA_VALIDATION", "$dataType API response validation passed")
                 ValidationResult.Valid
             }
         }
     }
     
     /**
-     * 檢查資料是否過期
+     * Check if data is stale
      */
     fun isDataStale(lastUpdated: Long, maxAgeMs: Long = 5 * 60 * 1000L): Boolean {
         val isStale = System.currentTimeMillis() - lastUpdated > maxAgeMs
         if (isStale) {
-            debugLogManager.logWarning("DATA_VALIDATION", "資料已過期: ${(System.currentTimeMillis() - lastUpdated) / 1000}秒前更新")
+            debugLogManager.logWarning("DATA_VALIDATION", "Data is stale: updated ${(System.currentTimeMillis() - lastUpdated) / 1000} seconds ago")
         }
         return isStale
     }
     
     /**
-     * 獲取資料品質評分
+     * Get data quality score
      */
     fun getDataQualityScore(stock: StockAsset): Int {
         var score = 100
@@ -227,12 +221,12 @@ class DataValidator @Inject constructor(
     }
     
     /**
-     * 記錄驗證統計
+     * Log validation statistics
      */
     fun logValidationStats(validCount: Int, invalidCount: Int, dataType: String) {
         val total = validCount + invalidCount
         val validPercent = if (total > 0) (validCount.toFloat() / total * 100) else 0f
         
-        debugLogManager.log("DATA_VALIDATION", "$dataType 驗證統計: 有效=$validCount, 無效=$invalidCount, 有效率=${validPercent.toInt()}%")
+        debugLogManager.log("DATA_VALIDATION", "$dataType validation stats: valid=$validCount, invalid=$invalidCount, validity rate=${validPercent.toInt()}%")
     }
 }

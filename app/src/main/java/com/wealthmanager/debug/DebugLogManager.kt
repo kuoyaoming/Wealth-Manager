@@ -16,9 +16,8 @@ class DebugLogManager @Inject constructor() {
     private val logs = mutableListOf<String>()
     private val dateFormat = SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault())
     
-    // Control detailed logging switches
     private val isVerboseLoggingEnabled = BuildConfig.DEBUG
-    private val isMarketDataVerboseEnabled = false // Default off for market data detailed logging
+    private val isMarketDataVerboseEnabled = false
     
     fun log(tag: String, message: String) {
         if (!isVerboseLoggingEnabled) return
@@ -28,7 +27,6 @@ class DebugLogManager @Inject constructor() {
         logs.add(logEntry)
         Log.d("WealthManagerDebug", logEntry)
         
-        // Keep only last 1000 logs to prevent memory issues
         if (logs.size > 1000) {
             logs.removeAt(0)
         }
@@ -45,9 +43,6 @@ class DebugLogManager @Inject constructor() {
         }
     }
     
-    /**
-     * 專門用於市場數據的 logging，減少詳細記錄
-     */
     fun logMarketData(action: String, message: String) {
         val timestamp = dateFormat.format(Date())
         val logEntry = "[$timestamp] MARKET_DATA: $action - $message"
@@ -59,9 +54,6 @@ class DebugLogManager @Inject constructor() {
         }
     }
     
-    /**
-     * 詳細的市場數據 logging（僅在需要時啟用）
-     */
     fun logMarketDataVerbose(action: String, message: String) {
         if (!isMarketDataVerboseEnabled) return
         
@@ -109,7 +101,6 @@ class DebugLogManager @Inject constructor() {
         logError("ERROR", error)
         throwable?.let {
             logError("ERROR", "Exception: ${it.message}")
-            // Only log full stack trace in debug builds
             if (isDebugBuild()) {
                 logError("ERROR", "Stack trace: ${it.stackTraceToString()}")
             } else {

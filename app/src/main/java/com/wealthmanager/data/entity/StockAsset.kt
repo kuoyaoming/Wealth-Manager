@@ -10,7 +10,7 @@ data class StockAsset(
     val id: String = UUID.randomUUID().toString(),
     val symbol: String, // e.g., "AAPL", "2330.TW"
     val companyName: String,
-    val shares: Int,
+    val shares: Double, // Support fractional shares
     val market: String, // "GLOBAL" for all stocks
     val currentPrice: Double = 0.0,
     val originalCurrency: String = "USD", // Default to USD for global stocks

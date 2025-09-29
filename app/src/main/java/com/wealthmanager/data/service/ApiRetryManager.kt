@@ -67,7 +67,7 @@ class ApiRetryManager @Inject constructor(
     }
     
     /**
-     * 智能延遲計算
+     * Smart delay calculation
      */
     private fun calculateSmartDelay(
         attempt: Int, 
@@ -96,7 +96,7 @@ class ApiRetryManager @Inject constructor(
     }
     
     /**
-     * 執行帶有降級策略的操作
+     * Execute operation with fallback strategy
      */
     suspend fun <T> executeWithFallback(
         operation: suspend () -> T,

@@ -11,8 +11,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
 /**
- * 響應式佈局管理器
- * 根據螢幕尺寸和方向動態調整佈局參數
+ * Responsive layout manager
+ * Dynamically adjust layout parameters based on screen size and orientation
  */
 @Composable
 fun rememberResponsiveLayout(): ResponsiveLayout {
@@ -110,7 +110,7 @@ data class ResponsiveLayout(
 }
 
 /**
- * 響應式卡片容器
+ * Responsive card container
  */
 @Composable
 fun ResponsiveCard(
@@ -133,7 +133,7 @@ fun ResponsiveCard(
 }
 
 /**
- * 響應式間距
+ * Responsive spacing
  */
 @Composable
 fun ResponsiveSpacer(
@@ -155,7 +155,7 @@ enum class ResponsiveSpacerSize {
 }
 
 /**
- * 響應式網格佈局
+ * Responsive grid layout
  */
 @Composable
 fun ResponsiveGrid(

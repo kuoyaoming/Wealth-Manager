@@ -158,8 +158,8 @@ fun EditStockAssetDialog(
                     },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     placeholder = { Text("Enter shares") },
-                    isError = shares.isNotEmpty() && shares.toIntOrNull() == null,
-                    supportingText = if (shares.isNotEmpty() && shares.toIntOrNull() == null) {
+                    isError = shares.isNotEmpty() && shares.toDoubleOrNull() == null,
+                    supportingText = if (shares.isNotEmpty() && shares.toDoubleOrNull() == null) {
                         { Text("Please enter a valid number of shares", color = MaterialTheme.colorScheme.error) }
                     } else null,
                     modifier = Modifier.fillMaxWidth()
@@ -170,7 +170,7 @@ fun EditStockAssetDialog(
             TextButton(
                 onClick = {
                     debugLogManager.logUserAction("Save Stock Asset Changes")
-                    val newShares = shares.toIntOrNull()
+                    val newShares = shares.toDoubleOrNull()
                     if (newShares != null && newShares > 0) {
                         val updatedAsset = asset.copy(
                             shares = newShares,

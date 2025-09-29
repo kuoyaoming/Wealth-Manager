@@ -8,13 +8,13 @@ import com.wealthmanager.data.model.NoResultsReason
 import com.wealthmanager.data.model.SearchErrorType
 
 /**
- * 搜索結果處理器
- * 提供統一的搜索結果處理邏輯
+ * Search result handler
+ * Provides unified search result processing logic
  */
 object SearchResultHandler {
     
     /**
-     * 獲取搜索結果的使用者友善訊息
+     * Get user-friendly message for search results
      */
     @Composable
     fun getSearchResultMessage(searchResult: SearchResult): String {
@@ -23,7 +23,7 @@ object SearchResultHandler {
                 if (searchResult.results.isEmpty()) {
                     stringResource(R.string.search_error_stock_not_found)
                 } else {
-                    "找到 ${searchResult.results.size} 個結果"
+                    "Found ${searchResult.results.size} results"
                 }
             }
             is SearchResult.NoResults -> {
@@ -48,7 +48,7 @@ object SearchResultHandler {
     }
     
     /**
-     * 檢查是否為錯誤狀態
+     * Check if it's an error state
      */
     fun isErrorState(searchResult: SearchResult): Boolean {
         return when (searchResult) {
@@ -59,7 +59,7 @@ object SearchResultHandler {
     }
     
     /**
-     * 檢查是否為 API 限制錯誤
+     * Check if it's an API limit error
      */
     fun isApiLimitError(searchResult: SearchResult): Boolean {
         return when (searchResult) {
@@ -70,7 +70,7 @@ object SearchResultHandler {
     }
     
     /**
-     * 檢查是否為股票不存在錯誤
+     * Check if it's a stock not found error
      */
     fun isStockNotFoundError(searchResult: SearchResult): Boolean {
         return when (searchResult) {
@@ -81,7 +81,7 @@ object SearchResultHandler {
     }
     
     /**
-     * 獲取搜索結果列表
+     * Get search results list
      */
     fun getSearchResults(searchResult: SearchResult): List<com.wealthmanager.data.model.StockSearchItem> {
         return when (searchResult) {

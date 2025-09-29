@@ -17,6 +17,8 @@ import com.wealthmanager.data.service.SmartCacheStrategy
 import com.wealthmanager.data.service.PerformanceMonitor120Hz
 import com.wealthmanager.data.service.ApiProviderService
 import com.wealthmanager.data.repository.AssetRepository
+import com.wealthmanager.utils.NumberFormatter
+import com.wealthmanager.data.service.TwseCacheManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -136,6 +138,12 @@ object NetworkModule {
     
     @Provides
     @Singleton
+    fun provideNumberFormatter(): NumberFormatter {
+        return NumberFormatter()
+    }
+    
+    @Provides
+    @Singleton
     fun providePerformanceMonitor120Hz(debugLogManager: com.wealthmanager.debug.DebugLogManager): PerformanceMonitor120Hz {
         return PerformanceMonitor120Hz(debugLogManager)
     }
@@ -183,14 +191,23 @@ object NetworkModule {
     
     @Provides
     @Singleton
+    fun provideTwseCacheManager(
+        debugLogManager: com.wealthmanager.debug.DebugLogManager
+    ): TwseCacheManager {
+        return TwseCacheManager(debugLogManager)
+    }
+
+    @Provides
+    @Singleton
     fun provideApiProviderService(
         finnhubApi: FinnhubApi,
         twseApi: TwseApi,
         exchangeRateApi: ExchangeRateApi,
         twseDataParser: TwseDataParser,
+        twseCacheManager: TwseCacheManager,
         debugLogManager: com.wealthmanager.debug.DebugLogManager
     ): ApiProviderService {
-        return ApiProviderService(finnhubApi, twseApi, exchangeRateApi, twseDataParser, debugLogManager)
+        return ApiProviderService(finnhubApi, twseApi, exchangeRateApi, twseDataParser, twseCacheManager, debugLogManager)
     }
     
     @Provides
@@ -203,7 +220,8 @@ object NetworkModule {
         apiErrorHandler: ApiErrorHandler,
         dataValidator: DataValidator,
         requestDeduplicationManager: RequestDeduplicationManager,
-        apiRetryManager: ApiRetryManager
+        apiRetryManager: ApiRetryManager,
+        numberFormatter: NumberFormatter
     ): MarketDataService {
         return MarketDataService(
             apiProviderService,
@@ -213,7 +231,8 @@ object NetworkModule {
             apiErrorHandler,
             dataValidator,
             requestDeduplicationManager,
-            apiRetryManager
+            apiRetryManager,
+            numberFormatter
         )
     }
     
