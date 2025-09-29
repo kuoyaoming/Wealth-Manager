@@ -15,6 +15,28 @@
 - ⚡ **性能監控** - 即時性能追蹤和優化
 - 🗄️ **智能快取** - 智能快取管理，離線支援
 
+## 📱 應用程式截圖
+
+### 投資組合概覽
+![投資組合概覽](docs/screenshots/portfolio-overview.png)
+*完整的投資組合概覽，包含資產分佈圖表和即時估值*
+
+### 資產管理
+![資產管理](docs/screenshots/asset-management.png)
+*直觀的現金和股票資產管理介面*
+
+### 生物識別認證
+![生物識別認證](docs/screenshots/biometric-auth.png)
+*安全的生物識別認證，包含隱私保護說明*
+
+### 新增資產
+![新增資產](docs/screenshots/add-assets.png)
+*智能資產新增功能，支援即時股票搜尋和代碼查詢*
+
+### 關於與隱私
+![關於 Wealth Manager](docs/screenshots/about-app.png)
+*透明的隱私政策和第三方 API 使用資訊*
+
 ## 安全特性
 
 - **本地儲存** - 所有數據加密儲存在裝置上

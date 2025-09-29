@@ -1,5 +1,6 @@
 package com.wealthmanager
 
+import android.content.ComponentCallbacks2
 import android.os.Bundle
 import android.util.Log
 import android.view.MotionEvent
@@ -146,16 +147,25 @@ class MainActivity : FragmentActivity() {
         Log.d("MainActivity", "onTrimMemory called with level: $level")
         
         when (level) {
-            TRIM_MEMORY_RUNNING_CRITICAL -> {
-                Log.w("MainActivity", "Critical memory pressure - trigger emergency cleanup")
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE -> {
+                Log.w("MainActivity", "Memory pressure detected - level: $level")
+                // Trigger garbage collection for memory cleanup
                 System.gc()
             }
-            TRIM_MEMORY_RUNNING_LOW -> {
-                Log.w("MainActivity", "Low memory pressure - trigger cleanup")
-                System.gc()
+            ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
+                Log.d("MainActivity", "UI hidden - release non-essential resources")
             }
-            TRIM_MEMORY_RUNNING_MODERATE -> {
+            ComponentCallbacks2.TRIM_MEMORY_BACKGROUND -> {
+                Log.d("MainActivity", "App moved to background - release resources")
+            }
+            ComponentCallbacks2.TRIM_MEMORY_MODERATE -> {
                 Log.d("MainActivity", "Moderate memory pressure")
+            }
+            ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> {
+                Log.w("MainActivity", "Complete memory pressure - release all non-essential resources")
+                System.gc()
             }
         }
     }

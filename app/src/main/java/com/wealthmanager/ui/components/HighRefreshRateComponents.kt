@@ -306,17 +306,17 @@ fun <T> rememberHighRefreshRatePageTransition(
         }
     }
     
-    val offsetX by animateFloatAsState(
-        targetValue = if (currentPage == targetPage) 0f else 300f,
-        animationSpec = HighRefreshRateAnimations.mediumTween(),
-        label = "page_offset"
-    )
+    // val offsetX by animateFloatAsState(
+    //     targetValue = if (currentPage == targetPage) 0f else 300f,
+    //     animationSpec = HighRefreshRateAnimations.mediumTween(),
+    //     label = "page_offset"
+    // )
     
-    val alpha by animateFloatAsState(
-        targetValue = if (currentPage == targetPage) 1.0f else 0.0f,
-        animationSpec = HighRefreshRateAnimations.fastTween(),
-        label = "page_alpha"
-    )
+    // val alpha by animateFloatAsState(
+    //     targetValue = if (currentPage == targetPage) 1.0f else 0.0f,
+    //     animationSpec = HighRefreshRateAnimations.fastTween(),
+    //     label = "page_alpha"
+    // )
     
     content(currentPage)
 }

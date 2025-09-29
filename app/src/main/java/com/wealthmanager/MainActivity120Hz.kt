@@ -1,6 +1,7 @@
 package com.wealthmanager
 
 import android.app.Activity
+import android.content.ComponentCallbacks2
 import android.os.Build
 import android.os.Bundle
 import android.util.Log
@@ -219,7 +220,7 @@ class MainActivity120Hz : FragmentActivity() {
         System.gc()
 
         // Log performance issues
-        val stats = performanceMonitor.getPerformanceStats()
+        // val stats = performanceMonitor.getPerformanceStats()
         // Remove screen refresh log
     }
     
@@ -231,16 +232,24 @@ class MainActivity120Hz : FragmentActivity() {
         // Remove screen refresh log
 
         when (level) {
-            TRIM_MEMORY_RUNNING_CRITICAL -> {
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE -> {
                 // Remove screen refresh log
                 System.gc()
             }
-            TRIM_MEMORY_RUNNING_LOW -> {
-                // Remove screen refresh log
-                System.gc()
+            ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
+                // UI hidden - release non-essential resources
             }
-            TRIM_MEMORY_RUNNING_MODERATE -> {
-                // Remove screen refresh log
+            ComponentCallbacks2.TRIM_MEMORY_BACKGROUND -> {
+                // App moved to background - release resources
+            }
+            ComponentCallbacks2.TRIM_MEMORY_MODERATE -> {
+                // Moderate memory pressure
+            }
+            ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> {
+                // Complete memory pressure - release all non-essential resources
+                System.gc()
             }
         }
     }

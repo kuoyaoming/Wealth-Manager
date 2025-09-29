@@ -15,6 +15,28 @@ A modern personal finance tracker built with Jetpack Compose. Features biometric
 - ⚡ **Performance Monitoring** - Real-time performance tracking and optimization
 - 🗄️ **Smart Caching** - Intelligent cache management with offline support
 
+## 📱 Screenshots
+
+### Portfolio Overview
+![Portfolio Overview](docs/screenshots/portfolio-overview.png)
+*Comprehensive portfolio overview with asset distribution charts and real-time valuations*
+
+### Asset Management
+![Asset Management](docs/screenshots/asset-management.png)
+*Easy management of cash and stock assets with intuitive interface*
+
+### Biometric Authentication
+![Biometric Authentication](docs/screenshots/biometric-auth.png)
+*Secure biometric authentication with privacy protection notice*
+
+### Add Assets
+![Add Assets](docs/screenshots/add-assets.png)
+*Smart asset addition with real-time stock search and symbol lookup*
+
+### About & Privacy
+![About Wealth Manager](docs/screenshots/about-app.png)
+*Transparent privacy policy and third-party API usage information*
+
 ## Security
 
 - **Local-only storage** - All data encrypted on device
