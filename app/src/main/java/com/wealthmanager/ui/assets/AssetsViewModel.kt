@@ -45,7 +45,7 @@ class AssetsViewModel @Inject constructor(
                                 _uiState.value = _uiState.value.copy(
                                     searchResults = searchResult.results,
                                     isSearching = false,
-                                    searchError = if (searchResult.results.isEmpty()) "找不到此股票代碼，請檢查是否正確" else ""
+                                    searchError = if (searchResult.results.isEmpty()) "Stock code not found, please check if correct" else ""
                                 )
                             }
                             is SearchResult.NoResults -> {
@@ -54,11 +54,11 @@ class AssetsViewModel @Inject constructor(
                                     searchResults = emptyList(),
                                     isSearching = false,
                                     searchError = when (searchResult.reason) {
-                                        NoResultsReason.STOCK_NOT_FOUND -> "找不到此股票代碼，請檢查是否正確"
-                                        NoResultsReason.API_LIMIT_REACHED -> "API 請求已達每日限制，請明天再試"
-                                        NoResultsReason.NETWORK_ERROR -> "網路連線問題，請檢查網路設定"
-                                        NoResultsReason.INVALID_QUERY -> "請輸入至少 2 個字符進行搜索"
-                                        NoResultsReason.SERVER_ERROR -> "伺服器暫時無法使用，請稍後再試"
+                                        NoResultsReason.STOCK_NOT_FOUND -> "Stock code not found, please check if correct"
+                                        NoResultsReason.API_LIMIT_REACHED -> "API request limit reached, please try again tomorrow"
+                                        NoResultsReason.NETWORK_ERROR -> "Network connection issue, please check network settings"
+                                        NoResultsReason.INVALID_QUERY -> "Please enter at least 2 characters to search"
+                                        NoResultsReason.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
                                     }
                                 )
                             }
@@ -68,11 +68,11 @@ class AssetsViewModel @Inject constructor(
                                     searchResults = emptyList(),
                                     isSearching = false,
                                     searchError = when (searchResult.errorType) {
-                                        SearchErrorType.API_LIMIT -> "API 請求已達每日限制，請明天再試"
-                                        SearchErrorType.NETWORK_ERROR -> "網路連線問題，請檢查網路設定"
-                                        SearchErrorType.SERVER_ERROR -> "伺服器暫時無法使用，請稍後再試"
-                                        SearchErrorType.INVALID_API_KEY -> "API 金鑰無效，請聯繫技術支援"
-                                        SearchErrorType.UNKNOWN_ERROR -> "發生未知錯誤，請重新啟動應用程式"
+                                        SearchErrorType.API_LIMIT -> "API request limit reached, please try again tomorrow"
+                                        SearchErrorType.NETWORK_ERROR -> "Network connection issue, please check network settings"
+                                        SearchErrorType.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
+                                        SearchErrorType.INVALID_API_KEY -> "Invalid API key, please contact technical support"
+                                        SearchErrorType.UNKNOWN_ERROR -> "Unknown error occurred, please restart the application"
                                     }
                                 )
                             }
@@ -85,7 +85,7 @@ class AssetsViewModel @Inject constructor(
                     _uiState.value = _uiState.value.copy(
                         searchResults = emptyList(),
                         isSearching = false,
-                        searchError = "發生未知錯誤，請重新啟動應用程式"
+                        searchError = "Unknown error occurred, please restart the application"
                     )
                     debugLogManager.log("ASSETS", "UI state updated with empty results due to error")
                 }
@@ -141,13 +141,13 @@ class AssetsViewModel @Inject constructor(
                     id = System.currentTimeMillis().toString(),
                     symbol = symbol,
                     companyName = symbol, // Simple mapping
-                    shares = shares.toInt(),
+                    shares = shares, // Keep Double type
                     market = "GLOBAL",
                     currentPrice = 0.0, // Will be fetched later
                     originalCurrency = currency, // Set correct currency
                     twdEquivalent = 0.0 // Will be calculated later
                 )
-                debugLogManager.log("ASSETS", "Stock asset created: $symbol, ${shares.toInt()} shares, currency: $currency")
+                debugLogManager.log("ASSETS", "Stock asset created: $symbol, $shares shares, currency: $currency")
                 assetRepository.insertStockAsset(stockAsset)
                 debugLogManager.log("ASSETS", "Stock asset inserted to database")
             }

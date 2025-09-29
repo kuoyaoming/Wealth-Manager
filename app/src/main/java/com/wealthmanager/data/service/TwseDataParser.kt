@@ -9,8 +9,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * TWSE資料解析器
- * 負責解析台灣證券交易所API返回的資料
+ * TWSE data parser
+ * Responsible for parsing data returned by Taiwan Stock Exchange API
  */
 @Singleton
 class TwseDataParser @Inject constructor(
@@ -18,7 +18,7 @@ class TwseDataParser @Inject constructor(
 ) {
     
     /**
-     * 從所有股票資料中查找特定股票
+     * Find specific stock from all stock data
      */
     fun findStockFromAllData(allData: List<TwseStockItem>, stockNo: String): TwseStockData? {
         return try {
@@ -31,7 +31,7 @@ class TwseDataParser @Inject constructor(
     }
     
     /**
-     * 將TwseStockItem轉換為TwseStockData
+     * Convert TwseStockItem to TwseStockData
      */
     private fun convertToTwseStockData(item: TwseStockItem): TwseStockData {
         return TwseStockData(
@@ -50,7 +50,7 @@ class TwseDataParser @Inject constructor(
     }
     
     /**
-     * 計算漲跌百分比
+     * Calculate change percentage
      */
     private fun calculateChangePercent(change: String, closingPrice: String): String {
         return try {
@@ -69,7 +69,7 @@ class TwseDataParser @Inject constructor(
     }
     
     /**
-     * 獲取今天的日期字串 (YYYYMMDD格式)
+     * Get today's date string (YYYYMMDD format)
      */
     fun getTodayDateString(): String {
         val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
@@ -77,14 +77,14 @@ class TwseDataParser @Inject constructor(
     }
     
     /**
-     * 清理台股代碼格式
+     * Clean Taiwan stock symbol format
      */
     fun cleanTaiwanStockSymbol(symbol: String): String {
         return symbol.removeSuffix(".TW").removeSuffix(":TW")
     }
     
     /**
-     * 驗證TWSE API回應
+     * Validate TWSE API response
      */
     fun validateTwseResponse(data: List<TwseStockItem>): Boolean {
         return data.isNotEmpty()

@@ -8,6 +8,7 @@ import com.wealthmanager.data.api.TwseApi
 import com.wealthmanager.data.api.TwseStockData
 import com.wealthmanager.data.api.ExchangeRateApi
 import com.wealthmanager.data.api.ExchangeRateResponse
+import com.wealthmanager.data.service.TwseCacheManager
 import com.wealthmanager.data.model.SearchResult
 import com.wealthmanager.data.model.StockSearchItem
 import com.wealthmanager.data.model.NoResultsReason
@@ -23,6 +24,7 @@ class ApiProviderService @Inject constructor(
     private val twseApi: TwseApi,
     private val exchangeRateApi: ExchangeRateApi,
     private val twseDataParser: TwseDataParser,
+    private val twseCacheManager: TwseCacheManager,
     private val debugLogManager: DebugLogManager
 ) {
     
@@ -31,9 +33,6 @@ class ApiProviderService @Inject constructor(
         private const val EXCHANGE_RATE_API_KEY = "7b5a247a5c1690934ff0b6a4"
     }
     
-    /**
-     * 獲取股票報價，根據市場選擇API
-     */
     suspend fun getStockQuote(symbol: String): Result<StockQuoteData> {
         return if (isTaiwanStock(symbol)) {
             tryTwseQuote(symbol)
@@ -42,9 +41,6 @@ class ApiProviderService @Inject constructor(
         }
     }
     
-    /**
-     * 搜尋股票
-     */
     suspend fun searchStocks(query: String, market: String): Flow<SearchResult> = flow {
         try {
             debugLogManager.log("API_PROVIDER", "Searching stocks: '$query' in market: '$market'")
@@ -56,16 +52,10 @@ class ApiProviderService @Inject constructor(
         }
     }
     
-    /**
-     * 獲取匯率
-     */
     suspend fun getExchangeRate(fromCurrency: String = "USD", toCurrency: String = "TWD"): Result<ExchangeRateData> {
         return tryExchangeRateApi(fromCurrency, toCurrency)
     }
     
-    /**
-     * 嘗試Finnhub美股報價
-     */
     private suspend fun tryFinnhubQuote(symbol: String): Result<StockQuoteData> {
         return try {
             debugLogManager.log("API_PROVIDER", "Getting stock quote for $symbol")
@@ -76,7 +66,7 @@ class ApiProviderService @Inject constructor(
                 price = response.c,
                 change = response.d,
                 changePercent = response.dp,
-                volume = 0L, // Finnhub quote doesn't include volume
+                volume = 0L,
                 high = response.h,
                 low = response.l,
                 open = response.o,
@@ -89,22 +79,24 @@ class ApiProviderService @Inject constructor(
         }
     }
     
-    /**
-     * 嘗試TWSE台股報價
-     */
     private suspend fun tryTwseQuote(symbol: String): Result<StockQuoteData> {
         return try {
             debugLogManager.log("API_PROVIDER", "Getting stock quote for $symbol")
             debugLogManager.log("API_PROVIDER", "Taiwan stock detected: $symbol")
             
-            // Clean Taiwan stock code format
             val cleanSymbol = twseDataParser.cleanTaiwanStockSymbol(symbol)
             
-            // Use STOCK_DAY_ALL endpoint to get all stock data
-            val response = twseApi.getAllStockPrices()
+            var response = twseCacheManager.getCachedStockData()
+            
+            if (response == null) {
+                debugLogManager.log("API_PROVIDER", "No cached TWSE data, fetching from API")
+                response = twseApi.getAllStockPrices()
+                twseCacheManager.updateCachedStockData(response)
+            } else {
+                debugLogManager.log("API_PROVIDER", "Using cached TWSE data: ${twseCacheManager.getCacheStatus()}")
+            }
             
             if (twseDataParser.validateTwseResponse(response)) {
-                // Find specific stock from all stock data
                 val stockData = twseDataParser.findStockFromAllData(response, cleanSymbol)
                 
                 if (stockData != null) {
@@ -132,19 +124,14 @@ class ApiProviderService @Inject constructor(
         }
     }
     
-    /**
-     * 嘗試ExchangeRate-API匯率
-     */
     private suspend fun tryExchangeRateApi(fromCurrency: String, toCurrency: String): Result<ExchangeRateData> {
         return try {
             debugLogManager.log("API_PROVIDER", "Getting exchange rate: $fromCurrency to $toCurrency")
             val response = exchangeRateApi.getExchangeRate(EXCHANGE_RATE_API_KEY, fromCurrency)
             
-            // Get exchange rate for target currency from response
-            val rate = when (toCurrency) {
-                "TWD" -> response.conversion_rate
-                else -> response.conversion_rate
-            }
+            val rate = response.conversion_rates[toCurrency] ?: 0.0
+            
+            debugLogManager.log("API_PROVIDER", "Exchange rate $fromCurrency/$toCurrency = $rate")
             
             Result.success(ExchangeRateData(
                 fromCurrency = fromCurrency,
@@ -158,9 +145,6 @@ class ApiProviderService @Inject constructor(
         }
     }
     
-    /**
-     * 處理Finnhub搜尋結果
-     */
     private fun processFinnhubSearchResults(results: List<com.wealthmanager.data.api.FinnhubSearchResult>): SearchResult {
         return if (results.isEmpty()) {
             SearchResult.NoResults(NoResultsReason.STOCK_NOT_FOUND)
@@ -178,9 +162,6 @@ class ApiProviderService @Inject constructor(
         }
     }
     
-    /**
-     * 判斷交易所
-     */
     private fun determineExchange(symbol: String): String {
         return when {
             symbol.endsWith(".TW", ignoreCase = true) -> "TWSE"
@@ -190,9 +171,6 @@ class ApiProviderService @Inject constructor(
         }
     }
     
-    /**
-     * 判斷市場類型
-     */
     private fun determineMarket(symbol: String): String {
         return when {
             symbol.endsWith(".TW", ignoreCase = true) -> "TW"
@@ -202,9 +180,6 @@ class ApiProviderService @Inject constructor(
         }
     }
     
-    /**
-     * 判斷是否為台股
-     */
     private fun isTaiwanStock(symbol: String): Boolean {
         return symbol.endsWith(".TW", ignoreCase = true) ||
                symbol.endsWith(".T", ignoreCase = true) ||

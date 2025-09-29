@@ -42,7 +42,7 @@ object HighRefreshRateAnimations {
     )
     
     /**
-     * 120Hz 優化的補間動畫
+     * 120Hz optimized tween animation
      */
     fun fastTween(durationMillis: Int = FAST_DURATION) = tween<Float>(
         durationMillis = durationMillis,
@@ -50,7 +50,7 @@ object HighRefreshRateAnimations {
     )
     
     /**
-     * 120Hz 優化的中等速度動畫
+     * 120Hz optimized medium speed animation
      */
     fun mediumTween(durationMillis: Int = MEDIUM_DURATION) = tween<Float>(
         durationMillis = durationMillis,
@@ -58,7 +58,7 @@ object HighRefreshRateAnimations {
     )
     
     /**
-     * 120Hz 優化的慢速動畫
+     * 120Hz optimized slow animation
      */
     fun slowTween(durationMillis: Int = SLOW_DURATION) = tween<Float>(
         durationMillis = durationMillis,
@@ -68,7 +68,7 @@ object HighRefreshRateAnimations {
 }
 
 /**
- * 高刷新率優化的觸控回饋
+ * High refresh rate optimized touch feedback
  */
 @Composable
 fun Modifier.highRefreshRateClickable(
@@ -98,7 +98,7 @@ fun Modifier.highRefreshRateClickable(
 }
 
 /**
- * 120Hz 優化的按鈕組件
+ * 120Hz optimized button component
  */
 @Composable
 fun HighRefreshRateButton(
@@ -138,7 +138,7 @@ fun HighRefreshRateButton(
 }
 
 /**
- * 120Hz 優化的卡片組件
+ * 120Hz optimized card component
  */
 @Composable
 fun HighRefreshRateCard(
@@ -176,7 +176,7 @@ fun HighRefreshRateCard(
 }
 
 /**
- * 120Hz 優化的列表項組件
+ * 120Hz optimized list item component
  */
 @Composable
 fun HighRefreshRateListItem(
@@ -220,7 +220,7 @@ fun HighRefreshRateListItem(
 }
 
 /**
- * 120Hz 優化的進度指示器
+ * 120Hz optimized progress indicator
  */
 @Composable
 fun HighRefreshRateProgressIndicator(
@@ -252,7 +252,7 @@ fun HighRefreshRateProgressIndicator(
 }
 
 /**
- * 120Hz 優化的淡入淡出動畫
+ * 120Hz optimized fade in/out animation
  */
 @Composable
 fun <T> rememberHighRefreshRateAnimatedVisibility(
@@ -282,7 +282,7 @@ fun <T> rememberHighRefreshRateAnimatedVisibility(
 }
 
 /**
- * 120Hz 優化的滾動動畫
+ * 120Hz optimized scroll animation
  */
 @Composable
 fun rememberHighRefreshRateScrollState(): LazyListState {
@@ -290,7 +290,7 @@ fun rememberHighRefreshRateScrollState(): LazyListState {
 }
 
 /**
- * 120Hz 優化的頁面轉換動畫
+ * 120Hz optimized page transition animation
  */
 @Composable
 fun <T> rememberHighRefreshRatePageTransition(

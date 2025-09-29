@@ -12,8 +12,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 效能監控器
- * 監控主線程阻塞和應用程式效能
+ * Performance monitor for main thread blocking and application performance
  */
 @Singleton
 class PerformanceMonitor @Inject constructor(
@@ -21,12 +20,9 @@ class PerformanceMonitor @Inject constructor(
 ) {
     
     companion object {
-        // Main thread blocking threshold (ms)
-        private const val MAIN_THREAD_BLOCK_THRESHOLD_MS = 16L // 16ms (60fps)
-        private const val CRITICAL_BLOCK_THRESHOLD_MS = 100L // 100ms
-        private const val MONITORING_INTERVAL_MS = 1000L // 1s
-        
-        // Memory warning thresholds
+        private const val MAIN_THREAD_BLOCK_THRESHOLD_MS = 16L
+        private const val CRITICAL_BLOCK_THRESHOLD_MS = 100L
+        private const val MONITORING_INTERVAL_MS = 1000L
         private const val MEMORY_WARNING_THRESHOLD_MB = 100L
         private const val MEMORY_CRITICAL_THRESHOLD_MB = 200L
     }
@@ -34,7 +30,6 @@ class PerformanceMonitor @Inject constructor(
     private val mainHandler = Handler(Looper.getMainLooper())
     private val performanceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
     
-    // Performance statistics
     private val frameDropCount = AtomicLong(0)
     private val mainThreadBlockCount = AtomicLong(0)
     private val criticalBlockCount = AtomicLong(0)
@@ -47,7 +42,7 @@ class PerformanceMonitor @Inject constructor(
         if (isMonitoring) return
         
         isMonitoring = true
-        debugLogManager.log("PERFORMANCE", "開始效能監控")
+        debugLogManager.log("PERFORMANCE", "Starting performance monitoring")
         
         performanceScope.launch {
             while (isMonitoring) {
@@ -58,50 +53,46 @@ class PerformanceMonitor @Inject constructor(
     }
     
     /**
-     * 停止效能監控
+     * Stop performance monitoring
      */
     fun stopMonitoring() {
         isMonitoring = false
-        debugLogManager.log("PERFORMANCE", "停止效能監控")
+        debugLogManager.log("PERFORMANCE", "Stop performance monitoring")
     }
     
     /**
-     * 監控主線程效能
+     * Monitor main thread performance
      */
     private suspend fun monitorMainThreadPerformance() {
         val startTime = System.currentTimeMillis()
         
-        // Execute a simple task on main thread to measure blocking
         val blockTime = withContext(Dispatchers.Main) {
             val taskStart = System.currentTimeMillis()
-            // Execute a lightweight task
-            Thread.sleep(1) // Simulate lightweight operation
+            Thread.sleep(1)
             System.currentTimeMillis() - taskStart
         }
         
         val totalTime = System.currentTimeMillis() - startTime
         
-        // Check main thread blocking
         when {
             blockTime > CRITICAL_BLOCK_THRESHOLD_MS -> {
                 criticalBlockCount.incrementAndGet()
-                debugLogManager.logWarning("PERFORMANCE", "嚴重主線程阻塞: ${blockTime}ms")
+                debugLogManager.logWarning("PERFORMANCE", "Critical main thread blocking: ${blockTime}ms")
                 recordPerformanceIssue("Critical main thread block: ${blockTime}ms")
             }
             blockTime > MAIN_THREAD_BLOCK_THRESHOLD_MS -> {
                 mainThreadBlockCount.incrementAndGet()
-                debugLogManager.log("PERFORMANCE", "主線程阻塞: ${blockTime}ms")
+                debugLogManager.log("PERFORMANCE", "Main thread blocking: ${blockTime}ms")
             }
         }
         
-        // Check overall response time
         if (totalTime > 1000L) {
-            debugLogManager.logWarning("PERFORMANCE", "慢響應時間: ${totalTime}ms")
+            debugLogManager.logWarning("PERFORMANCE", "Slow response time: ${totalTime}ms")
         }
     }
     
     /**
-     * 監控記憶體使用
+     * Monitor memory usage
      */
     fun monitorMemoryUsage(): Flow<MemoryStatus> = flow {
         while (isMonitoring) {
@@ -125,32 +116,29 @@ class PerformanceMonitor @Inject constructor(
             }
             
             emit(status)
-            delay(5000L) // Check every 5 seconds
+            delay(5000L)
         }
     }
     
     /**
-     * 記錄效能問題
+     * Record performance issues
      */
     private fun recordPerformanceIssue(issue: String) {
-        debugLogManager.logError("效能問題: $issue")
+        debugLogManager.logError("Performance issue: $issue")
         
-        // Can trigger automatic optimization measures
         when {
             issue.contains("Critical main thread block") -> {
-                // Trigger memory cleanup
                 System.gc()
-                debugLogManager.log("PERFORMANCE", "觸發記憶體清理")
+                debugLogManager.log("PERFORMANCE", "Trigger memory cleanup")
             }
             issue.contains("memory") -> {
-                // Trigger cache cleanup
-                debugLogManager.log("PERFORMANCE", "觸發快取清理")
+                debugLogManager.log("PERFORMANCE", "Trigger cache cleanup")
             }
         }
     }
     
     /**
-     * 獲取效能統計
+     * Get performance statistics
      */
     fun getPerformanceStats(): PerformanceStats {
         return PerformanceStats(
@@ -162,17 +150,17 @@ class PerformanceMonitor @Inject constructor(
     }
     
     /**
-     * 重置統計
+     * Reset statistics
      */
     fun resetStats() {
         frameDropCount.set(0)
         mainThreadBlockCount.set(0)
         criticalBlockCount.set(0)
-        debugLogManager.log("PERFORMANCE", "效能統計已重置")
+        debugLogManager.log("PERFORMANCE", "Performance statistics reset")
     }
     
     /**
-     * 記憶體狀態
+     * Memory status
      */
     sealed class MemoryStatus {
         data class NORMAL(val usedMB: Long, val maxMB: Long, val usagePercent: Int) : MemoryStatus()
@@ -181,7 +169,7 @@ class PerformanceMonitor @Inject constructor(
     }
     
     /**
-     * 效能統計
+     * Performance statistics
      */
     data class PerformanceStats(
         val frameDrops: Long,

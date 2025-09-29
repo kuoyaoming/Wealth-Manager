@@ -5,8 +5,8 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 測試 Logging 優化效果的類別
- * 用於驗證修復後的 logging 行為
+ * Test class for logging optimization effects
+ * Used to verify fixed logging behavior
  */
 @Singleton
 class LoggingOptimizationTest @Inject constructor(
@@ -14,7 +14,7 @@ class LoggingOptimizationTest @Inject constructor(
 ) {
     
     /**
-     * 測試市場數據 logging 優化
+     * Test market data logging optimization
      */
     fun testMarketDataLogging() {
         Log.d("LoggingTest", "=== Testing Market Data Logging Optimization ===")
@@ -55,43 +55,43 @@ class LoggingOptimizationTest @Inject constructor(
         debugLogManager.logAsset("DELETE", "Stock", "AAPL - Apple Inc")
         
         // Test biometric logging
-        debugLogManager.logBiometric("AUTHENTICATION", "指紋識別成功")
-        debugLogManager.logBiometric("AUTHENTICATION", "指紋識別失敗")
+        debugLogManager.logBiometric("AUTHENTICATION", "Fingerprint authentication successful")
+        debugLogManager.logBiometric("AUTHENTICATION", "Fingerprint authentication failed")
         
-        Log.d("LoggingTest", "=== 一般 Logging 測試完成 ===")
+        Log.d("LoggingTest", "=== General Logging Test Complete ===")
     }
     
     /**
-     * 測試錯誤處理 logging
+     * Test error handling logging
      */
     fun testErrorLogging() {
-        Log.d("LoggingTest", "=== 測試錯誤處理 Logging ===")
+        Log.d("LoggingTest", "=== Testing Error Handling Logging ===")
         
         // Test general errors
-        debugLogManager.logError("API_ERROR", "API 請求失敗")
-        debugLogManager.logError("NETWORK_ERROR", "網路連線超時")
+        debugLogManager.logError("API_ERROR", "API request failed")
+        debugLogManager.logError("NETWORK_ERROR", "Network connection timeout")
         
         // Test exception handling
         try {
-            throw RuntimeException("測試異常")
+            throw RuntimeException("Test exception")
         } catch (e: Exception) {
-            debugLogManager.logError("測試異常處理", e)
+            debugLogManager.logError("Test exception handling", e)
         }
         
-        Log.d("LoggingTest", "=== 錯誤處理 Logging 測試完成 ===")
+        Log.d("LoggingTest", "=== Error Handling Logging Test Complete ===")
     }
     
     /**
-     * 執行所有測試
+     * Run all tests
      */
     fun runAllTests() {
-        Log.d("LoggingTest", "開始執行 Logging 優化測試...")
+        Log.d("LoggingTest", "Starting logging optimization tests...")
         
         testMarketDataLogging()
         testGeneralLogging()
         testErrorLogging()
         
-        Log.d("LoggingTest", "所有 Logging 優化測試完成")
-        Log.d("LoggingTest", "總共記錄了 ${debugLogManager.getLogCount()} 條 log")
+        Log.d("LoggingTest", "All logging optimization tests completed")
+        Log.d("LoggingTest", "Total recorded ${debugLogManager.getLogCount()} logs")
     }
 }
