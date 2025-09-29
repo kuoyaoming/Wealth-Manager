@@ -1,53 +1,82 @@
 # Contributor Covenant Code of Conduct
 
-## 我們的承諾
+## Our Pledge
 
-為了營造開放且友善的環境，我們作為貢獻者和維護者承諾，無論年齡、體型、身體健全與否、種族、民族、性別認同與表達、經驗水平、教育程度、社會經濟地位、國籍、個人外貌、種族、宗教或性取向如何，參與我們專案和社群的每個人都能免於騷擾。
+We as members, contributors, and leaders pledge to make participation in our community a harassment-free experience for everyone, regardless of age, body size, visible or invisible disability, ethnicity, sex characteristics, gender identity and expression, level of experience, education, socio-economic status, nationality, personal appearance, race, religion, or sexual identity and orientation.
 
-## 我們的標準
+We pledge to act and interact in ways that contribute to an open, welcoming, diverse, inclusive, and healthy community.
 
-有助於營造正面環境的行為包括：
+## Our Standards
 
-* 使用友善且包容的語言
-* 尊重不同的觀點和經驗
-* 優雅地接受建設性批評
-* 關注對社群最有利的事情
-* 對其他社群成員展現同理心
+Examples of behavior that contributes to a positive environment for our community include:
 
-不可接受的行為包括：
+* Using welcoming and inclusive language
+* Being respectful of differing viewpoints and experiences
+* Gracefully accepting constructive criticism
+* Focusing on what is best for the community
+* Showing empathy towards other community members
 
-* 使用性化的語言或圖像，或進行性騷擾
-* 挑釁、侮辱或貶損性評論，以及個人或政治攻擊
-* 公開或私下的騷擾
-* 在未經明確許可的情況下發布他人的私人資訊，如實體或電子地址
-* 在專業環境中可能被合理認為不當的其他行為
+Examples of unacceptable behavior include:
 
-## 我們的責任
+* The use of sexualized language or imagery, and sexual attention or advances
+* Trolling, insulting or derogatory comments, and personal or political attacks
+* Public or private harassment
+* Publishing others' private information, such as a physical or email address, without their explicit permission
+* Other conduct which could reasonably be considered inappropriate in a professional setting
 
-專案維護者有責任澄清可接受行為的標準，並對任何不可接受的行為採取適當且公平的糾正措施。
+## Enforcement Responsibilities
 
-專案維護者有權利和責任移除、編輯或拒絕不符合本行為準則的評論、提交、程式碼、wiki 編輯、問題和其他貢獻，或暫時或永久禁止任何他們認為不當、威脅、冒犯或有害的貢獻者。
+Community leaders are responsible for clarifying and enforcing our standards of acceptable behavior and will take appropriate and fair corrective action in response to any behavior that they deem inappropriate, threatening, offensive, or harmful.
 
-## 適用範圍
+Community leaders have the right and responsibility to remove, edit, or reject comments, commits, code, wiki edits, issues, and other contributions that are not aligned to this Code of Conduct, and will communicate reasons for moderation decisions when appropriate.
 
-本行為準則適用於專案空間和公共空間，當個人代表專案或其社群時。代表專案或社群的例子包括使用官方專案電子郵件地址、透過官方社群媒體帳戶發布，或在線上或離線活動中擔任指定代表。專案維護者可以進一步定義和澄清專案的代表。
+## Scope
 
-## 執行
+This Code of Conduct applies within all community spaces, and also applies when an individual is officially representing the community in public spaces. Examples of representing our community include using an official e-mail address, posting via an official social media account, or acting as an appointed representative at an online or offline event.
 
-可以透過 [security@wealthmanager.app](mailto:security@wealthmanager.app) 向專案團隊報告虐待、騷擾或其他不可接受的行為。所有投訴都會被審查和調查，並會產生被認為必要且適合情況的回應。專案團隊有義務對事件報告者保密。具體執行政策可能會單獨發布。
+## Enforcement
 
-不真誠遵循或執行行為準則的專案維護者可能會面臨專案領導層決定的臨時或永久影響。
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the community leaders responsible for enforcement at [security@wealthmanager.app](mailto:security@wealthmanager.app). All complaints will be reviewed and investigated promptly and fairly.
 
-## 歸屬
+All community leaders are obligated to respect the privacy and security of the reporter of any incident.
 
-本行為準則改編自 [Contributor Covenant][homepage]，版本 1.4，可在 https://www.contributor-covenant.org/version/1/4/code-of-conduct.html 取得
+## Enforcement Guidelines
+
+Community leaders will follow these Community Impact Guidelines in determining the consequences for any action they deem in violation of this Code of Conduct:
+
+### 1. Correction
+**Community Impact**: Use of inappropriate language or other behavior deemed unprofessional or unwelcome in the community.
+
+**Consequence**: A private, written warning from community leaders, providing clarity around the nature of the violation and an explanation of why the behavior was inappropriate. A public apology may be requested.
+
+### 2. Warning
+**Community Impact**: A violation through a single incident or series of actions.
+
+**Consequence**: A warning with consequences for continued behavior. No interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, for a specified period of time. This includes avoiding interactions in community spaces as well as external channels like social media. Violating these terms may lead to a temporary or permanent ban.
+
+### 3. Temporary Ban
+**Community Impact**: A serious violation of community standards, including sustained inappropriate behavior.
+
+**Consequence**: A temporary ban from any sort of interaction or public communication with the community for a specified period of time. No public or private interaction with the people involved, including unsolicited interaction with those enforcing the Code of Conduct, is allowed during this period. Violating these terms may lead to a permanent ban.
+
+### 4. Permanent Ban
+**Community Impact**: Demonstrating a pattern of violation of community standards, including sustained inappropriate behavior, harassment of an individual, or aggression toward or disparagement of classes of individuals.
+
+**Consequence**: A permanent ban from any sort of public interaction within the community.
+
+## Attribution
+
+This Code of Conduct is adapted from the [Contributor Covenant][homepage], version 2.1, available at https://www.contributor-covenant.org/version/2/1/code_of_conduct.html.
+
+Community Impact Guidelines were inspired by [Mozilla's code of conduct enforcement ladder][Mozilla CoC].
+
+For answers to common questions about this code of conduct, see the FAQ at https://www.contributor-covenant.org/faq. Translations are available at https://www.contributor-covenant.org/translations.
 
 [homepage]: https://www.contributor-covenant.org
-
-有關此行為準則的常見問題解答，請參閱 https://www.contributor-covenant.org/faq。翻譯版本可在 https://www.contributor-covenant.org/translations 取得。
+[Mozilla CoC]: https://github.com/mozilla/diversity
 
 ---
 
-**最後更新**: 2025年1月  
-**版本**: 1.0.0  
-**適用於**: Wealth Manager 專案
+**Last Updated**: January 2025  
+**Version**: 1.0.0  
+**Applies to**: Wealth Manager Project
