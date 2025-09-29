@@ -15,6 +15,8 @@ import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
+import com.wealthmanager.haptic.HapticFeedbackManager
+import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -27,6 +29,7 @@ fun AssetsScreen(
     var showEditCashDialog by remember { mutableStateOf<CashAsset?>(null) }
     var showEditStockDialog by remember { mutableStateOf<StockAsset?>(null) }
     val debugLogManager = remember { DebugLogManager() }
+    val (hapticManager, view) = rememberHapticFeedbackWithView()
     
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Assets Screen Opened")
@@ -42,11 +45,12 @@ fun AssetsScreen(
                     IconButton(onClick = { 
                         debugLogManager.logUserAction("Back Button Clicked")
                         debugLogManager.log("UI", "User clicked back button to return to dashboard")
+                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                         onNavigateBack() 
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back to Dashboard"
+                            contentDescription = stringResource(R.string.cd_back_to_dashboard)
                         )
                     }
                 }
@@ -57,10 +61,11 @@ fun AssetsScreen(
                 onClick = { 
                     debugLogManager.logUserAction("Add Asset FAB Clicked")
                     debugLogManager.log("UI", "User clicked FAB to open Add Asset dialog")
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                     showAddDialog = true 
                 }
             ) {
-                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.add_cash))
+                Icon(Icons.Default.Add, contentDescription = stringResource(R.string.cd_add_asset))
             }
         }
     ) { paddingValues ->

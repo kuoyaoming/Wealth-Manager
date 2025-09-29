@@ -12,10 +12,10 @@ android {
 
     defaultConfig {
         applicationId = "com.wealthmanager"
-        minSdk = 36
+        minSdk = 34
         targetSdk = 36
-        versionCode = 6
-        versionName = "1.0.0"
+        versionCode = 7
+        versionName = "1.1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -23,8 +23,14 @@ android {
         }
         
         // API Keys from local.properties (secure)
-        buildConfigField("String", "FINNHUB_API_KEY", "\"${project.hasProperty("FINNHUB_API_KEY") ? project.property("FINNHUB_API_KEY") : ""}\"")
-        buildConfigField("String", "EXCHANGE_RATE_API_KEY", "\"${project.hasProperty("EXCHANGE_RATE_API_KEY") ? project.property("EXCHANGE_RATE_API_KEY") : ""}\"")
+        def localProperties = new Properties()
+        def localPropertiesFile = rootProject.file('local.properties')
+        if (localPropertiesFile.exists()) {
+            localPropertiesFile.withInputStream { localProperties.load(it) }
+        }
+        
+        buildConfigField("String", "FINNHUB_API_KEY", "\"${localProperties.getProperty('FINNHUB_API_KEY', '')}\"")
+        buildConfigField("String", "EXCHANGE_RATE_API_KEY", "\"${localProperties.getProperty('EXCHANGE_RATE_API_KEY', '')}\"")
     }
 
     buildTypes {

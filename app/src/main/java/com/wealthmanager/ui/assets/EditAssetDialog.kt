@@ -14,6 +14,8 @@ import androidx.compose.ui.unit.dp
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.debug.DebugLogManager
+import com.wealthmanager.haptic.HapticFeedbackManager
+import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -23,6 +25,7 @@ fun EditCashAssetDialog(
     onSave: (CashAsset) -> Unit
 ) {
     val debugLogManager = remember { DebugLogManager() }
+    val (hapticManager, view) = rememberHapticFeedbackWithView()
     var currency by remember { mutableStateOf(asset.currency) }
     var amount by remember { mutableStateOf(asset.amount.toString()) }
     
@@ -95,6 +98,7 @@ fun EditCashAssetDialog(
             TextButton(
                 onClick = {
                     debugLogManager.logUserAction("Save Cash Asset Changes")
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
                     val newAmount = amount.toDoubleOrNull()
                     if (newAmount != null && newAmount > 0) {
                         val twdEquivalent = if (currency == "TWD") newAmount else (newAmount * 30.0)
@@ -117,6 +121,7 @@ fun EditCashAssetDialog(
             TextButton(onClick = {
                 debugLogManager.logUserAction("Cancel Cash Asset Edit")
                 debugLogManager.log("UI", "User cancelled cash asset edit")
+                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                 onDismiss()
             }) {
                 Text("Cancel")
@@ -133,6 +138,7 @@ fun EditStockAssetDialog(
     onSave: (StockAsset) -> Unit
 ) {
     val debugLogManager = remember { DebugLogManager() }
+    val (hapticManager, view) = rememberHapticFeedbackWithView()
     var shares by remember { mutableStateOf(asset.shares.toString()) }
     
     LaunchedEffect(Unit) {
@@ -170,6 +176,7 @@ fun EditStockAssetDialog(
             TextButton(
                 onClick = {
                     debugLogManager.logUserAction("Save Stock Asset Changes")
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
                     val newShares = shares.toDoubleOrNull()
                     if (newShares != null && newShares > 0) {
                         val updatedAsset = asset.copy(
@@ -190,6 +197,7 @@ fun EditStockAssetDialog(
             TextButton(onClick = {
                 debugLogManager.logUserAction("Cancel Stock Asset Edit")
                 debugLogManager.log("UI", "User cancelled stock asset edit")
+                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                 onDismiss()
             }) {
                 Text("Cancel")

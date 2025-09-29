@@ -233,7 +233,7 @@ fun StatusIndicator(
 }
 
 private fun formatCurrency(amount: Double): String {
-    val formatter = NumberFormat.getNumberInstance(Locale.US)
+    val formatter = NumberFormat.getNumberInstance(Locale.getDefault())
     formatter.maximumFractionDigits = 0
     return formatter.format(amount)
 }
