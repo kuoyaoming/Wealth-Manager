@@ -11,11 +11,11 @@
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
     <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     
-    <!-- 高刷新率相關權限 -->
+    <!-- High refresh rate related permissions -->
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
     
-    <!-- 硬體加速支援 -->
+    <!-- Hardware acceleration support -->
     <uses-feature 
         android:name="android.hardware.type.touchscreen" 
         android:required="true" />
@@ -49,7 +49,7 @@
         android:largeHeap="true"
         tools:targetApi="36">
         
-        <!-- 120Hz 優化的 MainActivity -->
+        <!-- MainActivity optimized for 120Hz -->
         <activity
             android:name=".MainActivity120Hz"
             android:exported="true"
@@ -63,7 +63,7 @@
             android:screenOrientation="unspecified"
             android:configChanges="orientation|screenSize|keyboardHidden|screenLayout">
             
-            <!-- 啟用高刷新率模式 -->
+            <!-- Enable high refresh rate mode -->
             <meta-data
                 android:name="android.window.PROPERTY_ACTIVITY_EMBEDDING_SPLITS_ENABLED"
                 android:value="true" />
@@ -77,7 +77,7 @@
             </intent-filter>
         </activity>
         
-        <!-- 原始 MainActivity 作為備用 -->
+        <!-- Original MainActivity as a fallback -->
         <activity
             android:name=".MainActivity"
             android:exported="false"
