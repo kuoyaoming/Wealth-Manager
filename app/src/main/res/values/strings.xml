@@ -33,6 +33,9 @@
     <string name="cash_assets">Cash Assets</string>
     <string name="stock_assets">Stock Assets</string>
     <string name="refresh_data">Refresh Data</string>
+    <string name="asset_distribution_title">Asset Distribution</string>
+    <string name="asset_distribution_empty">No assets to display</string>
+    <string name="asset_distribution_value">%1$s  %2$s</string>
 
     <!-- Assets -->
     <string name="assets_title">Manage Assets</string>
@@ -59,6 +62,9 @@
 
     <!-- Settings -->
     <string name="settings_title">Settings</string>
+    <string name="language">Language</string>
+    <string name="theme">Theme</string>
+    <string name="about">About</string>
     <string name="settings_financial_backup_title">Financial Backup</string>
     <string name="settings_financial_backup_desc">Decide whether your financial data should be included in Android Auto Backup.</string>
     <string name="settings_biometric_title">Biometric Login</string>
@@ -76,6 +82,8 @@
     <string name="settings_haptic_enable_desc">Provide haptic feedback for button interactions</string>
     <string name="settings_haptic_sound_enable">Enable sound feedback</string>
     <string name="settings_haptic_sound_desc">Play sounds when interacting with the app</string>
+    <string name="settings_sound_enable">Enable sound feedback</string>
+    <string name="settings_sound_enable_desc">Play sounds when interacting with the app</string>
     <string name="settings_haptic_intensity">Haptic intensity</string>
     <string name="settings_haptic_intensity_light">Light</string>
     <string name="settings_haptic_intensity_medium">Medium</string>
@@ -87,17 +95,31 @@
     <!-- Language -->
     <string name="settings_language_title">Language</string>
     <string name="settings_language_desc">Choose the language used across the app.</string>
+    
+    <!-- API Key Check -->
+    <string name="settings_api_check_title">API Key Check</string>
+    <string name="settings_api_check_desc">Check if API keys are working properly</string>
+    <string name="settings_api_test_button">Test API Keys</string>
+    <string name="settings_api_testing">Testing...</string>
+    <string name="settings_api_working">API Working</string>
+    <string name="settings_api_error">API Error</string>
+    <string name="settings_api_manual_search">Search Results (%1$d):</string>
     <string name="language_option_english">English</string>
     <string name="language_option_traditional_chinese">Traditional Chinese</string>
     <string name="language_change_requires_restart">Language will apply after restarting the app.</string>
 
     <!-- Common -->
+    <string name="add">Add</string>
+    <string name="update">Update</string>
     <string name="loading">Loading...</string>
+    <string name="searching">Searching...</string>
     <string name="error">Error</string>
     <string name="retry">Retry</string>
     <string name="delete">Delete</string>
     <string name="edit">Edit</string>
     <string name="confirm">Confirm</string>
+    <string name="action_later">Later</string>
+    <string name="action_i_understand">I Understand</string>
 
     <!-- Error Messages -->
     <string name="error_network">Network error. Please check your connection.</string>
@@ -116,7 +138,7 @@
     <!-- Input Validation -->
     <string name="validation_enter_valid_number">Please enter a valid number.</string>
     <string name="validation_enter_valid_shares">Please enter a valid number of shares.</string>
-    <string name="validation_search_minimum_chars">Please enter at least 3 characters to search.</string>
+    <string name="validation_search_minimum_chars">Please enter at least 1 character to search.</string>
     <string name="validation_no_matching_stock">No matching stock found. Please verify the symbol.</string>
 
     <!-- Search Error Messages -->
@@ -128,10 +150,11 @@
     <string name="search_error_authentication">API authentication failed. Please verify the key.</string>
     <string name="search_error_rate_limit">Request rate limit exceeded. Please try again later.</string>
     <string name="search_error_unknown">Unknown error occurred. Please restart the app.</string>
-    <string name="search_error_invalid_query">Please enter at least 2 characters to search.</string>
+    <string name="search_error_invalid_query">Please enter at least 1 character to search.</string>
     <string name="search_error_api_limit_reached">API request limit reached. Please try again tomorrow.</string>
 
     <!-- Dialog Messages -->
+    <string name="dialog_add_asset">Add Asset</string>
     <string name="dialog_edit_cash_asset">Edit Cash Asset</string>
     <string name="dialog_edit_stock_asset">Edit Stock Asset</string>
     <string name="dialog_save">Save</string>
@@ -139,8 +162,43 @@
 
     <!-- About Dialog -->
     <string name="about_title">About Wealth Manager</string>
-    <string name="about_version">Version 1.0.0</string>
-    <string name="about_description">A comprehensive personal finance app that helps you track assets, monitor stock investments, and manage your financial portfolio with real-time market data. Features include biometric authentication, multi-currency support, and secure local storage.</string>
+    <string name="about_version">Version 1.2.0</string>
+    <string name="about_description">A modern personal finance tracker built with Jetpack Compose. Features biometric authentication, real-time market data, multi-language support, and secure local storage with Material You design.</string>
+    <string name="about_app_information_title">App Information</string>
+    <string name="about_information_description">Wealth Manager is a comprehensive personal finance application that helps you track assets, monitor stock investments, and manage your financial portfolio with real-time market data. Built for Android 16 with 120Hz optimizations and haptic feedback.</string>
+    <string name="about_data_usage_title">Data Usage Policy</string>
+    <string name="about_data_usage_description">Your financial data is stored locally on your device and is never transmitted to external servers without your explicit consent.</string>
+    <string name="about_data_usage_points">Asset information is stored locally using Android Room database. Biometric authentication data is handled by Android secure hardware. No personal financial data is collected or transmitted to our servers. All calculations are performed locally on your device. Offline mode available with intelligent cache management.</string>
+    <string name="about_third_party_title">Third-Party API Usage</string>
+    <string name="about_third_party_description">This app uses the following third-party services for market data:</string>
+    <string name="about_third_party_points">Finnhub API provides real-time stock prices and market data with 60 requests per minute limit. Exchange Rate API offers currency conversion rates with 1000 requests per month limit. TWSE API provides Taiwan stock market data with no rate limits. Android Biometric API handles secure authentication through Android secure hardware.</string>
+    <string name="about_security_title">Security &amp; Compliance</string>
+    <string name="about_security_points">All data is encrypted using Android built-in encryption. Biometric authentication provides secure access with 24-hour session timeout. No network requests are made without user consent. API usage is monitored and rate-limited to prevent abuse. Local database is protected by Android app sandbox. No third-party analytics or tracking services. Smart caching with offline support.</string>
+    <string name="about_privacy_title">Privacy Policy</string>
+    <string name="about_privacy_description">We are committed to protecting your privacy and financial data. This app:</string>
+    <string name="about_privacy_points">Does not collect personal information. Does not share data with third parties. Stores all data locally on your device. Uses secure industry-standard encryption. Complies with Android privacy guidelines. Provides transparent data usage information. Supports data export and deletion.</string>
+    <string name="about_privacy_acknowledgement">By continuing to use this app, you acknowledge that you have read and understood this privacy policy.</string>
+
+    <!-- Assets -->
+    <string name="assets_tab_cash">Cash</string>
+    <string name="assets_tab_stock">Stock</string>
+    <string name="assets_currency_twd">TWD</string>
+    <string name="assets_currency_usd">USD</string>
+    <string name="assets_cash_title">%1$s Cash</string>
+    <string name="assets_amount_placeholder">Enter amount (e.g., 1000.50)</string>
+    <string name="assets_stock_symbol_placeholder">e.g., VT, AAPL, TSMC</string>
+    <string name="assets_search_results_count">Search Results (%1$d):</string>
+    <string name="assets_search_no_match">No matching stocks found, please check the symbol</string>
+    <string name="assets_shares_placeholder">Enter number of shares</string>
+    <string name="assets_empty_cash">No cash assets found</string>
+    <string name="assets_empty_stock">No stock assets found</string>
+    <string name="assets_cash_currency_label">Currency</string>
+    <string name="assets_cash_original_amount">Original: %1$s %2$s</string>
+    <string name="assets_cash_twd_value">TWD: %1$s</string>
+    <string name="cash_update_existing">Existing %1$s amount detected. Updating the previous value.</string>
+    <string name="assets_stock_symbol_market">%1$s (%2$s)</string>
+    <string name="assets_stock_shares_price">%1$s shares @ %2$s</string>
+    <string name="assets_stock_company_symbol">%1$s (%2$s)</string>
 
     <!-- Content Descriptions -->
     <string name="cd_open_settings">Open settings</string>
@@ -155,4 +213,11 @@
     <string name="cd_delete_cash_asset">Delete cash asset</string>
     <string name="cd_edit_stock_asset">Edit stock asset</string>
     <string name="cd_delete_stock_asset">Delete stock asset</string>
+    <string name="wear_sync_success">Wear sync completed</string>
+    <string name="wear_sync_missing_app">Wear app not installed</string>
+    <string name="wear_sync_failed">Wear sync failed</string>
+    <string name="sync_wear">Sync to Wear</string>
+    <string name="button_skip_authentication">Skip Authentication</string>
+    <string name="button_continue_without_biometric">Continue Without Biometric</string>
+    <string name="currency_twd_amount">NT$ %1$s</string>
 </resources>

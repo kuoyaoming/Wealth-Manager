@@ -53,7 +53,7 @@ fun TotalAssetsCardOptimized(
                 )
             } else {
                 Text(
-                    text = "NT$ ${formatCurrency(totalValue)}",
+                    text = stringResource(R.string.currency_twd_amount, formatCurrency(totalValue)),
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
@@ -100,14 +100,14 @@ fun CashAssetsCardOptimized(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Loading...",
+                        text = stringResource(R.string.loading),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             } else {
                 Text(
-                    text = "NT$ ${formatCurrency(cashValue)}",
+                    text = stringResource(R.string.currency_twd_amount, formatCurrency(cashValue)),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface
@@ -154,14 +154,14 @@ fun StockAssetsCardOptimized(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Loading...",
+                        text = stringResource(R.string.loading),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             } else {
                 Text(
-                    text = "NT$ ${formatCurrency(stockValue)}",
+                    text = stringResource(R.string.currency_twd_amount, formatCurrency(stockValue)),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface

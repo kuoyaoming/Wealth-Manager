@@ -1,6 +1,7 @@
 # Gradle files
 .gradle/
-build/
+**/build/
+!gradle/wrapper/gradle-wrapper.jar
 
 # Local configuration file (sdk path, etc)
 local.properties
@@ -19,13 +20,14 @@ captures/
 .externalNativeBuild/
 .cxx/
 *.aab
-# Allow APK files in project root for testing
-!*.apk
+*.apk
+outputs/
 output-metadata.json
 
-# IntelliJ
+# IntelliJ / VS Code
 *.iml
 .idea/
+.vscode/
 misc.xml
 deploymentTargetDropDown.xml
 render.experimental.xml
@@ -44,3 +46,12 @@ google-services.json
 
 # Android Profiling
 *.hprof
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Releases / Artifacts
+app/release/
+wear/release/
+dist/

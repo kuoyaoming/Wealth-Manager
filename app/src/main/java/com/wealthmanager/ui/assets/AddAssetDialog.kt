@@ -5,6 +5,7 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
+import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
@@ -16,6 +17,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
@@ -29,41 +31,45 @@ import kotlinx.coroutines.delay
 @Composable
 fun AddAssetDialog(
     onDismiss: () -> Unit,
+    cashCurrency: String,
+    cashAmount: String,
+    cashButtonLabelRes: Int,
+    onCurrencyChange: (String) -> Unit,
+    onCashAmountChange: (String) -> Unit,
     onAddCash: (String, Double) -> Unit,
     onAddStock: (String, Double) -> Unit,
     onSearchStocks: (String, String) -> Unit = { _, _ -> },
+    onSearchQueryChange: (String) -> Unit = {},
     searchResults: List<StockSearchItem> = emptyList(),
     isSearching: Boolean = false
 ) {
     val debugLogManager = remember { DebugLogManager() }
     val (hapticManager, view) = rememberHapticFeedbackWithView()
     var selectedTab by remember { mutableStateOf(0) }
-    var cashCurrency by remember { mutableStateOf("TWD") }
-    var cashAmount by remember { mutableStateOf("") }
-        var stockSymbol by remember { mutableStateOf("") }
-        var stockShares by remember { mutableStateOf("") }
-        var searchQuery by remember { mutableStateOf("") }
-        var showSearchResults by remember { mutableStateOf(false) }
-        var searchError by remember { mutableStateOf("") }
-        var pendingSearchQuery by remember { mutableStateOf("") }
+    val isUpdating = remember(cashButtonLabelRes) { cashButtonLabelRes == R.string.update }
+    var stockSymbol by remember { mutableStateOf("") }
+    var stockShares by remember { mutableStateOf("") }
+    var showSearchResults by remember { mutableStateOf(false) }
+    var searchError by remember { mutableStateOf("") }
     
+    LaunchedEffect(cashCurrency) { 
+        debugLogManager.log("UI", "Cash currency changed to: $cashCurrency")
+        debugLogManager.logUserAction("Cash Currency Changed")
+    }
+    LaunchedEffect(cashAmount) { 
+        debugLogManager.log("UI", "Cash amount changed to: $cashAmount")
+        debugLogManager.logUserAction("Cash Amount Changed")
+    }
+
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Add Asset Dialog Opened")
     }
     
-    // Immediate search logic - triggers search without delay
-    LaunchedEffect(pendingSearchQuery) {
-        if (pendingSearchQuery.isNotEmpty()) {
-            debugLogManager.log("UI", "Immediately triggering search for: $pendingSearchQuery")
-            debugLogManager.logUserAction("Immediate Stock Search Triggered")
-            onSearchStocks(pendingSearchQuery, "")
-            showSearchResults = true
-        }
-    }
+    // Debounced search is handled in ViewModel; this composable only forwards query changes
     
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Add Asset") },
+        title = { Text(stringResource(R.string.dialog_add_asset)) },
         text = {
             Column {
                 // Tab Selection
@@ -89,7 +95,7 @@ fun AddAssetDialog(
                             selected = selectedTab == 0,
                             onClick = null
                         )
-                        Text("Cash", modifier = Modifier.padding(start = 8.dp))
+                        Text(stringResource(R.string.assets_tab_cash), modifier = Modifier.padding(start = 8.dp))
                     }
                     Row(
                         modifier = Modifier
@@ -108,7 +114,7 @@ fun AddAssetDialog(
                             selected = selectedTab == 1,
                             onClick = null
                         )
-                        Text("Stock", modifier = Modifier.padding(start = 8.dp))
+                        Text(stringResource(R.string.assets_tab_stock), modifier = Modifier.padding(start = 8.dp))
                     }
                 }
                 
@@ -117,7 +123,7 @@ fun AddAssetDialog(
                 when (selectedTab) {
                     0 -> { // Cash
                         Column {
-                            Text("Currency")
+                            Text(stringResource(R.string.assets_cash_currency_label))
                             Spacer(modifier = Modifier.height(8.dp))
                             Row {
                                 Row(
@@ -128,7 +134,7 @@ fun AddAssetDialog(
                                             onClick = { 
                                                 debugLogManager.logUserAction("TWD Currency Selected")
                                                 debugLogManager.log("UI", "User selected TWD currency for cash asset")
-                                                cashCurrency = "TWD" 
+                                                onCurrencyChange("TWD")
                                             },
                                             role = Role.RadioButton
                                         )
@@ -137,7 +143,7 @@ fun AddAssetDialog(
                                         selected = cashCurrency == "TWD",
                                         onClick = null
                                     )
-                                    Text("TWD", modifier = Modifier.padding(start = 8.dp))
+                                    Text(stringResource(R.string.assets_currency_twd), modifier = Modifier.padding(start = 8.dp))
                                 }
                                 Row(
                                     modifier = Modifier
@@ -147,7 +153,7 @@ fun AddAssetDialog(
                                             onClick = { 
                                                 debugLogManager.logUserAction("USD Currency Selected")
                                                 debugLogManager.log("UI", "User selected USD currency for cash asset")
-                                                cashCurrency = "USD" 
+                                                onCurrencyChange("USD")
                                             },
                                             role = Role.RadioButton
                                         )
@@ -156,26 +162,33 @@ fun AddAssetDialog(
                                         selected = cashCurrency == "USD",
                                         onClick = null
                                     )
-                                    Text("USD", modifier = Modifier.padding(start = 8.dp))
+                                    Text(stringResource(R.string.assets_currency_usd), modifier = Modifier.padding(start = 8.dp))
                                 }
                             }
                             Spacer(modifier = Modifier.height(16.dp))
-                            Text("Amount")
+                            if (isUpdating) {
+                                Text(
+                                    text = stringResource(R.string.cash_update_existing, cashCurrency.uppercase()),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                )
+                                Spacer(modifier = Modifier.height(12.dp))
+                            }
+                            Text(stringResource(R.string.cash_amount))
                             Spacer(modifier = Modifier.height(8.dp))
                             OutlinedTextField(
                                 value = cashAmount,
                                 onValueChange = { 
                                     debugLogManager.log("UI", "User typing cash amount: $it")
-                                    // Allow decimal input for cash amounts
                                     if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
-                                        cashAmount = it
+                                        onCashAmountChange(it)
                                     }
                                 },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                                placeholder = { Text("Enter amount (e.g., 1000.50)") },
+                                placeholder = { Text(stringResource(R.string.assets_amount_placeholder)) },
                                 isError = cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null,
                                 supportingText = if (cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null) {
-                                    { Text("Please enter a valid number", color = MaterialTheme.colorScheme.error) }
+                                    { Text(stringResource(R.string.validation_enter_valid_number), color = MaterialTheme.colorScheme.error) }
                                 } else null,
                                 modifier = Modifier.fillMaxWidth()
                             )
@@ -183,39 +196,39 @@ fun AddAssetDialog(
                     }
                     1 -> { // Stock
                         Column {
-                            Text("Stock Symbol")
+                            Text(stringResource(R.string.stock_symbol))
                             Spacer(modifier = Modifier.height(8.dp))
                             OutlinedTextField(
                                 value = stockSymbol,
-                                    onValueChange = {
-                                        debugLogManager.log("UI", "User typing stock symbol: $it")
-                                        stockSymbol = it
-                                        searchQuery = it
-                                        searchError = "" // Clear previous errors
-                                        
-                                        if (it.isNotEmpty()) {
-                                            // Update pending search query, trigger immediate search
-                                            pendingSearchQuery = it
-                                            debugLogManager.log("UI", "Updated pending search query: $it (will search immediately)")
-                                        } else {
-                                            // Clear search related state
-                                            pendingSearchQuery = ""
-                                            showSearchResults = false
-                                            searchError = ""
-                                            debugLogManager.log("UI", "Cleared search query and results")
+                                onValueChange = {
+                                    debugLogManager.log("UI", "User typing stock symbol: $it")
+                                    stockSymbol = it
+                                    searchError = ""
+                                    onSearchQueryChange(it)
+                                    showSearchResults = it.isNotEmpty()
+                                },
+                                placeholder = { Text(stringResource(R.string.assets_stock_symbol_placeholder)) },
+                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Search),
+                                keyboardActions = KeyboardActions(
+                                    onSearch = {
+                                        if (stockSymbol.isNotEmpty()) {
+                                            debugLogManager.logUserAction("IME Search Triggered")
+                                            debugLogManager.log("UI", "IME Search for: $stockSymbol")
+                                            onSearchStocks(stockSymbol, "")
+                                            showSearchResults = true
                                         }
-                                    },
-                                placeholder = { Text("e.g., VT, AAPL, TSMC") },
+                                    }
+                                ),
                                 trailingIcon = {
                                     if (isSearching) {
                                         CircularProgressIndicator(modifier = Modifier.size(20.dp))
                                     } else {
                                         IconButton(onClick = { 
                                             debugLogManager.logUserAction("Manual Stock Search Clicked")
-                                            debugLogManager.log("UI", "User clicked manual search button for: $searchQuery")
+                                            debugLogManager.log("UI", "User clicked manual search button for: $stockSymbol")
                                             hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                                            if (searchQuery.isNotEmpty()) {
-                                                onSearchStocks(searchQuery, "")
+                                            if (stockSymbol.isNotEmpty()) {
+                                                onSearchStocks(stockSymbol, "")
                                                 showSearchResults = true
                                             }
                                         }) {
@@ -230,7 +243,7 @@ fun AddAssetDialog(
                             if (searchResults.isNotEmpty() && showSearchResults) {
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
-                                    text = "Search Results (${searchResults.size}):",
+                                    text = stringResource(R.string.assets_search_results_count, searchResults.size),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.onSurfaceVariant
                                 )
@@ -280,8 +293,8 @@ fun AddAssetDialog(
                                 ) {
                                     CircularProgressIndicator(modifier = Modifier.size(16.dp))
                                     Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = "Searching...",
+                                Text(
+                                    text = stringResource(R.string.searching),
                                         style = MaterialTheme.typography.bodySmall,
                                         color = MaterialTheme.colorScheme.onSurfaceVariant
                                     )
@@ -296,13 +309,13 @@ fun AddAssetDialog(
                             } else if (showSearchResults && searchResults.isEmpty() && !isSearching) {
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
-                                    text = "No matching stocks found, please check the symbol",
+                                    text = stringResource(R.string.assets_search_no_match),
                                     style = MaterialTheme.typography.bodySmall,
                                     color = MaterialTheme.colorScheme.error
                                 )
                             }
                             Spacer(modifier = Modifier.height(16.dp))
-                            Text("Shares")
+                            Text(stringResource(R.string.stock_shares))
                             Spacer(modifier = Modifier.height(8.dp))
                             OutlinedTextField(
                                 value = stockShares,
@@ -311,10 +324,10 @@ fun AddAssetDialog(
                                     stockShares = it 
                                 },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                placeholder = { Text("Enter number of shares") },
+                                placeholder = { Text(stringResource(R.string.assets_shares_placeholder)) },
                                 isError = stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null,
                                 supportingText = if (stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null) {
-                                    { Text("Please enter a valid number of shares", color = MaterialTheme.colorScheme.error) }
+                                    { Text(stringResource(R.string.validation_enter_valid_shares), color = MaterialTheme.colorScheme.error) }
                                 } else null,
                                 modifier = Modifier.fillMaxWidth()
                             )
@@ -328,7 +341,7 @@ fun AddAssetDialog(
                 onClick = {
                     debugLogManager.logUserAction("Add Asset Button Clicked")
                     hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
-                        when (selectedTab) {
+                    when (selectedTab) {
                         0 -> {
                             debugLogManager.log("UI", "Adding cash asset: $cashCurrency $cashAmount")
                             val amount = cashAmount.toDoubleOrNull()
@@ -350,7 +363,13 @@ fun AddAssetDialog(
                     }
                 }
             ) {
-                Text("Add")
+                Text(
+                    text = if (selectedTab == 0) {
+                        if (isUpdating) stringResource(R.string.update) else stringResource(R.string.add_cash)
+                    } else {
+                        stringResource(R.string.add_stock)
+                    }
+                )
             }
         },
         dismissButton = {
@@ -360,7 +379,7 @@ fun AddAssetDialog(
                 hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                 onDismiss() 
             }) {
-                Text("Cancel")
+                Text(stringResource(R.string.dialog_cancel))
             }
         }
     )

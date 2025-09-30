@@ -6,6 +6,7 @@ import com.wealthmanager.R
 import com.wealthmanager.auth.AuthStateManager
 import com.wealthmanager.backup.BackupPreferencesManager
 import com.wealthmanager.data.FirstLaunchManager
+import com.wealthmanager.data.service.ApiTestService
 import com.wealthmanager.preferences.LocalePreferencesManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
@@ -18,7 +19,9 @@ data class SettingsUiState(
     val biometricEnabled: Boolean = false,
     val financialBackupEnabled: Boolean = false,
     val currentLanguageCode: String = "",
-    val availableLanguages: List<LanguageOption> = emptyList()
+    val availableLanguages: List<LanguageOption> = emptyList(),
+    val apiTestResults: List<ApiTestService.ApiTestResult> = emptyList(),
+    val isTestingApis: Boolean = false
 )
 
 data class LanguageOption(
@@ -31,6 +34,7 @@ class SettingsViewModel @Inject constructor(
     private val authStateManager: AuthStateManager,
     private val backupPreferencesManager: BackupPreferencesManager,
     private val localePreferencesManager: LocalePreferencesManager,
+    private val apiTestService: ApiTestService,
     val firstLaunchManager: FirstLaunchManager
 ) : ViewModel() {
 
@@ -66,6 +70,24 @@ class SettingsViewModel @Inject constructor(
         viewModelScope.launch {
             localePreferencesManager.setLanguageCode(languageCode)
             _uiState.value = _uiState.value.copy(currentLanguageCode = languageCode)
+        }
+    }
+    
+    /**
+     * Test all API keys
+     */
+    fun testApiKeys() {
+        viewModelScope.launch {
+            _uiState.value = _uiState.value.copy(isTestingApis = true)
+            try {
+                val results = apiTestService.testAllApis()
+                _uiState.value = _uiState.value.copy(
+                    apiTestResults = results,
+                    isTestingApis = false
+                )
+            } catch (e: Exception) {
+                _uiState.value = _uiState.value.copy(isTestingApis = false)
+            }
         }
     }
 }

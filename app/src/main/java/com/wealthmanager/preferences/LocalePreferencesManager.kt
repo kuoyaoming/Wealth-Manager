@@ -2,6 +2,7 @@ package com.wealthmanager.preferences
 
 import android.content.Context
 import dagger.hilt.android.qualifiers.ApplicationContext
+import java.util.Locale
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -10,7 +11,16 @@ class LocalePreferencesManager @Inject constructor(
     @ApplicationContext private val appContext: Context
 ) {
 
-    fun getLanguageCode(): String = getStoredLanguage(appContext)
+    fun getLanguageCode(): String {
+        val storedLanguage = getStoredLanguage(appContext)
+        if (storedLanguage.isNotBlank()) {
+            return storedLanguage
+        }
+
+        val defaultLanguage = resolveDefaultLanguage(Locale.getDefault())
+        setStoredLanguage(appContext, defaultLanguage)
+        return defaultLanguage
+    }
 
     fun setLanguageCode(languageCode: String) {
         setStoredLanguage(appContext, languageCode)
@@ -38,6 +48,14 @@ class LocalePreferencesManager @Inject constructor(
                 prefs.edit().putString(KEY_LANGUAGE_CODE, languageCode).apply()
             } catch (e: Exception) {
                 // Ignore if there's any issue saving preferences
+            }
+        }
+
+        private fun resolveDefaultLanguage(locale: Locale): String {
+            return if (locale.language.equals("zh", ignoreCase = true)) {
+                "zh-TW"
+            } else {
+                "en"
             }
         }
     }

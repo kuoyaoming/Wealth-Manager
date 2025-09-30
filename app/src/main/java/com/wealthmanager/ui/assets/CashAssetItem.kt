@@ -52,12 +52,19 @@ fun CashAssetItem(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "${asset.currency} ${formatCurrency(asset.amount)}",
+                    text = stringResource(
+                        R.string.assets_cash_original_amount,
+                        formatCurrency(asset.amount),
+                        asset.currency
+                    ),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "NT$ ${formatCurrency(asset.twdEquivalent)}",
+                    text = stringResource(
+                        R.string.assets_cash_twd_value,
+                        stringResource(R.string.currency_twd_amount, formatCurrency(asset.twdEquivalent))
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )

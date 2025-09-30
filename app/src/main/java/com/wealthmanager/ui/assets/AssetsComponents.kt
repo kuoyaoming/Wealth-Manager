@@ -43,17 +43,24 @@ fun CashAssetItem(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "${asset.currency} Cash",
+                    text = stringResource(R.string.assets_cash_title, asset.currency),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "Original: ${formatCurrency(asset.amount)} ${asset.currency}",
+                    text = stringResource(
+                        R.string.assets_cash_original_amount,
+                        formatCurrency(asset.amount),
+                        asset.currency
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = "TWD: NT$ ${formatCurrency(asset.twdEquivalent)}",
+                    text = stringResource(
+                        R.string.assets_cash_twd_value,
+                        stringResource(R.string.currency_twd_amount, formatCurrency(asset.twdEquivalent))
+                    ),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.primary
@@ -93,17 +100,28 @@ fun StockAssetItem(
                 modifier = Modifier.weight(1f)
             ) {
                 Text(
-                    text = "${asset.companyName} (${asset.symbol})",
+                    text = stringResource(
+                        R.string.assets_stock_company_symbol,
+                        asset.companyName,
+                        asset.symbol
+                    ),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "${asset.shares} shares @ ${formatCurrency(asset.currentPrice)} ${asset.originalCurrency}",
+                    text = stringResource(
+                        R.string.assets_stock_shares_price,
+                        formatCurrency(asset.shares),
+                        formatCurrency(asset.currentPrice)
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = "TWD: NT$ ${formatCurrency(asset.twdEquivalent)}",
+                    text = stringResource(
+                        R.string.assets_cash_twd_value,
+                        stringResource(R.string.currency_twd_amount, formatCurrency(asset.twdEquivalent))
+                    ),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.primary

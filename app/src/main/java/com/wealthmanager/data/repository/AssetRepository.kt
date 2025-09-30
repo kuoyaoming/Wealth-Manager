@@ -8,6 +8,7 @@ import com.wealthmanager.data.entity.ExchangeRate
 import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.debug.DebugLogManager
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -53,8 +54,15 @@ class AssetRepository @Inject constructor(
     
     suspend fun getTotalCashValueInTWD(): Double? = cashAssetDao.getTotalCashValueInTWD()
     
+    suspend fun getCashAssetByCurrencySync(currency: String): CashAsset? =
+        cashAssetDao.getCashAssetByCurrencySync(currency)
+    
     // Stock Assets
     fun getAllStockAssets(): Flow<List<StockAsset>> = stockAssetDao.getAllStockAssets()
+
+    suspend fun getAllCashAssetsSync(): List<CashAsset> = cashAssetDao.getAllCashAssets().first()
+
+    suspend fun getAllStockAssetsSync(): List<StockAsset> = stockAssetDao.getAllStockAssets().first()
     
     fun getStockAssetsByMarket(market: String): Flow<List<StockAsset>> = 
         stockAssetDao.getStockAssetsByMarket(market)

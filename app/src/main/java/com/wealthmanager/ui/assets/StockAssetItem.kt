@@ -52,17 +52,28 @@ fun StockAssetItem(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = "${asset.symbol} (${asset.market})",
+                    text = stringResource(
+                        R.string.assets_stock_symbol_market,
+                        asset.symbol,
+                        asset.market
+                    ),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium
                 )
                 Text(
-                    text = "${asset.shares} shares @ ${formatCurrency(asset.currentPrice)}",
+                    text = stringResource(
+                        R.string.assets_stock_shares_price,
+                        formatCurrency(asset.shares),
+                        formatCurrency(asset.currentPrice)
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
                 Text(
-                    text = "NT$ ${formatCurrency(asset.twdEquivalent)}",
+                    text = stringResource(
+                        R.string.assets_cash_twd_value,
+                        stringResource(R.string.currency_twd_amount, formatCurrency(asset.twdEquivalent))
+                    ),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.primary

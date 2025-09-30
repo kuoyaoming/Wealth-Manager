@@ -62,6 +62,34 @@
     <string name="language">語言</string>
     <string name="theme">主題</string>
     <string name="about">關於</string>
+    <string name="settings_financial_backup_title">財務備份</string>
+    <string name="settings_financial_backup_desc">決定是否將財務資料納入 Android Auto Backup。</string>
+    <string name="settings_biometric_title">生物識別登入</string>
+    <string name="settings_biometric_desc">若停用，下次登入不需生物識別。若要重新啟用，請回登入畫面完成驗證。</string>
+    <string name="settings_status_enabled">已啟用</string>
+    <string name="settings_status_disabled">未啟用</string>
+    <string name="settings_view">檢視</string>
+    <string name="backup_warning_title">備份安全提醒</string>
+    <string name="backup_warning_message">您的財務資料將納入 Android Auto Backup。
+
+請務必使用強密碼與雙重驗證，您可隨時於設定中停用此功能。</string>
+    <string name="enable_backup_confirm">啟用備份</string>
+    <string name="settings_about_title">關於 Wealth Manager</string>
+    <string name="settings_about_desc">查看應用程式版本並了解資料使用方式。</string>
+    <string name="settings_haptic_title">觸覺回饋設定</string>
+    <string name="settings_haptic_enable">啟用觸覺回饋</string>
+    <string name="settings_haptic_enable_desc">為按鈕互動提供觸覺回饋</string>
+    <string name="settings_haptic_sound_enable">啟用音效回饋</string>
+    <string name="settings_haptic_sound_desc">操作時播放音效</string>
+    <string name="settings_sound_enable">啟用音效回饋</string>
+    <string name="settings_sound_enable_desc">操作時播放音效</string>
+    <string name="settings_haptic_intensity">觸覺強度</string>
+    <string name="settings_haptic_intensity_light">輕度</string>
+    <string name="settings_haptic_intensity_medium">中度</string>
+    <string name="settings_haptic_intensity_strong">強烈</string>
+    <string name="settings_haptic_intensity_confirm">確認</string>
+    <string name="settings_haptic_test_title">測試觸覺回饋</string>
+    <string name="settings_haptic_test_desc">點擊下方按鈕預覽各種強度</string>
     
     <!-- Common -->
     <string name="loading">載入中...</string>
@@ -70,6 +98,9 @@
     <string name="delete">刪除</string>
     <string name="edit">編輯</string>
     <string name="confirm">確認</string>
+    <string name="searching">搜尋中...</string>
+    <string name="action_later">稍後</string>
+    <string name="action_i_understand">了解</string>
     
     <!-- Error Messages -->
     <string name="error_network">網路錯誤，請檢查您的連線</string>
@@ -84,13 +115,131 @@
     <string name="api_error_connection_issue">連線問題</string>
     <string name="api_error_show_cached_data">顯示上次更新的資料，點擊重試以獲取最新資訊</string>
     <string name="api_error_retry">重試</string>
+    <string name="settings_api_check_title">API 金鑰檢查</string>
+    <string name="settings_api_check_desc">檢查 API 金鑰是否正常運作</string>
+    <string name="settings_api_test_button">測試 API 金鑰</string>
+    <string name="settings_api_testing">測試中...</string>
+    <string name="settings_api_working">API 正常</string>
+    <string name="settings_api_error">API 錯誤</string>
+    <string name="settings_api_manual_search">搜尋結果（%1$d 筆）:</string>
     
+    <!-- Input Validation -->
+    <string name="validation_enter_valid_number">請輸入有效數字。</string>
+    <string name="validation_enter_valid_shares">請輸入有效股數。</string>
+    <string name="validation_search_minimum_chars">請輸入至少 3 個字元進行搜尋。</string>
+    <string name="validation_no_matching_stock">查無符合的股票，請確認代號。</string>
+
+    <!-- Search Error Messages -->
+    <string name="search_error_api_limit">API 請求次數已達上限，請明天再試。</string>
+    <string name="search_error_stock_not_found">找不到股票代碼，請確認是否正確。</string>
+    <string name="search_error_network">網路連線異常，請檢查設定。</string>
+    <string name="search_error_server">伺服器暫時無法使用，請稍後再試。</string>
+    <string name="search_error_invalid_api_key">API 金鑰無效，請聯絡技術支援。</string>
+    <string name="search_error_authentication">API 驗證失敗，請確認金鑰設定。</string>
+    <string name="search_error_rate_limit">請求速度過快，請稍後再試。</string>
+    <string name="search_error_unknown">發生未知錯誤，請重新啟動應用程式。</string>
+    <string name="search_error_invalid_query">請輸入至少 2 個字元進行搜尋。</string>
+    <string name="search_error_api_limit_reached">API 請求次數已達上限，請明天再試。</string>
+
+    <!-- Dialog Messages -->
+    <string name="dialog_add_asset">新增資產</string>
+    <string name="dialog_edit_cash_asset">編輯現金資產</string>
+    <string name="dialog_edit_stock_asset">編輯股票資產</string>
+    <string name="dialog_save">儲存</string>
+    <string name="dialog_cancel">取消</string>
+
     <!-- About Dialog -->
     <string name="about_title">關於財富管理</string>
-    <string name="about_version">版本 1.0.5</string>
-    <string name="about_description">一個全面的個人理財管理應用程式，幫助您追蹤資產、監控股票投資，並透過即時市場數據管理您的財務投資組合。</string>
+    <string name="about_version">版本 1.2.0</string>
+    <string name="about_description">一個全面的個人理財應用程式，協助您追蹤資產、監控股票投資，並透過即時市場數據管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地儲存。</string>
+    <string name="about_app_information_title">應用程式資訊</string>
+    <string name="about_information_description">一個全面的個人理財管理應用程式，協助您追蹤資產、監控股票投資，並透過即時市場數據管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地資料儲存。</string>
+    <string name="about_data_usage_title">資料使用政策</string>
+    <string name="about_data_usage_description">您的財務資料儲存在裝置本機，未經您允許絕不傳輸至外部伺服器。</string>
+    <string name="about_data_usage_points">• 現金、股票等資產資料以 Android Room 本地資料庫儲存
+• 生物識別資料由 Android 安全硬體處理
+• 不會蒐集或傳輸任何個人財務資料
+• 所有計算均在裝置本地執行</string>
+    <string name="about_third_party_title">第三方 API 使用</string>
+    <string name="about_third_party_description">本應用程式使用以下第三方服務：</string>
+    <string name="about_third_party_points">• Finnhub API：即時股票價格與市場數據
+  - 限額：每分鐘 60 次（免費方案）
+  - 資料：股票報價、股票搜尋、外匯匯率
+  - 隱私：僅傳輸股票代號與市場資料
+
+• Exchange Rate API：貨幣匯率轉換
+  - 限額：每月 1000 次（免費方案）
+  - 資料：多種貨幣的即時匯率
+  - 隱私：僅傳輸貨幣代碼
+
+• TWSE API：台灣證券交易所資料
+  - 公開 API，無使用次數限制
+  - 資料：台灣股票價格與市場資訊
+  - 隱私：僅傳輸股票代號
+
+• Android Biometric API：安全驗證
+  - 由 Android 安全硬體處理
+  - 不儲存或傳輸任何生物識別資料</string>
+    <string name="about_security_title">安全與合規</string>
+    <string name="about_security_points">• 全部資料使用 Android 內建加密保護
+• 生物識別驗證提供安全存取
+• 未經使用者同意不會進行網路請求
+• 透過速率限制監控 API 使用
+• 本地資料庫受 Android 應用程式沙箱保護
+• 不使用第三方分析或追蹤服務</string>
+    <string name="about_privacy_title">隱私政策</string>
+    <string name="about_privacy_description">我們致力於保護您的隱私與財務資料，本應用程式：</string>
+    <string name="about_privacy_points">• 不蒐集個人資訊
+• 不與第三方分享資料
+• 所有資料儲存在裝置本機
+• 採用安全、業界標準的加密技術
+• 遵循 Android 隱私指引
+• 提供透明的資料使用說明</string>
+    <string name="about_privacy_acknowledgement">繼續使用本應用程式，即表示您已閱讀並理解本隱私政策。</string>
 
     <string name="language_option_english">English</string>
     <string name="language_option_traditional_chinese">繁體中文</string>
     <string name="language_change_requires_restart">切換語言需重新啟動應用程式後生效。</string>
+
+    <!-- Assets -->
+    <string name="assets_tab_cash">現金</string>
+    <string name="assets_tab_stock">股票</string>
+    <string name="assets_currency_twd">台幣</string>
+    <string name="assets_currency_usd">美金</string>
+    <string name="assets_cash_title">%1$s 現金</string>
+    <string name="assets_amount_placeholder">輸入金額（例如 1000.50）</string>
+    <string name="assets_stock_symbol_placeholder">例如：VT、AAPL、TSMC</string>
+    <string name="assets_search_results_count">搜尋結果（%1$d 筆）:</string>
+    <string name="assets_search_no_match">查無符合的股票，請確認代號</string>
+    <string name="assets_shares_placeholder">輸入股數</string>
+    <string name="assets_empty_cash">尚未新增任何現金資產</string>
+    <string name="assets_empty_stock">尚未新增任何股票資產</string>
+    <string name="assets_cash_currency_label">幣別</string>
+    <string name="assets_cash_original_amount">原始金額：%1$s %2$s</string>
+    <string name="assets_cash_twd_value">台幣：%1$s</string>
+    <string name="cash_update_existing">偵測到現有的 %1$s 金額，將更新先前的數值。</string>
+    <string name="assets_stock_symbol_market">%1$s（%2$s）</string>
+    <string name="assets_stock_shares_price">%1$s 股 @ %2$s</string>
+    <string name="assets_stock_company_symbol">%1$s（%2$s）</string>
+
+    <!-- Content Descriptions -->
+    <string name="cd_open_settings">開啟設定</string>
+    <string name="cd_add_asset">新增資產</string>
+    <string name="cd_back_to_dashboard">返回儀表板</string>
+    <string name="cd_warning">警告</string>
+    <string name="cd_retry">重試動作</string>
+    <string name="cd_dismiss">關閉</string>
+    <string name="cd_close">關閉對話框</string>
+    <string name="cd_search">搜尋</string>
+    <string name="cd_edit_cash_asset">編輯現金資產</string>
+    <string name="cd_delete_cash_asset">刪除現金資產</string>
+    <string name="cd_edit_stock_asset">編輯股票資產</string>
+    <string name="cd_delete_stock_asset">刪除股票資產</string>
+    <string name="wear_sync_success">穿戴裝置同步完成</string>
+    <string name="wear_sync_missing_app">未安裝穿戴裝置應用程式</string>
+    <string name="wear_sync_failed">穿戴裝置同步失敗</string>
+    <string name="sync_wear">同步到穿戴裝置</string>
+    <string name="button_skip_authentication">略過驗證</string>
+    <string name="button_continue_without_biometric">不使用生物識別繼續</string>
+    <string name="currency_twd_amount">NT$ %1$s</string>
 </resources>

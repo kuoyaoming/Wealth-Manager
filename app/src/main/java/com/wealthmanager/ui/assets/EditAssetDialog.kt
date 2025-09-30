@@ -11,6 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.res.stringResource
+import com.wealthmanager.R
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.debug.DebugLogManager
@@ -36,10 +38,10 @@ fun EditCashAssetDialog(
     
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Edit Cash Asset") },
+        title = { Text(stringResource(R.string.dialog_edit_cash_asset)) },
         text = {
             Column {
-                Text("Currency")
+                Text(stringResource(R.string.assets_cash_currency_label))
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth().selectableGroup(),
@@ -65,7 +67,9 @@ fun EditCashAssetDialog(
                                 onClick = null
                             )
                             Text(
-                                text = text,
+                                text = stringResource(
+                                    if (text == "TWD") R.string.assets_currency_twd else R.string.assets_currency_usd
+                                ),
                                 style = MaterialTheme.typography.bodyLarge,
                                 modifier = Modifier.padding(start = 8.dp)
                             )
@@ -73,7 +77,7 @@ fun EditCashAssetDialog(
                     }
                 }
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("Amount")
+                Text(stringResource(R.string.cash_amount))
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = amount,
@@ -85,10 +89,10 @@ fun EditCashAssetDialog(
                         }
                     },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    placeholder = { Text("Enter amount (e.g., 1000.50)") },
+                    placeholder = { Text(stringResource(R.string.assets_amount_placeholder)) },
                     isError = amount.isNotEmpty() && amount.toDoubleOrNull() == null,
                     supportingText = if (amount.isNotEmpty() && amount.toDoubleOrNull() == null) {
-                        { Text("Please enter a valid number", color = MaterialTheme.colorScheme.error) }
+                        { Text(stringResource(R.string.validation_enter_valid_number), color = MaterialTheme.colorScheme.error) }
                     } else null,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -114,7 +118,7 @@ fun EditCashAssetDialog(
                     }
                 }
             ) {
-                Text("Save")
+                Text(stringResource(R.string.dialog_save))
             }
         },
         dismissButton = {
@@ -124,7 +128,7 @@ fun EditCashAssetDialog(
                 hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                 onDismiss()
             }) {
-                Text("Cancel")
+                Text(stringResource(R.string.dialog_cancel))
             }
         }
     )
@@ -148,13 +152,13 @@ fun EditStockAssetDialog(
     
     AlertDialog(
         onDismissRequest = onDismiss,
-        title = { Text("Edit Stock Asset") },
+        title = { Text(stringResource(R.string.dialog_edit_stock_asset)) },
         text = {
             Column {
-                Text("Stock: ${asset.symbol}")
-                Text("Company: ${asset.companyName}")
+                Text(stringResource(R.string.assets_stock_symbol_market, asset.symbol, asset.market))
+                Text(stringResource(R.string.assets_stock_company_symbol, asset.companyName, asset.symbol))
                 Spacer(modifier = Modifier.height(16.dp))
-                Text("Shares")
+                Text(stringResource(R.string.stock_shares))
                 Spacer(modifier = Modifier.height(8.dp))
                 OutlinedTextField(
                     value = shares,
@@ -163,10 +167,10 @@ fun EditStockAssetDialog(
                         shares = it
                     },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                    placeholder = { Text("Enter shares") },
+                    placeholder = { Text(stringResource(R.string.assets_shares_placeholder)) },
                     isError = shares.isNotEmpty() && shares.toDoubleOrNull() == null,
                     supportingText = if (shares.isNotEmpty() && shares.toDoubleOrNull() == null) {
-                        { Text("Please enter a valid number of shares", color = MaterialTheme.colorScheme.error) }
+                        { Text(stringResource(R.string.validation_enter_valid_shares), color = MaterialTheme.colorScheme.error) }
                     } else null,
                     modifier = Modifier.fillMaxWidth()
                 )
@@ -190,7 +194,7 @@ fun EditStockAssetDialog(
                     }
                 }
             ) {
-                Text("Save")
+                Text(stringResource(R.string.dialog_save))
             }
         },
         dismissButton = {
@@ -200,7 +204,7 @@ fun EditStockAssetDialog(
                 hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                 onDismiss()
             }) {
-                Text("Cancel")
+                Text(stringResource(R.string.dialog_cancel))
             }
         }
     )

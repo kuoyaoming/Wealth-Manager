@@ -7,15 +7,17 @@ import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.data.repository.AssetRepository
 import com.wealthmanager.data.service.ApiStatus
 import com.wealthmanager.data.service.ApiStatusManager
-import com.wealthmanager.data.service.ApiUsageManager
 import com.wealthmanager.data.service.MarketDataService
 import com.wealthmanager.debug.DebugLogManager
+import com.wealthmanager.wear.WearSyncManager
+import com.wealthmanager.wear.WearSyncManager.ManualSyncResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -25,11 +27,15 @@ class DashboardViewModel @Inject constructor(
     private val marketDataService: MarketDataService,
     private val debugLogManager: DebugLogManager,
     private val apiStatusManager: ApiStatusManager,
+    private val wearSyncManager: WearSyncManager,
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
     val apiStatus: StateFlow<ApiStatus> = apiStatusManager.apiStatus
+    
+    private val _manualSyncStatus = MutableStateFlow<ManualSyncStatus?>(null)
+    val manualSyncStatus: StateFlow<ManualSyncStatus?> = _manualSyncStatus.asStateFlow()
     
     init {
         debugLogManager.log("DASHBOARD", "DashboardViewModel initialized")
@@ -48,6 +54,9 @@ class DashboardViewModel @Inject constructor(
                 val totalCash = cashAssets.sumOf { it.twdEquivalent }
                 val totalStock = stockAssets.sumOf { it.twdEquivalent }
                 val totalAssets = totalCash + totalStock
+                val lastUpdatedCash = cashAssets.maxOfOrNull { it.lastUpdated } ?: 0L
+                val lastUpdatedStock = stockAssets.maxOfOrNull { it.lastUpdated } ?: 0L
+                val lastUpdated = maxOf(lastUpdatedCash, lastUpdatedStock, System.currentTimeMillis())
                 
                 debugLogManager.log("DASHBOARD", "Total Assets: $totalAssets, Cash: $totalCash, Stock: $totalStock")
                 
@@ -58,6 +67,20 @@ class DashboardViewModel @Inject constructor(
                     assets = cashAssets.map { it.toAssetItem() } + stockAssets.map { it.toAssetItem() },
                     isLoading = false
                 )
+
+                viewModelScope.launch {
+                    debugLogManager.log("WEAR_SYNC", "Starting wear sync - total: $totalAssets, lastUpdated: $lastUpdated")
+                    try {
+                        wearSyncManager.syncTotalsFromDashboard(
+                            totalAssets = totalAssets,
+                            lastUpdated = lastUpdated,
+                            hasError = false
+                        )
+                        debugLogManager.log("WEAR_SYNC", "Wear sync completed successfully")
+                    } catch (e: Exception) {
+                        debugLogManager.logError("WEAR_SYNC: Failed to sync to wear: ${e.message}", e)
+                    }
+                }
             }.collect { }
         }
     }
@@ -115,6 +138,14 @@ class DashboardViewModel @Inject constructor(
                 debugLogManager.logError("Failed to refresh data: ${e.message}", e)
                 apiStatusManager.setApiError("Server busy, please try again later", isDataStale = true, isRetrying = false)
                 _uiState.value = _uiState.value.copy(isLoading = false)
+
+                viewModelScope.launch {
+                    wearSyncManager.syncTotalsFromDashboard(
+                        totalAssets = _uiState.value.totalAssets,
+                        lastUpdated = System.currentTimeMillis(),
+                        hasError = true
+                    )
+                }
             }
         }
     }
@@ -127,6 +158,26 @@ class DashboardViewModel @Inject constructor(
     fun dismissApiError() {
         debugLogManager.logUserAction("Dismiss API Error")
         apiStatusManager.clearError()
+    }
+
+    fun manualSyncToWear() {
+        val currentState = _uiState.value
+        viewModelScope.launch {
+            _manualSyncStatus.value = ManualSyncStatus.InProgress
+            when (val result = wearSyncManager.manualSync(
+                totalAssets = currentState.totalAssets,
+                lastUpdated = System.currentTimeMillis(),
+                hasError = false
+            )) {
+                ManualSyncResult.Success -> _manualSyncStatus.value = ManualSyncStatus.Success
+                ManualSyncResult.WearAppNotInstalled -> _manualSyncStatus.value = ManualSyncStatus.WearAppMissing
+                is ManualSyncResult.Failure -> _manualSyncStatus.value = ManualSyncStatus.Failure(result.reason)
+            }
+        }
+    }
+
+    fun clearManualSyncStatus() {
+        _manualSyncStatus.value = null
     }
 }
 
@@ -159,4 +210,11 @@ private fun CashAsset.toAssetItem(): AssetItem {
         name = "$currency $amount",
         value = twdEquivalent
     )
+}
+
+sealed class ManualSyncStatus {
+    object InProgress : ManualSyncStatus()
+    object Success : ManualSyncStatus()
+    data class Failure(val reason: String? = null) : ManualSyncStatus()
+    object WearAppMissing : ManualSyncStatus()
 }
