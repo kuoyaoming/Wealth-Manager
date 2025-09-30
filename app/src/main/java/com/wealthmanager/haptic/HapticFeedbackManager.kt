@@ -20,35 +20,35 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 觸覺回饋管理器
- * 提供不同強度的觸覺回饋和音效回饋
+ * Haptic feedback manager
+ * Provides haptic and sound feedback with multiple intensity levels
  */
 @Singleton
 class HapticFeedbackManager @Inject constructor() {
     
     /**
-     * 觸覺回饋強度等級
+     * Haptic feedback intensity levels
      */
     enum class HapticIntensity {
-        LIGHT,      // 輕微 - 導航操作
-        MEDIUM,     // 中等 - 一般操作
-        STRONG,     // 強烈 - 重要操作
-        CONFIRM     // 確認 - 關鍵操作
+        LIGHT,      // Light - navigation actions
+        MEDIUM,     // Medium - general actions
+        STRONG,     // Strong - important actions
+        CONFIRM     // Confirm - critical actions
     }
     
     /**
-     * 觸覺回饋類型
+     * Haptic feedback types
      */
     enum class HapticType {
-        TAP,        // 點擊
-        LONG_PRESS, // 長按
-        SUCCESS,    // 成功
-        ERROR,      // 錯誤
-        SELECTION   // 選擇
+        TAP,        // Tap
+        LONG_PRESS, // Long press
+        SUCCESS,    // Success
+        ERROR,      // Error
+        SELECTION   // Selection
     }
     
     /**
-     * 觸覺回饋設置
+     * Haptic feedback settings
      */
     data class HapticSettings(
         val hapticEnabled: Boolean = true,
@@ -59,19 +59,19 @@ class HapticFeedbackManager @Inject constructor() {
     private var settings = HapticSettings()
     
     /**
-     * 更新觸覺回饋設置
+     * Update haptic feedback settings
      */
     fun updateSettings(newSettings: HapticSettings) {
         settings = newSettings
     }
     
     /**
-     * 獲取當前設置
+     * Get current settings
      */
     fun getSettings(): HapticSettings = settings
     
     /**
-     * 觸發觸覺回饋
+     * Trigger haptic feedback
      */
     fun triggerHaptic(
         view: View,
@@ -91,7 +91,7 @@ class HapticFeedbackManager @Inject constructor() {
     }
     
     /**
-     * 觸發震動回饋（用於更強烈的回饋）
+     * Trigger vibration feedback (for stronger feedback)
      */
     fun triggerVibration(
         context: Context,
@@ -127,7 +127,7 @@ class HapticFeedbackManager @Inject constructor() {
     }
     
     /**
-     * 觸發成功回饋
+     * Trigger success feedback
      */
     fun triggerSuccess(view: View, context: Context) {
         triggerHaptic(view, HapticIntensity.CONFIRM, HapticType.SUCCESS)
@@ -135,7 +135,7 @@ class HapticFeedbackManager @Inject constructor() {
     }
     
     /**
-     * 觸發錯誤回饋
+     * Trigger error feedback
      */
     fun triggerError(view: View, context: Context) {
         triggerHaptic(view, HapticIntensity.STRONG, HapticType.ERROR)
@@ -143,14 +143,14 @@ class HapticFeedbackManager @Inject constructor() {
     }
     
     /**
-     * 觸發選擇回饋
+     * Trigger selection feedback
      */
     fun triggerSelection(view: View) {
         triggerHaptic(view, HapticIntensity.LIGHT, HapticType.SELECTION)
     }
     
     /**
-     * 觸發導航回饋
+     * Trigger navigation feedback
      */
     fun triggerNavigation(view: View) {
         triggerHaptic(view, HapticIntensity.LIGHT, HapticType.TAP)
@@ -158,7 +158,7 @@ class HapticFeedbackManager @Inject constructor() {
 }
 
 /**
- * Compose 中的觸覺回饋 Hook
+ * Haptic feedback hook for Compose
  */
 @Composable
 fun rememberHapticFeedback(): HapticFeedbackManager {
@@ -166,7 +166,7 @@ fun rememberHapticFeedback(): HapticFeedbackManager {
 }
 
 /**
- * 獲取當前 View 和 Context 的觸覺回饋管理器
+ * Get haptic feedback manager with current View
  */
 @Composable
 fun rememberHapticFeedbackWithView(): Pair<HapticFeedbackManager, View> {
@@ -176,7 +176,7 @@ fun rememberHapticFeedbackWithView(): Pair<HapticFeedbackManager, View> {
 }
 
 /**
- * Hilt 模組用於提供觸覺回饋管理器
+ * Hilt module to provide the haptic feedback manager
  */
 @Module
 @InstallIn(SingletonComponent::class)

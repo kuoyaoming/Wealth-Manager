@@ -1,6 +1,6 @@
 # Wealth Manager
 
-一個使用 Jetpack Compose 建構的現代個人理財追蹤應用程式。具備生物識別安全、本地資產管理、即時市場數據、智能 API 切換和性能優化功能。
+一款以 Jetpack Compose 打造的現代化 Android 個人理財追蹤應用。提供本機加密儲存、生物識別驗證、即時市場數據（Finnhub、TWSE、匯率）、多語系介面，以及 120Hz 與觸覺回饋最佳化。
 
 **語言**: [English](README.md) | [繁體中文](README_zh.md)
 
@@ -11,7 +11,7 @@
 - 📊 **即時市場數據** - 透過 Finnhub API、TWSE API 和匯率 API
 - 🎨 **Material You** - 動態主題設計，響應式佈局
 - 🌍 **多語言支援** - 英文和繁體中文，即時切換
-- 📱 **Android 16** - 最新 Android 功能，120Hz 性能優化
+- 📱 **Android 16 目標** - 以 API 36 為目標，並針對 120Hz 最佳化
 - ⚡ **性能監控** - 即時性能追蹤和優化
 - 🗄️ **智能快取** - 智能快取管理，離線支援
 
@@ -85,7 +85,7 @@
    ./docs/setup/setup-dev.sh
    ```
 
-2. **遵循設定指南**: [API 設定指南](docs/api/API_SETUP.md)
+2. **遵循設定指南**：參考 [API 設定指南](docs/api/API_SETUP.md)
 
 ### 安全功能
 
@@ -135,7 +135,7 @@
 ## 安裝說明
 
 ```bash
-# 複製專案
+# 複製專案（或你的 fork）
 git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
 # 建置專案
@@ -147,9 +147,10 @@ git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
 ## 系統需求
 
-- Android 16+ (API 36)
-- 生物識別認證 (建議)
-- 網路連線 (市場數據)
+- 最低支援：Android 14+（API 34+）
+- 目標版本：Android 16（API 36）
+- 生物識別認證（建議）
+- 網路連線（市場數據）
 - 最少 100MB 儲存空間
 
 ## 應用程式架構
@@ -296,10 +297,11 @@ MIT License - 詳見 [LICENSE](LICENSE) 檔案
 
 ---
 
-**版本**: 1.0.0  
-**最後更新**: 2025  
-**Android 支援**: 16+ (API 36)  
-**建置狀態**: 生產就緒
+**版本**：1.0.0  
+**最後更新**：2025  
+**最低支援**：Android 14（API 34）  
+**目標版本**：Android 16（API 36）  
+**建置狀態**：生產就緒
 
 ## 開發狀態
 
