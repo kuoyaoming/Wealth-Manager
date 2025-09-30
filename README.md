@@ -1,6 +1,6 @@
 # Wealth Manager
 
-A modern personal finance tracker built with Jetpack Compose. Features biometric security, local asset management, real-time market data, and intelligent API switching with performance optimization.
+A modern Android personal finance tracker built with Jetpack Compose. Secure local-only storage, biometric authentication, real-time market data (Finnhub, TWSE, Exchange Rate), multilingual UI, and a 120Hz-optimized experience with haptic feedback.
 
 **Language**: [English](README.md) | [繁體中文](README_zh.md)
 
@@ -11,7 +11,7 @@ A modern personal finance tracker built with Jetpack Compose. Features biometric
 - 📊 **Real-time Market Data** - Live prices via Finnhub API, TWSE API, and Exchange Rate API
 - 🎨 **Material You** - Dynamic theming with responsive design
 - 🌍 **Multi-language Support** - English & Traditional Chinese with instant switching
-- 📱 **Android 16** - Latest Android features with 120Hz performance optimization
+- 📱 **Android 16 target** - Built for API 36 with 120Hz optimizations
 - ⚡ **Performance Monitoring** - Real-time performance tracking and optimization
 - 🗄️ **Smart Caching** - Intelligent cache management with offline support
 
@@ -135,7 +135,7 @@ A modern personal finance tracker built with Jetpack Compose. Features biometric
 ## Installation
 
 ```bash
-# Clone the repository
+# Clone the repository (or your fork)
 git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
 # Build the project
@@ -147,7 +147,8 @@ git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
 ## Requirements
 
-- Android 16+ (API 36)
+- Android 14+ (API 34+)
+- Target SDK 36 (Android 16)
 - Biometric authentication (recommended)
 - Internet connection (market data)
 - Minimum 100MB storage space
@@ -298,7 +299,8 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 **Version**: 1.0.0  
 **Last Updated**: 2025  
-**Android Support**: 16+ (API 36)  
+**Min SDK**: 34 (Android 14)  
+**Target SDK**: 36 (Android 16)  
 **Build Status**: Production Ready
 
 ## Development Status
