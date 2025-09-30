@@ -50,7 +50,7 @@ class ApiProviderService @Inject constructor(
             debugLogManager.log("API_PROVIDER", "Searching stocks: '$query' in market: '$market'")
             debugLogManager.log("API_PROVIDER", "Using API key: ${FINNHUB_API_KEY.take(8)}...")
             
-            // 執行診斷檢查
+            // Run diagnostic checks
             val diagnostic = apiDiagnostic.runDiagnostic()
             if (!diagnostic.isHealthy) {
                 debugLogManager.logError("API_PROVIDER", "API diagnostic failed: Network=${diagnostic.networkStatus.isConnected}, API Key=${diagnostic.apiKeyStatus.finnhubKeyValid}, Finnhub=${diagnostic.finnhubStatus.isReachable}")
@@ -77,7 +77,7 @@ class ApiProviderService @Inject constructor(
         } catch (e: Exception) {
             debugLogManager.logError("Finnhub search failed for '$query': ${e.message}", e)
             
-            // 更詳細的錯誤分析
+            // More detailed error analysis
             when {
                 e.message?.contains("401") == true -> {
                     debugLogManager.logError("API_PROVIDER", "API key authentication failed")

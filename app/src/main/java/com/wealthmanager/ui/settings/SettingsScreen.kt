@@ -317,7 +317,7 @@ private fun HapticFeedbackSettingsCard(
                 )
             }
 
-            // 啟用觸覺回饋
+            // Enable haptic feedback
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -343,7 +343,7 @@ private fun HapticFeedbackSettingsCard(
                 )
             }
 
-            // 啟用音效回饋
+            // Enable sound feedback
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -369,7 +369,7 @@ private fun HapticFeedbackSettingsCard(
                 )
             }
 
-            // 觸覺回饋強度
+            // Haptic feedback intensity
             if (hapticEnabled) {
                 Column {
                     Text(
