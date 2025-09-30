@@ -14,8 +14,8 @@ android {
         applicationId = "com.wealthmanager"
         minSdk = 34
         targetSdk = 35
-        versionCode = 15
-        versionName = "1.2.0"
+        versionCode = 16
+        versionName = "1.2.1"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
@@ -43,6 +43,9 @@ android {
             
             // Default file with automatically generated optimization rules.
             proguardFiles = [getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro']
+            ndk {
+                debugSymbolLevel = 'FULL'
+            }
         }
         debug {
             minifyEnabled = false

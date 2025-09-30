@@ -21,3 +21,38 @@ jobs:
       - name: Build (assembleDebug)
         run: ./gradlew assembleDebug --no-daemon
 
+      - name: Build release bundles (app + wear)
+        run: ./gradlew :app:bundleRelease :wear:bundleRelease --no-daemon
+
+      - name: Upload app native symbols
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-native-debug-symbols
+          path: app/build/outputs/native-debug-symbols/release/native-debug-symbols.zip
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload app mapping
+        uses: actions/upload-artifact@v4
+        with:
+          name: app-mapping
+          path: app/build/outputs/mapping/release/mapping.txt
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload wear native symbols
+        uses: actions/upload-artifact@v4
+        with:
+          name: wear-native-debug-symbols
+          path: wear/build/outputs/native-debug-symbols/release/native-debug-symbols.zip
+          if-no-files-found: warn
+          retention-days: 14
+
+      - name: Upload wear mapping
+        uses: actions/upload-artifact@v4
+        with:
+          name: wear-mapping
+          path: wear/build/outputs/mapping/release/mapping.txt
+          if-no-files-found: warn
+          retention-days: 14
+
