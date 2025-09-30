@@ -76,7 +76,7 @@ class HapticFeedbackManager @Inject constructor() {
     fun triggerHaptic(
         view: View,
         intensity: HapticIntensity = HapticIntensity.MEDIUM,
-        type: HapticType = HapticType.TAP
+        @Suppress("UNUSED_PARAMETER") type: HapticType = HapticType.TAP
     ) {
         if (!settings.hapticEnabled) return
         

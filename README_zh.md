@@ -297,7 +297,7 @@ MIT License - 詳見 [LICENSE](LICENSE) 檔案
 
 ---
 
-**版本**：1.0.0  
+**版本**：1.2.0  
 **最後更新**：2025  
 **最低支援**：Android 14（API 34）  
 **目標版本**：Android 16（API 36）  

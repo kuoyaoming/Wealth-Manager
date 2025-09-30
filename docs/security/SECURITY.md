@@ -170,5 +170,5 @@ For security-related questions or concerns:
 ---
 
 **Last Updated**: 2025  
-**Version**: 1.0.0  
+**Version**: 1.2.0  
 **Review Schedule**: Quarterly

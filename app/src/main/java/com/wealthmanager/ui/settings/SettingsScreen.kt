@@ -14,12 +14,15 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
+import androidx.compose.material.icons.filled.CheckCircle
+import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.filled.Vibration
+import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -140,6 +143,15 @@ fun SettingsScreen(
             TestHapticFeedbackCard(
                 hapticManager = hapticManager,
                 view = view
+            )
+
+            ApiKeyCheckCard(
+                apiTestResults = uiState.apiTestResults,
+                isTestingApis = uiState.isTestingApis,
+                onTestApis = {
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                    viewModel.testApiKeys()
+                }
             )
 
             BiometricSettingsCard(
@@ -351,11 +363,11 @@ private fun HapticFeedbackSettingsCard(
             ) {
                 Column {
                     Text(
-                        text = "啟用音效回饋",
+                        text = stringResource(R.string.settings_sound_enable),
                         style = MaterialTheme.typography.bodyLarge
                     )
                     Text(
-                        text = "為操作提供音效回饋",
+                        text = stringResource(R.string.settings_sound_enable_desc),
                         style = MaterialTheme.typography.bodySmall,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -637,6 +649,90 @@ private fun AboutSettingsCard(
                 modifier = Modifier.align(Alignment.End)
             ) {
                 Text(stringResource(R.string.settings_view))
+            }
+        }
+    }
+}
+
+@Composable
+private fun ApiKeyCheckCard(
+    apiTestResults: List<com.wealthmanager.data.service.ApiTestService.ApiTestResult>,
+    isTestingApis: Boolean,
+    onTestApis: () -> Unit
+) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp)
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp)
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Wifi,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary
+                )
+                Text(
+                    text = stringResource(R.string.settings_api_check_title),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold
+                )
+            }
+
+            Text(
+                text = stringResource(R.string.settings_api_check_desc),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            )
+
+            // API Test Results
+            if (apiTestResults.isNotEmpty()) {
+                apiTestResults.forEach { result ->
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
+                        Icon(
+                            imageVector = if (result.isWorking) Icons.Default.CheckCircle else Icons.Default.Error,
+                            contentDescription = null,
+                            tint = if (result.isWorking) 
+                                MaterialTheme.colorScheme.primary 
+                            else 
+                                MaterialTheme.colorScheme.error
+                        )
+                        Column(modifier = Modifier.weight(1f)) {
+                            Text(
+                                text = result.apiName,
+                                style = MaterialTheme.typography.bodyMedium,
+                                fontWeight = FontWeight.Medium
+                            )
+                            Text(
+                                text = result.message,
+                                style = MaterialTheme.typography.bodySmall,
+                                color = if (result.isWorking) 
+                                    MaterialTheme.colorScheme.primary 
+                                else 
+                                    MaterialTheme.colorScheme.error
+                            )
+                        }
+                    }
+                }
+            }
+
+            Button(
+                onClick = onTestApis,
+                enabled = !isTestingApis,
+                modifier = Modifier.fillMaxWidth()
+            ) {
+                Text(
+                    text = if (isTestingApis) stringResource(R.string.settings_api_testing) else stringResource(R.string.settings_api_test_button)
+                )
             }
         }
     }

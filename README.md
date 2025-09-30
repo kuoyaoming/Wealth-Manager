@@ -297,7 +297,7 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
-**Version**: 1.0.0  
+**Version**: 1.2.0  
 **Last Updated**: 2025  
 **Min SDK**: 34 (Android 14)  
 **Target SDK**: 36 (Android 16)  

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wealth Manager Wear</string>
+    <string name="wear_greeting">Hello Wear!</string>
+
+    <!-- Tile strings -->
+    <string name="tile_title">Total Assets</string>
+    <string name="tile_total_assets">Total Assets</string>
+    <string name="tile_last_updated">Last Updated</string>
+    <string name="tile_last_updated_format">%1$s %2$s</string>
+    <string name="tile_tap_to_open">Tap to open</string>
+    <string name="tile_error">Data error</string>
+
+    <string name="wear_home_title">Wealth Manager</string>
+    <string name="wear_home_tile_instructions">Long press the watch face, add Tiles, and select Wealth Manager.</string>
+    <string name="wear_home_sync_button">Sync now</string>
+    <string name="wear_home_sync_success">Sync successful</string>
+    <string name="wear_home_sync_failure">Sync failed, please try again later</string>
+    <string name="wear_home_sync_progress">Syncing...</string>
+    <string name="wear_home_tile_hint">If you do not see the Total Assets Tile, add it and then sync.</string>
+    <string name="wear_home_tile_added">Tile enabled. Total assets will update automatically in the background.</string>
+</resources>

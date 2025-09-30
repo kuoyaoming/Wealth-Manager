@@ -30,4 +30,7 @@ interface CashAssetDao {
     
     @Query("SELECT SUM(twdEquivalent) FROM cash_assets")
     suspend fun getTotalCashValueInTWD(): Double?
+
+    @Query("SELECT * FROM cash_assets WHERE currency = :currency LIMIT 1")
+    suspend fun getCashAssetByCurrencySync(currency: String): CashAsset?
 }

@@ -45,7 +45,7 @@ fun TotalAssetsCard(
                 )
             } else {
                 Text(
-                    text = "NT$ ${formatCurrency(totalValue)}",
+                    text = stringResource(R.string.currency_twd_amount, formatCurrency(totalValue)),
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
@@ -86,7 +86,7 @@ fun CashAssetsCard(
                 )
             } else {
                 Text(
-                    text = "NT$ ${formatCurrency(cashValue)}",
+                    text = stringResource(R.string.currency_twd_amount, formatCurrency(cashValue)),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.primary
@@ -127,7 +127,7 @@ fun StockAssetsCard(
                 )
             } else {
                 Text(
-                    text = "NT$ ${formatCurrency(stockValue)}",
+                    text = stringResource(R.string.currency_twd_amount, formatCurrency(stockValue)),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.primary

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Wealth Manager Wear</string>
+    <string name="wear_greeting">Hello Wear!</string>
+
+    <!-- Tile strings -->
+    <string name="tile_title">總資產</string>
+    <string name="tile_total_assets">總資產</string>
+    <string name="tile_last_updated">更新時間</string>
+    <string name="tile_last_updated_format">%1$s %2$s</string>
+    <string name="tile_tap_to_open">點擊開啟</string>
+    <string name="tile_error">資料錯誤</string>
+
+    <string name="wear_home_title">Wealth Manager</string>
+    <string name="wear_home_tile_instructions">長按手錶主畫面，新增 Tiles 並選擇 Wealth Manager。</string>
+    <string name="wear_home_sync_button">立即同步</string>
+    <string name="wear_home_sync_success">同步成功</string>
+    <string name="wear_home_sync_failure">同步失敗，請稍後再試</string>
+    <string name="wear_home_sync_progress">同步中...</string>
+    <string name="wear_home_tile_hint">若未看到總資產 Tile，請先新增後再同步。</string>
+    <string name="wear_home_tile_added">Tiles 已啟用，總資產會在背景自動更新。</string>
+</resources>

@@ -15,3 +15,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Wealth Manager"
 include ':app'
+include ':wear'

@@ -62,7 +62,8 @@ fun AssetsScreen(
                     debugLogManager.logUserAction("Add Asset FAB Clicked")
                     debugLogManager.log("UI", "User clicked FAB to open Add Asset dialog")
                     hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                    showAddDialog = true 
+                    showAddDialog = true
+                    viewModel.openAddCashDialog()
                 }
             ) {
                 Icon(Icons.Default.Add, contentDescription = stringResource(R.string.cd_add_asset))
@@ -88,7 +89,7 @@ fun AssetsScreen(
             if (uiState.cashAssets.isEmpty()) {
                 item {
                     Text(
-                        text = "No cash assets found",
+                        text = stringResource(R.string.assets_empty_cash),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -123,7 +124,7 @@ fun AssetsScreen(
             if (uiState.stockAssets.isEmpty()) {
                 item {
                     Text(
-                        text = "No stock assets found",
+                        text = stringResource(R.string.assets_empty_stock),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -147,26 +148,38 @@ fun AssetsScreen(
             }
         }
     }
-    
-        // Add Asset Dialog
-        if (showAddDialog) {
-            AddAssetDialog(
-                onDismiss = { showAddDialog = false },
-                onAddCash = { currency, amount ->
-                    viewModel.addCashAsset(currency, amount)
-                    showAddDialog = false
-                },
-                onAddStock = { symbol, shares ->
-                    viewModel.addStockAsset(symbol, shares)
-                    showAddDialog = false
-                },
-                onSearchStocks = { query, _ ->
-                    viewModel.searchStocks(query)
-                },
-                searchResults = uiState.searchResults,
-                isSearching = uiState.isSearching
-            )
-        }
+
+    val cashCurrencyState by viewModel.selectedCashCurrency.collectAsState()
+    val cashAmountState by viewModel.cashAmountInput.collectAsState()
+    val cashButtonLabelState by viewModel.cashActionButtonLabel.collectAsState()
+
+    if (showAddDialog) {
+        AddAssetDialog(
+            onDismiss = { showAddDialog = false },
+            cashCurrency = cashCurrencyState,
+            cashAmount = cashAmountState,
+            cashButtonLabelRes = cashButtonLabelState,
+            onCurrencyChange = { viewModel.setSelectedCashCurrency(it) },
+            onCashAmountChange = { viewModel.onCashAmountChanged(it) },
+            onAddCash = { currency, amount ->
+                viewModel.addCashAsset(currency, amount)
+                showAddDialog = false
+            },
+            onAddStock = { symbol, shares ->
+                viewModel.addStockAsset(symbol, shares)
+                showEditStockDialog = null
+                showAddDialog = false
+            },
+            onSearchStocks = { query, _ ->
+                viewModel.searchStocksNow(query)
+            },
+            onSearchQueryChange = { query ->
+                viewModel.setSearchQuery(query)
+            },
+            searchResults = uiState.searchResults,
+            isSearching = uiState.isSearching
+        )
+    }
         
         // Edit Cash Asset Dialog
         showEditCashDialog?.let { asset ->

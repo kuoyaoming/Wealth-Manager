@@ -12,6 +12,17 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code of Conduct
 - Changelog documentation
 
+## [1.2.0] - 2025-09-30
+
+### Changed
+- Version bump for app and wear modules: versionCode 15, versionName 1.2.0
+- Improved stock search UX: debounce 450ms, min query length 1, immediate IME search
+
+### Fixed
+- Cancelled outdated stock search requests using flatMapLatest to prevent stale results
+
+---
+
 ## [1.1.0] - 2025-01-30
 
 ### Added

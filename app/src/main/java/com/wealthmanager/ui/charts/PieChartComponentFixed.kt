@@ -8,6 +8,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -16,6 +17,7 @@ import androidx.compose.ui.graphics.drawscope.Stroke
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.ui.dashboard.AssetItem
+import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 import kotlin.math.*
 
@@ -49,7 +51,7 @@ fun PieChartComponentFixed(
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = "Asset Distribution",
+                text = stringResource(R.string.asset_distribution_title),
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
@@ -71,7 +73,7 @@ fun PieChartComponentFixed(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No assets to display",
+                        text = stringResource(R.string.asset_distribution_empty),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
@@ -137,7 +139,11 @@ private fun LegendItemFixed(asset: AssetItem) {
                 color = MaterialTheme.colorScheme.onSurface
             )
             Text(
-                text = "NT$ ${formatCurrency(asset.value)} $percentage",
+                text = stringResource(
+                    R.string.asset_distribution_value,
+                    stringResource(R.string.currency_twd_amount, formatCurrency(asset.value)),
+                    percentage
+                ),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )

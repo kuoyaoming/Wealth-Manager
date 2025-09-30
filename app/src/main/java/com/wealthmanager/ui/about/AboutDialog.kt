@@ -114,7 +114,7 @@ fun AboutDialog(
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                         onDismiss()
                     }) {
-                        Text("Later")
+                        Text(stringResource(R.string.action_later))
                     }
                     
                     Button(
@@ -124,7 +124,7 @@ fun AboutDialog(
                             onDismiss()
                         }
                     ) {
-                        Text("I Understand")
+                        Text(stringResource(R.string.action_i_understand))
                     }
                 }
             }
@@ -152,20 +152,20 @@ private fun AppVersionSection() {
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = "App Information",
+                    text = stringResource(R.string.about_app_information_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
             }
             
             Text(
-                text = "Wealth Manager v1.0.0",
+                text = stringResource(R.string.about_version),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium
             )
             
             Text(
-                text = "A comprehensive personal finance management application that helps you track your assets, monitor stock investments, and manage your financial portfolio with real-time market data. Features include biometric authentication, multi-currency support, and secure local data storage.",
+                text = stringResource(R.string.about_information_description),
                 style = MaterialTheme.typography.bodyMedium
             )
         }
@@ -192,22 +192,19 @@ private fun DataUsageSection() {
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = "Data Usage Policy",
+                    text = stringResource(R.string.about_data_usage_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
             }
             
             Text(
-                text = "Your financial data is stored locally on your device and is never transmitted to external servers without your explicit consent.",
+                text = stringResource(R.string.about_data_usage_description),
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Text(
-                text = "• Asset information (cash, stocks) is stored locally using Android Room database\n" +
-                        "• Biometric authentication data is handled by Android's secure hardware\n" +
-                        "• No personal financial data is collected or transmitted to our servers\n" +
-                        "• All calculations are performed locally on your device",
+                text = stringResource(R.string.about_data_usage_points),
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -225,32 +222,18 @@ private fun ThirdPartyApiSection() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = "Third-Party API Usage",
+                text = stringResource(R.string.about_third_party_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
             
             Text(
-                text = "This app uses the following third-party services:",
+                text = stringResource(R.string.about_third_party_description),
                 style = MaterialTheme.typography.bodyMedium
             )
             
             Text(
-                text = "• Finnhub API: For real-time stock prices and market data\n" +
-                        "  - Rate limit: 60 requests per minute (free tier)\n" +
-                        "  - Data: Stock quotes, stock search, forex rates\n" +
-                        "  - Privacy: Only stock symbols and market data are transmitted\n\n" +
-                        "• Exchange Rate API: For currency conversion rates\n" +
-                        "  - Rate limit: 1000 requests per month (free tier)\n" +
-                        "  - Data: Real-time exchange rates for multiple currencies\n" +
-                        "  - Privacy: Only currency codes are transmitted\n\n" +
-                        "• TWSE API: For Taiwan stock market data\n" +
-                        "  - Public API with no rate limits\n" +
-                        "  - Data: Taiwan stock prices and market information\n" +
-                        "  - Privacy: Only stock symbols are transmitted\n\n" +
-                        "• Android Biometric API: For secure authentication\n" +
-                        "  - Handled by Android's secure hardware\n" +
-                        "  - No biometric data is stored or transmitted",
+                text = stringResource(R.string.about_third_party_points),
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -277,19 +260,14 @@ private fun SecurityComplianceSection() {
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = "Security & Compliance",
+                    text = stringResource(R.string.about_security_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
             }
             
             Text(
-                text = "• All data is encrypted using Android's built-in encryption\n" +
-                        "• Biometric authentication provides secure access\n" +
-                        "• No network requests are made without user consent\n" +
-                        "• API usage is monitored and rate-limited to prevent abuse\n" +
-                        "• Local database is protected by Android's app sandbox\n" +
-                        "• No third-party analytics or tracking services",
+                text = stringResource(R.string.about_security_points),
                 style = MaterialTheme.typography.bodySmall
             )
         }
@@ -307,30 +285,25 @@ private fun PrivacyPolicySection() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = "Privacy Policy",
+                text = stringResource(R.string.about_privacy_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
             
             Text(
-                text = "We are committed to protecting your privacy and financial data. This app:",
+                text = stringResource(R.string.about_privacy_description),
                 style = MaterialTheme.typography.bodyMedium
             )
             
             Text(
-                text = "• Does not collect personal information\n" +
-                        "• Does not share data with third parties\n" +
-                        "• Stores all data locally on your device\n" +
-                        "• Uses secure, industry-standard encryption\n" +
-                        "• Complies with Android's privacy guidelines\n" +
-                        "• Provides transparent data usage information",
+                text = stringResource(R.string.about_privacy_points),
                 style = MaterialTheme.typography.bodySmall
             )
             
             Spacer(modifier = Modifier.height(8.dp))
             
             Text(
-                text = "By continuing to use this app, you acknowledge that you have read and understood this privacy policy.",
+                text = stringResource(R.string.about_privacy_acknowledgement),
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center

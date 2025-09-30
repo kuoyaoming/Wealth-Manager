@@ -242,7 +242,7 @@ class MarketDataService @Inject constructor(
         try {
             debugLogManager.logMarketData("SEARCH", "Searching stocks: '$query' in market: '$market'")
             
-            if (query.isBlank() || query.length < 2) {
+            if (query.isBlank() || query.length < 1) {
                 debugLogManager.logWarning("Invalid search query: '$query'", "MARKET_DATA")
                 emit(SearchResult.NoResults(NoResultsReason.INVALID_QUERY))
                 return@flow
