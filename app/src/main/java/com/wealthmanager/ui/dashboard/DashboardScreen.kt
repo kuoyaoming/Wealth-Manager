@@ -48,6 +48,7 @@ import com.wealthmanager.ui.dashboard.StockAssetsCardOptimized
 import com.wealthmanager.ui.charts.TreemapChartComponent
 import com.wealthmanager.ui.dashboard.ApiErrorBanner
 import com.wealthmanager.ui.dashboard.ManualSyncStatus
+import com.wealthmanager.utils.PerformanceTracker
 import kotlinx.coroutines.flow.collectLatest
 import androidx.compose.ui.draw.alpha
 
@@ -59,6 +60,11 @@ fun DashboardScreen(
     navController: NavHostController,
     viewModel: DashboardViewModel = hiltViewModel()
 ) {
+    PerformanceTracker(
+        componentName = "DashboardScreen",
+        trackMemory = true,
+        trackRecomposition = true
+    ) {
     val uiState by viewModel.uiState.collectAsState()
     val apiStatus by viewModel.apiStatus.collectAsState()
     val manualSyncStatus by viewModel.manualSyncStatus.collectAsState()
@@ -69,6 +75,18 @@ fun DashboardScreen(
     var showMissingKeysDialog = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     val wearSyncMissingAppMessage = stringResource(R.string.wear_sync_missing_app)
     val wearSyncFailedMessage = stringResource(R.string.wear_sync_failed)
+    
+    // Auto-refresh when returning from assets page
+    LaunchedEffect(navController.currentBackStackEntry) {
+        val currentDestination = navController.currentBackStackEntry?.destination?.route
+        if (currentDestination == "dashboard") {
+            // Check if we just returned from assets page by looking at the back stack
+            val previousEntry = navController.previousBackStackEntry
+            if (previousEntry?.destination?.route == "assets") {
+                viewModel.refreshData()
+            }
+        }
+    }
 
     LaunchedEffect(manualSyncStatus) {
         when (val status = manualSyncStatus) {
@@ -156,6 +174,7 @@ fun DashboardScreen(
             item {
                 CashAssetsCardOptimized(
                     cashValue = uiState.cashAssets,
+                    totalAssets = uiState.totalAssets,
                     isLoading = uiState.isLoading
                 )
             }
@@ -164,6 +183,7 @@ fun DashboardScreen(
             item {
                 StockAssetsCardOptimized(
                     stockValue = uiState.stockAssets,
+                    totalAssets = uiState.totalAssets,
                     isLoading = uiState.isLoading
                 )
             }
@@ -216,5 +236,6 @@ fun DashboardScreen(
                 }
             )
         }
+    }
     }
 }

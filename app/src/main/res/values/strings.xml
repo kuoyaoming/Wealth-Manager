@@ -171,7 +171,7 @@
 
     <!-- About Dialog -->
     <string name="about_title">About Wealth Manager</string>
-    <string name="about_version">Version 1.2.0</string>
+    <string name="about_version">Version 1.4.5</string>
     <string name="about_version_format">Version %1$s (Code %2$d)</string>
     <string name="about_description">A modern personal finance tracker built with Jetpack Compose. Features biometric authentication, real-time market data, multi-language support, and secure local storage with Material You design.</string>
     <string name="about_app_information_title">App Information</string>
@@ -223,6 +223,14 @@
     <string name="cd_delete_cash_asset">Delete cash asset</string>
     <string name="cd_edit_stock_asset">Edit stock asset</string>
     <string name="cd_delete_stock_asset">Delete stock asset</string>
+    <string name="cd_notifications">Notifications</string>
+    
+    <!-- Notification Permissions -->
+    <string name="notification_permission_title">Enable Notifications</string>
+    <string name="notification_permission_description">Get notified about important market updates and portfolio changes.</string>
+    <string name="enable_notifications">Enable Notifications</string>
+    <string name="notifications_enabled">Notifications enabled</string>
+    <string name="notifications_disabled">Notifications disabled</string>
     <string name="wear_sync_success">Wear sync completed</string>
     <string name="wear_sync_missing_app">Wear app not installed</string>
     <string name="wear_sync_failed">Wear sync failed</string>
@@ -235,4 +243,10 @@
     <string name="missing_api_keys_title">API keys required</string>
     <string name="missing_api_keys_message">Please add your Finnhub and Exchange Rate API keys in Settings to refresh market data.</string>
     <string name="go_to_settings">Go to Settings</string>
+    
+    <!-- Chart Components -->
+    <string name="chart_portfolio_distribution">Portfolio Distribution</string>
+    <string name="chart_no_assets_available">No assets available</string>
+    <string name="chart_treemap_content_description">Treemap chart showing portfolio distribution</string>
+    <string name="chart_others_group">Others</string>
 </resources>

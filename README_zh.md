@@ -1,6 +1,6 @@
 # Wealth Manager
 
-以 Jetpack Compose 打造的現代化 Android 個人理財應用。資料僅存於本機、生物識別登入、即時市場數據（Finnhub、TWSE、ExchangeRate‑API）、多語系介面、120Hz 最佳化與豐富觸覺回饋。
+以 Jetpack Compose 打造的現代化 Android 個人理財應用。資料僅存於本機、生物識別登入、即時市場數據（Finnhub、TWSE、ExchangeRate‑API）、多語系介面、120Hz 最佳化與豐富觸覺回饋。**現已完全符合 Android 2025 官方設計指南！**
 
 語言：[English](README.md) | [繁體中文](README_zh.md)
 

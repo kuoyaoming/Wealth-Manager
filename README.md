@@ -1,6 +1,6 @@
 # Wealth Manager
 
-Modern Android personal finance tracker powered by Jetpack Compose. Local-only data storage, biometric authentication, real‑time market data (Finnhub, TWSE, ExchangeRate‑API), multilingual UI, 120Hz optimizations, and rich haptics.
+Modern Android personal finance tracker powered by Jetpack Compose. Local-only data storage, biometric authentication, real‑time market data (Finnhub, TWSE, ExchangeRate‑API), multilingual UI, 120Hz optimizations, and rich haptics. **Now fully compliant with Android 2025 official design guidelines!**
 
 Language: [English](README.md) | [繁體中文](README_zh.md)
 
@@ -14,6 +14,8 @@ Language: [English](README.md) | [繁體中文](README_zh.md)
 - ⚙️ **Performance**: 120Hz‑friendly UI and performance monitoring
 - 🌍 **Localization**: English and Traditional Chinese, instant switching
 - ⌚ **Wear OS**: Companion sync via data layer (separate Wear module)
+- 🚀 **Android 2025 Compliant**: Latest API 36, Splash Screen, Edge-to-Edge, Notification permissions
+- 🔔 **Smart Notifications**: Android 13+ notification permission management
 
 ## 📱 Screenshots
 

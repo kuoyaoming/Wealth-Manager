@@ -21,6 +21,7 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.Vibration
 import androidx.compose.material.icons.filled.Wifi
+import androidx.compose.material.icons.filled.Notifications
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
@@ -56,6 +57,8 @@ import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 import com.wealthmanager.ui.about.AboutDialog
 import com.wealthmanager.util.LanguageManager
+import com.wealthmanager.ui.permissions.NotificationPermissionSection
+import com.wealthmanager.ui.permissions.NotificationPermissionStatus
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -136,6 +139,16 @@ fun SettingsScreen(
                 onSoundEnabledChange = { soundEnabled = it },
                 hapticManager = hapticManager,
                 view = view
+            )
+
+            // Notification Permission Section
+            NotificationPermissionSection(
+                onPermissionGranted = {
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
+                },
+                onPermissionDenied = {
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                }
             )
 
             ApiKeyManagementCard(

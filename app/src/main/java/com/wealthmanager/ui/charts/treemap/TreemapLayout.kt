@@ -34,7 +34,9 @@ object TreemapLayout {
     fun computeTreemapRects(
         assets: List<AssetItem>,
         width: Float,
-        height: Float
+        height: Float,
+        spacing: Float = 0f,
+        othersGroupName: String = "Others"
     ): List<TreemapRect> {
         if (assets.isEmpty() || width <= 0 || height <= 0) return emptyList()
         
@@ -55,10 +57,12 @@ object TreemapLayout {
         
         val itemsToLayout = if (othersItems.isNotEmpty()) {
             val othersValue = othersItems.sumOf { it.value }
+            val othersPercentage = (othersValue / totalValue * 100)
             val othersAsset = AssetItem(
                 id = "others",
-                name = "Others",
-                value = othersValue
+                name = othersGroupName,
+                value = othersValue,
+                percentage = othersPercentage
             )
             visibleItems + othersAsset
         } else {
@@ -70,9 +74,9 @@ object TreemapLayout {
             NormalizedItem(asset, asset.value / totalValue)
         }
         
-        // Apply squarified algorithm
+        // Apply squarified algorithm with spacing
         val rectangles = mutableListOf<TreemapRect>()
-        squarify(normalizedItems, 0f, 0f, width, height, rectangles)
+        squarify(normalizedItems, 0f, 0f, width, height, rectangles, spacing)
         
         return rectangles
     }
@@ -88,20 +92,88 @@ object TreemapLayout {
         y: Float,
         width: Float,
         height: Float,
-        result: MutableList<TreemapRect>
+        result: MutableList<TreemapRect>,
+        spacing: Float = 0f
     ) {
         if (items.isEmpty()) return
         
         val totalValue = items.sumOf { it.normalizedValue }
         if (totalValue <= 0) return
         
-        // Determine layout direction (horizontal or vertical)
-        val isHorizontal = width >= height
+        // Use multi-row layout for better organization
+        layoutMultiRow(items, x, y, width, height, result, spacing)
+    }
+    
+    private fun layoutMultiRow(
+        items: List<NormalizedItem>,
+        x: Float,
+        y: Float,
+        width: Float,
+        height: Float,
+        result: MutableList<TreemapRect>,
+        spacing: Float = 0f
+    ) {
+        val maxDisplayItems = 8  // Maximum 8 items to display (2 rows × 4 items)
+        val maxItemsPerRow = 4
+        val totalItems = items.size
         
-        if (isHorizontal) {
-            layoutHorizontally(items, x, y, width, height, result)
+        // If we have more than 8 items, group the excess into "Others"
+        val displayItems = if (totalItems > maxDisplayItems) {
+            val mainItems = items.take(maxDisplayItems - 1)  // Take first 7 items
+            val othersItems = items.drop(maxDisplayItems - 1)  // Rest go to Others
+            val othersValue = othersItems.sumOf { it.normalizedValue }
+            val othersAsset = AssetItem(
+                id = "others",
+                name = "Others",
+                value = othersValue,
+                percentage = (othersValue / items.sumOf { it.normalizedValue } * 100)
+            )
+            mainItems + NormalizedItem(othersAsset, othersValue)
         } else {
-            layoutVertically(items, x, y, width, height, result)
+            items
+        }
+        
+        val totalRows = 2  // Always 2 rows maximum
+        val rowHeight = (height - spacing) / totalRows
+        
+        var currentY = y
+        var itemIndex = 0
+        
+        for (row in 0 until totalRows) {
+            val itemsInThisRow = minOf(maxItemsPerRow, displayItems.size - itemIndex)
+            if (itemsInThisRow <= 0) break
+            
+            val rowItems = displayItems.subList(itemIndex, itemIndex + itemsInThisRow)
+            
+            // Calculate total value for this row
+            val rowTotalValue = rowItems.sumOf { it.normalizedValue }
+            
+            // Layout items horizontally in this row
+            val totalSpacing = (itemsInThisRow - 1) * spacing
+            val availableWidth = width - totalSpacing
+            var currentX = x
+            
+            for (item in rowItems) {
+                val itemWidth = (item.normalizedValue / rowTotalValue * availableWidth).toFloat()
+                
+                if (itemWidth >= MIN_RECT_SIZE) {
+                    result.add(
+                        TreemapRect(
+                            asset = item.asset,
+                            x = currentX,
+                            y = currentY,
+                            width = itemWidth,
+                            height = rowHeight,
+                            isOthers = item.asset.name == "Others"
+                        )
+                    )
+                }
+                
+                currentX += itemWidth + spacing
+            }
+            
+            currentY += rowHeight + spacing
+            itemIndex += itemsInThisRow
         }
     }
     
@@ -111,13 +183,16 @@ object TreemapLayout {
         y: Float,
         width: Float,
         height: Float,
-        result: MutableList<TreemapRect>
+        result: MutableList<TreemapRect>,
+        spacing: Float = 0f
     ) {
         val totalValue = items.sumOf { it.normalizedValue }
+        val totalSpacing = (items.size - 1) * spacing
+        val availableWidth = width - totalSpacing
         var currentX = x
         
-        for (item in items) {
-            val itemWidth = (item.normalizedValue / totalValue * width).toFloat()
+        for ((index, item) in items.withIndex()) {
+            val itemWidth = (item.normalizedValue / totalValue * availableWidth).toFloat()
             
             if (itemWidth >= MIN_RECT_SIZE) {
                 result.add(
@@ -133,6 +208,10 @@ object TreemapLayout {
             }
             
             currentX += itemWidth
+            // Add spacing between items (except for the last item)
+            if (index < items.size - 1) {
+                currentX += spacing
+            }
         }
     }
     
@@ -142,13 +221,16 @@ object TreemapLayout {
         y: Float,
         width: Float,
         height: Float,
-        result: MutableList<TreemapRect>
+        result: MutableList<TreemapRect>,
+        spacing: Float = 0f
     ) {
         val totalValue = items.sumOf { it.normalizedValue }
+        val totalSpacing = (items.size - 1) * spacing
+        val availableHeight = height - totalSpacing
         var currentY = y
         
-        for (item in items) {
-            val itemHeight = (item.normalizedValue / totalValue * height).toFloat()
+        for ((index, item) in items.withIndex()) {
+            val itemHeight = (item.normalizedValue / totalValue * availableHeight).toFloat()
             
             if (itemHeight >= MIN_RECT_SIZE) {
                 result.add(
@@ -164,6 +246,10 @@ object TreemapLayout {
             }
             
             currentY += itemHeight
+            // Add spacing between items (except for the last item)
+            if (index < items.size - 1) {
+                currentY += spacing
+            }
         }
     }
     

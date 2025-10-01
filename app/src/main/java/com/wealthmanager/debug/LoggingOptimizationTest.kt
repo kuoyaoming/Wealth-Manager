@@ -1,6 +1,6 @@
 package com.wealthmanager.debug
 
-import android.util.Log
+import com.wealthmanager.utils.StandardLogger
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -17,7 +17,7 @@ class LoggingOptimizationTest @Inject constructor(
      * Test market data logging optimization
      */
     fun testMarketDataLogging() {
-        Log.d("LoggingTest", "=== Testing Market Data Logging Optimization ===")
+        StandardLogger.debug("LoggingTest", "=== Testing Market Data Logging Optimization ===")
         
         // Test general market data logging
         debugLogManager.logMarketData("SEARCH", "Testing search: AAPL")
@@ -32,14 +32,14 @@ class LoggingOptimizationTest @Inject constructor(
         debugLogManager.logMarketData("ERROR", "Search failed: Network connection error")
         debugLogManager.logMarketData("NO_RESULTS", "No matching results found")
         
-        Log.d("LoggingTest", "=== Market Data Logging Test Complete ===")
+        StandardLogger.debug("LoggingTest", "=== Market Data Logging Test Complete ===")
     }
     
     /**
      * Test general logging optimization
      */
     fun testGeneralLogging() {
-        Log.d("LoggingTest", "=== Testing General Logging Optimization ===")
+        StandardLogger.debug("LoggingTest", "=== Testing General Logging Optimization ===")
         
         // Test user action logging
         debugLogManager.logUserAction("Add Asset FAB Clicked")
@@ -58,14 +58,14 @@ class LoggingOptimizationTest @Inject constructor(
         debugLogManager.logBiometric("AUTHENTICATION", "Fingerprint authentication successful")
         debugLogManager.logBiometric("AUTHENTICATION", "Fingerprint authentication failed")
         
-        Log.d("LoggingTest", "=== General Logging Test Complete ===")
+        StandardLogger.debug("LoggingTest", "=== General Logging Test Complete ===")
     }
     
     /**
      * Test error handling logging
      */
     fun testErrorLogging() {
-        Log.d("LoggingTest", "=== Testing Error Handling Logging ===")
+        StandardLogger.debug("LoggingTest", "=== Testing Error Handling Logging ===")
         
         // Test general errors
         debugLogManager.logError("API_ERROR", "API request failed")
@@ -78,20 +78,20 @@ class LoggingOptimizationTest @Inject constructor(
             debugLogManager.logError("Test exception handling", e)
         }
         
-        Log.d("LoggingTest", "=== Error Handling Logging Test Complete ===")
+        StandardLogger.debug("LoggingTest", "=== Error Handling Logging Test Complete ===")
     }
     
     /**
      * Run all tests
      */
     fun runAllTests() {
-        Log.d("LoggingTest", "Starting logging optimization tests...")
+        StandardLogger.debug("LoggingTest", "Starting logging optimization tests...")
         
         testMarketDataLogging()
         testGeneralLogging()
         testErrorLogging()
         
-        Log.d("LoggingTest", "All logging optimization tests completed")
-        Log.d("LoggingTest", "Total recorded ${debugLogManager.getLogCount()} logs")
+        StandardLogger.debug("LoggingTest", "All logging optimization tests completed")
+        StandardLogger.debug("LoggingTest", "Total recorded ${debugLogManager.getLogCount()} logs")
     }
 }
