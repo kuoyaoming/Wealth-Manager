@@ -20,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.wealthmanager.R
+import com.wealthmanager.BuildConfig
 import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
@@ -159,7 +160,11 @@ private fun AppVersionSection() {
             }
             
             Text(
-                text = stringResource(R.string.about_version),
+                text = stringResource(
+                    R.string.about_version_format,
+                    BuildConfig.VERSION_NAME,
+                    BuildConfig.VERSION_CODE
+                ),
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium
             )

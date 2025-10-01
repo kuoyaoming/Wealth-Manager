@@ -3,7 +3,7 @@ package com.wealthmanager.debug
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.wealthmanager.BuildConfig
+import com.wealthmanager.security.KeyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.net.HttpURLConnection
@@ -14,7 +14,8 @@ import javax.inject.Singleton
 @Singleton
 class ApiDiagnostic @Inject constructor(
     private val context: Context,
-    private val debugLogManager: DebugLogManager
+    private val debugLogManager: DebugLogManager,
+    private val keyRepository: KeyRepository
 ) {
     
     suspend fun runDiagnostic(): DiagnosticResult {
@@ -55,8 +56,8 @@ class ApiDiagnostic @Inject constructor(
     }
     
     private fun checkApiKey(): ApiKeyStatus {
-        val finnhubKey = BuildConfig.FINNHUB_API_KEY
-        val exchangeKey = BuildConfig.EXCHANGE_RATE_API_KEY
+        val finnhubKey = keyRepository.getUserFinnhubKey() ?: ""
+        val exchangeKey = keyRepository.getUserExchangeKey() ?: ""
         
         debugLogManager.log("DIAGNOSTIC", "Finnhub key length: ${finnhubKey.length}")
         debugLogManager.log("DIAGNOSTIC", "Exchange key length: ${exchangeKey.length}")
@@ -74,7 +75,8 @@ class ApiDiagnostic @Inject constructor(
             try {
                 debugLogManager.log("DIAGNOSTIC", "Testing Finnhub API connectivity...")
                 
-                val url = URL("https://finnhub.io/api/v1/quote?symbol=AAPL&token=${BuildConfig.FINNHUB_API_KEY}")
+                val key = keyRepository.getUserFinnhubKey() ?: ""
+                val url = URL("https://finnhub.io/api/v1/quote?symbol=AAPL&token=$key")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
                 connection.connectTimeout = 10000

@@ -12,8 +12,8 @@ import com.wealthmanager.R
 import com.wealthmanager.ui.charts.PieChartComponentFixed
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
 import com.wealthmanager.ui.theme.ColorGuidelines
-import java.text.NumberFormat
-import java.util.*
+import com.wealthmanager.utils.MoneyFormatter
+import com.wealthmanager.utils.rememberMoneyText
 
 /**
  * Optimized dashboard components with proper theme color usage
@@ -53,7 +53,12 @@ fun TotalAssetsCardOptimized(
                 )
             } else {
                 Text(
-                    text = stringResource(R.string.currency_twd_amount, formatCurrency(totalValue)),
+                    text = rememberMoneyText(
+                        totalValue,
+                        "TWD",
+                        style = MoneyFormatter.Style.CurrencyCode,
+                        moneyContext = MoneyFormatter.MoneyContext.Total
+                    ),
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onSurface
@@ -107,7 +112,12 @@ fun CashAssetsCardOptimized(
                 }
             } else {
                 Text(
-                    text = stringResource(R.string.currency_twd_amount, formatCurrency(cashValue)),
+                    text = rememberMoneyText(
+                        cashValue,
+                        "TWD",
+                        style = MoneyFormatter.Style.CurrencyCode,
+                        moneyContext = MoneyFormatter.MoneyContext.Total
+                    ),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface
@@ -161,7 +171,12 @@ fun StockAssetsCardOptimized(
                 }
             } else {
                 Text(
-                    text = stringResource(R.string.currency_twd_amount, formatCurrency(stockValue)),
+                    text = rememberMoneyText(
+                        stockValue,
+                        "TWD",
+                        style = MoneyFormatter.Style.CurrencyCode,
+                        moneyContext = MoneyFormatter.MoneyContext.Total
+                    ),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface
@@ -200,7 +215,12 @@ fun FinancialValueDisplay(
     }
     
     Text(
-        text = "NT$ ${formatCurrency(value)}",
+        text = rememberMoneyText(
+            value,
+            "TWD",
+            style = MoneyFormatter.Style.CurrencyCode,
+            moneyContext = MoneyFormatter.MoneyContext.Total
+        ),
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Medium,
         color = color
@@ -232,8 +252,4 @@ fun StatusIndicator(
     )
 }
 
-private fun formatCurrency(amount: Double): String {
-    val formatter = NumberFormat.getNumberInstance(Locale.getDefault())
-    formatter.maximumFractionDigits = 0
-    return formatter.format(amount)
-}
+// Removed local formatter; unified via MoneyFormatter

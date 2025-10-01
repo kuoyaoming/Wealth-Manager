@@ -138,8 +138,8 @@ A modern Android personal finance tracker built with Jetpack Compose. Secure loc
 # Clone the repository (or your fork)
 git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
-# Build the project
-./gradlew assembleDebug
+# Build the project (Debug)
+./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug
 
 # Install on device
 ./gradlew installDebug
@@ -297,11 +297,30 @@ MIT License - see [LICENSE](LICENSE) file for details
 
 ---
 
-**Version**: 1.2.0  
+**Version**: 1.4.0  
 **Last Updated**: 2025  
 **Min SDK**: 34 (Android 14)  
 **Target SDK**: 36 (Android 16)  
 **Build Status**: Production Ready
+
+## Release & Versioning
+
+- **versionName**: Derived from Git tag `vX.Y.Z` → `X.Y.Z` (SemVer)
+- **versionCode**: Assigned by CI using `GITHUB_RUN_NUMBER` (monotonically increasing)
+- **Release AAB**: Produced only on CI when a tag is pushed
+
+Examples
+```bash
+# Create and push release tag
+git tag v1.4.0
+git push origin v1.4.0
+
+# Local debug build (no release bundles allowed locally)
+./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug
+```
+
+Artifacts
+- CI on tag builds `:app:bundleRelease` and uploads `.aab` and `mapping.txt` as artifacts
 
 ## Development Status
 

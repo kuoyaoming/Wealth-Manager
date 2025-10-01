@@ -19,8 +19,9 @@ import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
-import java.text.NumberFormat
-import java.util.*
+import androidx.compose.runtime.CompositionLocalProvider
+import com.wealthmanager.utils.MoneyFormatter
+import com.wealthmanager.utils.rememberMoneyText
 
 @Composable
 fun CashAssetItem(
@@ -50,7 +51,12 @@ fun CashAssetItem(
                 Text(
                     text = stringResource(
                         R.string.assets_cash_original_amount,
-                        formatCurrency(asset.amount),
+                        rememberMoneyText(
+                            asset.amount,
+                            asset.currency,
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.CashAmount
+                        ),
                         asset.currency
                     ),
                     style = MaterialTheme.typography.bodyMedium,
@@ -59,7 +65,12 @@ fun CashAssetItem(
                 Text(
                     text = stringResource(
                         R.string.assets_cash_twd_value,
-                        stringResource(R.string.currency_twd_amount, formatCurrency(asset.twdEquivalent))
+                        rememberMoneyText(
+                            asset.twdEquivalent,
+                            "TWD",
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.Total
+                        )
                     ),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
@@ -111,8 +122,18 @@ fun StockAssetItem(
                 Text(
                     text = stringResource(
                         R.string.assets_stock_shares_price,
-                        formatCurrency(asset.shares),
-                        formatCurrency(asset.currentPrice)
+                        rememberMoneyText(
+                            asset.shares,
+                            "USD",
+                            style = MoneyFormatter.Style.NumberOnly,
+                            maxFractionDigits = 2
+                        ),
+                        rememberMoneyText(
+                            asset.currentPrice,
+                            asset.originalCurrency,
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.StockPrice
+                        )
                     ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -120,7 +141,12 @@ fun StockAssetItem(
                 Text(
                     text = stringResource(
                         R.string.assets_cash_twd_value,
-                        stringResource(R.string.currency_twd_amount, formatCurrency(asset.twdEquivalent))
+                        rememberMoneyText(
+                            asset.twdEquivalent,
+                            "TWD",
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.Total
+                        )
                     ),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
@@ -140,8 +166,4 @@ fun StockAssetItem(
     }
 }
 
-private fun formatCurrency(amount: Double): String {
-    val formatter = NumberFormat.getNumberInstance(Locale.getDefault())
-    formatter.maximumFractionDigits = 2
-    return formatter.format(amount)
-}
+// Removed local formatter; unified via MoneyFormatter

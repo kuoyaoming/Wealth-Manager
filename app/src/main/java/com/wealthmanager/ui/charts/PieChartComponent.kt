@@ -9,6 +9,8 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
+import com.wealthmanager.utils.MoneyFormatter
+import com.wealthmanager.utils.rememberMoneyText
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
@@ -136,7 +138,12 @@ private fun LegendItem(asset: AssetItem) {
             Text(
                 text = stringResource(
                     R.string.asset_distribution_value,
-                    stringResource(R.string.currency_twd_amount, formatCurrency(asset.value)),
+                    rememberMoneyText(
+                        asset.value,
+                        "TWD",
+                        style = MoneyFormatter.Style.CurrencyCode,
+                        moneyContext = MoneyFormatter.MoneyContext.ChartLabel
+                    ),
                     percentage
                 ),
                 style = MaterialTheme.typography.bodySmall,

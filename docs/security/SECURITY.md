@@ -8,7 +8,7 @@
 2. **Use local.properties for local development**
 3. **Use environment variables for CI/CD**
 
-### Setting up API Keys
+### Setting up API Keys (Developers)
 
 1. Copy `local.properties.template` to `local.properties`
 2. Add your actual API keys to `local.properties`
@@ -19,6 +19,7 @@
 - **Finnhub**: https://finnhub.io/register
 - **Exchange Rate API**: https://exchangerate-api.com/
 - **Alpha Vantage**: https://www.alphavantage.co/support/#api-key
+- **User-provided (in-app)**: Settings → Manage API Keys → Validate & Save
 
 ### Security Best Practices
 
@@ -43,12 +44,12 @@
 - **Request validation**: All API requests are validated before sending
 - **Error handling**: Secure error handling without exposing sensitive information
 
-### Authentication Security
+### API Keys at Runtime
 
-- **Biometric authentication**: Fingerprint/face recognition
-- **Session timeout**: 24-hour automatic logout
-- **No password storage**: No passwords stored locally
-- **Secure session management**: Encrypted session state
+- **Encrypted storage**: User API keys stored with EncryptedSharedPreferences (AES-256)
+- **Redacted logs**: Keys never logged; UI shows masked preview only (first 6 chars)
+- **Backup exclusions**: Keys excluded from cloud backup and device transfer
+- **Fallback**: User key takes precedence; falls back to BuildConfig when absent
 
 ## 🔒 Privacy Policy
 
@@ -111,15 +112,8 @@ cp local.properties.template local.properties
 
 ### API Key Management
 
-```kotlin
-// Secure API key access
-val apiKey = BuildConfig.FINNHUB_API_KEY
-if (apiKey.isNotEmpty()) {
-    // Use API key
-} else {
-    // Handle missing API key gracefully
-}
-```
+- Build-time keys removed. Keys are provided by users in-app.
+- Stored with EncryptedSharedPreferences; redacted in logs; excluded from backups.
 
 ## 📋 Security Checklist
 
@@ -170,5 +164,5 @@ For security-related questions or concerns:
 ---
 
 **Last Updated**: 2025  
-**Version**: 1.2.0  
+**Version**: 1.2.1  
 **Review Schedule**: Quarterly

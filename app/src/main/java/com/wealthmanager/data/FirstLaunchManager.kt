@@ -2,6 +2,7 @@ package com.wealthmanager.data
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.wealthmanager.BuildConfig
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -73,9 +74,9 @@ class FirstLaunchManager @Inject constructor(
     private fun getCurrentAppVersion(): String {
         return try {
             val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-            packageInfo.versionName ?: "1.2.0"
+            packageInfo.versionName ?: BuildConfig.VERSION_NAME
         } catch (e: Exception) {
-            "1.2.0"
+            BuildConfig.VERSION_NAME
         }
     }
     

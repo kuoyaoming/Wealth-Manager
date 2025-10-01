@@ -97,6 +97,7 @@
     <string name="retry">重試</string>
     <string name="delete">刪除</string>
     <string name="edit">編輯</string>
+    <string name="clear">清除</string>
     <string name="confirm">確認</string>
     <string name="searching">搜尋中...</string>
     <string name="action_later">稍後</string>
@@ -122,6 +123,14 @@
     <string name="settings_api_working">API 正常</string>
     <string name="settings_api_error">API 錯誤</string>
     <string name="settings_api_manual_search">搜尋結果（%1$d 筆）:</string>
+    
+    <!-- API Key Management -->
+    <string name="settings_api_manage_title">管理 API 金鑰</string>
+    <string name="settings_api_finnhub_label">Finnhub API 金鑰</string>
+    <string name="settings_api_exchange_label">Exchange Rate API 金鑰</string>
+    <string name="settings_api_input_placeholder">輸入您的 API 金鑰</string>
+    <string name="settings_api_validate_and_save">驗證並儲存</string>
+    <string name="settings_api_saved_preview">已保存：%1$s</string>
     
     <!-- Input Validation -->
     <string name="validation_enter_valid_number">請輸入有效數字。</string>
@@ -150,7 +159,8 @@
 
     <!-- About Dialog -->
     <string name="about_title">關於財富管理</string>
-    <string name="about_version">版本 1.2.0</string>
+    <string name="about_version">版本</string>
+    <string name="about_version_format">版本 %1$s（代碼 %2$d）</string>
     <string name="about_description">一個全面的個人理財應用程式，協助您追蹤資產、監控股票投資，並透過即時市場數據管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地儲存。</string>
     <string name="about_app_information_title">應用程式資訊</string>
     <string name="about_information_description">一個全面的個人理財管理應用程式，協助您追蹤資產、監控股票投資，並透過即時市場數據管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地資料儲存。</string>
@@ -199,7 +209,7 @@
 
     <string name="language_option_english">English</string>
     <string name="language_option_traditional_chinese">繁體中文</string>
-    <string name="language_change_requires_restart">切換語言需重新啟動應用程式後生效。</string>
+    
 
     <!-- Assets -->
     <string name="assets_tab_cash">現金</string>
@@ -207,7 +217,7 @@
     <string name="assets_currency_twd">台幣</string>
     <string name="assets_currency_usd">美金</string>
     <string name="assets_cash_title">%1$s 現金</string>
-    <string name="assets_amount_placeholder">輸入金額（例如 1000.50）</string>
+    <string name="assets_amount_placeholder">輸入金額（例如 %1$s）</string>
     <string name="assets_stock_symbol_placeholder">例如：VT、AAPL、TSMC</string>
     <string name="assets_search_results_count">搜尋結果（%1$d 筆）:</string>
     <string name="assets_search_no_match">查無符合的股票，請確認代號</string>
@@ -242,4 +252,9 @@
     <string name="button_skip_authentication">略過驗證</string>
     <string name="button_continue_without_biometric">不使用生物識別繼續</string>
     <string name="currency_twd_amount">NT$ %1$s</string>
+
+    <!-- Missing API Keys Dialog -->
+    <string name="missing_api_keys_title">需要 API 金鑰</string>
+    <string name="missing_api_keys_message">請至「設定」新增 Finnhub 與 Exchange Rate 的 API 金鑰後，才能刷新市場資料。</string>
+    <string name="go_to_settings">前往設定</string>
 </resources>

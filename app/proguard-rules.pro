@@ -26,6 +26,8 @@
 -keep class okhttp3.** { *; }
 -keep class com.google.gson.** { *; }
 -keep class com.wealthmanager.data.service.** { *; }
+# Keep Security Crypto (EncryptedSharedPreferences, MasterKey)
+-keep class androidx.security.** { *; }
 
 # Keep Compose classes
 -keep class androidx.compose.** { *; }
