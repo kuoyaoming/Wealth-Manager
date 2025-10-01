@@ -109,13 +109,13 @@ jobs:
           echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
-      - name: Build release bundles
+      - name: Build release bundles and APK
         env:
           ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/keystore.jks
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:bundleRelease --no-daemon --stacktrace
+        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:bundleRelease :app:assembleRelease --no-daemon --stacktrace
 
       - name: Upload release bundles
         uses: actions/upload-artifact@v4
@@ -124,3 +124,30 @@ jobs:
           path: |
             app/build/outputs/bundle/release/*.aab
             app/build/outputs/mapping/release/mapping.txt
+
+      - name: Compute checksums
+        run: |
+          set -e
+          cd app
+          echo "Generating SHA256 checksums..."
+          sha256sum build/outputs/bundle/release/*.aab > SHA256SUMS.txt
+          sha256sum build/outputs/apk/release/*.apk >> SHA256SUMS.txt
+          if [ -f build/outputs/mapping/release/mapping.txt ]; then
+            sha256sum build/outputs/mapping/release/mapping.txt >> SHA256SUMS.txt
+          fi
+          cat SHA256SUMS.txt
+
+      - name: Create GitHub Release and upload assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: v${{ env.WM_VERSION_NAME }}
+          draft: false
+          prerelease: false
+          files: |
+            app/build/outputs/bundle/release/*.aab
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/mapping/release/mapping.txt
+            app/SHA256SUMS.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

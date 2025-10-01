@@ -1,113 +1,80 @@
 # API Setup Guide
 
-This guide explains how to configure API keys for the Wealth Manager application.
+Language: [English](API_SETUP.md) | [繁體中文](API_SETUP_zh.md)
 
-## 🔑 Required API Keys
+Configure API keys for Wealth Manager using the in‑app settings. Keys are stored locally and encrypted.
 
-### 1. Finnhub API
-- **Purpose**: Stock market data and quotes
-- **Registration**: https://finnhub.io/register
-- **Free Tier**: Available
-- **Usage**: US and international stock prices
+## Required API Keys
 
-### 2. Exchange Rate API
-- **Purpose**: Currency exchange rates (USD/TWD)
-- **Registration**: https://exchangerate-api.com/
-- **Free Tier**: Available
-- **Usage**: Real-time exchange rate conversion
+### Finnhub
+- Purpose: Stock market data and quotes
+- Registration: https://finnhub.io/register
+- Free tier: Available
 
-## 🛠️ Setup Instructions
+### ExchangeRate‑API
+- Purpose: Currency rates (USD/TWD)
+- Registration: https://www.exchangerate-api.com/
+- Free tier: Available
 
-### Step 1: Get API Keys
+## Setup Instructions (In‑App)
 
-1. **Register for Finnhub API**:
-   - Visit https://finnhub.io/register
-   - Create account and get API key
-   - Free tier provides sufficient requests for development
+1) Obtain keys
+- Register and get API keys from the providers above.
 
-2. **Register for Exchange Rate API**:
-   - Visit https://exchangerate-api.com/
-   - Create account and get API key
-   - Free tier available
+2) Add keys in the app
+- Open the app → Settings → Manage API Keys → Paste keys → Validate & Save.
+- The app validates keys with the provider and stores them using EncryptedSharedPreferences via `KeyRepository`.
 
-### Step 2: Configure API Keys (In-App Only)
+3) Verify data
+- Go to Dashboard or Assets to confirm market data and rates load successfully.
 
-1. **Copy template file**:
-   ```bash
-   cp local.properties.template local.properties
-   ```
+Notes
+- No BuildConfig keys. Do not put keys in `local.properties`.
+- Keys never leave the device. They are encrypted on‑device and not backed up to cloud.
+- Logs redact secrets. UI shows masked previews only.
 
-2. **Provide keys in app**:
-   - Open app → Settings → Manage API Keys
-   - Paste keys and tap "Validate & Save"
+## Security Best Practices
 
-3. **Test**:
-   ```bash
-   # Run setup script
-   .\docs\setup\setup-dev.ps1
-   
-   # Build project
-   .\gradlew clean assembleDebug
-   ```
+Do
+- Store keys only in the app (Settings → Manage API Keys).
+- Use different keys for development and production.
+- Rotate keys regularly and monitor usage.
+- Keep original keys in a password manager.
 
-Notes:
-- BuildConfig keys have been removed. The app only uses user-provided keys.
-- Keys are encrypted on-device and excluded from cloud backup/device transfer.
-- Logs redact keys; UI shows masked preview only (e.g., first 6 chars).
+Don’t
+- Don’t commit keys to version control.
+- Don’t hardcode keys in source code.
+- Don’t place keys in `local.properties` or any config files.
+- Don’t share keys in screenshots or logs.
 
-## 🔐 Security Best Practices
+## Testing API Configuration
 
-### ✅ Do's
-- Store API keys in `local.properties`
-- Keep `local.properties` in `.gitignore`
-- Use different keys for development and production
-- Rotate API keys regularly
-- Monitor API usage
+Validate in app
+- Use “Validate & Save” in Settings → Manage API Keys.
+- On success, you should see up‑to‑date quotes and exchange rates.
 
-### ❌ Don'ts
-- Never commit API keys to version control
-- Don't hardcode keys in source code
-- Don't share API keys publicly
-- Don't use production keys for development
+Optional diagnostics
+- Check the in‑app diagnostics/logs (sensitive parts are masked).
 
-## 🧪 Testing API Configuration
+## Troubleshooting
 
-### Check BuildConfig
-After building, verify in `app/build/generated/source/buildConfig/debug/com/wealthmanager/BuildConfig.java`:
+Keys not accepted
+- Reopen Manage API Keys, clear and re‑paste the keys.
+- Confirm the key format with the provider; check account limits/plan.
+- Ensure device time and network are correct.
 
-```java
-public static final String FINNHUB_API_KEY = "your_actual_key";
-public static final String EXCHANGE_RATE_API_KEY = "your_actual_key";
-```
+Requests failing
+- Verify keys are valid and not rate‑limited.
+- Check internet connectivity and provider status pages.
+- Retry Validate in Settings.
 
-### Test API Functionality
-1. Launch the application
-2. Try searching for stocks
-3. Check if market data loads
-4. Test currency conversion
+Build issues
+- Clean and rebuild (`./gradlew clean assembleDebug`).
+- Verify Android Gradle Plugin and dependency versions match the project.
 
-## 🚨 Troubleshooting
-
-### API Keys Not Loading
-- Check `local.properties` format
-- Ensure no extra spaces or special characters
-- Verify file encoding is UTF-8
-- Run `.\gradlew clean` and rebuild
-
-### API Requests Failing
-- Verify API keys are correct
-- Check internet connection
-- Review API usage limits
-- Check API service status
-
-### Build Errors
-- Ensure `buildConfig true` in `build.gradle`
-- Check Gradle version compatibility
-- Clean and rebuild project
-
-## 📞 Support
+## Support
 
 If you encounter issues:
-1. Check [Security Policy](../security/SECURITY.md)
-2. Review [Development Setup](../setup/README.md)
-3. Create an issue on GitHub
+1) See [Security Policy](../security/SECURITY.md)
+2) Review [Development Setup](../setup/README.md)
+3) Create an issue on GitHub

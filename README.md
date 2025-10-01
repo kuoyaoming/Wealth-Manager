@@ -96,6 +96,7 @@ Requirements
 - Keys are stored encrypted on‑device; do not commit keys to source control
 - No BuildConfig keys; avoid placing real keys in `local.properties`
 - Detailed steps: [docs/api/API_SETUP.md](docs/api/API_SETUP.md)
+ - Detailed steps: [API Setup (English)](docs/api/API_SETUP.md) · [繁體中文](docs/api/API_SETUP_zh.md)
 
 ## Architecture Overview
 
