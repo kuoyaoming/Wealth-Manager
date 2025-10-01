@@ -138,7 +138,7 @@ fun BiometricAuthScreen(
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Skip Authentication")
+                            Text(stringResource(R.string.button_skip_authentication))
                         }
                     }
                     BiometricStatus.NO_HARDWARE -> {
@@ -159,7 +159,7 @@ fun BiometricAuthScreen(
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Continue Without Biometric")
+                            Text(stringResource(R.string.button_continue_without_biometric))
                         }
                     }
                     BiometricStatus.HW_UNAVAILABLE -> {
@@ -180,7 +180,7 @@ fun BiometricAuthScreen(
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Continue Without Biometric")
+                            Text(stringResource(R.string.button_continue_without_biometric))
                         }
                     }
                     BiometricStatus.NONE_ENROLLED -> {
@@ -201,7 +201,7 @@ fun BiometricAuthScreen(
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Continue Without Biometric")
+                            Text(stringResource(R.string.button_continue_without_biometric))
                         }
                     }
                     BiometricStatus.UNKNOWN_ERROR -> {
@@ -222,7 +222,7 @@ fun BiometricAuthScreen(
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
-                            Text("Continue Without Biometric")
+                            Text(stringResource(R.string.button_continue_without_biometric))
                         }
                     }
                 }

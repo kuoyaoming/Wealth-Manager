@@ -1,7 +1,7 @@
 package com.wealthmanager.data.service
 
-import com.wealthmanager.BuildConfig
 import com.wealthmanager.debug.DebugLogManager
+import com.wealthmanager.security.KeyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -13,7 +13,8 @@ import javax.inject.Singleton
  */
 @Singleton
 class ApiTestService @Inject constructor(
-    private val debugLogManager: DebugLogManager
+    private val debugLogManager: DebugLogManager,
+    private val keyRepository: KeyRepository
 ) {
     
     data class ApiTestResult(
@@ -29,8 +30,9 @@ class ApiTestService @Inject constructor(
         try {
             debugLogManager.log("API_TEST", "Testing Finnhub API key")
             
-            // Check if API key is available
-            if (BuildConfig.FINNHUB_API_KEY.isBlank()) {
+            // Check if API key is available (user key overrides BuildConfig)
+            val key = keyRepository.getUserFinnhubKey() ?: ""
+            if (key.isBlank()) {
                 return@withContext ApiTestResult(
                     isWorking = false,
                     message = "API Key not configured",
@@ -39,7 +41,7 @@ class ApiTestService @Inject constructor(
             }
             
             // Make a simple test request to get AAPL quote
-            val testUrl = "https://finnhub.io/api/v1/quote?symbol=AAPL&token=${BuildConfig.FINNHUB_API_KEY}"
+            val testUrl = "https://finnhub.io/api/v1/quote?symbol=AAPL&token=$key"
             val response = java.net.URL(testUrl).openConnection().apply {
                 connectTimeout = 10000
                 readTimeout = 10000
@@ -70,6 +72,31 @@ class ApiTestService @Inject constructor(
             )
         }
     }
+
+    /**
+     * Test Finnhub API key with an explicitly provided key (used for validate-before-save in settings)
+     */
+    suspend fun testFinnhubApiWithKey(key: String): ApiTestResult = withContext(Dispatchers.IO) {
+        try {
+            debugLogManager.log("API_TEST", "Testing Finnhub API key (provided)")
+            if (key.isBlank()) {
+                return@withContext ApiTestResult(false, "API Key not configured", "Finnhub")
+            }
+            val testUrl = "https://finnhub.io/api/v1/quote?symbol=AAPL&token=$key"
+            val response = java.net.URL(testUrl).openConnection().apply {
+                connectTimeout = 10000
+                readTimeout = 10000
+            }.getInputStream().bufferedReader().readText()
+            if (response.contains("\"c\":") && response.contains("\"d\":")) {
+                ApiTestResult(true, "API Working - Test successful", "Finnhub")
+            } else {
+                ApiTestResult(false, "API Error - Invalid response", "Finnhub")
+            }
+        } catch (e: Exception) {
+            debugLogManager.logError("API_TEST: Finnhub provided key test failed", e)
+            ApiTestResult(false, "API Error - ${e.message}", "Finnhub")
+        }
+    }
     
     /**
      * Test Exchange Rate API key by making a simple request
@@ -78,8 +105,9 @@ class ApiTestService @Inject constructor(
         try {
             debugLogManager.log("API_TEST", "Testing Exchange Rate API key")
             
-            // Check if API key is available
-            if (BuildConfig.EXCHANGE_RATE_API_KEY.isBlank()) {
+            // Check if API key is available (user key overrides BuildConfig)
+            val key = keyRepository.getUserExchangeKey() ?: ""
+            if (key.isBlank()) {
                 return@withContext ApiTestResult(
                     isWorking = false,
                     message = "API Key not configured",
@@ -88,7 +116,7 @@ class ApiTestService @Inject constructor(
             }
             
             // Make a simple test request to get USD to TWD rate
-            val testUrl = "https://v6.exchangerate-api.com/v6/${BuildConfig.EXCHANGE_RATE_API_KEY}/latest/USD"
+            val testUrl = "https://v6.exchangerate-api.com/v6/$key/latest/USD"
             val response = java.net.URL(testUrl).openConnection().apply {
                 connectTimeout = 10000
                 readTimeout = 10000
@@ -117,6 +145,31 @@ class ApiTestService @Inject constructor(
                 message = "API Error - ${e.message}",
                 apiName = "Exchange Rate"
             )
+        }
+    }
+
+    /**
+     * Test Exchange Rate API key with an explicitly provided key (used for validate-before-save in settings)
+     */
+    suspend fun testExchangeRateApiWithKey(key: String): ApiTestResult = withContext(Dispatchers.IO) {
+        try {
+            debugLogManager.log("API_TEST", "Testing Exchange Rate API key (provided)")
+            if (key.isBlank()) {
+                return@withContext ApiTestResult(false, "API Key not configured", "Exchange Rate")
+            }
+            val testUrl = "https://v6.exchangerate-api.com/v6/$key/latest/USD"
+            val response = java.net.URL(testUrl).openConnection().apply {
+                connectTimeout = 10000
+                readTimeout = 10000
+            }.getInputStream().bufferedReader().readText()
+            if (response.contains("\"result\":\"success\"") && response.contains("\"TWD\"")) {
+                ApiTestResult(true, "API Working - Test successful", "Exchange Rate")
+            } else {
+                ApiTestResult(false, "API Error - Invalid response", "Exchange Rate")
+            }
+        } catch (e: Exception) {
+            debugLogManager.logError("API_TEST: Exchange Rate provided key test failed", e)
+            ApiTestResult(false, "API Error - ${e.message}", "Exchange Rate")
         }
     }
     

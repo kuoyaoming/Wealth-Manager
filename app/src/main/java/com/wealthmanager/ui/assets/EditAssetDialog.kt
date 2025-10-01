@@ -79,6 +79,7 @@ fun EditCashAssetDialog(
                 Spacer(modifier = Modifier.height(16.dp))
                 Text(stringResource(R.string.cash_amount))
                 Spacer(modifier = Modifier.height(8.dp))
+                val amountExample = if (currency == "TWD") "1000" else "1000.50"
                 OutlinedTextField(
                     value = amount,
                     onValueChange = {
@@ -89,7 +90,7 @@ fun EditCashAssetDialog(
                         }
                     },
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                    placeholder = { Text(stringResource(R.string.assets_amount_placeholder)) },
+                    placeholder = { Text(stringResource(R.string.assets_amount_placeholder, amountExample)) },
                     isError = amount.isNotEmpty() && amount.toDoubleOrNull() == null,
                     supportingText = if (amount.isNotEmpty() && amount.toDoubleOrNull() == null) {
                         { Text(stringResource(R.string.validation_enter_valid_number), color = MaterialTheme.colorScheme.error) }

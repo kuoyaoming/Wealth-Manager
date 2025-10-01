@@ -93,15 +93,15 @@ class MainActivityIntegrated : FragmentActivity() {
                             modifier = Modifier.padding(innerPadding)
                         )
                     }
+
+                    // Show about dialog if needed
+                    if (showAboutDialog) {
+                        AboutDialog(
+                            onDismiss = { showAboutDialog = false },
+                            firstLaunchManager = firstLaunchManager
+                        )
+                    }
                 }
-            }
-            
-            // Show about dialog if needed
-            if (showAboutDialog) {
-                AboutDialog(
-                    onDismiss = { showAboutDialog = false },
-                    firstLaunchManager = firstLaunchManager
-                )
             }
         }
     }

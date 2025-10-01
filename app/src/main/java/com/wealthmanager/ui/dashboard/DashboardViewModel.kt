@@ -11,6 +11,7 @@ import com.wealthmanager.data.service.MarketDataService
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.wear.WearSyncManager
 import com.wealthmanager.wear.WearSyncManager.ManualSyncResult
+import com.wealthmanager.security.KeyRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -28,6 +29,7 @@ class DashboardViewModel @Inject constructor(
     private val debugLogManager: DebugLogManager,
     private val apiStatusManager: ApiStatusManager,
     private val wearSyncManager: WearSyncManager,
+    private val keyRepository: KeyRepository,
 ) : ViewModel() {
     
     private val _uiState = MutableStateFlow(DashboardUiState())
@@ -42,6 +44,12 @@ class DashboardViewModel @Inject constructor(
         observeAssets()
     }
     
+    fun hasRequiredKeys(): Boolean {
+        val finnhub = keyRepository.getUserFinnhubKey()?.isNotBlank() == true
+        val exchange = keyRepository.getUserExchangeKey()?.isNotBlank() == true
+        return finnhub && exchange
+    }
+
     private fun observeAssets() {
         debugLogManager.log("DASHBOARD", "Starting to observe assets")
         viewModelScope.launch {

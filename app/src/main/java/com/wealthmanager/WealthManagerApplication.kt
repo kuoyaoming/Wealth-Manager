@@ -5,7 +5,7 @@ import android.content.Context
 import com.wealthmanager.auth.AuthStateManager
 import com.wealthmanager.auth.AuthStateManagerEntryPoint
 import com.wealthmanager.preferences.LocalePreferencesManager
-import com.wealthmanager.util.LocaleHelper
+import com.wealthmanager.util.LanguageManager
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -26,11 +26,11 @@ class WealthManagerApplication : Application(), AuthStateManagerEntryPoint {
 
     override fun onCreate() {
         super.onCreate()
-        // Apply locale settings after the app is fully initialized
+        // Apply app language using official per-app locales
         try {
             val languageCode = localePreferencesManager.getLanguageCode()
             if (languageCode.isNotEmpty()) {
-                LocaleHelper.applyLocaleToContext(this, languageCode)
+                LanguageManager.setAppLanguage(this, languageCode)
             }
         } catch (e: Exception) {
             // Ignore locale application errors during startup

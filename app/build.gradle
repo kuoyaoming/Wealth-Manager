@@ -6,6 +6,17 @@ plugins {
     id 'kotlin-parcelize'
 }
 
+// Versioning: receive from CI or command line to avoid git calls during configuration
+def wmVersionName = (project.findProperty('wmVersionName') ?: System.getenv('WM_VERSION_NAME') ?: '0.0.0') as String
+def wmVersionCodeStr = (project.findProperty('wmVersionCode') ?: System.getenv('WM_VERSION_CODE') ?: '1').toString()
+def wmVersionCode
+try {
+    wmVersionCode = Integer.parseInt(wmVersionCodeStr)
+} catch (Exception ignored) {
+    wmVersionCode = 1
+}
+def isCi = (System.getenv('CI') ?: 'false').toBoolean()
+
 android {
     namespace = 'com.wealthmanager'
     compileSdk = 35
@@ -14,23 +25,15 @@ android {
         applicationId = "com.wealthmanager"
         minSdk = 34
         targetSdk = 35
-        versionCode = 16
-        versionName = "1.2.1"
+        versionCode = wmVersionCode
+        versionName = wmVersionName
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         vectorDrawables {
             useSupportLibrary = true
         }
         
-        // API Keys from local.properties (secure)
-        def localProperties = new Properties()
-        def localPropertiesFile = rootProject.file('local.properties')
-        if (localPropertiesFile.exists()) {
-            localPropertiesFile.withInputStream { localProperties.load(it) }
-        }
-        
-        buildConfigField("String", "FINNHUB_API_KEY", "\"${localProperties.getProperty('FINNHUB_API_KEY', '')}\"")
-        buildConfigField("String", "EXCHANGE_RATE_API_KEY", "\"${localProperties.getProperty('EXCHANGE_RATE_API_KEY', '')}\"")
+        // Removed BuildConfig API keys. Keys must be provided by users in Settings.
     }
 
     buildTypes {
@@ -85,8 +88,20 @@ android {
     buildToolsVersion = '36.1.0'
 }
 
+// Guard: Only allow release AAB builds on CI (bundleRelease/publishRelease*)
+afterEvaluate {
+    if (!isCi) {
+        tasks.matching { it.name == 'bundleRelease' || (it.name.toLowerCase().startsWith('publish') && it.name.toLowerCase().contains('release')) }.all { t ->
+            t.doFirst {
+                throw new GradleException('Release AAB builds are only allowed on CI.')
+            }
+        }
+    }
+}
+
 dependencies {
     // Core Android
+    implementation 'androidx.appcompat:appcompat:1.7.0'
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
     implementation 'androidx.activity:activity-compose:1.8.2'
@@ -97,6 +112,7 @@ dependencies {
     implementation 'androidx.compose.ui:ui-graphics'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     implementation 'androidx.compose.material3:material3'
+    implementation 'androidx.compose.material3:material3-window-size-class'
     implementation 'androidx.compose.material:material-icons-extended'
     
     // Navigation
@@ -122,6 +138,9 @@ dependencies {
     implementation 'com.squareup.retrofit2:retrofit:2.9.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.9.0'
     implementation 'com.squareup.okhttp3:logging-interceptor:4.12.0'
+
+    // Security Crypto for EncryptedSharedPreferences
+    implementation 'androidx.security:security-crypto:1.1.0-alpha06'
 
     // Wear OS data layer
     implementation 'com.google.android.gms:play-services-wearable:18.2.0'

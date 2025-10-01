@@ -26,8 +26,8 @@ import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
-import java.text.NumberFormat
-import java.util.Locale
+import com.wealthmanager.utils.MoneyFormatter
+import com.wealthmanager.utils.rememberMoneyText
 
 @Composable
 fun StockAssetItem(
@@ -63,8 +63,18 @@ fun StockAssetItem(
                 Text(
                     text = stringResource(
                         R.string.assets_stock_shares_price,
-                        formatCurrency(asset.shares),
-                        formatCurrency(asset.currentPrice)
+                        rememberMoneyText(
+                            asset.shares,
+                            "USD",
+                            style = MoneyFormatter.Style.NumberOnly,
+                            maxFractionDigits = 2
+                        ),
+                        rememberMoneyText(
+                            asset.currentPrice,
+                            asset.originalCurrency,
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.StockPrice
+                        )
                     ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -72,7 +82,12 @@ fun StockAssetItem(
                 Text(
                     text = stringResource(
                         R.string.assets_cash_twd_value,
-                        stringResource(R.string.currency_twd_amount, formatCurrency(asset.twdEquivalent))
+                        rememberMoneyText(
+                            asset.twdEquivalent,
+                            "TWD",
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.Total
+                        )
                     ),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = FontWeight.Medium,
@@ -115,8 +130,4 @@ fun StockAssetItem(
     }
 }
 
-private fun formatCurrency(amount: Double): String {
-    val formatter = NumberFormat.getNumberInstance(Locale.getDefault())
-    formatter.maximumFractionDigits = 2
-    return formatter.format(amount)
-}
+// Removed local formatter; unified via MoneyFormatter

@@ -1,6 +1,5 @@
 package com.wealthmanager.data.service
 
-import com.wealthmanager.BuildConfig
 import com.wealthmanager.data.api.FinnhubApi
 import com.wealthmanager.data.api.FinnhubQuoteResponse
 import com.wealthmanager.data.api.FinnhubSearchResponse
@@ -15,6 +14,7 @@ import com.wealthmanager.data.model.StockSearchItem
 import com.wealthmanager.data.model.NoResultsReason
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.debug.ApiDiagnostic
+import com.wealthmanager.security.KeyRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -28,14 +28,11 @@ class ApiProviderService @Inject constructor(
     private val twseDataParser: TwseDataParser,
     private val twseCacheManager: TwseCacheManager,
     private val debugLogManager: DebugLogManager,
-    private val apiDiagnostic: ApiDiagnostic
+    private val apiDiagnostic: ApiDiagnostic,
+    private val keyRepository: KeyRepository
 ) {
     
-    companion object {
-        // API keys are now loaded from BuildConfig for security
-        private val FINNHUB_API_KEY = BuildConfig.FINNHUB_API_KEY
-        private val EXCHANGE_RATE_API_KEY = BuildConfig.EXCHANGE_RATE_API_KEY
-    }
+    companion object {}
     
     suspend fun getStockQuote(symbol: String): Result<StockQuoteData> {
         return if (isTaiwanStock(symbol)) {
@@ -48,7 +45,8 @@ class ApiProviderService @Inject constructor(
     suspend fun searchStocks(query: String, market: String): Flow<SearchResult> = flow {
         try {
             debugLogManager.log("API_PROVIDER", "Searching stocks: '$query' in market: '$market'")
-            debugLogManager.log("API_PROVIDER", "Using API key: ${FINNHUB_API_KEY.take(8)}...")
+            val effectiveKey = keyRepository.getUserFinnhubKey() ?: ""
+            debugLogManager.log("API_PROVIDER", "Using API key: ${effectiveKey.take(8)}...")
             
             // Run diagnostic checks
             val diagnostic = apiDiagnostic.runDiagnostic()
@@ -71,7 +69,7 @@ class ApiProviderService @Inject constructor(
                 }
             }
             
-            val response = finnhubApi.searchStocks(query, FINNHUB_API_KEY)
+            val response = finnhubApi.searchStocks(query, effectiveKey)
             debugLogManager.log("API_PROVIDER", "Finnhub response received: ${response.result.size} results")
             emit(processFinnhubSearchResults(response.result))
         } catch (e: Exception) {
@@ -106,7 +104,7 @@ class ApiProviderService @Inject constructor(
     private suspend fun tryFinnhubQuote(symbol: String): Result<StockQuoteData> {
         return try {
             debugLogManager.log("API_PROVIDER", "Getting stock quote for $symbol")
-            val response = finnhubApi.getStockQuote(symbol, FINNHUB_API_KEY)
+            val response = finnhubApi.getStockQuote(symbol, keyRepository.getUserFinnhubKey() ?: "")
             
             Result.success(StockQuoteData(
                 symbol = symbol,
@@ -174,7 +172,7 @@ class ApiProviderService @Inject constructor(
     private suspend fun tryExchangeRateApi(fromCurrency: String, toCurrency: String): Result<ExchangeRateData> {
         return try {
             debugLogManager.log("API_PROVIDER", "Getting exchange rate: $fromCurrency to $toCurrency")
-            val response = exchangeRateApi.getExchangeRate(EXCHANGE_RATE_API_KEY, fromCurrency)
+            val response = exchangeRateApi.getExchangeRate(keyRepository.getUserExchangeKey() ?: "", fromCurrency)
             
             val rate = response.conversion_rates[toCurrency] ?: 0.0
             

@@ -2,57 +2,113 @@ name: Android CI
 
 on:
   push:
-    branches: [ main ]
+    tags:
+      - 'v*.*.*'
+    branches:
+      - '**'
   pull_request:
 
 jobs:
-  build:
+  debug:
+    if: startsWith(github.ref, 'refs/heads/')
     runs-on: ubuntu-latest
+    timeout-minutes: 45
     steps:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Validate Gradle Wrapper
-        uses: gradle/actions/wrapper-validation@v3
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
 
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v2
 
-      - name: Build (assembleDebug)
-        run: ./gradlew assembleDebug --no-daemon
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
 
-      - name: Build release bundles (app + wear)
-        run: ./gradlew :app:bundleRelease :wear:bundleRelease --no-daemon
+      - name: Install Android SDK components
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;36.1.0" || sdkmanager --install "build-tools;35.0.0"
 
-      - name: Upload app native symbols
+      - name: Grant Gradle permissions
+        run: chmod +x gradlew
+
+      - name: Compute version (beta)
+        shell: bash
+        run: |
+          TAG="$(git describe --tags --abbrev=0 2>/dev/null || echo v0.0.0)"
+          BASE_NAME="${TAG#v}"
+          SHORT_SHA="$(git rev-parse --short HEAD)"
+          VERSION_NAME="${BASE_NAME}-beta.${GITHUB_RUN_NUMBER}+${SHORT_SHA}"
+          echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+
+      - name: Build app and wear (Debug)
+        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:assembleDebug :wear:assembleDebug --no-daemon --stacktrace
+
+      - name: Upload app artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-native-debug-symbols
-          path: app/build/outputs/native-debug-symbols/release/native-debug-symbols.zip
-          if-no-files-found: warn
-          retention-days: 14
+          name: app-debug-apk
+          path: app/build/outputs/apk/debug/*.apk
 
-      - name: Upload app mapping
+      - name: Upload wear artifacts
         uses: actions/upload-artifact@v4
         with:
-          name: app-mapping
-          path: app/build/outputs/mapping/release/mapping.txt
-          if-no-files-found: warn
-          retention-days: 14
+          name: wear-debug-apk
+          path: wear/build/outputs/apk/debug/*.apk
 
-      - name: Upload wear native symbols
+  release:
+    if: startsWith(github.ref, 'refs/tags/v')
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: temurin
+          java-version: '17'
+          cache: gradle
+
+      - name: Validate Gradle wrapper
+        uses: gradle/wrapper-validation-action@v2
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK components
+        run: |
+          yes | sdkmanager --licenses
+          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;36.1.0" || sdkmanager --install "build-tools;35.0.0"
+
+      - name: Grant Gradle permissions
+        run: chmod +x gradlew
+
+      - name: Compute version (release)
+        shell: bash
+        run: |
+          TAG="$(git describe --tags --abbrev=0)"
+          VERSION_NAME="${TAG#v}"
+          echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
+          echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+
+      - name: Build release bundles
+        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:bundleRelease --no-daemon --stacktrace
+
+      - name: Upload release bundles
         uses: actions/upload-artifact@v4
         with:
-          name: wear-native-debug-symbols
-          path: wear/build/outputs/native-debug-symbols/release/native-debug-symbols.zip
-          if-no-files-found: warn
-          retention-days: 14
-
-      - name: Upload wear mapping
-        uses: actions/upload-artifact@v4
-        with:
-          name: wear-mapping
-          path: wear/build/outputs/mapping/release/mapping.txt
-          if-no-files-found: warn
-          retention-days: 14
-
+          name: app-release-bundle
+          path: |
+            app/build/outputs/bundle/release/*.aab
+            app/build/outputs/mapping/release/mapping.txt

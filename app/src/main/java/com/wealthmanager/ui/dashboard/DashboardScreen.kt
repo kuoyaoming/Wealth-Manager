@@ -19,6 +19,8 @@ import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
+import androidx.compose.material3.AlertDialog
+import androidx.compose.material3.TextButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -64,6 +66,7 @@ fun DashboardScreen(
     val responsiveLayout = rememberResponsiveLayout()
     val snackbarHostState = remember { SnackbarHostState() }
     val wearSyncSuccessMessage = stringResource(R.string.wear_sync_success)
+    var showMissingKeysDialog = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     val wearSyncMissingAppMessage = stringResource(R.string.wear_sync_missing_app)
     val wearSyncFailedMessage = stringResource(R.string.wear_sync_failed)
 
@@ -87,7 +90,11 @@ fun DashboardScreen(
                     IconButton(
                         onClick = {
                             hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                            viewModel.refreshData()
+                            if (viewModel.hasRequiredKeys()) {
+                                viewModel.refreshData()
+                            } else {
+                                showMissingKeysDialog.value = true
+                            }
                         }
                     ) {
                         Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
@@ -129,15 +136,16 @@ fun DashboardScreen(
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->
-        LazyVerticalGrid(
-            columns = GridCells.Fixed(if (responsiveLayout.isTablet) 2 else 1),
+			val columns = responsiveLayout.columns
+			LazyVerticalGrid(
+				columns = GridCells.Fixed(columns),
             contentPadding = PaddingValues(responsiveLayout.paddingMedium),
             horizontalArrangement = Arrangement.spacedBy(responsiveLayout.paddingMedium),
             verticalArrangement = Arrangement.spacedBy(responsiveLayout.paddingMedium),
             modifier = Modifier.padding(paddingValues)
         ) {
             // Total Assets Card
-            item(span = { GridItemSpan(2) }) {
+				item(span = { GridItemSpan(columns) }) {
                 TotalAssetsCardOptimized(
                     totalValue = uiState.totalAssets,
                     isLoading = uiState.isLoading
@@ -162,7 +170,7 @@ fun DashboardScreen(
             
             // Pie Chart
             if (uiState.totalAssets > 0) {
-                item(span = { GridItemSpan(2) }) {
+					item(span = { GridItemSpan(columns) }) {
                     PieChartComponentFixed(
                         assets = uiState.assets,
                         isLoading = uiState.isLoading
@@ -184,6 +192,23 @@ fun DashboardScreen(
                 onDismiss = {
                     hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                     // Dismiss error logic would go here
+                }
+            )
+        }
+
+        if (showMissingKeysDialog.value) {
+            AlertDialog(
+                onDismissRequest = { showMissingKeysDialog.value = false },
+                title = { Text(stringResource(R.string.missing_api_keys_title)) },
+                text = { Text(stringResource(R.string.missing_api_keys_message)) },
+                confirmButton = {
+                    TextButton(onClick = {
+                        showMissingKeysDialog.value = false
+                        onNavigateToSettings()
+                    }) { Text(stringResource(R.string.go_to_settings)) }
+                },
+                dismissButton = {
+                    TextButton(onClick = { showMissingKeysDialog.value = false }) { Text(stringResource(R.string.cancel)) }
                 }
             )
         }
