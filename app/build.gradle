@@ -21,6 +21,20 @@ android {
     namespace = 'com.wealthmanager'
     compileSdk = 35
 
+    signingConfigs {
+        release {
+            def keystorePath = System.getenv('ANDROID_KEYSTORE_PATH') ?: new File(rootDir, 'keystore.jks').absolutePath
+            storeFile file(keystorePath)
+            storePassword System.getenv('ANDROID_KEYSTORE_PASSWORD') ?: ''
+            keyAlias System.getenv('ANDROID_KEY_ALIAS') ?: ''
+            keyPassword System.getenv('ANDROID_KEY_PASSWORD') ?: ''
+            def keystoreType = System.getenv('ANDROID_KEYSTORE_TYPE')
+            if (keystoreType != null && !keystoreType.isEmpty()) {
+                storeType keystoreType
+            }
+        }
+    }
+
     defaultConfig {
         applicationId = "com.wealthmanager"
         minSdk = 34
@@ -49,6 +63,7 @@ android {
             ndk {
                 debugSymbolLevel = 'FULL'
             }
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled = false

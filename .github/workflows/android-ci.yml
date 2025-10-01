@@ -94,6 +94,13 @@ jobs:
       - name: Grant Gradle permissions
         run: chmod +x gradlew
 
+      - name: Decode Android keystore
+        if: env.ANDROID_KEYSTORE_BASE64 != ''
+        run: |
+          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > keystore.jks
+        env:
+          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+
       - name: Compute version (release)
         shell: bash
         run: |
@@ -103,6 +110,11 @@ jobs:
           echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
       - name: Build release bundles
+        env:
+          ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/keystore.jks
+          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
+          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
+          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:bundleRelease --no-daemon --stacktrace
 
       - name: Upload release bundles
