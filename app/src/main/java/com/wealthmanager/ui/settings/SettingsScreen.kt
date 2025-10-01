@@ -18,9 +18,7 @@ import androidx.compose.material.icons.filled.CheckCircle
 import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Translate
-import androidx.compose.material.icons.filled.VolumeUp
 import androidx.compose.material.icons.filled.Vibration
 import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.AlertDialog
@@ -32,6 +30,7 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Button
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -49,6 +48,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.wealthmanager.R
@@ -134,15 +134,30 @@ fun SettingsScreen(
                 onHapticEnabledChange = { hapticEnabled = it },
                 soundEnabled = soundEnabled,
                 onSoundEnabledChange = { soundEnabled = it },
-                hapticIntensity = hapticIntensity,
-                onHapticIntensityChange = { hapticIntensity = it },
                 hapticManager = hapticManager,
                 view = view
             )
 
-            TestHapticFeedbackCard(
-                hapticManager = hapticManager,
-                view = view
+            ApiKeyManagementCard(
+                finnhubKeyPreview = uiState.finnhubKeyPreview,
+                exchangeKeyPreview = uiState.exchangeKeyPreview,
+                lastActionMessage = uiState.lastKeyActionMessage,
+                onValidateAndSaveFinnhub = { key ->
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                    viewModel.validateAndSaveFinnhubKey(key)
+                },
+                onValidateAndSaveExchange = { key ->
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                    viewModel.validateAndSaveExchangeKey(key)
+                },
+                onClearFinnhub = {
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                    viewModel.clearFinnhubKey()
+                },
+                onClearExchange = {
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                    viewModel.clearExchangeKey()
+                }
             )
 
             ApiKeyCheckCard(
@@ -292,8 +307,6 @@ private fun HapticFeedbackSettingsCard(
     onHapticEnabledChange: (Boolean) -> Unit,
     soundEnabled: Boolean,
     onSoundEnabledChange: (Boolean) -> Unit,
-    hapticIntensity: HapticFeedbackManager.HapticIntensity,
-    onHapticIntensityChange: (HapticFeedbackManager.HapticIntensity) -> Unit,
     hapticManager: HapticFeedbackManager,
     view: android.view.View
 ) {
@@ -373,54 +386,24 @@ private fun HapticFeedbackSettingsCard(
                 )
             }
 
-            // Haptic feedback intensity
-            if (hapticEnabled) {
-                Column {
-                    Text(
-                        text = stringResource(R.string.settings_haptic_intensity),
-                        style = MaterialTheme.typography.bodyLarge
-                    )
-                    Spacer(modifier = Modifier.height(8.dp))
-
-                    val intensityOptions = listOf(
-                        HapticFeedbackManager.HapticIntensity.LIGHT to stringResource(R.string.settings_haptic_intensity_light),
-                        HapticFeedbackManager.HapticIntensity.MEDIUM to stringResource(R.string.settings_haptic_intensity_medium),
-                        HapticFeedbackManager.HapticIntensity.STRONG to stringResource(R.string.settings_haptic_intensity_strong),
-                        HapticFeedbackManager.HapticIntensity.CONFIRM to stringResource(R.string.settings_haptic_intensity_confirm)
-                    )
-
-                    intensityOptions.forEach { (intensity, label) ->
-                        Row(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
-                            verticalAlignment = Alignment.CenterVertically
-                        ) {
-                            RadioButton(
-                                selected = hapticIntensity == intensity,
-                                onClick = {
-                                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                                    onHapticIntensityChange(intensity)
-                                }
-                            )
-                            Spacer(modifier = Modifier.width(8.dp))
-                            Text(
-                                text = label,
-                                style = MaterialTheme.typography.bodyMedium
-                            )
-                        }
-                    }
-                }
-            }
+            // intensity selection removed per product decision
         }
     }
 }
 
 @Composable
-private fun TestHapticFeedbackCard(
-    hapticManager: HapticFeedbackManager,
-    view: android.view.View
+private fun ApiKeyManagementCard(
+    finnhubKeyPreview: String,
+    exchangeKeyPreview: String,
+    lastActionMessage: String,
+    onValidateAndSaveFinnhub: (String) -> Unit,
+    onValidateAndSaveExchange: (String) -> Unit,
+    onClearFinnhub: () -> Unit,
+    onClearExchange: () -> Unit
 ) {
+    var finnhubInput by remember { mutableStateOf("") }
+    var exchangeInput by remember { mutableStateOf("") }
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -434,67 +417,61 @@ private fun TestHapticFeedbackCard(
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Icon(
-                    imageVector = Icons.Default.Settings,
+                    imageVector = Icons.Default.Lock,
                     contentDescription = null,
                     tint = MaterialTheme.colorScheme.primary
                 )
                 Text(
-                    text = stringResource(R.string.settings_haptic_test_title),
+                    text = stringResource(R.string.settings_api_manage_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
             }
 
-            Text(
-                text = stringResource(R.string.settings_haptic_test_desc),
-                style = MaterialTheme.typography.bodyMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            )
-
-            Row(
+            // Finnhub
+            Text(text = stringResource(R.string.settings_api_finnhub_label), style = MaterialTheme.typography.bodyMedium)
+            if (finnhubKeyPreview.isNotBlank()) {
+                Text(text = stringResource(R.string.settings_api_saved_preview, finnhubKeyPreview), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            OutlinedTextField(
+                value = finnhubInput,
+                onValueChange = { finnhubInput = it },
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Button(
-                    onClick = {
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                    },
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(stringResource(R.string.settings_haptic_intensity_light))
+                visualTransformation = PasswordVisualTransformation(),
+                placeholder = { Text(stringResource(R.string.settings_api_input_placeholder)) }
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(onClick = { onValidateAndSaveFinnhub(finnhubInput) }) {
+                    Text(stringResource(R.string.settings_api_validate_and_save))
                 }
-
-                Button(
-                    onClick = {
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                    },
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(stringResource(R.string.settings_haptic_intensity_medium))
+                TextButton(onClick = onClearFinnhub) {
+                    Text(stringResource(R.string.clear))
                 }
             }
 
-            Row(
+            // Exchange Rate
+            Text(text = stringResource(R.string.settings_api_exchange_label), style = MaterialTheme.typography.bodyMedium)
+            if (exchangeKeyPreview.isNotBlank()) {
+                Text(text = stringResource(R.string.settings_api_saved_preview, exchangeKeyPreview), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+            OutlinedTextField(
+                value = exchangeInput,
+                onValueChange = { exchangeInput = it },
                 modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.spacedBy(8.dp)
-            ) {
-                Button(
-                    onClick = {
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.STRONG)
-                    },
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(stringResource(R.string.settings_haptic_intensity_strong))
+                visualTransformation = PasswordVisualTransformation(),
+                placeholder = { Text(stringResource(R.string.settings_api_input_placeholder)) }
+            )
+            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
+                Button(onClick = { onValidateAndSaveExchange(exchangeInput) }) {
+                    Text(stringResource(R.string.settings_api_validate_and_save))
                 }
+                TextButton(onClick = onClearExchange) {
+                    Text(stringResource(R.string.clear))
+                }
+            }
 
-                Button(
-                    onClick = {
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
-                    },
-                    modifier = Modifier.weight(1f)
-                ) {
-                    Text(stringResource(R.string.settings_haptic_intensity_confirm))
-                }
+            if (lastActionMessage.isNotBlank()) {
+                Text(text = lastActionMessage, style = MaterialTheme.typography.bodySmall)
             }
         }
     }

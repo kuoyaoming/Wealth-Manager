@@ -11,10 +11,8 @@ import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 import com.wealthmanager.ui.charts.PieChartComponent
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
-import androidx.compose.ui.platform.LocalContext
-import com.wealthmanager.util.LanguageManager
-import java.text.NumberFormat
-import java.util.*
+import com.wealthmanager.utils.MoneyFormatter
+import com.wealthmanager.utils.rememberMoneyText
 
 @Composable
 fun TotalAssetsCard(
@@ -47,7 +45,12 @@ fun TotalAssetsCard(
                 )
             } else {
                 Text(
-                    text = stringResource(R.string.currency_twd_amount, formatCurrency(totalValue)),
+                    text = rememberMoneyText(
+                        totalValue,
+                        "TWD",
+                        style = MoneyFormatter.Style.CurrencyCode,
+                        moneyContext = MoneyFormatter.MoneyContext.Total
+                    ),
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.primary
@@ -88,7 +91,12 @@ fun CashAssetsCard(
                 )
             } else {
                 Text(
-                    text = stringResource(R.string.currency_twd_amount, formatCurrency(cashValue)),
+                    text = rememberMoneyText(
+                        cashValue,
+                        "TWD",
+                        style = MoneyFormatter.Style.CurrencyCode,
+                        moneyContext = MoneyFormatter.MoneyContext.Total
+                    ),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.primary
@@ -129,7 +137,12 @@ fun StockAssetsCard(
                 )
             } else {
                 Text(
-                    text = stringResource(R.string.currency_twd_amount, formatCurrency(stockValue)),
+                    text = rememberMoneyText(
+                        stockValue,
+                        "TWD",
+                        style = MoneyFormatter.Style.CurrencyCode,
+                        moneyContext = MoneyFormatter.MoneyContext.Total
+                    ),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.primary
@@ -150,10 +163,4 @@ fun PieChartCard(
     )
 }
 
-private fun formatCurrency(amount: Double): String {
-    val context = LocalContext.current
-    val appLocale = LanguageManager.getCurrentLocale(context)
-    val formatter = NumberFormat.getNumberInstance(appLocale)
-    formatter.maximumFractionDigits = 0
-    return formatter.format(amount)
-}
+// Removed local formatter; unified via MoneyFormatter

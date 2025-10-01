@@ -30,23 +30,18 @@ This guide explains how to configure API keys for the Wealth Manager application
    - Create account and get API key
    - Free tier available
 
-### Step 2: Configure API Keys
+### Step 2: Configure API Keys (In-App Only)
 
 1. **Copy template file**:
    ```bash
    cp local.properties.template local.properties
    ```
 
-2. **Edit local.properties**:
-   ```properties
-   sdk.dir=C:\\Users\\YourUsername\\AppData\\Local\\Android\\Sdk
-   
-   # API Keys
-   FINNHUB_API_KEY=your_finnhub_api_key_here
-   EXCHANGE_RATE_API_KEY=your_exchange_rate_api_key_here
-   ```
+2. **Provide keys in app**:
+   - Open app → Settings → Manage API Keys
+   - Paste keys and tap "Validate & Save"
 
-3. **Test configuration**:
+3. **Test**:
    ```bash
    # Run setup script
    .\docs\setup\setup-dev.ps1
@@ -54,6 +49,11 @@ This guide explains how to configure API keys for the Wealth Manager application
    # Build project
    .\gradlew clean assembleDebug
    ```
+
+Notes:
+- BuildConfig keys have been removed. The app only uses user-provided keys.
+- Keys are encrypted on-device and excluded from cloud backup/device transfer.
+- Logs redact keys; UI shows masked preview only (e.g., first 6 chars).
 
 ## 🔐 Security Best Practices
 

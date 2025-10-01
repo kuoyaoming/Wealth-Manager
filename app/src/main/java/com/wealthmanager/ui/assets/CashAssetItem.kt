@@ -26,10 +26,8 @@ import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
-import androidx.compose.ui.platform.LocalContext
-import com.wealthmanager.util.LanguageManager
-import java.text.NumberFormat
-import java.util.*
+import com.wealthmanager.utils.MoneyFormatter
+import com.wealthmanager.utils.rememberMoneyText
 
 @Composable
 fun CashAssetItem(
@@ -56,7 +54,12 @@ fun CashAssetItem(
                 Text(
                     text = stringResource(
                         R.string.assets_cash_original_amount,
-                        formatCurrency(asset.amount),
+                        rememberMoneyText(
+                            asset.amount,
+                            asset.currency,
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.CashAmount
+                        ),
                         asset.currency
                     ),
                     style = MaterialTheme.typography.titleMedium,
@@ -65,7 +68,12 @@ fun CashAssetItem(
                 Text(
                     text = stringResource(
                         R.string.assets_cash_twd_value,
-                        stringResource(R.string.currency_twd_amount, formatCurrency(asset.twdEquivalent))
+                        rememberMoneyText(
+                            asset.twdEquivalent,
+                            "TWD",
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.Total
+                        )
                     ),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
@@ -107,10 +115,4 @@ fun CashAssetItem(
     }
 }
 
-private fun formatCurrency(amount: Double): String {
-    val context = LocalContext.current
-    val appLocale = LanguageManager.getCurrentLocale(context)
-    val formatter = NumberFormat.getNumberInstance(appLocale)
-    formatter.maximumFractionDigits = 2
-    return formatter.format(amount)
-}
+// Removed local formatter; unified via MoneyFormatter

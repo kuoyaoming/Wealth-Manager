@@ -2,6 +2,7 @@ package com.wealthmanager
 
 import android.content.ComponentCallbacks2
 import android.os.Bundle
+import android.os.Build
 import android.util.Log
 import android.view.MotionEvent
 import androidx.activity.ComponentActivity
@@ -20,11 +21,16 @@ import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.data.service.PerformanceMonitor120Hz
 import com.wealthmanager.ui.about.AboutDialog
 import com.wealthmanager.ui.navigation.WealthManagerNavigation
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
+import androidx.compose.runtime.CompositionLocalProvider
+import com.wealthmanager.ui.responsive.LocalWindowWidthSizeClass
 import com.wealthmanager.ui.theme.WealthManagerTheme
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
 @AndroidEntryPoint
+@androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 class MainActivity : FragmentActivity() {
     
     @Inject
@@ -53,26 +59,43 @@ class MainActivity : FragmentActivity() {
                 }
             }
             
+            val windowSizeClass = calculateWindowSizeClass(this)
             WealthManagerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                        WealthManagerNavigation(
-                            modifier = Modifier.padding(innerPadding)
+                    CompositionLocalProvider(
+                        LocalWindowWidthSizeClass provides windowSizeClass.widthSizeClass
+                    ) {
+                        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
+                            WealthManagerNavigation(
+                                modifier = Modifier.padding(innerPadding)
+                            )
+                        }
+                    }
+
+                    if (showAboutDialog) {
+                        AboutDialog(
+                            onDismiss = { showAboutDialog = false },
+                            firstLaunchManager = firstLaunchManager
                         )
                     }
                 }
             }
-            
-            if (showAboutDialog) {
-                AboutDialog(
-                    onDismiss = { showAboutDialog = false },
-                    firstLaunchManager = firstLaunchManager
-                )
-            }
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // Hint system to auto-manage refresh rate by default
+        hintFrameRate(0f)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        // Return control to system when leaving the screen
+        hintFrameRate(0f)
     }
     
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -129,6 +152,18 @@ class MainActivity : FragmentActivity() {
         } catch (e: Exception) {
             Log.e("MainActivity", "Error checking touch position", e)
             true
+        }
+    }
+
+    private fun hintFrameRate(frameRate: Float) {
+        try {
+            // Provide a non-binding refresh rate preference to the system
+            // On API 30+ the system supports dynamic refresh rate; using LayoutParams hint keeps control with the system
+            val lp = window.attributes
+            lp.preferredRefreshRate = if (frameRate > 0f) frameRate else 0f
+            window.attributes = lp
+        } catch (e: Exception) {
+            Log.w("MainActivity", "Failed to hint frame rate: $frameRate", e)
         }
     }
     

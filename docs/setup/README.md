@@ -27,6 +27,23 @@ This directory contains scripts to help developers set up the development enviro
 ./docs/setup/setup-dev.sh
 ```
 
+## 🔖 Release & Versioning (for Maintainers)
+
+- versionName: from Git tag `vX.Y.Z` → `X.Y.Z` (SemVer)
+- versionCode: from CI `GITHUB_RUN_NUMBER`
+- Release AAB is only produced on CI when a tag is pushed
+
+Steps
+```bash
+# 1) Ensure CHANGELOG.md is updated
+# 2) Create and push tag
+git tag v1.4.0
+git push origin v1.4.0
+
+# 3) Wait for CI to finish and download artifacts (.aab & mapping.txt)
+# 4) Upload AAB to Play Console (internal/testing) and submit
+```
+
 ## 🔍 What These Scripts Do
 
 - ✅ Check if `local.properties` exists and create from template if needed
