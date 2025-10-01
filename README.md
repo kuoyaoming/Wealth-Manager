@@ -106,26 +106,26 @@ Requirements
 - **Security**: EncryptedSharedPreferences for API keys; biometric auth
 
 ```mermaid
-graph TB
-  subgraph "UI Layer"
-    UI1[Compose UI Screens (Auth, Dashboard, Assets, Settings)]
-    UI2[Navigation (NavHost)]
-    UI3[Material 3 + Responsive Layout]
-    UI4[Haptics & 120Hz-friendly UX]
+flowchart TB
+  subgraph UI_Layer
+    UI1[Compose screens]
+    UI2[Navigation]
+    UI3[Material 3 and responsive]
+    UI4[Haptics and 120Hz UX]
   end
 
-  subgraph "Business Logic Layer"
+  subgraph Business_Logic
     BL1[ViewModels]
     BL2[MarketDataService]
-    BL3[AuthState: BiometricAuthManager / AuthStateManager]
+    BL3[Auth state]
     BL4[FirstLaunchManager]
   end
 
-  subgraph "Data Layer"
-    DL1[Repositories (AssetRepository, KeyRepository)]
-    DL2[Room DB (WealthManagerDatabase + DAOs)]
-    DL3[API Provider Service (Retrofit APIs)]
-    DL4[Caching & Resilience (CacheManager, TwseCacheManager, SmartCacheStrategy, Retry, Dedupe, Error Handling, Validation, Diagnostics)]
+  subgraph Data_Layer
+    DL1[Repositories]
+    DL2[Room database]
+    DL3[API provider]
+    DL4[Caching and resilience]
   end
 
   UI1 --> BL1
@@ -145,31 +145,31 @@ graph TB
 ### Core Modules
 
 ```mermaid
-graph LR
-  subgraph "🔐 Authentication"
+flowchart LR
+  subgraph Auth
     A1[BiometricAuthManager]
     A2[AuthStateManager]
     A3[BiometricAuthScreen]
   end
 
-  subgraph "💰 Assets"
+  subgraph Assets
     B1[AssetsScreen]
     B2[AssetRepository]
     B3[Room DAOs]
   end
 
-  subgraph "📊 Market Data"
+  subgraph Market_Data
     C1[MarketDataService]
-    C2[ApiProviderService (FinnhubApi / TwseApi / ExchangeRateApi)]
-    C3[Caching & Parser (TwseCacheManager / TwseDataParser)]
-    C4[Resilience (Retry / Dedupe / Error / Validation)]
+    C2[ApiProviderService]
+    C3[Cache and parser]
+    C4[Resilience]
   end
 
-  subgraph "🎨 UI & System"
+  subgraph UI_and_System
     D1[DashboardScreen]
     D2[SettingsScreen]
     D3[Navigation]
-    D4[Material 3 / Responsive]
+    D4[Material 3 and responsive]
     D5[PerformanceMonitor120Hz]
   end
 
@@ -185,7 +185,7 @@ graph LR
 ## Data Flow
 
 ```mermaid
-graph TD
+flowchart TD
   UI[Compose UI] --> VM[ViewModel]
   VM --> REPO[Repository]
   REPO --> DB[Room]
@@ -200,14 +200,14 @@ graph TD
   X --> C
 
   C --> MDS[MarketDataService]
-  MDS --> AU[Asset Updates]
+  MDS --> AU[Asset updates]
   AU --> DB
 
-  AUTH[Biometric + AuthState (24h)] --> VM
+  AUTH[Biometric and auth state] --> VM
   K[KeyRepository] --> API
-  R[Resilience (Retry/Dedupe/Error/Validation/Diagnostics)] --> API
-  OFF[Offline Mode] --> C
-  C --> L[Local Cache] --> UI
+  R[Resilience] --> API
+  OFF[Offline mode] --> C
+  C --> L[Local cache] --> UI
 ```
 
 ## Tech Stack
@@ -258,10 +258,10 @@ git push origin v1.4.0
 
 ```mermaid
 flowchart TD
-  A[auth\nBiometricAuthScreen] -->|onAuthSuccess| B[dashboard\nDashboardScreen]
-  A -->|onSkipAuth (if not authenticated)| B
-  B -->|onNavigateToAssets| C[assets\nAssetsScreen]
-  B -->|onNavigateToSettings| D[settings\nSettingsScreen]
+  A[auth] -->|onAuthSuccess| B[dashboard]
+  A -->|onSkipAuth when not authenticated| B
+  B -->|onNavigateToAssets| C[assets]
+  B -->|onNavigateToSettings| D[settings]
   C -->|onNavigateBack| B
   D -->|onNavigateBack| B
 ```

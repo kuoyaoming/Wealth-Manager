@@ -106,26 +106,26 @@ git clone https://github.com/kuoyaoming/Wealth-Manager.git
 - **安全**：EncryptedSharedPreferences 金鑰；生物識別登入
 
 ```mermaid
-graph TB
-  subgraph "UI 層"
-    U1[Compose UI 畫面（認證、儀表板、資產、設定）]
-    U2[Navigation（NavHost）]
-    U3[Material 3 ＋ 響應式版面]
-    U4[觸覺與 120Hz 體驗]
+flowchart TB
+  subgraph UI_層
+    U1[UI 畫面]
+    U2[導覽]
+    U3[Material 3 與響應式]
+    U4[觸覺與 120Hz]
   end
 
-  subgraph "業務邏輯層"
+  subgraph 業務邏輯層
     B1[ViewModels]
     B2[MarketDataService]
-    B3[認證狀態：BiometricAuthManager / AuthStateManager]
+    B3[認證狀態]
     B4[FirstLaunchManager]
   end
 
-  subgraph "資料層"
-    D1[Repositories（AssetRepository、KeyRepository）]
-    D2[Room 資料庫（WealthManagerDatabase＋DAOs）]
-    D3[API Provider Service（Retrofit APIs）]
-    D4[快取與韌性（CacheManager、TwseCacheManager、SmartCacheStrategy、重試、去重、錯誤處理、驗證、診斷）]
+  subgraph 資料層
+    D1[Repositories]
+    D2[Room 資料庫]
+    D3[API Provider]
+    D4[快取與韌性]
   end
 
   U1 --> B1
@@ -258,10 +258,10 @@ git push origin v1.4.0
 
 ```mermaid
 flowchart TD
-  A[auth\nBiometricAuthScreen] -->|onAuthSuccess| B[dashboard\nDashboardScreen]
+  A[auth] -->|onAuthSuccess| B[dashboard]
   A -->|onSkipAuth（未認證時）| B
-  B -->|onNavigateToAssets| C[assets\nAssetsScreen]
-  B -->|onNavigateToSettings| D[settings\nSettingsScreen]
+  B -->|onNavigateToAssets| C[assets]
+  B -->|onNavigateToSettings| D[settings]
   C -->|onNavigateBack| B
   D -->|onNavigateBack| B
 ```
