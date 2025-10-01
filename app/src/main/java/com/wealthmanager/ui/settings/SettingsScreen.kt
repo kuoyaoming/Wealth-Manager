@@ -55,6 +55,7 @@ import com.wealthmanager.R
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 import com.wealthmanager.ui.about.AboutDialog
+import com.wealthmanager.util.LanguageManager
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -85,11 +86,9 @@ fun SettingsScreen(
     var currentLanguage by remember { mutableStateOf(uiState.currentLanguageCode) }
     LaunchedEffect(uiState.currentLanguageCode) {
         if (uiState.currentLanguageCode.isNotEmpty() && uiState.currentLanguageCode != currentLanguage) {
-            // Update the current language first
             currentLanguage = uiState.currentLanguageCode
-            
-            // Directly recreate the activity to apply language changes
-            (context as? Activity)?.recreate()
+            // Apply per-app language immediately via LanguageManager; Compose will recompose
+            LanguageManager.setAppLanguage(context, uiState.currentLanguageCode)
         }
     }
     Scaffold(
@@ -125,6 +124,7 @@ fun SettingsScreen(
                     if (languageCode != uiState.currentLanguageCode) {
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                         viewModel.setLanguage(languageCode)
+                        LanguageManager.setAppLanguage(context, languageCode)
                     }
                 }
             )
@@ -281,14 +281,6 @@ private fun LanguageSettingsCard(
                         style = MaterialTheme.typography.bodyMedium
                     )
                 }
-            }
-
-            if (languageOptions.any { it.languageCode.equals(currentLanguageCode, ignoreCase = true) }) {
-                Text(
-                    text = stringResource(R.string.language_change_requires_restart),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
-                )
             }
         }
     }
