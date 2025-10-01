@@ -45,7 +45,7 @@ import com.wealthmanager.ui.responsive.rememberResponsiveLayout
 import com.wealthmanager.ui.dashboard.TotalAssetsCardOptimized
 import com.wealthmanager.ui.dashboard.CashAssetsCardOptimized
 import com.wealthmanager.ui.dashboard.StockAssetsCardOptimized
-import com.wealthmanager.ui.charts.PieChartComponentFixed
+import com.wealthmanager.ui.charts.TreemapChartComponent
 import com.wealthmanager.ui.dashboard.ApiErrorBanner
 import com.wealthmanager.ui.dashboard.ManualSyncStatus
 import kotlinx.coroutines.flow.collectLatest
@@ -168,12 +168,16 @@ fun DashboardScreen(
                 )
             }
             
-            // Pie Chart
+            // Treemap Chart
             if (uiState.totalAssets > 0) {
 					item(span = { GridItemSpan(columns) }) {
-                    PieChartComponentFixed(
+                    TreemapChartComponent(
                         assets = uiState.assets,
-                        isLoading = uiState.isLoading
+                        isLoading = uiState.isLoading,
+                        onAssetClick = { asset ->
+                            // TODO: Navigate to asset details or show details dialog
+                            // For now, just log the click
+                        }
                     )
                 }
             }
