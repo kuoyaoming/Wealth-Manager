@@ -108,7 +108,7 @@ Requirements
 ```mermaid
 graph TB
   subgraph "UI Layer"
-    UI1[Compose UI Screens\n(Auth, Dashboard, Assets, Settings)]
+    UI1[Compose UI Screens<br/>(Auth, Dashboard, Assets, Settings)]
     UI2[Navigation (NavHost)]
     UI3[Material 3 + Responsive Layout]
     UI4[Haptics & 120Hz-friendly UX]
@@ -122,10 +122,10 @@ graph TB
   end
 
   subgraph "Data Layer"
-    DL1[Repositories\n(AssetRepository, KeyRepository)]
-    DL2[Room DB\n(WealthManagerDatabase + DAOs)]
-    DL3[API Provider Service\n(Retrofit APIs)]
-    DL4[Caching & Resilience\n(CacheManager, TwseCacheManager,\nSmartCacheStrategy, Retry, Dedupe,\nError Handling, Validation, Diagnostics)]
+    DL1[Repositories<br/>(AssetRepository, KeyRepository)]
+    DL2[Room DB<br/>(WealthManagerDatabase + DAOs)]
+    DL3[API Provider Service<br/>(Retrofit APIs)]
+    DL4[Caching & Resilience<br/>(CacheManager, TwseCacheManager)<br/>SmartCacheStrategy, Retry, Dedupe,<br/>Error Handling, Validation, Diagnostics]
   end
 
   UI1 --> BL1
@@ -160,9 +160,9 @@ graph LR
 
   subgraph "📊 Market Data"
     C1[MarketDataService]
-    C2[ApiProviderService\n(FinnhubApi / TwseApi / ExchangeRateApi)]
-    C3[Caching & Parser\n(TwseCacheManager / TwseDataParser)]
-    C4[Resilience\n(Retry / Dedupe / Error / Validation)]
+    C2[ApiProviderService<br/>(FinnhubApi / TwseApi / ExchangeRateApi)]
+    C3[Caching & Parser<br/>(TwseCacheManager / TwseDataParser)]
+    C4[Resilience<br/>(Retry / Dedupe / Error / Validation)]
   end
 
   subgraph "🎨 UI & System"
@@ -205,7 +205,7 @@ graph TD
 
   AUTH[Biometric + AuthState (24h)] --> VM
   K[KeyRepository] --> API
-  R[Resilience (Retry/Dedupe/Error/Validation/Diagnostics)] --> API
+  R[Resilience<br/>(Retry/Dedupe/Error/Validation/Diagnostics)] --> API
   OFF[Offline Mode] --> C
   C --> L[Local Cache] --> UI
 ```
