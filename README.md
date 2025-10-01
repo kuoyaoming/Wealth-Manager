@@ -1,19 +1,19 @@
 # Wealth Manager
 
-A modern Android personal finance tracker built with Jetpack Compose. Secure local-only storage, biometric authentication, real-time market data (Finnhub, TWSE, Exchange Rate), multilingual UI, and a 120Hz-optimized experience with haptic feedback.
+Modern Android personal finance tracker powered by Jetpack Compose. Local-only data storage, biometric authentication, real‑time market data (Finnhub, TWSE, ExchangeRate‑API), multilingual UI, 120Hz optimizations, and rich haptics.
 
-**Language**: [English](README.md) | [繁體中文](README_zh.md)
+Language: [English](README.md) | [繁體中文](README_zh.md)
 
 ## Features
 
-- 🔐 **Biometric Security** - Fingerprint/face recognition authentication with 24-hour session timeout
-- 💰 **Portfolio Tracking** - Cash and stock investment management with CRUD operations
-- 📊 **Real-time Market Data** - Live prices via Finnhub API, TWSE API, and Exchange Rate API
-- 🎨 **Material You** - Dynamic theming with responsive design
-- 🌍 **Multi-language Support** - English & Traditional Chinese with instant switching
-- 📱 **Android 16 target** - Built for API 36 with 120Hz optimizations
-- ⚡ **Performance Monitoring** - Real-time performance tracking and optimization
-- 🗄️ **Smart Caching** - Intelligent cache management with offline support
+- 🔐 **Biometric Security**: Fingerprint/face authentication with 24‑hour session timeout
+- 💰 **Portfolio Tracking**: Cash and stock management with full CRUD
+- 📊 **Real‑time Market Data**: Finnhub (global), TWSE (Taiwan), ExchangeRate‑API (USD/TWD)
+- 🔁 **Resilience Built‑in**: Failover, retry, request deduplication, and offline cache
+- 🎨 **Material You**: Dynamic color with responsive layouts
+- ⚙️ **Performance**: 120Hz‑friendly UI and performance monitoring
+- 🌍 **Localization**: English and Traditional Chinese, instant switching
+- ⌚ **Wear OS**: Companion sync via data layer (separate Wear module)
 
 ## 📱 Screenshots
 
@@ -24,11 +24,11 @@ A modern Android personal finance tracker built with Jetpack Compose. Secure loc
 <tr>
 <td width="50%">
 <img src="docs/screenshots/portfolio-overview.png" alt="Portfolio Overview" width="100%"/>
-<p align="center"><em>Comprehensive portfolio overview with asset distribution charts and real-time valuations</em></p>
+<p align="center"><em>Portfolio overview with distribution and real‑time valuation</em></p>
 </td>
 <td width="50%">
 <img src="docs/screenshots/asset-management.png" alt="Asset Management" width="100%"/>
-<p align="center"><em>Easy management of cash and stock assets with intuitive interface</em></p>
+<p align="center"><em>Manage cash and stocks with an intuitive workflow</em></p>
 </td>
 </tr>
 </table>
@@ -38,11 +38,11 @@ A modern Android personal finance tracker built with Jetpack Compose. Secure loc
 <tr>
 <td width="50%">
 <img src="docs/screenshots/biometric-auth.png" alt="Biometric Authentication" width="100%"/>
-<p align="center"><em>Secure biometric authentication with privacy protection notice</em></p>
+<p align="center"><em>Secure sign‑in with clear privacy notice</em></p>
 </td>
 <td width="50%">
 <img src="docs/screenshots/add-assets.png" alt="Add Assets" width="100%"/>
-<p align="center"><em>Smart asset addition with real-time stock search and symbol lookup</em></p>
+<p align="center"><em>Smart add flow with stock search and symbol lookup</em></p>
 </td>
 </tr>
 </table>
@@ -52,108 +52,58 @@ A modern Android personal finance tracker built with Jetpack Compose. Secure loc
 <tr>
 <td width="50%">
 <img src="docs/screenshots/about-app.png" alt="About Wealth Manager" width="100%"/>
-<p align="center"><em>Transparent privacy policy and third-party API usage information</em></p>
+<p align="center"><em>Transparent privacy and third‑party API disclosure</em></p>
 </td>
 <td width="50%">
-<!-- Empty cell for better layout -->
+<!-- Empty cell for balanced layout -->
 </td>
 </tr>
 </table>
 
 </div>
 
-## Security
+## Security & Privacy
 
-- **Local-only storage** - All data encrypted on device
-- **Biometric authentication** - No passwords required, 24-hour session timeout
-- **No cloud sync** - Complete privacy protection
-- **Session management** - Automatic authentication state management
+- **Local‑only storage**: Financial data stays on the device (no cloud sync)
+- **Biometric authentication**: No passwords, 24‑hour session timeout
+- **API keys encrypted on‑device**: Stored with EncryptedSharedPreferences
+- **Logging hygiene**: Keys redacted; diagnostics focus on non‑sensitive details
 
-## 🔐 Security Configuration
+Docs: [Security Policy](docs/security/SECURITY.md) · [API Setup](docs/api/API_SETUP.md)
 
-### Quick Setup
-
-1. **Run setup script**:
-   ```bash
-   # Windows PowerShell (recommended)
-   .\docs\setup\setup-dev.ps1
-   
-   # Windows Command Prompt
-   .\docs\setup\setup-dev.bat
-   
-   # Linux/Mac
-   ./docs/setup/setup-dev.sh
-   ```
-
-2. **Follow the setup guide**: [API Setup Guide](docs/api/API_SETUP.md)
-
-### Security Features
-
-- ✅ **Local-only storage** - All data encrypted on device
-- ✅ **No API keys in source code** - Keys stored securely in local.properties
-- ✅ **Biometric authentication** - No passwords required
-- ✅ **No cloud sync** - Complete privacy protection
-
-### Documentation
-
-- 📖 [Security Policy](docs/security/SECURITY.md) - Complete security guidelines
-- 🛠️ [API Setup Guide](docs/api/API_SETUP.md) - Detailed API configuration
-- 👥 [Contributing Guide](docs/development/CONTRIBUTING.md) - Development guidelines
-
-## Asset Management
-
-- **Cash tracking** - TWD and USD support
-- **Stock portfolio** - Taiwan and US markets
-- **Smart search** - Real-time stock symbol search and matching
-- **Asset editing** - Complete CRUD operations
-- **Real-time price updates** - Automatic and manual refresh
-
-## Market Data
-
-- **Finnhub API** - Primary data source for US and international stock prices
-- **TWSE API** - Taiwan Stock Exchange data integration with real-time quotes
-- **Exchange Rate API** - Real-time USD/TWD exchange rate conversion
-- **Smart API switching** - Automatic failover ensures data availability
-- **Request deduplication** - Prevents duplicate API calls for better performance
-- **Cache support** - Intelligent caching with offline data availability
-- **Error recovery** - Automatic retry mechanisms and error handling
-
-## Tech Stack
-
-- **UI**: Jetpack Compose + Material 3
-- **Architecture**: MVVM + Repository Pattern
-- **Dependency Injection**: Hilt
-- **Database**: Room (local encrypted storage)
-- **Networking**: Retrofit + OkHttp with logging
-- **Authentication**: Android Biometric API
-- **Language**: Kotlin
-- **Target**: Android 16 (API 36)
-- **Responsive Design**: Adaptive layout system
-- **Performance**: 120Hz optimization with memory management
-- **Caching**: Smart cache strategy with TWSE data parser
-
-## Installation
+## Getting Started
 
 ```bash
 # Clone the repository (or your fork)
 git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
-# Build the project (Debug)
+# Build (Debug)
 ./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug
 
 # Install on device
 ./gradlew installDebug
 ```
 
-## Requirements
-
+Requirements
 - Android 14+ (API 34+)
-- Target SDK 36 (Android 16)
-- Biometric authentication (recommended)
-- Internet connection (market data)
-- Minimum 100MB storage space
+- Target SDK 35 (Android 15)
+- Biometric hardware recommended
+- Internet connection for market data
 
-## Application Architecture
+## API Keys
+
+- Configure inside the app: Settings → Manage API Keys → Validate & Save
+- Keys are stored encrypted on‑device; do not commit keys to source control
+- No BuildConfig keys; avoid placing real keys in `local.properties`
+- Detailed steps: [docs/api/API_SETUP.md](docs/api/API_SETUP.md)
+
+## Architecture Overview
+
+- **Pattern**: MVVM + Repository
+- **Data**: Room (local storage), Retrofit/OkHttp
+- **DI**: Hilt
+- **UI**: Jetpack Compose + Material 3
+- **Security**: EncryptedSharedPreferences for API keys; biometric auth
 
 ```mermaid
 graph TB
@@ -163,21 +113,21 @@ graph TB
         C[Material 3]
         D[Responsive Design]
     end
-    
+
     subgraph "Business Logic Layer"
         E[ViewModels]
         F[Use Cases]
         G[Managers]
         H[Authentication]
     end
-    
+
     subgraph "Data Layer"
         I[Repository]
         J[Room DB]
-        K[API Service]
+        K[API Provider Service]
         L[Cache Management]
     end
-    
+
     A --> E
     B --> E
     C --> E
@@ -191,7 +141,7 @@ graph TB
     I --> L
 ```
 
-## Core Modules
+### Core Modules
 
 ```mermaid
 graph LR
@@ -200,28 +150,28 @@ graph LR
         A2[AuthStateManager]
         A3[BiometricAuthScreen]
     end
-    
-    subgraph "💰 Asset Management"
+
+    subgraph "💰 Assets"
         B1[AssetsScreen]
         B2[AddAssetDialog]
         B3[EditAssetDialog]
         B4[CashAsset/StockAsset]
     end
-    
+
     subgraph "📊 Market Data"
         C1[MarketDataService]
         C2[ApiProviderService]
-        C3[FinnhubApi/TwseApi]
-        C4[CacheManager]
+        C3[Finnhub/TWSE]
+        C4[Cache/Parser]
     end
-    
-    subgraph "🎨 User Interface"
-        D1[DashboardScreen]
-        D2[WealthManagerNavigation]
+
+    subgraph "🎨 UI"
+        D1[Dashboard]
+        D2[Navigation]
         D3[Responsive Layout]
         D4[Material You]
     end
-    
+
     A1 --> B1
     A2 --> B1
     B1 --> C1
@@ -229,85 +179,68 @@ graph LR
     D1 --> A3
 ```
 
-### 🔐 Authentication System
-- **BiometricAuthManager** - Biometric authentication management with error handling
-- **AuthStateManager** - Session state management (24-hour timeout)
-- **BiometricAuthScreen** - Authentication interface with skip option
-
-### 💰 Asset Management
-- **AssetsScreen** - Asset list management with search functionality
-- **AddAssetDialog** - Add asset dialog with stock search
-- **EditAssetDialog** - Edit asset functionality for cash and stocks
-- **CashAsset/StockAsset** - Cash/stock entities with market support
-
-### 📊 Market Data
-- **MarketDataService** - Market data service with retry mechanisms
-- **ApiProviderService** - API provider service with failover
-- **FinnhubApi/TwseApi** - Multi-API integration with caching
-- **CacheManager** - Data cache management with smart strategies
-- **TwseDataParser** - Taiwan stock data parsing and validation
-
-### 🎨 User Interface
-- **DashboardScreen** - Main dashboard with portfolio overview
-- **WealthManagerNavigation** - Navigation system with authentication flow
-- **Responsive Layout** - Adaptive design for different screen sizes
-- **Material You** - Dynamic theming with performance optimization
-- **PerformanceMonitor120Hz** - Real-time performance tracking
-
-## Data Flow Architecture
+## Data Flow
 
 ```mermaid
 graph TD
-    A[User Interface] --> B[ViewModel]
+    A[UI] --> B[ViewModel]
     B --> C[Repository]
-    C --> D[Room Database]
-    C --> E[API Provider Service]
-    
-    E --> F[Finnhub API]
-    E --> G[Alpha Vantage API]
-    E --> H[TWSE API]
-    
-    F --> I[Cache Management]
-    G --> I
+    C --> D[Room]
+    C --> E[API Provider]
+
+    E --> F[Finnhub]
+    E --> H[TWSE]
+    E --> R[ExchangeRate]
+
+    F --> I[Cache]
     H --> I
-    
-    I --> J[Market Data Service]
+    R --> I
+
+    I --> J[MarketDataService]
     J --> K[Asset Updates]
     K --> D
-    
-    L[Biometric Auth] --> M[Auth State Management]
+
+    L[Biometric Auth] --> M[Auth State (24h)]
     M --> A
-    
+
     N[Offline Mode] --> I
-    I --> O[Local Cache Data]
+    I --> O[Local Cache]
     O --> A
 ```
 
+## Tech Stack
+
+- Kotlin, Jetpack Compose, Material 3
+- Hilt, Room (local storage), Retrofit, OkHttp (logging)
+- AndroidX Biometric
+- Coroutines/Flows
+- Wear OS data layer
+
+## Wear OS
+
+- Separate module `wear` (`minSdk 30`, `targetSdk 35`)
+- Companion sync via `MobileWearSyncService` using Play Services Wearable
+
 ## Contributing
 
-1. Fork the repository
-2. Create a feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit your changes (`git commit -m 'Add amazing feature'`)
-4. Push to the branch (`git push origin feature/amazing-feature`)
-5. Open a Pull Request
+See [docs/development/CONTRIBUTING.md](docs/development/CONTRIBUTING.md)
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) file for details
+MIT License — see [LICENSE](LICENSE)
 
 ---
 
-**Version**: 1.4.0  
-**Last Updated**: 2025  
-**Min SDK**: 34 (Android 14)  
-**Target SDK**: 36 (Android 16)  
-**Build Status**: Production Ready
+Version: 1.4.0  
+Last Updated: 2025  
+Min SDK: 34 (Android 14)  
+Target SDK: 35 (Android 15)
 
 ## Release & Versioning
 
-- **versionName**: Derived from Git tag `vX.Y.Z` → `X.Y.Z` (SemVer)
-- **versionCode**: Assigned by CI using `GITHUB_RUN_NUMBER` (monotonically increasing)
-- **Release AAB**: Produced only on CI when a tag is pushed
+- versionName: Derived from Git tag `vX.Y.Z` → `X.Y.Z` (SemVer)
+- versionCode: Assigned by CI with `GITHUB_RUN_NUMBER`
+- Release AAB: Produced only on CI when a tag is pushed
 
 Examples
 ```bash
@@ -315,29 +248,28 @@ Examples
 git tag v1.4.0
 git push origin v1.4.0
 
-# Local debug build (no release bundles allowed locally)
+# Local debug build (release bundles are CI‑only)
 ./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug
 ```
 
 Artifacts
-- CI on tag builds `:app:bundleRelease` and uploads `.aab` and `mapping.txt` as artifacts
+- On tag, CI builds `:app:bundleRelease` and uploads `.aab` and `mapping.txt`
 
 ## Development Status
 
-### ✅ Completed Features
-- Biometric authentication system with 24-hour session timeout
-- Asset management (cash/stocks) with CRUD operations
-- Real-time market data integration (Finnhub, TWSE, Exchange Rate APIs)
-- Multi-API failover with request deduplication
-- Responsive UI design with Material 3 theming
-- Multi-language support (English/Traditional Chinese)
-- Performance monitoring and 120Hz optimization
-- Smart caching system with offline support
-- Error recovery and retry mechanisms
-- Debug logging and performance tracking
+### ✅ Completed
+- Biometric auth with 24‑hour session timeout
+- Cash/stock asset management (CRUD)
+- Real‑time market data (Finnhub, TWSE, ExchangeRate‑API)
+- Failover, retry, request deduplication
+- Responsive UI with Material 3
+- English/Traditional Chinese localization
+- Performance monitoring and 120Hz optimizations
+- Smart caching with offline support
+- Error recovery & diagnostics
 
 ### 🚧 In Development
-- Portfolio visualization charts
-- Advanced analytics features
-- Data export functionality
+- Portfolio charts
+- Advanced analytics
+- Data export
 - Enhanced chart components
