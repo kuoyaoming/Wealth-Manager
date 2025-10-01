@@ -12,6 +12,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code of Conduct
 - Changelog documentation
 
+## [1.4.0] - 2025-10-01
+
+### Added
+- 🚀 CI 版控與發佈流程：
+  - versionName 由 Git Tag（`vX.Y.Z` → `X.Y.Z`）決定
+  - versionCode 由 GitHub Actions `GITHUB_RUN_NUMBER` 自動產生（嚴格遞增）
+  - Tag 觸發產出簽章 `:app:bundleRelease` 與 `mapping.txt`
+- 🧭 響應式佈局：新增 `WindowSizeClass`，優化平板與大螢幕體驗
+- 💵 `MoneyFormatter` 公用模組：一致的金額格式化與本地化顯示
+- 🔐 安全性/診斷：優化 `ApiDiagnostic` 與網路模組可觀測性
+
+### Changed
+- 📦 Gradle：`app/build.gradle` 改為接收 `-PwmVersionName/-PwmVersionCode`，避免設定期呼叫 git，並新增非 CI 禁止 release AAB 保護
+- 🧱 Build/Targets：minSdk 34、targetSdk 35、compileSdk 35、Build Tools 36.1.0
+- 🧭 Dashboard/Charts：最佳化重組與記憶體配置，改善效能與流暢度
+- 🌐 多語言：優化設定頁與語言切換流程，符合 2025 per-app-language 指南
+
+### Fixed
+- 🛠️ 修正市場數據查詢穩定性與錯誤處理；改善網路異常情境下的回復能力
+- 🧹 修正部分 UI 元件的狀態同步與邏輯邊界條件
+
+### Notes
+- 正式釋出 AAB 僅由 CI 產出；本地禁止 `bundleRelease`
+
 ## [1.2.0] - 2025-09-30
 
 ### Changed
@@ -147,6 +171,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Release Date | Key Features |
 |---------|-------------|--------------|
+| 1.4.0   | 2025-10-01  | CI-driven versioning, responsive layout, MoneyFormatter |
 | 1.1.0   | 2025-01-30  | Multi-language support, improved UX |
 | 1.0.0   | 2025-01-XX  | Complete feature set, production ready |
 | 0.1.6   | 2024-XX-XX  | Play Store optimization |

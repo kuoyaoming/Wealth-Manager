@@ -7,6 +7,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -20,12 +21,14 @@ fun rememberResponsiveLayout(): ResponsiveLayout {
     val screenWidth = configuration.screenWidthDp.dp
     val screenHeight = configuration.screenHeightDp.dp
     val isLandscape = configuration.orientation == android.content.res.Configuration.ORIENTATION_LANDSCAPE
-    
-    return remember(screenWidth, screenHeight, isLandscape) {
+    val widthSizeClass = LocalWindowWidthSizeClass.current
+
+    return remember(screenWidth, screenHeight, isLandscape, widthSizeClass) {
         ResponsiveLayout(
             screenWidth = screenWidth,
             screenHeight = screenHeight,
-            isLandscape = isLandscape
+            isLandscape = isLandscape,
+            widthSizeClass = widthSizeClass
         )
     }
 }
@@ -33,7 +36,8 @@ fun rememberResponsiveLayout(): ResponsiveLayout {
 data class ResponsiveLayout(
     val screenWidth: Dp,
     val screenHeight: Dp,
-    val isLandscape: Boolean
+    val isLandscape: Boolean,
+    val widthSizeClass: WindowWidthSizeClass
 ) {
     // Screen type detection
     val isTablet: Boolean
@@ -97,16 +101,21 @@ data class ResponsiveLayout(
     
     // Column configuration
     val columns: Int
-        get() = when {
-            isLargeScreen && isLandscape -> 3
-            isTablet && isLandscape -> 2
-            isTablet -> 2
+        get() = when (widthSizeClass) {
+            WindowWidthSizeClass.Compact -> 1
+            WindowWidthSizeClass.Medium -> 2
+            WindowWidthSizeClass.Expanded -> 2 // 僅手機目標，暫不特化大螢幕
             else -> 1
         }
     
     // Grid spacing
     val gridSpacing: Dp
-        get() = if (isTablet) 16.dp else 8.dp
+        get() = when (widthSizeClass) {
+            WindowWidthSizeClass.Compact -> 8.dp
+            WindowWidthSizeClass.Medium -> 16.dp
+            WindowWidthSizeClass.Expanded -> 16.dp
+            else -> 8.dp
+        }
 }
 
 /**

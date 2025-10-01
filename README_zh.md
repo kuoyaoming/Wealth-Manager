@@ -138,8 +138,8 @@
 # 複製專案（或你的 fork）
 git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
-# 建置專案
-./gradlew assembleDebug
+# 建置專案（Debug）
+./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug
 
 # 安裝到裝置
 ./gradlew installDebug
@@ -297,11 +297,30 @@ MIT License - 詳見 [LICENSE](LICENSE) 檔案
 
 ---
 
-**版本**：1.2.0  
+**版本**：1.4.0  
 **最後更新**：2025  
 **最低支援**：Android 14（API 34）  
 **目標版本**：Android 16（API 36）  
 **建置狀態**：生產就緒
+
+## 發佈與版本規則
+
+- **versionName**：來自 Git Tag `vX.Y.Z` → `X.Y.Z`（SemVer）
+- **versionCode**：由 CI 的 `GITHUB_RUN_NUMBER` 指派（嚴格遞增）
+- **正式釋出 AAB**：僅在推送 Tag 時由 CI 產生
+
+範例
+```bash
+# 建立並推送釋出標籤
+git tag v1.4.0
+git push origin v1.4.0
+
+# 本地 Debug 建置（本地不允許 release bundle）
+./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug
+```
+
+產物
+- Tag 觸發時，CI 會執行 `:app:bundleRelease` 並上傳 `.aab` 與 `mapping.txt`
 
 ## 開發狀態
 
