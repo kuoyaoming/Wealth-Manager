@@ -199,7 +199,7 @@
 
     <string name="language_option_english">English</string>
     <string name="language_option_traditional_chinese">繁體中文</string>
-    <string name="language_change_requires_restart">切換語言需重新啟動應用程式後生效。</string>
+    
 
     <!-- Assets -->
     <string name="assets_tab_cash">現金</string>

@@ -106,7 +106,7 @@
     <string name="settings_api_manual_search">Search Results (%1$d):</string>
     <string name="language_option_english">English</string>
     <string name="language_option_traditional_chinese">Traditional Chinese</string>
-    <string name="language_change_requires_restart">Language will apply after restarting the app.</string>
+    
 
     <!-- Common -->
     <string name="add">Add</string>
