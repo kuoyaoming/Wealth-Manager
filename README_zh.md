@@ -108,7 +108,7 @@ git clone https://github.com/kuoyaoming/Wealth-Manager.git
 ```mermaid
 graph TB
   subgraph "UI 層"
-    U1[Compose UI 畫面\n（認證、儀表板、資產、設定）]
+    U1[Compose UI 畫面<br/>（認證、儀表板、資產、設定）]
     U2[Navigation（NavHost）]
     U3[Material 3 ＋ 響應式版面]
     U4[觸覺與 120Hz 體驗]
@@ -122,10 +122,10 @@ graph TB
   end
 
   subgraph "資料層"
-    D1[Repositories\n（AssetRepository、KeyRepository）]
-    D2[Room 資料庫\n（WealthManagerDatabase＋DAOs）]
-    D3[API Provider Service\n（Retrofit APIs）]
-    D4[快取與韌性\n（CacheManager、TwseCacheManager、\nSmartCacheStrategy、重試、去重、\n錯誤處理、驗證、診斷）]
+    D1[Repositories<br/>（AssetRepository、KeyRepository）]
+    D2[Room 資料庫<br/>（WealthManagerDatabase＋DAOs）]
+    D3[API Provider Service<br/>（Retrofit APIs）]
+    D4[快取與韌性<br/>（CacheManager、TwseCacheManager）<br/>SmartCacheStrategy、重試、去重、<br/>錯誤處理、驗證、診斷]
   end
 
   U1 --> B1
@@ -160,9 +160,9 @@ graph LR
 
   subgraph "📊 市場數據"
     C1[MarketDataService]
-    C2[ApiProviderService\n（FinnhubApi／TwseApi／ExchangeRateApi）]
-    C3[快取與解析\n（TwseCacheManager／TwseDataParser）]
-    C4[韌性\n（重試／去重／錯誤／驗證）]
+    C2[ApiProviderService<br/>（FinnhubApi／TwseApi／ExchangeRateApi）]
+    C3[快取與解析<br/>（TwseCacheManager／TwseDataParser）]
+    C4[韌性<br/>（重試／去重／錯誤／驗證）]
   end
 
   subgraph "🎨 介面與系統"
@@ -205,7 +205,7 @@ graph TD
 
   AUTH[生物識別＋認證狀態（24h）] --> VM
   KEY[KeyRepository] --> AP
-  RES[韌性（重試／去重／錯誤／驗證／診斷）] --> AP
+  RES[韌性<br/>（重試／去重／錯誤／驗證／診斷）] --> AP
   OFF[離線模式] --> C
   C --> LC[本地快取] --> UI
 ```
