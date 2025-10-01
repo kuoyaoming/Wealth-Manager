@@ -9,7 +9,6 @@
     
     <!-- Biometric permission - Android 14 requires explicit declaration -->
     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
-    <uses-permission android:name="android.permission.USE_FINGERPRINT" />
     
     <!-- Optional biometric hardware -->
     <uses-feature 

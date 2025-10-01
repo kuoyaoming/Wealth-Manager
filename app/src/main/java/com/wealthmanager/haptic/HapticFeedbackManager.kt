@@ -1,7 +1,6 @@
 package com.wealthmanager.haptic
 
 import android.content.Context
-import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
 import android.os.VibratorManager
@@ -10,8 +9,6 @@ import android.view.View
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalView
-import androidx.compose.ui.platform.LocalContext
-import androidx.hilt.navigation.compose.hiltViewModel
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -100,30 +97,20 @@ class HapticFeedbackManager @Inject constructor() {
     ) {
         if (!settings.hapticEnabled) return
         
-        val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
-            val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-            vibratorManager.defaultVibrator
-        } else {
-            @Suppress("DEPRECATION")
-            context.getSystemService(Context.VIBRATOR_SERVICE) as Vibrator
-        }
+        val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+        val vibrator = vibratorManager.defaultVibrator
         
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val vibrationEffect = when (intensity) {
-                HapticIntensity.LIGHT -> VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE / 2)
-                HapticIntensity.MEDIUM -> VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE)
-                HapticIntensity.STRONG -> VibrationEffect.createOneShot(duration * 2, VibrationEffect.DEFAULT_AMPLITUDE)
-                HapticIntensity.CONFIRM -> VibrationEffect.createWaveform(
-                    longArrayOf(0, 100, 50, 100),
-                    intArrayOf(0, 255, 0, 255),
-                    -1
-                )
-            }
-            vibrator.vibrate(vibrationEffect)
-        } else {
-            @Suppress("DEPRECATION")
-            vibrator.vibrate(duration)
+        val vibrationEffect = when (intensity) {
+            HapticIntensity.LIGHT -> VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE / 2)
+            HapticIntensity.MEDIUM -> VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE)
+            HapticIntensity.STRONG -> VibrationEffect.createOneShot(duration * 2, VibrationEffect.DEFAULT_AMPLITUDE)
+            HapticIntensity.CONFIRM -> VibrationEffect.createWaveform(
+                longArrayOf(0, 100, 50, 100),
+                intArrayOf(0, 255, 0, 255),
+                -1
+            )
         }
+        vibrator.vibrate(vibrationEffect)
     }
     
     /**
