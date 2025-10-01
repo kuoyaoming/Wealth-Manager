@@ -107,105 +107,107 @@ Requirements
 
 ```mermaid
 graph TB
-    subgraph "UI Layer"
-        A[Compose UI]
-        B[Navigation]
-        C[Material 3]
-        D[Responsive Design]
-    end
+  subgraph "UI Layer"
+    UI1[Compose UI Screens\n(Auth, Dashboard, Assets, Settings)]
+    UI2[Navigation (NavHost)]
+    UI3[Material 3 + Responsive Layout]
+    UI4[Haptics & 120Hz-friendly UX]
+  end
 
-    subgraph "Business Logic Layer"
-        E[ViewModels]
-        F[Use Cases]
-        G[Managers]
-        H[Authentication]
-    end
+  subgraph "Business Logic Layer"
+    BL1[ViewModels]
+    BL2[MarketDataService]
+    BL3[AuthState: BiometricAuthManager / AuthStateManager]
+    BL4[FirstLaunchManager]
+  end
 
-    subgraph "Data Layer"
-        I[Repository]
-        J[Room DB]
-        K[API Provider Service]
-        L[Cache Management]
-    end
+  subgraph "Data Layer"
+    DL1[Repositories\n(AssetRepository, KeyRepository)]
+    DL2[Room DB\n(WealthManagerDatabase + DAOs)]
+    DL3[API Provider Service\n(Retrofit APIs)]
+    DL4[Caching & Resilience\n(CacheManager, TwseCacheManager,\nSmartCacheStrategy, Retry, Dedupe,\nError Handling, Validation, Diagnostics)]
+  end
 
-    A --> E
-    B --> E
-    C --> E
-    D --> E
-    E --> I
-    F --> I
-    G --> I
-    H --> I
-    I --> J
-    I --> K
-    I --> L
+  UI1 --> BL1
+  UI2 --> BL1
+  UI3 --> BL1
+  UI4 --> BL1
+
+  BL1 --> DL1
+  BL2 --> DL1
+  BL3 --> DL1
+
+  DL1 --> DL2
+  DL1 --> DL3
+  DL1 --> DL4
 ```
 
 ### Core Modules
 
 ```mermaid
 graph LR
-    subgraph "🔐 Authentication"
-        A1[BiometricAuthManager]
-        A2[AuthStateManager]
-        A3[BiometricAuthScreen]
-    end
+  subgraph "🔐 Authentication"
+    A1[BiometricAuthManager]
+    A2[AuthStateManager]
+    A3[BiometricAuthScreen]
+  end
 
-    subgraph "💰 Assets"
-        B1[AssetsScreen]
-        B2[AddAssetDialog]
-        B3[EditAssetDialog]
-        B4[CashAsset/StockAsset]
-    end
+  subgraph "💰 Assets"
+    B1[AssetsScreen]
+    B2[AssetRepository]
+    B3[Room DAOs]
+  end
 
-    subgraph "📊 Market Data"
-        C1[MarketDataService]
-        C2[ApiProviderService]
-        C3[Finnhub/TWSE]
-        C4[Cache/Parser]
-    end
+  subgraph "📊 Market Data"
+    C1[MarketDataService]
+    C2[ApiProviderService\n(FinnhubApi / TwseApi / ExchangeRateApi)]
+    C3[Caching & Parser\n(TwseCacheManager / TwseDataParser)]
+    C4[Resilience\n(Retry / Dedupe / Error / Validation)]
+  end
 
-    subgraph "🎨 UI"
-        D1[Dashboard]
-        D2[Navigation]
-        D3[Responsive Layout]
-        D4[Material You]
-    end
+  subgraph "🎨 UI & System"
+    D1[DashboardScreen]
+    D2[SettingsScreen]
+    D3[Navigation]
+    D4[Material 3 / Responsive]
+    D5[PerformanceMonitor120Hz]
+  end
 
-    A1 --> B1
-    A2 --> B1
-    B1 --> C1
-    C1 --> D1
-    D1 --> A3
+  A1 --> A3
+  A2 --> A3
+  A3 --> D1
+  D1 --> B1
+  B1 --> C1
+  C1 --> B2
+  B2 --> B3
 ```
 
 ## Data Flow
 
 ```mermaid
 graph TD
-    A[UI] --> B[ViewModel]
-    B --> C[Repository]
-    C --> D[Room]
-    C --> E[API Provider]
+  UI[Compose UI] --> VM[ViewModel]
+  VM --> REPO[Repository]
+  REPO --> DB[Room]
+  REPO --> API[ApiProviderService]
 
-    E --> F[Finnhub]
-    E --> H[TWSE]
-    E --> R[ExchangeRate]
+  API --> F[Finnhub]
+  API --> T[TWSE]
+  API --> X[ExchangeRate]
 
-    F --> I[Cache]
-    H --> I
-    R --> I
+  F --> C[Cache]
+  T --> C
+  X --> C
 
-    I --> J[MarketDataService]
-    J --> K[Asset Updates]
-    K --> D
+  C --> MDS[MarketDataService]
+  MDS --> AU[Asset Updates]
+  AU --> DB
 
-    L[Biometric Auth] --> M[Auth State (24h)]
-    M --> A
-
-    N[Offline Mode] --> I
-    I --> O[Local Cache]
-    O --> A
+  AUTH[Biometric + AuthState (24h)] --> VM
+  K[KeyRepository] --> API
+  R[Resilience (Retry/Dedupe/Error/Validation/Diagnostics)] --> API
+  OFF[Offline Mode] --> C
+  C --> L[Local Cache] --> UI
 ```
 
 ## Tech Stack

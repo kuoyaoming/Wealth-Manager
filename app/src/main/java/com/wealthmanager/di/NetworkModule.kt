@@ -7,7 +7,6 @@ import com.wealthmanager.data.api.ExchangeRateApi
 import com.wealthmanager.data.service.TwseDataParser
 import com.wealthmanager.data.service.ApiRetryManager
 import com.wealthmanager.data.service.ApiStatusManager
-import com.wealthmanager.data.service.MarketDataServiceFixedCorrected
 import com.wealthmanager.data.service.MarketDataService
 import com.wealthmanager.data.service.ApiErrorHandler
 import com.wealthmanager.data.service.CacheManager
@@ -181,15 +180,7 @@ object NetworkModule {
         return ApiStatusManager(debugLogManager)
     }
     
-    @Provides
-    @Singleton
-    fun provideMarketDataServiceFixedCorrected(
-        apiProviderService: ApiProviderService,
-        assetRepository: AssetRepository,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager
-    ): MarketDataServiceFixedCorrected {
-        return MarketDataServiceFixedCorrected(apiProviderService, assetRepository, debugLogManager)
-    }
+    
     
     @Provides
     @Singleton

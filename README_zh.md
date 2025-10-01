@@ -107,105 +107,107 @@ git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
 ```mermaid
 graph TB
-    subgraph "UI 層"
-        A[Compose UI]
-        B[Navigation]
-        C[Material 3]
-        D[響應式設計]
-    end
+  subgraph "UI 層"
+    U1[Compose UI 畫面\n（認證、儀表板、資產、設定）]
+    U2[Navigation（NavHost）]
+    U3[Material 3 ＋ 響應式版面]
+    U4[觸覺與 120Hz 體驗]
+  end
 
-    subgraph "業務邏輯層"
-        E[ViewModels]
-        F[Use Cases]
-        G[Managers]
-        H[認證]
-    end
+  subgraph "業務邏輯層"
+    B1[ViewModels]
+    B2[MarketDataService]
+    B3[認證狀態：BiometricAuthManager / AuthStateManager]
+    B4[FirstLaunchManager]
+  end
 
-    subgraph "資料層"
-        I[Repository]
-        J[Room DB]
-        K[API Provider Service]
-        L[快取管理]
-    end
+  subgraph "資料層"
+    D1[Repositories\n（AssetRepository、KeyRepository）]
+    D2[Room 資料庫\n（WealthManagerDatabase＋DAOs）]
+    D3[API Provider Service\n（Retrofit APIs）]
+    D4[快取與韌性\n（CacheManager、TwseCacheManager、\nSmartCacheStrategy、重試、去重、\n錯誤處理、驗證、診斷）]
+  end
 
-    A --> E
-    B --> E
-    C --> E
-    D --> E
-    E --> I
-    F --> I
-    G --> I
-    H --> I
-    I --> J
-    I --> K
-    I --> L
+  U1 --> B1
+  U2 --> B1
+  U3 --> B1
+  U4 --> B1
+
+  B1 --> D1
+  B2 --> D1
+  B3 --> D1
+
+  D1 --> D2
+  D1 --> D3
+  D1 --> D4
 ```
 
 ### 核心模組
 
 ```mermaid
 graph LR
-    subgraph "🔐 認證"
-        A1[BiometricAuthManager]
-        A2[AuthStateManager]
-        A3[BiometricAuthScreen]
-    end
+  subgraph "🔐 認證"
+    A1[BiometricAuthManager]
+    A2[AuthStateManager]
+    A3[BiometricAuthScreen]
+  end
 
-    subgraph "💰 資產"
-        B1[AssetsScreen]
-        B2[AddAssetDialog]
-        B3[EditAssetDialog]
-        B4[CashAsset/StockAsset]
-    end
+  subgraph "💰 資產"
+    B1[AssetsScreen]
+    B2[AssetRepository]
+    B3[Room DAOs]
+  end
 
-    subgraph "📊 市場數據"
-        C1[MarketDataService]
-        C2[ApiProviderService]
-        C3[Finnhub/TWSE]
-        C4[Cache/Parser]
-    end
+  subgraph "📊 市場數據"
+    C1[MarketDataService]
+    C2[ApiProviderService\n（FinnhubApi／TwseApi／ExchangeRateApi）]
+    C3[快取與解析\n（TwseCacheManager／TwseDataParser）]
+    C4[韌性\n（重試／去重／錯誤／驗證）]
+  end
 
-    subgraph "🎨 介面"
-        D1[Dashboard]
-        D2[Navigation]
-        D3[響應式版面]
-        D4[Material You]
-    end
+  subgraph "🎨 介面與系統"
+    D1[DashboardScreen]
+    D2[SettingsScreen]
+    D3[Navigation]
+    D4[Material 3／響應式]
+    D5[PerformanceMonitor120Hz]
+  end
 
-    A1 --> B1
-    A2 --> B1
-    B1 --> C1
-    C1 --> D1
-    D1 --> A3
+  A1 --> A3
+  A2 --> A3
+  A3 --> D1
+  D1 --> B1
+  B1 --> C1
+  C1 --> B2
+  B2 --> B3
 ```
 
 ## 數據流程
 
 ```mermaid
 graph TD
-    A[UI] --> B[ViewModel]
-    B --> C[Repository]
-    C --> D[Room]
-    C --> E[API Provider]
+  UI[Compose UI] --> VM[ViewModel]
+  VM --> RP[Repository]
+  RP --> DB[Room]
+  RP --> AP[ApiProviderService]
 
-    E --> F[Finnhub]
-    E --> H[TWSE]
-    E --> R[ExchangeRate]
+  AP --> F[Finnhub]
+  AP --> T[TWSE]
+  AP --> X[ExchangeRate]
 
-    F --> I[Cache]
-    H --> I
-    R --> I
+  F --> C[快取]
+  T --> C
+  X --> C
 
-    I --> J[MarketDataService]
-    J --> K[Asset Updates]
-    K --> D
+  C --> MDS[MarketDataService]
+  MDS --> AU[資產資料更新]
+  AU --> DB
 
-    L[Biometric] --> M[Auth State (24h)]
-    M --> A
-
-    N[離線模式] --> I
-    I --> O[本地快取]
-    O --> A
+  AUTH[生物識別＋認證狀態（24h）] --> VM
+  KEY[KeyRepository] --> AP
+  RES[韌性（重試／去重／錯誤／驗證／診斷）] --> AP
+  OFF[離線模式] --> C
+  C --> LC[本地快取] --> UI
 ```
 
 ## 技術棧
