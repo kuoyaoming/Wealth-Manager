@@ -12,6 +12,8 @@ import com.wealthmanager.R
 import com.wealthmanager.ui.charts.PieChartComponentFixed
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
 import com.wealthmanager.ui.theme.ColorGuidelines
+import androidx.compose.ui.platform.LocalContext
+import com.wealthmanager.util.LanguageManager
 import java.text.NumberFormat
 import java.util.*
 
@@ -200,7 +202,7 @@ fun FinancialValueDisplay(
     }
     
     Text(
-        text = "NT$ ${formatCurrency(value)}",
+        text = stringResource(R.string.currency_twd_amount, formatCurrency(value)),
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Medium,
         color = color
@@ -233,7 +235,9 @@ fun StatusIndicator(
 }
 
 private fun formatCurrency(amount: Double): String {
-    val formatter = NumberFormat.getNumberInstance(Locale.getDefault())
+    val context = LocalContext.current
+    val appLocale = LanguageManager.getCurrentLocale(context)
+    val formatter = NumberFormat.getNumberInstance(appLocale)
     formatter.maximumFractionDigits = 0
     return formatter.format(amount)
 }

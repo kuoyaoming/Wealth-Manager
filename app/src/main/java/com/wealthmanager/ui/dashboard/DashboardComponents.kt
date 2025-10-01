@@ -11,6 +11,8 @@ import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 import com.wealthmanager.ui.charts.PieChartComponent
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
+import androidx.compose.ui.platform.LocalContext
+import com.wealthmanager.util.LanguageManager
 import java.text.NumberFormat
 import java.util.*
 
@@ -149,7 +151,9 @@ fun PieChartCard(
 }
 
 private fun formatCurrency(amount: Double): String {
-    val formatter = NumberFormat.getNumberInstance(Locale.getDefault())
+    val context = LocalContext.current
+    val appLocale = LanguageManager.getCurrentLocale(context)
+    val formatter = NumberFormat.getNumberInstance(appLocale)
     formatter.maximumFractionDigits = 0
     return formatter.format(amount)
 }
