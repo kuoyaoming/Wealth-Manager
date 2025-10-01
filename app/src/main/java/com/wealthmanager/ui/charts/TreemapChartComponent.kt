@@ -6,6 +6,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -32,6 +33,7 @@ import com.wealthmanager.ui.dashboard.AssetItem
 import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.utils.MoneyFormatter
+import com.wealthmanager.utils.PerformanceTracker
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import kotlin.math.*
@@ -47,6 +49,11 @@ fun TreemapChartComponent(
     onAssetClick: (AssetItem) -> Unit = {},
     modifier: Modifier = Modifier
 ) {
+    PerformanceTracker(
+        componentName = "TreemapChartComponent",
+        trackMemory = true,
+        trackRecomposition = true
+    ) {
     val debugLogManager = remember { DebugLogManager() }
     
     LaunchedEffect(assets.size) {
@@ -68,7 +75,7 @@ fun TreemapChartComponent(
             modifier = Modifier.padding(16.dp)
         ) {
             Text(
-                text = "Portfolio Distribution",
+                text = stringResource(R.string.chart_portfolio_distribution),
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
@@ -92,67 +99,102 @@ fun TreemapChartComponent(
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
-                        text = "No assets available",
+                        text = stringResource(R.string.chart_no_assets_available),
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
             } else {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                // Full-width Treemap Chart using Compose components
+                TreemapCompose(
+                    assets = assets,
+                    onAssetClick = onAssetClick,
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(300.dp)
+                        .padding(vertical = 8.dp)
+                )
+                
+                Spacer(modifier = Modifier.height(8.dp))
+                
+                // Legend below the chart - sorted by percentage (largest to smallest)
+                Column(
+                    modifier = Modifier.fillMaxWidth()
                 ) {
-                    // Treemap Chart
-                    TreemapCanvas(
-                        assets = assets,
-                        onAssetClick = onAssetClick,
-                        modifier = Modifier
-                            .size(200.dp)
-                            .padding(8.dp)
-                    )
-                    
-                    // Legend
-                    LazyColumn(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(200.dp)
-                    ) {
-                        items(assets) { asset ->
+                    assets
+                        .sortedByDescending { it.percentage }
+                        .forEach { asset ->
                             TreemapLegendItem(asset)
                         }
-                    }
                 }
             }
         }
     }
+    }
 }
 
 @Composable
-private fun TreemapCanvas(
+private fun TreemapCompose(
     assets: List<AssetItem>,
     onAssetClick: (AssetItem) -> Unit,
     modifier: Modifier = Modifier
 ) {
+    PerformanceTracker(
+        componentName = "TreemapCompose",
+        trackMemory = true
+    ) {
     val density = LocalDensity.current
+    val colorScheme = MaterialTheme.colorScheme
+    // Use secondary color for better contrast against background
+    val unifiedColor = colorScheme.secondary.copy(alpha = 0.7f) // Secondary color with transparency for subtle contrast
+    val cornerRadius = 12.dp // Rounded corners like the FAB
     
-    // Compute treemap layout
-    val treemapRects by remember(assets) {
-        derivedStateOf {
-            TreemapLayout.computeTreemapRects(
-                assets = assets,
-                width = 200f,
-                height = 200f
+    val contentDescription = stringResource(R.string.chart_treemap_content_description)
+    val othersGroupName = stringResource(R.string.chart_others_group)
+    
+    BoxWithConstraints(
+        modifier = modifier
+            .semantics {
+                this.contentDescription = contentDescription
+            }
+    ) {
+        // Use actual container dimensions
+        val containerWidth = maxWidth.value * density.density
+        val containerHeight = maxHeight.value * density.density
+        
+        // Compute treemap layout with actual dimensions
+        val treemapRects by remember(assets, containerWidth, containerHeight) {
+            derivedStateOf {
+                TreemapLayout.computeTreemapRects(
+                    assets = assets,
+                    width = containerWidth,
+                    height = containerHeight,
+                    spacing = 16f, // Moderate spacing
+                    othersGroupName = othersGroupName
+                )
+            }
+        }
+        
+        // Draw each rectangle as a Compose Box
+        treemapRects.forEach { rect ->
+            Box(
+                modifier = Modifier
+                    .offset(
+                        x = with(density) { rect.x.toDp() },
+                        y = with(density) { rect.y.toDp() }
+                    )
+                    .size(
+                        width = with(density) { rect.width.toDp() },
+                        height = with(density) { rect.height.toDp() }
+                    )
+                    .background(
+                        color = unifiedColor,
+                        shape = RoundedCornerShape(cornerRadius)
+                    )
+                    .clickable { onAssetClick(rect.asset) }
             )
         }
     }
-    
-    Canvas(
-        modifier = modifier
-            .semantics {
-                contentDescription = "Treemap chart showing portfolio distribution"
-            }
-    ) {
-        drawTreemap(treemapRects, onAssetClick)
     }
 }
 
@@ -160,22 +202,22 @@ private fun DrawScope.drawTreemap(
     rects: List<TreemapRect>,
     onAssetClick: (AssetItem) -> Unit
 ) {
+    val unifiedColor = Color(0xFF2196F3) // Unified blue color for all rectangles
+    
     rects.forEach { rect ->
-        val color = getAssetColor(rect.asset.name)
-        
-        // Draw rectangle background
+        // Draw rectangle background with unified color
         drawRect(
-            color = color,
+            color = unifiedColor,
             topLeft = Offset(rect.x, rect.y),
             size = Size(rect.width, rect.height)
         )
         
-        // Draw border
+        // Draw subtle border
         drawRect(
-            color = Color.Black.copy(alpha = 0.1f),
+            color = Color.White.copy(alpha = 0.3f),
             topLeft = Offset(rect.x, rect.y),
             size = Size(rect.width, rect.height),
-            style = Stroke(width = 1.dp.toPx())
+            style = Stroke(width = 2.dp.toPx())
         )
         
         // For now, skip text drawing to avoid Canvas complexity
@@ -188,20 +230,20 @@ private fun TreemapLegendItem(asset: AssetItem) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
-            .padding(vertical = 2.dp),
+            .padding(vertical = 4.dp, horizontal = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         // Color indicator
         Box(
             modifier = Modifier
-                .size(12.dp)
+                .size(16.dp)
                 .background(
                     color = getAssetColor(asset.name),
                     shape = MaterialTheme.shapes.small
                 )
         )
         
-        Spacer(modifier = Modifier.width(8.dp))
+        Spacer(modifier = Modifier.width(12.dp))
         
         // Asset info
         Column(
@@ -222,8 +264,9 @@ private fun TreemapLegendItem(asset: AssetItem) {
         // Percentage
         Text(
             text = "${asset.percentage.toInt()}%",
-            style = MaterialTheme.typography.bodySmall,
-            color = MaterialTheme.colorScheme.onSurfaceVariant
+            style = MaterialTheme.typography.bodyMedium,
+            fontWeight = FontWeight.Medium,
+            color = MaterialTheme.colorScheme.primary
         )
     }
 }

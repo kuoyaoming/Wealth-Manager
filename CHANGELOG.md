@@ -12,6 +12,47 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code of Conduct
 - Changelog documentation
 
+## [1.4.5] - 2025-01-02
+
+### Added
+- 🚀 **Android 2025 官方設計指南合規性**：
+  - 更新至 Android API 36 (compileSdk/targetSdk 36)
+  - 實現 Splash Screen API 提供專業啟動體驗
+  - 完善 Edge-to-Edge 實現，支援沉浸式全螢幕體驗
+  - 添加 Android 13+ 通知權限處理
+- 🔔 **通知系統**：
+  - 新增 `NotificationPermissionManager` 組件
+  - 支援 Android 13+ 通知權限請求
+  - 整合到設定頁面，提供完整的通知管理
+- 🎨 **UI/UX 改進**：
+  - 平滑的應用啟動畫面，消除黑屏閃爍
+  - 沉浸式全螢幕設計，內容延伸到狀態欄
+  - 現代化的系統欄行為配置
+- 🌐 **多語言支援**：
+  - 新增通知權限相關的中英文字符串
+  - 完善無障礙設計的內容描述
+
+### Changed
+- 📱 **目標平台**：minSdk 34 → 34, targetSdk 35 → 36, compileSdk 35 → 36
+- 🏗️ **構建配置**：添加 Splash Screen 依賴 `androidx.core:core-splashscreen:1.0.1`
+- 🎯 **權限聲明**：添加 Android 13+ 通知權限聲明
+- 🔧 **代碼修復**：修復 TreemapChartComponent 中的 @Composable 問題
+
+### Fixed
+- 🐛 修復 TreemapChartComponent 中的 @Composable 調用問題
+- 🐛 修復 semantics 塊中的賦值問題
+- 🐛 確保所有改進都能正常編譯和運行
+
+### Security
+- 🔒 符合 2025 年 Android 官方安全指南
+- 🔒 支援最新的 Android 安全機制
+- 🔒 完整的通知權限管理
+
+### Performance
+- ⚡ 優化應用啟動性能
+- ⚡ 改善全螢幕渲染性能
+- ⚡ 更好的記憶體管理
+
 ## [1.4.0] - 2025-10-01
 
 ### Added

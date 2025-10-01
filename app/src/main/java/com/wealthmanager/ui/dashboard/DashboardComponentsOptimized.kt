@@ -71,6 +71,7 @@ fun TotalAssetsCardOptimized(
 @Composable
 fun CashAssetsCardOptimized(
     cashValue: Double,
+    totalAssets: Double,
     isLoading: Boolean
 ) {
     val responsiveLayout = rememberResponsiveLayout()
@@ -111,13 +112,14 @@ fun CashAssetsCardOptimized(
                     )
                 }
             } else {
+                val percentage = if (totalAssets > 0) (cashValue / totalAssets * 100) else 0.0
                 Text(
                     text = rememberMoneyText(
                         cashValue,
                         "TWD",
                         style = MoneyFormatter.Style.CurrencyCode,
                         moneyContext = MoneyFormatter.MoneyContext.Total
-                    ),
+                    ) + " (${String.format("%.1f", percentage)}%)",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface
@@ -130,6 +132,7 @@ fun CashAssetsCardOptimized(
 @Composable
 fun StockAssetsCardOptimized(
     stockValue: Double,
+    totalAssets: Double,
     isLoading: Boolean
 ) {
     val responsiveLayout = rememberResponsiveLayout()
@@ -170,13 +173,14 @@ fun StockAssetsCardOptimized(
                     )
                 }
             } else {
+                val percentage = if (totalAssets > 0) (stockValue / totalAssets * 100) else 0.0
                 Text(
                     text = rememberMoneyText(
                         stockValue,
                         "TWD",
                         style = MoneyFormatter.Style.CurrencyCode,
                         moneyContext = MoneyFormatter.MoneyContext.Total
-                    ),
+                    ) + " (${String.format("%.1f", percentage)}%)",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
                     color = MaterialTheme.colorScheme.onSurface

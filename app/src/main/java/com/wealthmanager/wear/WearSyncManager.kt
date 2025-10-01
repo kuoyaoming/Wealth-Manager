@@ -29,6 +29,8 @@ class WearSyncManager @Inject constructor(
     private var lastSyncedTotal: Double? = null
     private var lastSyncedTimestamp: Long = 0L
     private var lastSyncResultWasError: Boolean = false
+    private var lastSyncAttemptTime: Long = 0L
+    private val MIN_SYNC_INTERVAL_MS = 30 * 1000L // 30 seconds debounce interval
 
     suspend fun syncTotalsFromDashboard(totalAssets: Double, lastUpdated: Long, hasError: Boolean) {
         debugLogManager.log("WEAR_SYNC", "syncTotalsFromDashboard called - total: $totalAssets, lastUpdated: $lastUpdated, hasError: $hasError")
@@ -108,6 +110,16 @@ class WearSyncManager @Inject constructor(
     }
 
     private fun shouldSync(totalAssets: Double, lastUpdated: Long, hasError: Boolean): Boolean {
+        val currentTime = System.currentTimeMillis()
+        
+        // Debounce check: skip if too soon since last sync attempt
+        if (currentTime - lastSyncAttemptTime < MIN_SYNC_INTERVAL_MS) {
+            debugLogManager.log("WEAR_SYNC", "Sync throttled - too soon since last attempt")
+            return false
+        }
+        
+        lastSyncAttemptTime = currentTime
+        
         if (hasError) {
             // Always propagate error state
             return !lastSyncResultWasError
@@ -145,8 +157,8 @@ class WearSyncManager @Inject constructor(
         const val KEY_TIMESTAMP = "timestamp"
         private const val CAPABILITY_WEAR_APP = "wealth_manager_wear_app"
 
-        private const val VALUE_DELTA_THRESHOLD = 10.0
-        private const val TIME_DELTA_THRESHOLD_MS = 5 * 60 * 1000L // 5 minutes
+        private const val VALUE_DELTA_THRESHOLD = 100.0  // Increased threshold to reduce sync frequency
+        private const val TIME_DELTA_THRESHOLD_MS = 10 * 60 * 1000L // 10 minutes, reduce sync frequency
     }
 }
 

@@ -104,7 +104,7 @@ data class ResponsiveLayout(
         get() = when (widthSizeClass) {
             WindowWidthSizeClass.Compact -> 1
             WindowWidthSizeClass.Medium -> 2
-            WindowWidthSizeClass.Expanded -> 2 // 僅手機目標，暫不特化大螢幕
+            WindowWidthSizeClass.Expanded -> 2 // Mobile target only, no large screen specialization yet
             else -> 1
         }
     

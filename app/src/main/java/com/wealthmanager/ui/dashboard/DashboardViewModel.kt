@@ -72,7 +72,7 @@ class DashboardViewModel @Inject constructor(
                     totalAssets = totalAssets,
                     cashAssets = totalCash,
                     stockAssets = totalStock,
-                    assets = cashAssets.map { it.toAssetItem() } + stockAssets.map { it.toAssetItem() },
+                    assets = cashAssets.map { it.toAssetItem(totalAssets) } + stockAssets.map { it.toAssetItem(totalAssets) },
                     isLoading = false
                 )
 
@@ -204,19 +204,21 @@ data class AssetItem(
     val percentage: Double = 0.0
 )
 
-private fun StockAsset.toAssetItem(): AssetItem {
+private fun StockAsset.toAssetItem(totalValue: Double): AssetItem {
     return AssetItem(
         id = id,
-        name = "$companyName ($symbol)",
-        value = twdEquivalent
+        name = companyName, // Only show company name, no duplicate symbol
+        value = twdEquivalent,
+        percentage = if (totalValue > 0) (twdEquivalent / totalValue * 100) else 0.0
     )
 }
 
-private fun CashAsset.toAssetItem(): AssetItem {
+private fun CashAsset.toAssetItem(totalValue: Double): AssetItem {
     return AssetItem(
         id = id,
         name = "$currency $amount",
-        value = twdEquivalent
+        value = twdEquivalent,
+        percentage = if (totalValue > 0) (twdEquivalent / totalValue * 100) else 0.0
     )
 }
 

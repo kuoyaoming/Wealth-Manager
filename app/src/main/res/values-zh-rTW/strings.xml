@@ -159,7 +159,7 @@
 
     <!-- About Dialog -->
     <string name="about_title">關於財富管理</string>
-    <string name="about_version">版本</string>
+    <string name="about_version">版本 1.4.5</string>
     <string name="about_version_format">版本 %1$s（代碼 %2$d）</string>
     <string name="about_description">一個全面的個人理財應用程式，協助您追蹤資產、監控股票投資，並透過即時市場數據管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地儲存。</string>
     <string name="about_app_information_title">應用程式資訊</string>
@@ -245,6 +245,14 @@
     <string name="cd_delete_cash_asset">刪除現金資產</string>
     <string name="cd_edit_stock_asset">編輯股票資產</string>
     <string name="cd_delete_stock_asset">刪除股票資產</string>
+    <string name="cd_notifications">通知</string>
+    
+    <!-- Notification Permissions -->
+    <string name="notification_permission_title">啟用通知</string>
+    <string name="notification_permission_description">接收重要的市場更新和投資組合變更通知。</string>
+    <string name="enable_notifications">啟用通知</string>
+    <string name="notifications_enabled">通知已啟用</string>
+    <string name="notifications_disabled">通知已停用</string>
     <string name="wear_sync_success">穿戴裝置同步完成</string>
     <string name="wear_sync_missing_app">未安裝穿戴裝置應用程式</string>
     <string name="wear_sync_failed">穿戴裝置同步失敗</string>
@@ -257,4 +265,10 @@
     <string name="missing_api_keys_title">需要 API 金鑰</string>
     <string name="missing_api_keys_message">請至「設定」新增 Finnhub 與 Exchange Rate 的 API 金鑰後，才能刷新市場資料。</string>
     <string name="go_to_settings">前往設定</string>
+    
+    <!-- Chart Components -->
+    <string name="chart_portfolio_distribution">投資組合分布</string>
+    <string name="chart_no_assets_available">無可用資產</string>
+    <string name="chart_treemap_content_description">顯示投資組合分布的樹狀圖</string>
+    <string name="chart_others_group">其他</string>
 </resources>

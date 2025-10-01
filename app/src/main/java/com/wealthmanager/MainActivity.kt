@@ -3,7 +3,6 @@ package com.wealthmanager
 import android.content.ComponentCallbacks2
 import android.os.Bundle
 import android.os.Build
-import android.util.Log
 import android.view.MotionEvent
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -16,7 +15,9 @@ import androidx.compose.material3.Surface
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.fragment.app.FragmentActivity
-// import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.core.view.WindowCompat
+import androidx.core.view.WindowInsetsControllerCompat
 import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.data.service.PerformanceMonitor120Hz
 import com.wealthmanager.ui.about.AboutDialog
@@ -26,6 +27,7 @@ import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.CompositionLocalProvider
 import com.wealthmanager.ui.responsive.LocalWindowWidthSizeClass
 import com.wealthmanager.ui.theme.WealthManagerTheme
+import com.wealthmanager.utils.StandardLogger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -44,9 +46,18 @@ class MainActivity : FragmentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
+        // Install Splash Screen API for smooth app launch
+        installSplashScreen()
         
-        
+        // Complete Edge-to-Edge implementation
+        WindowCompat.setDecorFitsSystemWindows(window, false)
         enableEdgeToEdge()
+        
+        // Configure system bars behavior for immersive experience
+        val insetsController = WindowCompat.getInsetsController(window, window.decorView)
+        insetsController.systemBarsBehavior = 
+            WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
+        
         performanceMonitor.startMonitoring()
         setupInputEventHandling()
         
@@ -107,26 +118,26 @@ class MainActivity : FragmentActivity() {
                 if (isValidTouchPosition(event.x, event.y)) {
                     val result = super.onTouchEvent(event)
                     if (!result) {
-                        Log.d("MainActivity", "Touch event not handled by super: ${event.action}")
+                        StandardLogger.debug("MainActivity", "Touch event not handled by super: ${event.action}")
                     }
                     return result
                 } else {
-                    Log.w("MainActivity", "Touch event at invalid position: x=${event.x}, y=${event.y}")
+                    StandardLogger.warn("MainActivity", "Touch event at invalid position: x=${event.x}, y=${event.y}")
                     return false
                 }
             }
             false
         } catch (e: Exception) {
-            Log.e("MainActivity", "Error handling touch event", e)
+            StandardLogger.error("MainActivity", "Error handling touch event", e)
             false
         }
     }
     
     private fun setupInputEventHandling() {
         try {
-            Log.d("MainActivity", "Input event handling configured")
+            StandardLogger.debug("MainActivity", "Input event handling configured")
         } catch (e: Exception) {
-            Log.e("MainActivity", "Error setting up input event handling", e)
+            StandardLogger.error("MainActivity", "Error setting up input event handling", e)
         }
     }
     
@@ -142,15 +153,15 @@ class MainActivity : FragmentActivity() {
                              y >= margin && y <= (height - margin)
                 
                 if (!isValid) {
-                    Log.d("MainActivity", "Touch position out of bounds: x=$x, y=$y, width=$width, height=$height")
+                    StandardLogger.debug("MainActivity", "Touch position out of bounds: x=$x, y=$y, width=$width, height=$height")
                 }
                 isValid
             } else {
-                Log.w("MainActivity", "Cannot get window decor view, allowing touch")
+                StandardLogger.warn("MainActivity", "Cannot get window decor view, allowing touch")
                 true
             }
         } catch (e: Exception) {
-            Log.e("MainActivity", "Error checking touch position", e)
+            StandardLogger.error("MainActivity", "Error checking touch position", e)
             true
         }
     }
@@ -163,47 +174,47 @@ class MainActivity : FragmentActivity() {
             lp.preferredRefreshRate = if (frameRate > 0f) frameRate else 0f
             window.attributes = lp
         } catch (e: Exception) {
-            Log.w("MainActivity", "Failed to hint frame rate: $frameRate", e)
+            StandardLogger.warn("MainActivity", "Failed to hint frame rate: $frameRate", e)
         }
     }
     
     override fun onDestroy() {
         super.onDestroy()
-        Log.d("MainActivity", "onDestroy called")
+        StandardLogger.debug("MainActivity", "onDestroy called")
         
         performanceMonitor.stopMonitoring()
     }
     
     override fun onLowMemory() {
         super.onLowMemory()
-        Log.w("MainActivity", "onLowMemory called - trigger memory optimization")
+        StandardLogger.warn("MainActivity", "onLowMemory called - trigger memory optimization")
         System.gc()
         performanceMonitor.getPerformanceStats()
     }
     
     override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)
-        Log.d("MainActivity", "onTrimMemory called with level: $level")
+        StandardLogger.debug("MainActivity", "onTrimMemory called with level: $level")
         
         when (level) {
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE -> {
-                Log.w("MainActivity", "Memory pressure detected - level: $level")
+                StandardLogger.warn("MainActivity", "Memory pressure detected - level: $level")
                 // Trigger garbage collection for memory cleanup
                 System.gc()
             }
             ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
-                Log.d("MainActivity", "UI hidden - release non-essential resources")
+                StandardLogger.debug("MainActivity", "UI hidden - release non-essential resources")
             }
             ComponentCallbacks2.TRIM_MEMORY_BACKGROUND -> {
-                Log.d("MainActivity", "App moved to background - release resources")
+                StandardLogger.debug("MainActivity", "App moved to background - release resources")
             }
             ComponentCallbacks2.TRIM_MEMORY_MODERATE -> {
-                Log.d("MainActivity", "Moderate memory pressure")
+                StandardLogger.debug("MainActivity", "Moderate memory pressure")
             }
             ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> {
-                Log.w("MainActivity", "Complete memory pressure - release all non-essential resources")
+                StandardLogger.warn("MainActivity", "Complete memory pressure - release all non-essential resources")
                 System.gc()
             }
         }

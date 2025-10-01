@@ -7,8 +7,8 @@ plugins {
 }
 
 // Versioning: receive from CI or command line to avoid git calls during configuration
-def wmVersionName = (project.findProperty('wmVersionName') ?: System.getenv('WM_VERSION_NAME') ?: '0.0.0') as String
-def wmVersionCodeStr = (project.findProperty('wmVersionCode') ?: System.getenv('WM_VERSION_CODE') ?: '1').toString()
+def wmVersionName = (project.findProperty('wmVersionName') ?: System.getenv('WM_VERSION_NAME') ?: '1.4.5') as String
+def wmVersionCodeStr = (project.findProperty('wmVersionCode') ?: System.getenv('WM_VERSION_CODE') ?: '145').toString()
 def wmVersionCode
 try {
     wmVersionCode = Integer.parseInt(wmVersionCodeStr)
@@ -19,7 +19,7 @@ def isCi = (System.getenv('CI') ?: 'false').toBoolean()
 
 android {
     namespace = 'com.wealthmanager'
-    compileSdk = 35
+    compileSdk = 36
 
     signingConfigs {
         release {
@@ -38,7 +38,7 @@ android {
     defaultConfig {
         applicationId = "com.wealthmanager"
         minSdk = 34
-        targetSdk = 35
+        targetSdk = 36
         versionCode = wmVersionCode
         versionName = wmVersionName
 
@@ -120,6 +120,7 @@ dependencies {
     implementation 'androidx.core:core-ktx:1.13.1'
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
     implementation 'androidx.activity:activity-compose:1.8.2'
+    implementation 'androidx.core:core-splashscreen:1.0.1'
     
     // Compose BOM
     implementation platform('androidx.compose:compose-bom:2024.12.01')
