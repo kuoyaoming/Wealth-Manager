@@ -79,11 +79,13 @@ class TileStateRepository(private val context: Context) {
     }
 
     private fun formatCurrency(value: Double): String {
-        return "NT$" + String.format(Locale.TAIWAN, "%,.0f", value)
+        val locale = context.resources.configuration.locales.get(0)
+        return String.format(locale, "%,.0f", value)
     }
 
     private fun formatDate(timestamp: Long): String {
-        val sdf = SimpleDateFormat("MM/dd HH:mm", Locale.getDefault())
+        val locale = context.resources.configuration.locales.get(0)
+        val sdf = SimpleDateFormat("MM/dd HH:mm", locale)
         return sdf.format(Date(timestamp))
     }
 

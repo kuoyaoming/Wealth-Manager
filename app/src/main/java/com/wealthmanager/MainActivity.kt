@@ -18,11 +18,9 @@ import androidx.fragment.app.FragmentActivity
 // import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.data.service.PerformanceMonitor120Hz
-import com.wealthmanager.preferences.LocalePreferencesManager
 import com.wealthmanager.ui.about.AboutDialog
 import com.wealthmanager.ui.navigation.WealthManagerNavigation
 import com.wealthmanager.ui.theme.WealthManagerTheme
-import com.wealthmanager.util.LocaleHelper
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -35,21 +33,12 @@ class MainActivity : FragmentActivity() {
     @Inject
     lateinit var performanceMonitor: PerformanceMonitor120Hz
     
-    @Inject
-    lateinit var localePreferencesManager: LocalePreferencesManager
+    
     
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Apply language settings before setting up the UI
-        try {
-            val languageCode = localePreferencesManager.getLanguageCode()
-            if (languageCode.isNotEmpty()) {
-                LocaleHelper.applyLocaleToContext(this, languageCode)
-            }
-        } catch (e: Exception) {
-            // Ignore locale application errors
-        }
+        
         
         enableEdgeToEdge()
         performanceMonitor.startMonitoring()
