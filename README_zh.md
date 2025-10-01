@@ -108,7 +108,7 @@ git clone https://github.com/kuoyaoming/Wealth-Manager.git
 ```mermaid
 graph TB
   subgraph "UI 層"
-    U1[Compose UI 畫面<br/>（認證、儀表板、資產、設定）]
+    U1[Compose UI 畫面（認證、儀表板、資產、設定）]
     U2[Navigation（NavHost）]
     U3[Material 3 ＋ 響應式版面]
     U4[觸覺與 120Hz 體驗]
@@ -122,10 +122,10 @@ graph TB
   end
 
   subgraph "資料層"
-    D1[Repositories<br/>（AssetRepository、KeyRepository）]
-    D2[Room 資料庫<br/>（WealthManagerDatabase＋DAOs）]
-    D3[API Provider Service<br/>（Retrofit APIs）]
-    D4[快取與韌性<br/>（CacheManager、TwseCacheManager）<br/>SmartCacheStrategy、重試、去重、<br/>錯誤處理、驗證、診斷]
+    D1[Repositories（AssetRepository、KeyRepository）]
+    D2[Room 資料庫（WealthManagerDatabase＋DAOs）]
+    D3[API Provider Service（Retrofit APIs）]
+    D4[快取與韌性（CacheManager、TwseCacheManager、SmartCacheStrategy、重試、去重、錯誤處理、驗證、診斷）]
   end
 
   U1 --> B1
@@ -252,6 +252,18 @@ git push origin v1.4.0
 
 # 本地 Debug（Release 僅限 CI）
 ./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug
+```
+
+### 導覽圖（Navigation Graph）
+
+```mermaid
+flowchart TD
+  A[auth\nBiometricAuthScreen] -->|onAuthSuccess| B[dashboard\nDashboardScreen]
+  A -->|onSkipAuth（未認證時）| B
+  B -->|onNavigateToAssets| C[assets\nAssetsScreen]
+  B -->|onNavigateToSettings| D[settings\nSettingsScreen]
+  C -->|onNavigateBack| B
+  D -->|onNavigateBack| B
 ```
 
 產物
