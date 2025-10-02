@@ -67,12 +67,19 @@ Screenshots are referenced in:
 
 ## 📁 File Organization
 
-```
-docs/screenshots/
-├── README.md                    # This file
-├── portfolio-overview.png      # Main dashboard
-├── asset-management.png        # Asset management
-├── biometric-auth.png         # Authentication
-├── add-assets.png             # Add asset dialog
-└── about-app.png              # About screen
+```mermaid
+graph TD
+    A[screenshots/] --> B[README.md]
+    A --> C[portfolio-overview.png]
+    A --> D[asset-management.png]
+    A --> E[biometric-auth.png]
+    A --> F[add-assets.png]
+    A --> G[about-app.png]
+    
+    B --> B1[This file]
+    C --> C1[Main dashboard]
+    D --> D1[Asset management]
+    E --> E1[Authentication]
+    F --> F1[Add asset dialog]
+    G --> G1[About screen]
 ```

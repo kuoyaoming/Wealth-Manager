@@ -148,14 +148,14 @@ See [API Setup Guide](docs/API_SETUP.md) for detailed instructions.
 ## 🏗️ Architecture
 
 ### **MVVM + Repository Pattern**
-```
-┌─────────────────┐    ┌─────────────────┐    ┌─────────────────┐
-│   UI Layer      │    │  Domain Layer   │    │   Data Layer    │
-│                 │    │                 │    │                 │
-│ • Compose UI    │◄──►│ • ViewModels    │◄──►│ • Repositories  │
-│ • Navigation    │    │ • Use Cases     │    │ • Data Sources  │
-│ • State Mgmt    │    │ • Business Logic│    │ • Local Storage  │
-└─────────────────┘    └─────────────────┘    └─────────────────┘
+```mermaid
+graph LR
+    UI[UI Layer<br/>• Compose UI<br/>• Navigation<br/>• State Mgmt] 
+    Domain[Domain Layer<br/>• ViewModels<br/>• Use Cases<br/>• Business Logic]
+    Data[Data Layer<br/>• Repositories<br/>• Data Sources<br/>• Local Storage]
+    
+    UI <--> Domain
+    Domain <--> Data
 ```
 
 ### **Technology Stack**
@@ -176,26 +176,31 @@ See [API Setup Guide](docs/API_SETUP.md) for detailed instructions.
 
 ## 📦 Project Structure
 
-```
-Wealth-Manager/
-├── app/                          # Main Android application
-│   ├── src/main/java/com/wealthmanager/
-│   │   ├── auth/                 # Biometric authentication
-│   │   ├── data/                 # Data layer (Room, APIs)
-│   │   ├── security/             # Security and encryption
-│   │   ├── ui/                   # Compose UI components
-│   │   └── utils/                # Utilities and helpers
-│   └── src/main/res/             # Resources and assets
-├── wear/                         # Wear OS companion app
-│   ├── src/main/java/com/wealthmanager/wear/
-│   │   ├── tiles/                # Wear OS tiles
-│   │   └── ui/                   # Wear OS UI
-│   └── src/main/res/             # Wear OS resources
-├── docs/                         # Documentation
-│   ├── API_SETUP.md             # API configuration guide
-│   ├── DEVELOPMENT.md            # Development setup
-│   └── assets/                   # Screenshots and assets
-└── local.properties.template     # Environment configuration
+```mermaid
+graph TD
+    A[Wealth-Manager] --> B[app/]
+    A --> C[wear/]
+    A --> D[docs/]
+    A --> E[local.properties.template]
+    
+    B --> B1[src/main/java/com/wealthmanager/]
+    B --> B2[src/main/res/]
+    
+    B1 --> B1a[auth/]
+    B1 --> B1b[data/]
+    B1 --> B1c[security/]
+    B1 --> B1d[ui/]
+    B1 --> B1e[utils/]
+    
+    C --> C1[src/main/java/com/wealthmanager/wear/]
+    C --> C2[src/main/res/]
+    
+    C1 --> C1a[tiles/]
+    C1 --> C1b[ui/]
+    
+    D --> D1[API_SETUP.md]
+    D --> D2[DEVELOPMENT.md]
+    D --> D3[assets/]
 ```
 
 ## 🔧 Development

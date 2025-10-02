@@ -232,12 +232,17 @@ try {
 
 ### **Test Structure**
 
-```
-src/test/java/com/wealthmanager/
-├── auth/                    # Authentication tests
-├── data/                    # Data layer tests
-├── ui/                      # UI tests
-└── utils/                   # Utility tests
+```mermaid
+graph TD
+    A[src/test/java/com/wealthmanager/] --> B[auth/]
+    A --> C[data/]
+    A --> D[ui/]
+    A --> E[utils/]
+    
+    B --> B1[Authentication tests]
+    C --> C1[Data layer tests]
+    D --> D1[UI tests]
+    E --> E1[Utility tests]
 ```
 
 ### **Testing Guidelines**

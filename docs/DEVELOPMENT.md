@@ -105,52 +105,64 @@ See [API Setup Guide](API_SETUP.md) for detailed instructions on obtaining API k
 
 ### **Main Application (`app/`)**
 
-```
-app/src/main/java/com/wealthmanager/
-├── auth/                    # Biometric authentication
-│   ├── AuthStateManager.kt
-│   ├── BiometricAuthManager.kt
-│   └── BiometricAuthScreen.kt
-├── data/                    # Data layer
-│   ├── api/                 # API interfaces
-│   ├── dao/                 # Room DAOs
-│   ├── entity/              # Database entities
-│   ├── repository/          # Repository pattern
-│   └── service/             # Business logic services
-├── security/                # Security and encryption
-│   ├── BiometricProtectionManager.kt
-│   ├── SecurityLevelManager.kt
-│   └── AndroidKeystoreManager.kt
-├── ui/                      # UI layer
-│   ├── assets/              # Asset management screens
-│   ├── auth/                # Authentication screens
-│   ├── dashboard/            # Dashboard screens
-│   ├── settings/             # Settings screens
-│   └── theme/               # UI theming
-└── utils/                   # Utilities and helpers
+```mermaid
+graph TD
+    A[app/src/main/java/com/wealthmanager/] --> B[auth/]
+    A --> C[data/]
+    A --> D[security/]
+    A --> E[ui/]
+    A --> F[utils/]
+    
+    B --> B1[AuthStateManager.kt]
+    B --> B2[BiometricAuthManager.kt]
+    B --> B3[BiometricAuthScreen.kt]
+    
+    C --> C1[api/]
+    C --> C2[dao/]
+    C --> C3[entity/]
+    C --> C4[repository/]
+    C --> C5[service/]
+    
+    D --> D1[BiometricProtectionManager.kt]
+    D --> D2[SecurityLevelManager.kt]
+    D --> D3[AndroidKeystoreManager.kt]
+    
+    E --> E1[assets/]
+    E --> E2[auth/]
+    E --> E3[dashboard/]
+    E --> E4[settings/]
+    E --> E5[theme/]
 ```
 
 ### **Wear OS Module (`wear/`)**
 
-```
-wear/src/main/java/com/wealthmanager/wear/
-├── tiles/                   # Wear OS tiles
-│   ├── WealthTileService.kt
-│   └── state/               # Tile state management
-├── ui/                      # Wear OS UI
-│   └── theme/               # Wear OS theming
-└── WealthWearApplication.kt # Wear OS application
+```mermaid
+graph TD
+    A[wear/src/main/java/com/wealthmanager/wear/] --> B[tiles/]
+    A --> C[ui/]
+    A --> D[WealthWearApplication.kt]
+    
+    B --> B1[WealthTileService.kt]
+    B --> B2[state/]
+    
+    C --> C1[theme/]
 ```
 
 ### **Resources**
 
-```
-app/src/main/res/
-├── values/                  # Default strings and themes
-├── values-zh-rTW/          # Traditional Chinese
-├── drawable/                # Icons and drawables
-├── anim/                    # 120Hz optimized animations
-└── xml/                     # Configuration files
+```mermaid
+graph TD
+    A[app/src/main/res/] --> B[values/]
+    A --> C[values-zh-rTW/]
+    A --> D[drawable/]
+    A --> E[anim/]
+    A --> F[xml/]
+    
+    B --> B1[Default strings and themes]
+    C --> C1[Traditional Chinese]
+    D --> D1[Icons and drawables]
+    E --> E1[120Hz optimized animations]
+    F --> F1[Configuration files]
 ```
 
 ## ⚙️ Build Configuration
@@ -252,12 +264,17 @@ style:
 
 ### **Test Structure**
 
-```
-src/test/java/com/wealthmanager/
-├── auth/                    # Authentication tests
-├── data/                    # Data layer tests
-├── ui/                      # UI tests
-└── utils/                   # Utility tests
+```mermaid
+graph TD
+    A[src/test/java/com/wealthmanager/] --> B[auth/]
+    A --> C[data/]
+    A --> D[ui/]
+    A --> E[utils/]
+    
+    B --> B1[Authentication tests]
+    C --> C1[Data layer tests]
+    D --> D1[UI tests]
+    E --> E1[Utility tests]
 ```
 
 ### **Running Tests**
