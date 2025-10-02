@@ -83,8 +83,8 @@ dependencies {
     implementation 'com.google.android.gms:play-services-wearable:18.2.0'
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2'
 
     // Hilt
     implementation 'com.google.dagger:hilt-android:2.48'

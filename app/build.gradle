@@ -165,14 +165,14 @@ dependencies {
     implementation 'com.google.android.gms:play-services-wearable:18.2.0'
 
     // Coroutines extensions
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2'
     
     // Charts - Using Compose Canvas for now
     // implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     // implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
     
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
     
     // Testing
     testImplementation 'junit:junit:4.13.2'
