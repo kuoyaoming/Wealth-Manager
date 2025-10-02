@@ -34,49 +34,52 @@ fun CashAssetItem(
     asset: CashAsset,
     onEdit: (CashAsset) -> Unit,
     onDelete: (CashAsset) -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val debugLogManager = remember { DebugLogManager() }
     val (hapticManager, view) = rememberHapticFeedbackWithView()
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             horizontalArrangement = Arrangement.SpaceBetween,
-            verticalAlignment = Alignment.CenterVertically
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = stringResource(
-                        R.string.assets_cash_original_amount,
-                        rememberMoneyText(
-                            asset.amount,
+                    text =
+                        stringResource(
+                            R.string.assets_cash_original_amount,
+                            rememberMoneyText(
+                                asset.amount,
+                                asset.currency,
+                                style = MoneyFormatter.Style.CurrencyCode,
+                                moneyContext = MoneyFormatter.MoneyContext.CashAmount,
+                            ),
                             asset.currency,
-                            style = MoneyFormatter.Style.CurrencyCode,
-                            moneyContext = MoneyFormatter.MoneyContext.CashAmount
                         ),
-                        asset.currency
-                    ),
                     style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Medium
+                    fontWeight = FontWeight.Medium,
                 )
                 Text(
-                    text = stringResource(
-                        R.string.assets_cash_twd_value,
-                        rememberMoneyText(
-                            asset.twdEquivalent,
-                            "TWD",
-                            style = MoneyFormatter.Style.CurrencyCode,
-                            moneyContext = MoneyFormatter.MoneyContext.Total
-                        )
-                    ),
+                    text =
+                        stringResource(
+                            R.string.assets_cash_twd_value,
+                            rememberMoneyText(
+                                asset.twdEquivalent,
+                                "TWD",
+                                style = MoneyFormatter.Style.CurrencyCode,
+                                moneyContext = MoneyFormatter.MoneyContext.Total,
+                            ),
+                        ),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
 
@@ -84,30 +87,36 @@ fun CashAssetItem(
                 IconButton(
                     onClick = {
                         debugLogManager.logUserAction("Edit Cash Asset Clicked")
-                        debugLogManager.log("UI", "User clicked edit button for cash asset: ${asset.currency} ${asset.amount}")
+                        debugLogManager.log(
+                            "UI",
+                            "User clicked edit button for cash asset: ${asset.currency} ${asset.amount}",
+                        )
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                         onEdit(asset)
-                    }
+                    },
                 ) {
                     Icon(
                         imageVector = Icons.Default.Edit,
                         contentDescription = stringResource(R.string.cd_edit_cash_asset),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                 }
 
                 IconButton(
                     onClick = {
                         debugLogManager.logUserAction("Delete Cash Asset Clicked")
-                        debugLogManager.log("UI", "User clicked delete button for cash asset: ${asset.currency} ${asset.amount}")
+                        debugLogManager.log(
+                            "UI",
+                            "User clicked delete button for cash asset: ${asset.currency} ${asset.amount}",
+                        )
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.STRONG)
                         onDelete(asset)
-                    }
+                    },
                 ) {
                     Icon(
                         imageVector = Icons.Default.Delete,
                         contentDescription = stringResource(R.string.cd_delete_cash_asset),
-                        tint = MaterialTheme.colorScheme.error
+                        tint = MaterialTheme.colorScheme.error,
                     )
                 }
             }

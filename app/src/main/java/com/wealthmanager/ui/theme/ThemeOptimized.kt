@@ -17,58 +17,61 @@ import androidx.core.view.WindowCompat
 /**
  * Optimized theme configuration with better color schemes
  */
-private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80,
-    background = androidx.compose.ui.graphics.Color(0xFF121212),
-    surface = androidx.compose.ui.graphics.Color(0xFF1E1E1E),
-    onBackground = androidx.compose.ui.graphics.Color(0xFFE1E1E1),
-    onSurface = androidx.compose.ui.graphics.Color(0xFFE1E1E1),
-    surfaceVariant = androidx.compose.ui.graphics.Color(0xFF2A2A2A),
-    onSurfaceVariant = androidx.compose.ui.graphics.Color(0xFFB3B3B3),
-    error = androidx.compose.ui.graphics.Color(0xFFCF6679),
-    onError = androidx.compose.ui.graphics.Color(0xFF000000),
-    outline = androidx.compose.ui.graphics.Color(0xFF4A4A4A),
-    inverseSurface = androidx.compose.ui.graphics.Color(0xFFE1E1E1),
-    inverseOnSurface = androidx.compose.ui.graphics.Color(0xFF1A1A1A),
-    inversePrimary = Purple40
-)
+private val DarkColorScheme =
+    darkColorScheme(
+        primary = Purple80,
+        secondary = PurpleGrey80,
+        tertiary = Pink80,
+        background = androidx.compose.ui.graphics.Color(0xFF121212),
+        surface = androidx.compose.ui.graphics.Color(0xFF1E1E1E),
+        onBackground = androidx.compose.ui.graphics.Color(0xFFE1E1E1),
+        onSurface = androidx.compose.ui.graphics.Color(0xFFE1E1E1),
+        surfaceVariant = androidx.compose.ui.graphics.Color(0xFF2A2A2A),
+        onSurfaceVariant = androidx.compose.ui.graphics.Color(0xFFB3B3B3),
+        error = androidx.compose.ui.graphics.Color(0xFFCF6679),
+        onError = androidx.compose.ui.graphics.Color(0xFF000000),
+        outline = androidx.compose.ui.graphics.Color(0xFF4A4A4A),
+        inverseSurface = androidx.compose.ui.graphics.Color(0xFFE1E1E1),
+        inverseOnSurface = androidx.compose.ui.graphics.Color(0xFF1A1A1A),
+        inversePrimary = Purple40,
+    )
 
-private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40,
-    background = androidx.compose.ui.graphics.Color(0xFFFFFBFE),
-    surface = androidx.compose.ui.graphics.Color(0xFFFFFBFE),
-    onBackground = androidx.compose.ui.graphics.Color(0xFF1C1B1F),
-    onSurface = androidx.compose.ui.graphics.Color(0xFF1C1B1F),
-    surfaceVariant = androidx.compose.ui.graphics.Color(0xFFE7E0EC),
-    onSurfaceVariant = androidx.compose.ui.graphics.Color(0xFF49454F),
-    error = androidx.compose.ui.graphics.Color(0xFFBA1A1A),
-    onError = androidx.compose.ui.graphics.Color(0xFFFFFFFF),
-    outline = androidx.compose.ui.graphics.Color(0xFF79747E),
-    inverseSurface = androidx.compose.ui.graphics.Color(0xFF313033),
-    inverseOnSurface = androidx.compose.ui.graphics.Color(0xFFF4EFF4),
-    inversePrimary = Purple80
-)
+private val LightColorScheme =
+    lightColorScheme(
+        primary = Purple40,
+        secondary = PurpleGrey40,
+        tertiary = Pink40,
+        background = androidx.compose.ui.graphics.Color(0xFFFFFBFE),
+        surface = androidx.compose.ui.graphics.Color(0xFFFFFBFE),
+        onBackground = androidx.compose.ui.graphics.Color(0xFF1C1B1F),
+        onSurface = androidx.compose.ui.graphics.Color(0xFF1C1B1F),
+        surfaceVariant = androidx.compose.ui.graphics.Color(0xFFE7E0EC),
+        onSurfaceVariant = androidx.compose.ui.graphics.Color(0xFF49454F),
+        error = androidx.compose.ui.graphics.Color(0xFFBA1A1A),
+        onError = androidx.compose.ui.graphics.Color(0xFFFFFFFF),
+        outline = androidx.compose.ui.graphics.Color(0xFF79747E),
+        inverseSurface = androidx.compose.ui.graphics.Color(0xFF313033),
+        inverseOnSurface = androidx.compose.ui.graphics.Color(0xFFF4EFF4),
+        inversePrimary = Purple80,
+    )
 
 @Composable
 fun WealthManagerThemeOptimized(
     darkTheme: Boolean = isSystemInDarkTheme(),
     // Dynamic color is available on Android 12+
     dynamicColor: Boolean = true,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
-    val colorScheme = when {
-        dynamicColor -> {
-            val context = LocalContext.current
-            if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
-        }
+    val colorScheme =
+        when {
+            dynamicColor -> {
+                val context = LocalContext.current
+                if (darkTheme) dynamicDarkColorScheme(context) else dynamicLightColorScheme(context)
+            }
 
-        darkTheme -> DarkColorScheme
-        else -> LightColorScheme
-    }
+            darkTheme -> DarkColorScheme
+            else -> LightColorScheme
+        }
 
     val view = LocalView.current
     if (!view.isInEditMode) {
@@ -87,7 +90,7 @@ fun WealthManagerThemeOptimized(
     MaterialTheme(
         colorScheme = colorScheme,
         typography = Typography,
-        content = content
+        content = content,
     )
 }
 

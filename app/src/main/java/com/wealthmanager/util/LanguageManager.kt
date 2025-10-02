@@ -7,8 +7,10 @@ import androidx.core.os.LocaleListCompat
 import java.util.Locale
 
 object LanguageManager {
-
-    fun setAppLanguage(context: Context, languageTag: String) {
+    fun setAppLanguage(
+        context: Context,
+        languageTag: String,
+    ) {
         val appLocales = LocaleListCompat.forLanguageTags(languageTag)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
             try {
@@ -45,4 +47,3 @@ object LanguageManager {
         return Locale.getDefault()
     }
 }
-

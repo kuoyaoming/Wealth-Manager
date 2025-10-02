@@ -12,106 +12,110 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class ApiDiagnostic @Inject constructor(
-    private val context: Context,
-    private val debugLogManager: DebugLogManager,
-    private val keyRepository: KeyRepository
-) {
+class ApiDiagnostic
+    @Inject
+    constructor(
+        private val context: Context,
+        private val debugLogManager: DebugLogManager,
+        private val keyRepository: KeyRepository,
+    ) {
+        suspend fun runDiagnostic(): DiagnosticResult {
+            debugLogManager.log("DIAGNOSTIC", "Starting API diagnostic...")
 
-    suspend fun runDiagnostic(): DiagnosticResult {
-        debugLogManager.log("DIAGNOSTIC", "Starting API diagnostic...")
+            val networkStatus = checkNetworkConnectivity()
+            val apiKeyStatus = checkApiKey()
+            val finnhubStatus = testFinnhubApi()
 
-        val networkStatus = checkNetworkConnectivity()
-        val apiKeyStatus = checkApiKey()
-        val finnhubStatus = testFinnhubApi()
-
-        return DiagnosticResult(
-            networkStatus = networkStatus,
-            apiKeyStatus = apiKeyStatus,
-            finnhubStatus = finnhubStatus
-        )
-    }
-
-    private fun checkNetworkConnectivity(): NetworkStatus {
-        return try {
-            val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-            val network = connectivityManager.activeNetwork
-            val capabilities = connectivityManager.getNetworkCapabilities(network)
-
-            val hasInternet = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
-            val hasWifi = capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true
-            val hasCellular = capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true
-
-            debugLogManager.log("DIAGNOSTIC", "Network status: Internet=$hasInternet, WiFi=$hasWifi, Cellular=$hasCellular")
-
-            NetworkStatus(
-                isConnected = hasInternet,
-                hasWifi = hasWifi,
-                hasCellular = hasCellular
+            return DiagnosticResult(
+                networkStatus = networkStatus,
+                apiKeyStatus = apiKeyStatus,
+                finnhubStatus = finnhubStatus,
             )
-        } catch (e: Exception) {
-            debugLogManager.logError("DIAGNOSTIC", "Network check failed: ${e.message}")
-            NetworkStatus(isConnected = false, hasWifi = false, hasCellular = false)
         }
-    }
 
-    private fun checkApiKey(): ApiKeyStatus {
-        val finnhubKey = keyRepository.getUserFinnhubKey() ?: ""
-        val exchangeKey = keyRepository.getUserExchangeKey() ?: ""
+        private fun checkNetworkConnectivity(): NetworkStatus {
+            return try {
+                val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
+                val network = connectivityManager.activeNetwork
+                val capabilities = connectivityManager.getNetworkCapabilities(network)
 
-        debugLogManager.log("DIAGNOSTIC", "Finnhub key length: ${finnhubKey.length}")
-        debugLogManager.log("DIAGNOSTIC", "Exchange key length: ${exchangeKey.length}")
+                val hasInternet = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
+                val hasWifi = capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true
+                val hasCellular = capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true
 
-        return ApiKeyStatus(
-            finnhubKeyValid = finnhubKey.isNotEmpty() && finnhubKey.length > 10,
-            exchangeKeyValid = exchangeKey.isNotEmpty() && exchangeKey.length > 10,
-            finnhubKeyPreview = finnhubKey.take(8) + "...",
-            exchangeKeyPreview = exchangeKey.take(8) + "..."
-        )
-    }
+                debugLogManager.log(
+                    "DIAGNOSTIC",
+                    "Network status: Internet=$hasInternet, WiFi=$hasWifi, Cellular=$hasCellular",
+                )
 
-    private suspend fun testFinnhubApi(): FinnhubStatus {
-        return withContext(Dispatchers.IO) {
-            try {
-                debugLogManager.log("DIAGNOSTIC", "Testing Finnhub API connectivity...")
-
-                val key = keyRepository.getUserFinnhubKey() ?: ""
-                val url = URL("https://finnhub.io/api/v1/quote?symbol=AAPL&token=$key")
-                val connection = url.openConnection() as HttpURLConnection
-                connection.requestMethod = "GET"
-                connection.connectTimeout = 10000
-                connection.readTimeout = 10000
-
-                val responseCode = connection.responseCode
-                val responseMessage = connection.responseMessage
-
-                debugLogManager.log("DIAGNOSTIC", "Finnhub API response: $responseCode - $responseMessage")
-
-                connection.disconnect()
-
-                FinnhubStatus(
-                    isReachable = responseCode in 200..299,
-                    responseCode = responseCode,
-                    responseMessage = responseMessage,
-                    isApiKeyValid = responseCode != 401 && responseCode != 403
+                NetworkStatus(
+                    isConnected = hasInternet,
+                    hasWifi = hasWifi,
+                    hasCellular = hasCellular,
                 )
             } catch (e: Exception) {
-                debugLogManager.logError("DIAGNOSTIC", "Finnhub API test failed: ${e.message}")
-                FinnhubStatus(
-                    isReachable = false,
-                    responseCode = -1,
-                    responseMessage = e.message ?: "Unknown error",
-                    isApiKeyValid = false
-                )
+                debugLogManager.logError("DIAGNOSTIC", "Network check failed: ${e.message}")
+                NetworkStatus(isConnected = false, hasWifi = false, hasCellular = false)
+            }
+        }
+
+        private fun checkApiKey(): ApiKeyStatus {
+            val finnhubKey = keyRepository.getUserFinnhubKey() ?: ""
+            val exchangeKey = keyRepository.getUserExchangeKey() ?: ""
+
+            debugLogManager.log("DIAGNOSTIC", "Finnhub key length: ${finnhubKey.length}")
+            debugLogManager.log("DIAGNOSTIC", "Exchange key length: ${exchangeKey.length}")
+
+            return ApiKeyStatus(
+                finnhubKeyValid = finnhubKey.isNotEmpty() && finnhubKey.length > 10,
+                exchangeKeyValid = exchangeKey.isNotEmpty() && exchangeKey.length > 10,
+                finnhubKeyPreview = finnhubKey.take(8) + "...",
+                exchangeKeyPreview = exchangeKey.take(8) + "...",
+            )
+        }
+
+        private suspend fun testFinnhubApi(): FinnhubStatus {
+            return withContext(Dispatchers.IO) {
+                try {
+                    debugLogManager.log("DIAGNOSTIC", "Testing Finnhub API connectivity...")
+
+                    val key = keyRepository.getUserFinnhubKey() ?: ""
+                    val url = URL("https://finnhub.io/api/v1/quote?symbol=AAPL&token=$key")
+                    val connection = url.openConnection() as HttpURLConnection
+                    connection.requestMethod = "GET"
+                    connection.connectTimeout = 10000
+                    connection.readTimeout = 10000
+
+                    val responseCode = connection.responseCode
+                    val responseMessage = connection.responseMessage
+
+                    debugLogManager.log("DIAGNOSTIC", "Finnhub API response: $responseCode - $responseMessage")
+
+                    connection.disconnect()
+
+                    FinnhubStatus(
+                        isReachable = responseCode in 200..299,
+                        responseCode = responseCode,
+                        responseMessage = responseMessage,
+                        isApiKeyValid = responseCode != 401 && responseCode != 403,
+                    )
+                } catch (e: Exception) {
+                    debugLogManager.logError("DIAGNOSTIC", "Finnhub API test failed: ${e.message}")
+                    FinnhubStatus(
+                        isReachable = false,
+                        responseCode = -1,
+                        responseMessage = e.message ?: "Unknown error",
+                        isApiKeyValid = false,
+                    )
+                }
             }
         }
     }
-}
 
 data class DiagnosticResult(
     val networkStatus: NetworkStatus,
     val apiKeyStatus: ApiKeyStatus,
-    val finnhubStatus: FinnhubStatus
+    val finnhubStatus: FinnhubStatus,
 ) {
     val isHealthy: Boolean
         get() = networkStatus.isConnected && apiKeyStatus.finnhubKeyValid && finnhubStatus.isReachable
@@ -120,19 +124,19 @@ data class DiagnosticResult(
 data class NetworkStatus(
     val isConnected: Boolean,
     val hasWifi: Boolean,
-    val hasCellular: Boolean
+    val hasCellular: Boolean,
 )
 
 data class ApiKeyStatus(
     val finnhubKeyValid: Boolean,
     val exchangeKeyValid: Boolean,
     val finnhubKeyPreview: String,
-    val exchangeKeyPreview: String
+    val exchangeKeyPreview: String,
 )
 
 data class FinnhubStatus(
     val isReachable: Boolean,
     val responseCode: Int,
     val responseMessage: String,
-    val isApiKeyValid: Boolean
+    val isApiKeyValid: Boolean,
 )

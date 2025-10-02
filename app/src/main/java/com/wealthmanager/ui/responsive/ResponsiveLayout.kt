@@ -1,13 +1,13 @@
 package com.wealthmanager.ui.responsive
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.GridCells
+import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material3.*
+import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 
@@ -28,7 +28,7 @@ fun rememberResponsiveLayout(): ResponsiveLayout {
             screenWidth = screenWidth,
             screenHeight = screenHeight,
             isLandscape = isLandscape,
-            widthSizeClass = widthSizeClass
+            widthSizeClass = widthSizeClass,
         )
     }
 }
@@ -37,7 +37,7 @@ data class ResponsiveLayout(
     val screenWidth: Dp,
     val screenHeight: Dp,
     val isLandscape: Boolean,
-    val widthSizeClass: WindowWidthSizeClass
+    val widthSizeClass: WindowWidthSizeClass,
 ) {
     // Screen type detection
     val isTablet: Boolean
@@ -85,37 +85,41 @@ data class ResponsiveLayout(
 
     // Dialog width
     val dialogWidth: Dp
-        get() = when {
-            isLargeScreen -> 600.dp
-            isTablet -> 500.dp
-            else -> screenWidth * 0.9f
-        }
+        get() =
+            when {
+                isLargeScreen -> 600.dp
+                isTablet -> 500.dp
+                else -> screenWidth * 0.9f
+            }
 
     // Dialog height
     val dialogHeight: Dp
-        get() = when {
-            isLargeScreen -> 500.dp
-            isTablet -> 400.dp
-            else -> screenHeight * 0.8f
-        }
+        get() =
+            when {
+                isLargeScreen -> 500.dp
+                isTablet -> 400.dp
+                else -> screenHeight * 0.8f
+            }
 
     // Column configuration
     val columns: Int
-        get() = when (widthSizeClass) {
-            WindowWidthSizeClass.Compact -> 1
-            WindowWidthSizeClass.Medium -> 2
-            WindowWidthSizeClass.Expanded -> 2 // Mobile target only, no large screen specialization yet
-            else -> 1
-        }
+        get() =
+            when (widthSizeClass) {
+                WindowWidthSizeClass.Compact -> 1
+                WindowWidthSizeClass.Medium -> 2
+                WindowWidthSizeClass.Expanded -> 2 // Mobile target only, no large screen specialization yet
+                else -> 1
+            }
 
     // Grid spacing
     val gridSpacing: Dp
-        get() = when (widthSizeClass) {
-            WindowWidthSizeClass.Compact -> 8.dp
-            WindowWidthSizeClass.Medium -> 16.dp
-            WindowWidthSizeClass.Expanded -> 16.dp
-            else -> 8.dp
-        }
+        get() =
+            when (widthSizeClass) {
+                WindowWidthSizeClass.Compact -> 8.dp
+                WindowWidthSizeClass.Medium -> 16.dp
+                WindowWidthSizeClass.Expanded -> 16.dp
+                else -> 8.dp
+            }
 }
 
 /**
@@ -124,19 +128,20 @@ data class ResponsiveLayout(
 @Composable
 fun ResponsiveCard(
     modifier: Modifier = Modifier,
-    content: @Composable ColumnScope.() -> Unit
+    content: @Composable ColumnScope.() -> Unit,
 ) {
     val responsiveLayout = rememberResponsiveLayout()
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = if (responsiveLayout.isTablet) 6.dp else 4.dp
-        )
+        elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = if (responsiveLayout.isTablet) 6.dp else 4.dp,
+            ),
     ) {
         Column(
             modifier = Modifier.padding(responsiveLayout.paddingLarge),
-            content = content
+            content = content,
         )
     }
 }
@@ -145,22 +150,24 @@ fun ResponsiveCard(
  * Responsive spacing
  */
 @Composable
-fun ResponsiveSpacer(
-    size: ResponsiveSpacerSize = ResponsiveSpacerSize.Medium
-) {
+fun ResponsiveSpacer(size: ResponsiveSpacerSize = ResponsiveSpacerSize.Medium) {
     val responsiveLayout = rememberResponsiveLayout()
-    val spacerSize = when (size) {
-        ResponsiveSpacerSize.Small -> responsiveLayout.paddingSmall
-        ResponsiveSpacerSize.Medium -> responsiveLayout.paddingMedium
-        ResponsiveSpacerSize.Large -> responsiveLayout.paddingLarge
-        ResponsiveSpacerSize.ExtraLarge -> responsiveLayout.paddingExtraLarge
-    }
+    val spacerSize =
+        when (size) {
+            ResponsiveSpacerSize.Small -> responsiveLayout.paddingSmall
+            ResponsiveSpacerSize.Medium -> responsiveLayout.paddingMedium
+            ResponsiveSpacerSize.Large -> responsiveLayout.paddingLarge
+            ResponsiveSpacerSize.ExtraLarge -> responsiveLayout.paddingExtraLarge
+        }
 
     Spacer(modifier = Modifier.height(spacerSize))
 }
 
 enum class ResponsiveSpacerSize {
-    Small, Medium, Large, ExtraLarge
+    Small,
+    Medium,
+    Large,
+    ExtraLarge,
 }
 
 /**
@@ -169,7 +176,7 @@ enum class ResponsiveSpacerSize {
 @Composable
 fun ResponsiveGrid(
     modifier: Modifier = Modifier,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val responsiveLayout = rememberResponsiveLayout()
 
@@ -179,7 +186,7 @@ fun ResponsiveGrid(
             columns = androidx.compose.foundation.lazy.grid.GridCells.Fixed(responsiveLayout.columns),
             modifier = modifier,
             verticalArrangement = Arrangement.spacedBy(responsiveLayout.gridSpacing),
-            horizontalArrangement = Arrangement.spacedBy(responsiveLayout.gridSpacing)
+            horizontalArrangement = Arrangement.spacedBy(responsiveLayout.gridSpacing),
         ) {
             item { content() }
         }
@@ -187,7 +194,7 @@ fun ResponsiveGrid(
         // Single column layout
         Column(
             modifier = modifier,
-            verticalArrangement = Arrangement.spacedBy(responsiveLayout.cardSpacing)
+            verticalArrangement = Arrangement.spacedBy(responsiveLayout.cardSpacing),
         ) {
             content()
         }

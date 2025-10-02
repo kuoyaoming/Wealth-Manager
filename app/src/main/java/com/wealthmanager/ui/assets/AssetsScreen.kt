@@ -1,9 +1,9 @@
 package com.wealthmanager.ui.assets
 
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.statusBarsPadding
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
@@ -14,9 +14,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.wealthmanager.R
-import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
+import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 
@@ -24,7 +24,7 @@ import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 @Composable
 fun AssetsScreen(
     onNavigateBack: () -> Unit,
-    viewModel: AssetsViewModel = hiltViewModel()
+    viewModel: AssetsViewModel = hiltViewModel(),
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showAddDialog by remember { mutableStateOf(false) }
@@ -55,10 +55,10 @@ fun AssetsScreen(
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = stringResource(R.string.cd_back_to_dashboard)
+                            contentDescription = stringResource(R.string.cd_back_to_dashboard),
                         )
                     }
-                }
+                },
             )
         },
         floatingActionButton = {
@@ -69,25 +69,26 @@ fun AssetsScreen(
                     hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                     showAddDialog = true
                     viewModel.openAddCashDialog()
-                }
+                },
             ) {
                 Icon(Icons.Default.Add, contentDescription = stringResource(R.string.cd_add_asset))
             }
-        }
+        },
     ) { paddingValues ->
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(paddingValues)
-                .padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(8.dp)
+            modifier =
+                Modifier
+                    .fillMaxSize()
+                    .padding(paddingValues)
+                    .padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             // Cash Assets Section
             item {
                 Text(
                     text = stringResource(R.string.cash_assets),
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    modifier = Modifier.padding(vertical = 8.dp),
                 )
             }
 
@@ -96,7 +97,7 @@ fun AssetsScreen(
                     Text(
                         text = stringResource(R.string.assets_empty_cash),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             } else {
@@ -105,14 +106,20 @@ fun AssetsScreen(
                         asset = uiState.cashAssets[index],
                         onEdit = { asset ->
                             debugLogManager.logUserAction("Edit Cash Asset")
-                            debugLogManager.log("UI", "User wants to edit cash asset: ${asset.currency} ${asset.amount}")
+                            debugLogManager.log(
+                                "UI",
+                                "User wants to edit cash asset: ${asset.currency} ${asset.amount}",
+                            )
                             showEditCashDialog = asset
                         },
                         onDelete = { asset ->
                             debugLogManager.logUserAction("Delete Cash Asset")
-                            debugLogManager.log("UI", "User wants to delete cash asset: ${asset.currency} ${asset.amount}")
+                            debugLogManager.log(
+                                "UI",
+                                "User wants to delete cash asset: ${asset.currency} ${asset.amount}",
+                            )
                             viewModel.deleteCashAsset(asset)
-                        }
+                        },
                     )
                 }
             }
@@ -122,7 +129,7 @@ fun AssetsScreen(
                 Text(
                     text = stringResource(R.string.stock_assets),
                     style = MaterialTheme.typography.titleLarge,
-                    modifier = Modifier.padding(vertical = 8.dp)
+                    modifier = Modifier.padding(vertical = 8.dp),
                 )
             }
 
@@ -131,7 +138,7 @@ fun AssetsScreen(
                     Text(
                         text = stringResource(R.string.assets_empty_stock),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             } else {
@@ -147,7 +154,7 @@ fun AssetsScreen(
                             debugLogManager.logUserAction("Delete Stock Asset")
                             debugLogManager.log("UI", "User wants to delete stock asset: ${asset.symbol}")
                             viewModel.deleteStockAsset(asset)
-                        }
+                        },
                     )
                 }
             }
@@ -182,31 +189,31 @@ fun AssetsScreen(
                 viewModel.setSearchQuery(query)
             },
             searchResults = uiState.searchResults,
-            isSearching = uiState.isSearching
+            isSearching = uiState.isSearching,
         )
     }
 
-        // Edit Cash Asset Dialog
-        showEditCashDialog?.let { asset ->
-            EditCashAssetDialog(
-                asset = asset,
-                onDismiss = { showEditCashDialog = null },
-                onSave = { updatedAsset ->
-                    viewModel.updateCashAsset(updatedAsset)
-                    showEditCashDialog = null
-                }
-            )
-        }
+    // Edit Cash Asset Dialog
+    showEditCashDialog?.let { asset ->
+        EditCashAssetDialog(
+            asset = asset,
+            onDismiss = { showEditCashDialog = null },
+            onSave = { updatedAsset ->
+                viewModel.updateCashAsset(updatedAsset)
+                showEditCashDialog = null
+            },
+        )
+    }
 
-        // Edit Stock Asset Dialog
-        showEditStockDialog?.let { asset ->
-            EditStockAssetDialog(
-                asset = asset,
-                onDismiss = { showEditStockDialog = null },
-                onSave = { updatedAsset ->
-                    viewModel.updateStockAsset(updatedAsset)
-                    showEditStockDialog = null
-                }
-            )
-        }
+    // Edit Stock Asset Dialog
+    showEditStockDialog?.let { asset ->
+        EditStockAssetDialog(
+            asset = asset,
+            onDismiss = { showEditStockDialog = null },
+            onSave = { updatedAsset ->
+                viewModel.updateStockAsset(updatedAsset)
+                showEditStockDialog = null
+            },
+        )
+    }
 }

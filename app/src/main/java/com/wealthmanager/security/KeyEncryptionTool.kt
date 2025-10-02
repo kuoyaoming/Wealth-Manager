@@ -8,7 +8,6 @@ import javax.crypto.spec.SecretKeySpec
  * API key encryption tool for generating encrypted developer API keys.
  */
 object KeyEncryptionTool {
-
     private const val DECRYPTION_KEY = "dev_key_2024_secure"
 
     /**

@@ -15,5 +15,5 @@ data class StockAsset(
     val currentPrice: Double = 0.0,
     val originalCurrency: String = "USD", // Default to USD for global stocks
     val twdEquivalent: Double = 0.0,
-    val lastUpdated: Long = System.currentTimeMillis()
+    val lastUpdated: Long = System.currentTimeMillis(),
 )

@@ -8,7 +8,6 @@ import androidx.compose.ui.graphics.Color
  * Color guidelines and utilities for consistent theme usage
  */
 object ColorGuidelines {
-
     /**
      * Get appropriate text color based on background
      */
@@ -35,7 +34,7 @@ object ColorGuidelines {
             negative = getNegativeColor(),
             neutral = getNeutralColor(),
             warning = getWarningColor(),
-            info = getInfoColor()
+            info = getInfoColor(),
         )
     }
 
@@ -63,7 +62,7 @@ data class FinancialColorSet(
     val negative: Color,
     val neutral: Color,
     val warning: Color,
-    val info: Color
+    val info: Color,
 )
 
 /**

@@ -23,7 +23,6 @@ import javax.inject.Inject
  */
 @HiltAndroidApp
 class WealthManagerApplication : Application(), AuthStateManagerEntryPoint {
-
     @Inject
     lateinit var authStateManager: AuthStateManager
 

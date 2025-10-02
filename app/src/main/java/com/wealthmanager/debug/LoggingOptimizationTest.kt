@@ -9,89 +9,93 @@ import javax.inject.Singleton
  * Used to verify fixed logging behavior
  */
 @Singleton
-class LoggingOptimizationTest @Inject constructor(
-    private val debugLogManager: DebugLogManager
-) {
+class LoggingOptimizationTest
+    @Inject
+    constructor(
+        private val debugLogManager: DebugLogManager,
+    ) {
+        /**
+         * Test market data logging optimization
+         */
+        fun testMarketDataLogging() {
+            StandardLogger.debug("LoggingTest", "=== Testing Market Data Logging Optimization ===")
 
-    /**
-     * Test market data logging optimization
-     */
-    fun testMarketDataLogging() {
-        StandardLogger.debug("LoggingTest", "=== Testing Market Data Logging Optimization ===")
+            // Test general market data logging
+            debugLogManager.logMarketData("SEARCH", "Testing search: AAPL")
+            debugLogManager.logMarketData("SUCCESS", "Found 5 matching results")
+            debugLogManager.logMarketData("COMPLETE", "Successfully created 5 search results")
 
-        // Test general market data logging
-        debugLogManager.logMarketData("SEARCH", "Testing search: AAPL")
-        debugLogManager.logMarketData("SUCCESS", "Found 5 matching results")
-        debugLogManager.logMarketData("COMPLETE", "Successfully created 5 search results")
+            // Test detailed market data logging (should be filtered out)
+            debugLogManager.logMarketDataVerbose("DETAILS", "Processing 5 matches")
+            debugLogManager.logMarketDataVerbose(
+                "MATCH_0",
+                "Symbol: AAPL, Name: Apple Inc, Type: Equity, Region: United States, Score: 1.0000",
+            )
 
-        // Test detailed market data logging (should be filtered out)
-        debugLogManager.logMarketDataVerbose("DETAILS", "Processing 5 matches")
-        debugLogManager.logMarketDataVerbose("MATCH_0", "Symbol: AAPL, Name: Apple Inc, Type: Equity, Region: United States, Score: 1.0000")
+            // Test error cases
+            debugLogManager.logMarketData("ERROR", "Search failed: Network connection error")
+            debugLogManager.logMarketData("NO_RESULTS", "No matching results found")
 
-        // Test error cases
-        debugLogManager.logMarketData("ERROR", "Search failed: Network connection error")
-        debugLogManager.logMarketData("NO_RESULTS", "No matching results found")
-
-        StandardLogger.debug("LoggingTest", "=== Market Data Logging Test Complete ===")
-    }
-
-    /**
-     * Test general logging optimization
-     */
-    fun testGeneralLogging() {
-        StandardLogger.debug("LoggingTest", "=== Testing General Logging Optimization ===")
-
-        // Test user action logging
-        debugLogManager.logUserAction("Add Asset FAB Clicked")
-        debugLogManager.logUserAction("Search Button Clicked")
-
-        // Test navigation logging
-        debugLogManager.logNavigation("Dashboard", "Assets")
-        debugLogManager.logNavigation("Assets", "Add Asset")
-
-        // Test asset operation logging
-        debugLogManager.logAsset("ADD", "Stock", "AAPL - Apple Inc")
-        debugLogManager.logAsset("UPDATE", "Stock", "AAPL - Apple Inc")
-        debugLogManager.logAsset("DELETE", "Stock", "AAPL - Apple Inc")
-
-        // Test biometric logging
-        debugLogManager.logBiometric("AUTHENTICATION", "Fingerprint authentication successful")
-        debugLogManager.logBiometric("AUTHENTICATION", "Fingerprint authentication failed")
-
-        StandardLogger.debug("LoggingTest", "=== General Logging Test Complete ===")
-    }
-
-    /**
-     * Test error handling logging
-     */
-    fun testErrorLogging() {
-        StandardLogger.debug("LoggingTest", "=== Testing Error Handling Logging ===")
-
-        // Test general errors
-        debugLogManager.logError("API_ERROR", "API request failed")
-        debugLogManager.logError("NETWORK_ERROR", "Network connection timeout")
-
-        // Test exception handling
-        try {
-            throw RuntimeException("Test exception")
-        } catch (e: Exception) {
-            debugLogManager.logError("Test exception handling", e)
+            StandardLogger.debug("LoggingTest", "=== Market Data Logging Test Complete ===")
         }
 
-        StandardLogger.debug("LoggingTest", "=== Error Handling Logging Test Complete ===")
+        /**
+         * Test general logging optimization
+         */
+        fun testGeneralLogging() {
+            StandardLogger.debug("LoggingTest", "=== Testing General Logging Optimization ===")
+
+            // Test user action logging
+            debugLogManager.logUserAction("Add Asset FAB Clicked")
+            debugLogManager.logUserAction("Search Button Clicked")
+
+            // Test navigation logging
+            debugLogManager.logNavigation("Dashboard", "Assets")
+            debugLogManager.logNavigation("Assets", "Add Asset")
+
+            // Test asset operation logging
+            debugLogManager.logAsset("ADD", "Stock", "AAPL - Apple Inc")
+            debugLogManager.logAsset("UPDATE", "Stock", "AAPL - Apple Inc")
+            debugLogManager.logAsset("DELETE", "Stock", "AAPL - Apple Inc")
+
+            // Test biometric logging
+            debugLogManager.logBiometric("AUTHENTICATION", "Fingerprint authentication successful")
+            debugLogManager.logBiometric("AUTHENTICATION", "Fingerprint authentication failed")
+
+            StandardLogger.debug("LoggingTest", "=== General Logging Test Complete ===")
+        }
+
+        /**
+         * Test error handling logging
+         */
+        fun testErrorLogging() {
+            StandardLogger.debug("LoggingTest", "=== Testing Error Handling Logging ===")
+
+            // Test general errors
+            debugLogManager.logError("API_ERROR", "API request failed")
+            debugLogManager.logError("NETWORK_ERROR", "Network connection timeout")
+
+            // Test exception handling
+            try {
+                throw RuntimeException("Test exception")
+            } catch (e: Exception) {
+                debugLogManager.logError("Test exception handling", e)
+            }
+
+            StandardLogger.debug("LoggingTest", "=== Error Handling Logging Test Complete ===")
+        }
+
+        /**
+         * Run all tests
+         */
+        fun runAllTests() {
+            StandardLogger.debug("LoggingTest", "Starting logging optimization tests...")
+
+            testMarketDataLogging()
+            testGeneralLogging()
+            testErrorLogging()
+
+            StandardLogger.debug("LoggingTest", "All logging optimization tests completed")
+            StandardLogger.debug("LoggingTest", "Total recorded ${debugLogManager.getLogCount()} logs")
+        }
     }
-
-    /**
-     * Run all tests
-     */
-    fun runAllTests() {
-        StandardLogger.debug("LoggingTest", "Starting logging optimization tests...")
-
-        testMarketDataLogging()
-        testGeneralLogging()
-        testErrorLogging()
-
-        StandardLogger.debug("LoggingTest", "All logging optimization tests completed")
-        StandardLogger.debug("LoggingTest", "Total recorded ${debugLogManager.getLogCount()} logs")
-    }
-}

@@ -21,27 +21,29 @@ import com.wealthmanager.utils.rememberMoneyText
 @Composable
 fun TotalAssetsCardOptimized(
     totalValue: Double,
-    isLoading: Boolean
+    isLoading: Boolean,
 ) {
     val responsiveLayout = rememberResponsiveLayout()
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = if (responsiveLayout.isTablet) 6.dp else 4.dp
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+        elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = if (responsiveLayout.isTablet) 6.dp else 4.dp,
+            ),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
     ) {
         Column(
             modifier = Modifier.padding(responsiveLayout.paddingLarge),
-            horizontalAlignment = Alignment.CenterHorizontally
+            horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
                 text = stringResource(R.string.total_assets),
                 style = MaterialTheme.typography.titleMedium,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Spacer(modifier = Modifier.height(responsiveLayout.paddingMedium))
@@ -49,19 +51,20 @@ fun TotalAssetsCardOptimized(
             if (isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(if (responsiveLayout.isTablet) 40.dp else 32.dp),
-                    color = MaterialTheme.colorScheme.primary
+                    color = MaterialTheme.colorScheme.primary,
                 )
             } else {
                 Text(
-                    text = rememberMoneyText(
-                        totalValue,
-                        "TWD",
-                        style = MoneyFormatter.Style.CurrencyCode,
-                        moneyContext = MoneyFormatter.MoneyContext.Total
-                    ),
+                    text =
+                        rememberMoneyText(
+                            totalValue,
+                            "TWD",
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.Total,
+                        ),
                     style = MaterialTheme.typography.headlineLarge,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
@@ -72,57 +75,60 @@ fun TotalAssetsCardOptimized(
 fun CashAssetsCardOptimized(
     cashValue: Double,
     totalAssets: Double,
-    isLoading: Boolean
+    isLoading: Boolean,
 ) {
     val responsiveLayout = rememberResponsiveLayout()
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = if (responsiveLayout.isTablet) 4.dp else 2.dp
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+        elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = if (responsiveLayout.isTablet) 4.dp else 2.dp,
+            ),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
     ) {
         Column(
-            modifier = Modifier.padding(responsiveLayout.paddingMedium)
+            modifier = Modifier.padding(responsiveLayout.paddingMedium),
         ) {
             Text(
                 text = stringResource(R.string.cash_assets),
                 style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             if (isLoading) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(16.dp),
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = stringResource(R.string.loading),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             } else {
                 val percentage = if (totalAssets > 0) (cashValue / totalAssets * 100) else 0.0
                 Text(
-                    text = rememberMoneyText(
-                        cashValue,
-                        "TWD",
-                        style = MoneyFormatter.Style.CurrencyCode,
-                        moneyContext = MoneyFormatter.MoneyContext.Total
-                    ) + " (${String.format("%.1f", percentage)}%)",
+                    text =
+                        rememberMoneyText(
+                            cashValue,
+                            "TWD",
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.Total,
+                        ) + " (${String.format("%.1f", percentage)}%)",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
@@ -133,57 +139,60 @@ fun CashAssetsCardOptimized(
 fun StockAssetsCardOptimized(
     stockValue: Double,
     totalAssets: Double,
-    isLoading: Boolean
+    isLoading: Boolean,
 ) {
     val responsiveLayout = rememberResponsiveLayout()
 
     Card(
         modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = if (responsiveLayout.isTablet) 4.dp else 2.dp
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surface
-        )
+        elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = if (responsiveLayout.isTablet) 4.dp else 2.dp,
+            ),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.surface,
+            ),
     ) {
         Column(
-            modifier = Modifier.padding(responsiveLayout.paddingMedium)
+            modifier = Modifier.padding(responsiveLayout.paddingMedium),
         ) {
             Text(
                 text = stringResource(R.string.stock_assets),
                 style = MaterialTheme.typography.titleSmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
             Spacer(modifier = Modifier.height(8.dp))
 
             if (isLoading) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     CircularProgressIndicator(
                         modifier = Modifier.size(16.dp),
-                        color = MaterialTheme.colorScheme.primary
+                        color = MaterialTheme.colorScheme.primary,
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
                         text = stringResource(R.string.loading),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             } else {
                 val percentage = if (totalAssets > 0) (stockValue / totalAssets * 100) else 0.0
                 Text(
-                    text = rememberMoneyText(
-                        stockValue,
-                        "TWD",
-                        style = MoneyFormatter.Style.CurrencyCode,
-                        moneyContext = MoneyFormatter.MoneyContext.Total
-                    ) + " (${String.format("%.1f", percentage)}%)",
+                    text =
+                        rememberMoneyText(
+                            stockValue,
+                            "TWD",
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.Total,
+                        ) + " (${String.format("%.1f", percentage)}%)",
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Medium,
-                    color = MaterialTheme.colorScheme.onSurface
+                    color = MaterialTheme.colorScheme.onSurface,
                 )
             }
         }
@@ -193,11 +202,11 @@ fun StockAssetsCardOptimized(
 @Composable
 fun PieChartCardOptimized(
     assets: List<AssetItem>,
-    isLoading: Boolean
+    isLoading: Boolean,
 ) {
     PieChartComponentFixed(
         assets = assets,
-        isLoading = isLoading
+        isLoading = isLoading,
     )
 }
 
@@ -208,26 +217,28 @@ fun PieChartCardOptimized(
 fun FinancialValueDisplay(
     value: Double,
     isPositive: Boolean? = null,
-    isLoading: Boolean = false
+    isLoading: Boolean = false,
 ) {
     val financialColors = ColorGuidelines.getFinancialColors()
-    val color = when {
-        isLoading -> MaterialTheme.colorScheme.onSurfaceVariant
-        isPositive == true -> financialColors.positive
-        isPositive == false -> financialColors.negative
-        else -> MaterialTheme.colorScheme.onSurface
-    }
+    val color =
+        when {
+            isLoading -> MaterialTheme.colorScheme.onSurfaceVariant
+            isPositive == true -> financialColors.positive
+            isPositive == false -> financialColors.negative
+            else -> MaterialTheme.colorScheme.onSurface
+        }
 
     Text(
-        text = rememberMoneyText(
-            value,
-            "TWD",
-            style = MoneyFormatter.Style.CurrencyCode,
-            moneyContext = MoneyFormatter.MoneyContext.Total
-        ),
+        text =
+            rememberMoneyText(
+                value,
+                "TWD",
+                style = MoneyFormatter.Style.CurrencyCode,
+                moneyContext = MoneyFormatter.MoneyContext.Total,
+            ),
         style = MaterialTheme.typography.titleMedium,
         fontWeight = FontWeight.Medium,
-        color = color
+        color = color,
     )
 }
 
@@ -239,20 +250,21 @@ fun StatusIndicator(
     status: String,
     isSuccess: Boolean = false,
     isError: Boolean = false,
-    isWarning: Boolean = false
+    isWarning: Boolean = false,
 ) {
     val financialColors = ColorGuidelines.getFinancialColors()
-    val color = when {
-        isError -> financialColors.negative
-        isWarning -> financialColors.warning
-        isSuccess -> financialColors.positive
-        else -> MaterialTheme.colorScheme.onSurfaceVariant
-    }
+    val color =
+        when {
+            isError -> financialColors.negative
+            isWarning -> financialColors.warning
+            isSuccess -> financialColors.positive
+            else -> MaterialTheme.colorScheme.onSurfaceVariant
+        }
 
     Text(
         text = status,
         style = MaterialTheme.typography.bodyMedium,
-        color = color
+        color = color,
     )
 }
 

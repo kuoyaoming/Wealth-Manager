@@ -8,10 +8,10 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.res.stringResource
 import com.wealthmanager.R
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
@@ -24,7 +24,7 @@ import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 fun EditCashAssetDialog(
     asset: CashAsset,
     onDismiss: () -> Unit,
-    onSave: (CashAsset) -> Unit
+    onSave: (CashAsset) -> Unit,
 ) {
     val debugLogManager = remember { DebugLogManager() }
     val (hapticManager, view) = rememberHapticFeedbackWithView()
@@ -45,7 +45,7 @@ fun EditCashAssetDialog(
                 Spacer(modifier = Modifier.height(8.dp))
                 Row(
                     modifier = Modifier.fillMaxWidth().selectableGroup(),
-                    horizontalArrangement = Arrangement.SpaceAround
+                    horizontalArrangement = Arrangement.SpaceAround,
                 ) {
                     listOf("TWD", "USD").forEach { text ->
                         Row(
@@ -57,21 +57,22 @@ fun EditCashAssetDialog(
                                         debugLogManager.log("UI", "User changed currency to $text")
                                         currency = text
                                     },
-                                    role = Role.RadioButton
+                                    role = Role.RadioButton,
                                 )
                                 .padding(horizontal = 8.dp),
-                            verticalAlignment = Alignment.CenterVertically
+                            verticalAlignment = Alignment.CenterVertically,
                         ) {
                             RadioButton(
                                 selected = text == currency,
-                                onClick = null
+                                onClick = null,
                             )
                             Text(
-                                text = stringResource(
-                                    if (text == "TWD") R.string.assets_currency_twd else R.string.assets_currency_usd
-                                ),
+                                text =
+                                    stringResource(
+                                        if (text == "TWD") R.string.assets_currency_twd else R.string.assets_currency_usd,
+                                    ),
                                 style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier.padding(start = 8.dp)
+                                modifier = Modifier.padding(start = 8.dp),
                             )
                         }
                     }
@@ -92,12 +93,18 @@ fun EditCashAssetDialog(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
                     placeholder = { Text(stringResource(R.string.assets_amount_placeholder, amountExample)) },
                     isError = amount.isNotEmpty() && amount.toDoubleOrNull() == null,
-                    supportingText = if (amount.isNotEmpty() && amount.toDoubleOrNull() == null) {
-                        { Text(stringResource(R.string.validation_enter_valid_number), color = MaterialTheme.colorScheme.error) }
-                    } else {
-                        null
-                    },
-                    modifier = Modifier.fillMaxWidth()
+                    supportingText =
+                        if (amount.isNotEmpty() && amount.toDoubleOrNull() == null) {
+                            {
+                                Text(
+                                    stringResource(R.string.validation_enter_valid_number),
+                                    color = MaterialTheme.colorScheme.error,
+                                )
+                            }
+                        } else {
+                            null
+                        },
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         },
@@ -109,17 +116,18 @@ fun EditCashAssetDialog(
                     val newAmount = amount.toDoubleOrNull()
                     if (newAmount != null && newAmount > 0) {
                         val twdEquivalent = if (currency == "TWD") newAmount else newAmount * 30.0
-                        val updatedAsset = asset.copy(
-                            currency = currency,
-                            amount = newAmount,
-                            twdEquivalent = twdEquivalent
-                        )
+                        val updatedAsset =
+                            asset.copy(
+                                currency = currency,
+                                amount = newAmount,
+                                twdEquivalent = twdEquivalent,
+                            )
                         debugLogManager.log("UI", "Saving cash asset changes: $currency $newAmount")
                         onSave(updatedAsset)
                     } else {
                         debugLogManager.log("UI", "Invalid amount: $amount")
                     }
-                }
+                },
             ) {
                 Text(stringResource(R.string.dialog_save))
             }
@@ -133,7 +141,7 @@ fun EditCashAssetDialog(
             }) {
                 Text(stringResource(R.string.dialog_cancel))
             }
-        }
+        },
     )
 }
 
@@ -142,7 +150,7 @@ fun EditCashAssetDialog(
 fun EditStockAssetDialog(
     asset: StockAsset,
     onDismiss: () -> Unit,
-    onSave: (StockAsset) -> Unit
+    onSave: (StockAsset) -> Unit,
 ) {
     val debugLogManager = remember { DebugLogManager() }
     val (hapticManager, view) = rememberHapticFeedbackWithView()
@@ -172,12 +180,18 @@ fun EditStockAssetDialog(
                     keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                     placeholder = { Text(stringResource(R.string.assets_shares_placeholder)) },
                     isError = shares.isNotEmpty() && shares.toDoubleOrNull() == null,
-                    supportingText = if (shares.isNotEmpty() && shares.toDoubleOrNull() == null) {
-                        { Text(stringResource(R.string.validation_enter_valid_shares), color = MaterialTheme.colorScheme.error) }
-                    } else {
-                        null
-                    },
-                    modifier = Modifier.fillMaxWidth()
+                    supportingText =
+                        if (shares.isNotEmpty() && shares.toDoubleOrNull() == null) {
+                            {
+                                Text(
+                                    stringResource(R.string.validation_enter_valid_shares),
+                                    color = MaterialTheme.colorScheme.error,
+                                )
+                            }
+                        } else {
+                            null
+                        },
+                    modifier = Modifier.fillMaxWidth(),
                 )
             }
         },
@@ -188,16 +202,17 @@ fun EditStockAssetDialog(
                     hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
                     val newShares = shares.toDoubleOrNull()
                     if (newShares != null && newShares > 0) {
-                        val updatedAsset = asset.copy(
-                            shares = newShares,
-                            market = "GLOBAL"  // Fixed to GLOBAL market
-                        )
+                        val updatedAsset =
+                            asset.copy(
+                                shares = newShares,
+                                market = "GLOBAL", // Fixed to GLOBAL market
+                            )
                         debugLogManager.log("UI", "Saving stock asset changes: $newShares shares")
                         onSave(updatedAsset)
                     } else {
                         debugLogManager.log("UI", "Invalid shares: $shares")
                     }
-                }
+                },
             ) {
                 Text(stringResource(R.string.dialog_save))
             }
@@ -211,6 +226,6 @@ fun EditStockAssetDialog(
             }) {
                 Text(stringResource(R.string.dialog_cancel))
             }
-        }
+        },
     )
 }

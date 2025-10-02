@@ -24,7 +24,7 @@ import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 fun BiometricAuthScreen(
     onAuthSuccess: () -> Unit,
     onSkipAuth: () -> Unit = {},
-    viewModel: BiometricAuthViewModel = hiltViewModel()
+    viewModel: BiometricAuthViewModel = hiltViewModel(),
 ) {
     val context = LocalContext.current
     val uiState by viewModel.uiState.collectAsState()
@@ -37,25 +37,26 @@ fun BiometricAuthScreen(
     }
 
     Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(16.dp),
-        contentAlignment = Alignment.Center
+        modifier =
+            Modifier
+                .fillMaxSize()
+                .padding(16.dp),
+        contentAlignment = Alignment.Center,
     ) {
         Card(
             modifier = Modifier.fillMaxWidth(),
             shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Icon(
                     imageVector = Icons.Default.Fingerprint,
                     contentDescription = null,
                     modifier = Modifier.size(64.dp),
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -63,7 +64,7 @@ fun BiometricAuthScreen(
                 Text(
                     text = stringResource(R.string.biometric_auth_title),
                     style = MaterialTheme.typography.headlineMedium,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -72,7 +73,7 @@ fun BiometricAuthScreen(
                     text = stringResource(R.string.biometric_auth_subtitle),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -80,33 +81,34 @@ fun BiometricAuthScreen(
                 // Privacy Protection Notice
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    colors =
+                        CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         Text(
                             text = stringResource(R.string.privacy_protection_title),
                             style = MaterialTheme.typography.titleSmall,
                             fontWeight = FontWeight.Bold,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
 
                         Text(
                             text = stringResource(R.string.privacy_protection_description),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         )
 
                         Text(
                             text = stringResource(R.string.privacy_protection_points),
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
                     }
                 }
@@ -122,7 +124,7 @@ fun BiometricAuthScreen(
                                 hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
                                 viewModel.authenticate(context)
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         ) {
                             Text(stringResource(R.string.biometric_auth_button))
                         }
@@ -136,7 +138,7 @@ fun BiometricAuthScreen(
                                 hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                                 onSkipAuth()
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         ) {
                             Text(stringResource(R.string.button_skip_authentication))
                         }
@@ -146,7 +148,7 @@ fun BiometricAuthScreen(
                             text = stringResource(R.string.biometric_auth_error_no_hardware),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -154,10 +156,13 @@ fun BiometricAuthScreen(
                         Button(
                             onClick = {
                                 debugLogManager.logUserAction("Continue Without Biometric (No Hardware)")
-                                debugLogManager.log("UI", "User clicked continue without biometric - no hardware available")
+                                debugLogManager.log(
+                                    "UI",
+                                    "User clicked continue without biometric - no hardware available",
+                                )
                                 onSkipAuth()
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         ) {
                             Text(stringResource(R.string.button_continue_without_biometric))
                         }
@@ -167,7 +172,7 @@ fun BiometricAuthScreen(
                             text = stringResource(R.string.biometric_auth_error_hw_unavailable),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -175,10 +180,13 @@ fun BiometricAuthScreen(
                         Button(
                             onClick = {
                                 debugLogManager.logUserAction("Continue Without Biometric (HW Unavailable)")
-                                debugLogManager.log("UI", "User clicked continue without biometric - hardware unavailable")
+                                debugLogManager.log(
+                                    "UI",
+                                    "User clicked continue without biometric - hardware unavailable",
+                                )
                                 onSkipAuth()
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         ) {
                             Text(stringResource(R.string.button_continue_without_biometric))
                         }
@@ -188,7 +196,7 @@ fun BiometricAuthScreen(
                             text = stringResource(R.string.biometric_auth_error_no_biometrics),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -196,10 +204,13 @@ fun BiometricAuthScreen(
                         Button(
                             onClick = {
                                 debugLogManager.logUserAction("Continue Without Biometric (None Enrolled)")
-                                debugLogManager.log("UI", "User clicked continue without biometric - no biometrics enrolled")
+                                debugLogManager.log(
+                                    "UI",
+                                    "User clicked continue without biometric - no biometrics enrolled",
+                                )
                                 onSkipAuth()
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         ) {
                             Text(stringResource(R.string.button_continue_without_biometric))
                         }
@@ -209,7 +220,7 @@ fun BiometricAuthScreen(
                             text = stringResource(R.string.biometric_auth_error),
                             style = MaterialTheme.typography.bodyMedium,
                             color = MaterialTheme.colorScheme.error,
-                            textAlign = TextAlign.Center
+                            textAlign = TextAlign.Center,
                         )
 
                         Spacer(modifier = Modifier.height(16.dp))
@@ -217,10 +228,13 @@ fun BiometricAuthScreen(
                         Button(
                             onClick = {
                                 debugLogManager.logUserAction("Continue Without Biometric (Unknown Error)")
-                                debugLogManager.log("UI", "User clicked continue without biometric - unknown error occurred")
+                                debugLogManager.log(
+                                    "UI",
+                                    "User clicked continue without biometric - unknown error occurred",
+                                )
                                 onSkipAuth()
                             },
-                            modifier = Modifier.fillMaxWidth()
+                            modifier = Modifier.fillMaxWidth(),
                         ) {
                             Text(stringResource(R.string.button_continue_without_biometric))
                         }
@@ -233,7 +247,7 @@ fun BiometricAuthScreen(
                         text = uiState.errorMessage,
                         style = MaterialTheme.typography.bodyMedium,
                         color = MaterialTheme.colorScheme.error,
-                        textAlign = TextAlign.Center
+                        textAlign = TextAlign.Center,
                     )
                 }
             }

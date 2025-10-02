@@ -2,11 +2,12 @@ package com.wealthmanager.ui.assets
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.wealthmanager.R
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
-import com.wealthmanager.data.model.SearchResult
 import com.wealthmanager.data.model.NoResultsReason
 import com.wealthmanager.data.model.SearchErrorType
+import com.wealthmanager.data.model.SearchResult
 import com.wealthmanager.data.model.StockSearchItem
 import com.wealthmanager.data.repository.AssetRepository
 import com.wealthmanager.data.service.MarketDataService
@@ -27,116 +28,128 @@ import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.merge
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.update
-import com.wealthmanager.R
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 @OptIn(FlowPreview::class, ExperimentalCoroutinesApi::class)
-class AssetsViewModel @Inject constructor(
-    private val assetRepository: AssetRepository,
-    private val marketDataService: MarketDataService,
-    private val debugLogManager: DebugLogManager
-) : ViewModel() {
+class AssetsViewModel
+    @Inject
+    constructor(
+        private val assetRepository: AssetRepository,
+        private val marketDataService: MarketDataService,
+        private val debugLogManager: DebugLogManager,
+    ) : ViewModel() {
+        private val _uiState = MutableStateFlow(AssetsUiState())
+        val uiState: StateFlow<AssetsUiState> = _uiState.asStateFlow()
 
-    private val _uiState = MutableStateFlow(AssetsUiState())
-    val uiState: StateFlow<AssetsUiState> = _uiState.asStateFlow()
+        private val _selectedCashCurrency = MutableStateFlow("TWD")
+        val selectedCashCurrency: StateFlow<String> = _selectedCashCurrency.asStateFlow()
 
-    private val _selectedCashCurrency = MutableStateFlow("TWD")
-    val selectedCashCurrency: StateFlow<String> = _selectedCashCurrency.asStateFlow()
+        private val _cashAmountInput = MutableStateFlow("")
+        val cashAmountInput: StateFlow<String> = _cashAmountInput.asStateFlow()
 
-    private val _cashAmountInput = MutableStateFlow("")
-    val cashAmountInput: StateFlow<String> = _cashAmountInput.asStateFlow()
+        private val _cashActionButtonLabel = MutableStateFlow(R.string.add)
+        val cashActionButtonLabel: StateFlow<Int> = _cashActionButtonLabel.asStateFlow()
 
-    private val _cashActionButtonLabel = MutableStateFlow(R.string.add)
-    val cashActionButtonLabel: StateFlow<Int> = _cashActionButtonLabel.asStateFlow()
+        private var existingCashAsset: CashAsset? = null
 
-    private var existingCashAsset: CashAsset? = null
+        // Search query state (debounced)
+        private val _searchQuery = MutableStateFlow("")
 
-    // Search query state (debounced)
-    private val _searchQuery = MutableStateFlow("")
-    // Immediate search events (bypass debounce)
-    private val _immediateSearch = MutableSharedFlow<String>(extraBufferCapacity = 1)
+        // Immediate search events (bypass debounce)
+        private val _immediateSearch = MutableSharedFlow<String>(extraBufferCapacity = 1)
 
-    init {
-        // Merge debounced query flow with immediate searches, cancel previous via flatMapLatest
-        viewModelScope.launch {
-            merge(
-                _searchQuery
-                    .debounce(450)
-                    .map { it.trim() }
-                    .filter { it.isNotEmpty() }
-                    .distinctUntilChanged(),
-                _immediateSearch
-            )
-            .onEach { query ->
-                debugLogManager.log("ASSETS", "Search pipeline triggered for query: '$query'")
-                _uiState.value = _uiState.value.copy(isSearching = true, searchError = "")
-            }
-            .flatMapLatest { query ->
-                debugLogManager.log("ASSETS", "Calling marketDataService.searchStocks (merged flow)")
-                marketDataService.searchStocks(query, "US")
-            }
-            .collect { searchResult: SearchResult ->
-                when (searchResult) {
-                    is SearchResult.Success -> {
-                        debugLogManager.log("ASSETS", "Search successful: ${searchResult.results.size} results found")
-                        _uiState.value = _uiState.value.copy(
-                            searchResults = searchResult.results,
-                            isSearching = false,
-                            searchError = if (searchResult.results.isEmpty()) "Stock code not found, please check if correct" else ""
-                        )
+        init {
+            // Merge debounced query flow with immediate searches, cancel previous via flatMapLatest
+            viewModelScope.launch {
+                merge(
+                    _searchQuery
+                        .debounce(450)
+                        .map { it.trim() }
+                        .filter { it.isNotEmpty() }
+                        .distinctUntilChanged(),
+                    _immediateSearch,
+                )
+                    .onEach { query ->
+                        debugLogManager.log("ASSETS", "Search pipeline triggered for query: '$query'")
+                        _uiState.value = _uiState.value.copy(isSearching = true, searchError = "")
                     }
-                    is SearchResult.NoResults -> {
-                        debugLogManager.log("ASSETS", "No results found: ${searchResult.reason}")
-                        _uiState.value = _uiState.value.copy(
-                            searchResults = emptyList(),
-                            isSearching = false,
-                            searchError = when (searchResult.reason) {
-                                NoResultsReason.STOCK_NOT_FOUND -> "Stock code not found, please check if correct"
-                                NoResultsReason.API_LIMIT_REACHED -> "API request limit reached, please try again tomorrow"
-                                NoResultsReason.NETWORK_ERROR -> "Network connection issue, please check network settings"
-                                NoResultsReason.INVALID_QUERY -> "Please enter at least 1 character to search"
-                                NoResultsReason.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
+                    .flatMapLatest { query ->
+                        debugLogManager.log("ASSETS", "Calling marketDataService.searchStocks (merged flow)")
+                        marketDataService.searchStocks(query, "US")
+                    }
+                    .collect { searchResult: SearchResult ->
+                        when (searchResult) {
+                            is SearchResult.Success -> {
+                                debugLogManager.log(
+                                    "ASSETS",
+                                    "Search successful: ${searchResult.results.size} results found",
+                                )
+                                _uiState.value =
+                                    _uiState.value.copy(
+                                        searchResults = searchResult.results,
+                                        isSearching = false,
+                                        searchError = if (searchResult.results.isEmpty()) "Stock code not found, please check if correct" else "",
+                                    )
                             }
-                        )
-                    }
-                    is SearchResult.Error -> {
-                        debugLogManager.logError("Search error: ${searchResult.errorType}", Exception("Search failed"))
-                        _uiState.value = _uiState.value.copy(
-                            searchResults = emptyList(),
-                            isSearching = false,
-                            searchError = when (searchResult.errorType) {
-                                SearchErrorType.API_LIMIT -> "API request limit reached, please try again tomorrow"
-                                SearchErrorType.NETWORK_ERROR -> "Network connection issue, please check network settings"
-                                SearchErrorType.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
-                                SearchErrorType.INVALID_API_KEY -> "Invalid API key, please contact technical support"
-                                SearchErrorType.AUTHENTICATION_ERROR -> "API authentication failed, please check API key settings"
-                                SearchErrorType.RATE_LIMIT_ERROR -> "Request rate limit exceeded, please try again later"
-                                SearchErrorType.UNKNOWN_ERROR -> "Unknown error occurred, please restart the application"
+                            is SearchResult.NoResults -> {
+                                debugLogManager.log("ASSETS", "No results found: ${searchResult.reason}")
+                                _uiState.value =
+                                    _uiState.value.copy(
+                                        searchResults = emptyList(),
+                                        isSearching = false,
+                                        searchError =
+                                            when (searchResult.reason) {
+                                                NoResultsReason.STOCK_NOT_FOUND -> "Stock code not found, please check if correct"
+                                                NoResultsReason.API_LIMIT_REACHED -> "API request limit reached, please try again tomorrow"
+                                                NoResultsReason.NETWORK_ERROR -> "Network connection issue, please check network settings"
+                                                NoResultsReason.INVALID_QUERY -> "Please enter at least 1 character to search"
+                                                NoResultsReason.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
+                                            },
+                                    )
                             }
-                        )
+                            is SearchResult.Error -> {
+                                debugLogManager.logError(
+                                    "Search error: ${searchResult.errorType}",
+                                    Exception("Search failed"),
+                                )
+                                _uiState.value =
+                                    _uiState.value.copy(
+                                        searchResults = emptyList(),
+                                        isSearching = false,
+                                        searchError =
+                                            when (searchResult.errorType) {
+                                                SearchErrorType.API_LIMIT -> "API request limit reached, please try again tomorrow"
+                                                SearchErrorType.NETWORK_ERROR -> "Network connection issue, please check network settings"
+                                                SearchErrorType.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
+                                                SearchErrorType.INVALID_API_KEY -> "Invalid API key, please contact technical support"
+                                                SearchErrorType.AUTHENTICATION_ERROR -> "API authentication failed, please check API key settings"
+                                                SearchErrorType.RATE_LIMIT_ERROR -> "Request rate limit exceeded, please try again later"
+                                                SearchErrorType.UNKNOWN_ERROR -> "Unknown error occurred, please restart the application"
+                                            },
+                                    )
+                            }
+                        }
                     }
-                }
             }
         }
-    }
 
-    fun setSearchQuery(query: String) {
-        debugLogManager.log("ASSETS", "Search query changed: '$query'")
-        _searchQuery.value = query
-    }
-
-    fun searchStocksNow(query: String) {
-        val q = query.trim()
-        if (q.isEmpty()) {
-            debugLogManager.log("ASSETS", "Ignoring immediate search for empty query")
-            return
+        fun setSearchQuery(query: String) {
+            debugLogManager.log("ASSETS", "Search query changed: '$query'")
+            _searchQuery.value = query
         }
-        debugLogManager.logUserAction("Immediate Stock Search Initiated")
-        debugLogManager.log("ASSETS", "Emitting immediate search for: '$q'")
-        _immediateSearch.tryEmit(q)
-    }
+
+        fun searchStocksNow(query: String) {
+            val q = query.trim()
+            if (q.isEmpty()) {
+                debugLogManager.log("ASSETS", "Ignoring immediate search for empty query")
+                return
+            }
+            debugLogManager.logUserAction("Immediate Stock Search Initiated")
+            debugLogManager.log("ASSETS", "Emitting immediate search for: '$q'")
+            _immediateSearch.tryEmit(q)
+        }
 
         fun searchStocks(query: String) {
             debugLogManager.log("ASSETS", "=== STARTING STOCK SEARCH IN VIEWMODEL ===")
@@ -150,42 +163,53 @@ class AssetsViewModel @Inject constructor(
                     marketDataService.searchStocks(query, "US").collect { searchResult: SearchResult ->
                         when (searchResult) {
                             is SearchResult.Success -> {
-                                debugLogManager.log("ASSETS", "Search successful: ${searchResult.results.size} results found")
-                                _uiState.value = _uiState.value.copy(
-                                    searchResults = searchResult.results,
-                                    isSearching = false,
-                                    searchError = if (searchResult.results.isEmpty()) "Stock code not found, please check if correct" else ""
+                                debugLogManager.log(
+                                    "ASSETS",
+                                    "Search successful: ${searchResult.results.size} results found",
                                 )
+                                _uiState.value =
+                                    _uiState.value.copy(
+                                        searchResults = searchResult.results,
+                                        isSearching = false,
+                                        searchError = if (searchResult.results.isEmpty()) "Stock code not found, please check if correct" else "",
+                                    )
                             }
                             is SearchResult.NoResults -> {
                                 debugLogManager.log("ASSETS", "No results found: ${searchResult.reason}")
-                                _uiState.value = _uiState.value.copy(
-                                    searchResults = emptyList(),
-                                    isSearching = false,
-                                    searchError = when (searchResult.reason) {
-                                        NoResultsReason.STOCK_NOT_FOUND -> "Stock code not found, please check if correct"
-                                        NoResultsReason.API_LIMIT_REACHED -> "API request limit reached, please try again tomorrow"
-                                        NoResultsReason.NETWORK_ERROR -> "Network connection issue, please check network settings"
-                                        NoResultsReason.INVALID_QUERY -> "Please enter at least 2 characters to search"
-                                        NoResultsReason.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
-                                    }
-                                )
+                                _uiState.value =
+                                    _uiState.value.copy(
+                                        searchResults = emptyList(),
+                                        isSearching = false,
+                                        searchError =
+                                            when (searchResult.reason) {
+                                                NoResultsReason.STOCK_NOT_FOUND -> "Stock code not found, please check if correct"
+                                                NoResultsReason.API_LIMIT_REACHED -> "API request limit reached, please try again tomorrow"
+                                                NoResultsReason.NETWORK_ERROR -> "Network connection issue, please check network settings"
+                                                NoResultsReason.INVALID_QUERY -> "Please enter at least 2 characters to search"
+                                                NoResultsReason.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
+                                            },
+                                    )
                             }
                             is SearchResult.Error -> {
-                                debugLogManager.logError("Search error: ${searchResult.errorType}", Exception("Search failed"))
-                                _uiState.value = _uiState.value.copy(
-                                    searchResults = emptyList(),
-                                    isSearching = false,
-                                    searchError = when (searchResult.errorType) {
-                                        SearchErrorType.API_LIMIT -> "API request limit reached, please try again tomorrow"
-                                        SearchErrorType.NETWORK_ERROR -> "Network connection issue, please check network settings"
-                                        SearchErrorType.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
-                                        SearchErrorType.INVALID_API_KEY -> "Invalid API key, please contact technical support"
-                                        SearchErrorType.AUTHENTICATION_ERROR -> "API authentication failed, please check API key settings"
-                                        SearchErrorType.RATE_LIMIT_ERROR -> "Request rate limit exceeded, please try again later"
-                                        SearchErrorType.UNKNOWN_ERROR -> "Unknown error occurred, please restart the application"
-                                    }
+                                debugLogManager.logError(
+                                    "Search error: ${searchResult.errorType}",
+                                    Exception("Search failed"),
                                 )
+                                _uiState.value =
+                                    _uiState.value.copy(
+                                        searchResults = emptyList(),
+                                        isSearching = false,
+                                        searchError =
+                                            when (searchResult.errorType) {
+                                                SearchErrorType.API_LIMIT -> "API request limit reached, please try again tomorrow"
+                                                SearchErrorType.NETWORK_ERROR -> "Network connection issue, please check network settings"
+                                                SearchErrorType.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
+                                                SearchErrorType.INVALID_API_KEY -> "Invalid API key, please contact technical support"
+                                                SearchErrorType.AUTHENTICATION_ERROR -> "API authentication failed, please check API key settings"
+                                                SearchErrorType.RATE_LIMIT_ERROR -> "Request rate limit exceeded, please try again later"
+                                                SearchErrorType.UNKNOWN_ERROR -> "Unknown error occurred, please restart the application"
+                                            },
+                                    )
                             }
                         }
                     }
@@ -193,112 +217,127 @@ class AssetsViewModel @Inject constructor(
                 } catch (e: Exception) {
                     debugLogManager.logError("Stock search failed: ${e.message}", e)
                     debugLogManager.log("ASSETS", "Exception during stock search: ${e::class.simpleName}")
-                    _uiState.value = _uiState.value.copy(
-                        searchResults = emptyList(),
-                        isSearching = false,
-                        searchError = "Unknown error occurred, please restart the application"
-                    )
+                    _uiState.value =
+                        _uiState.value.copy(
+                            searchResults = emptyList(),
+                            isSearching = false,
+                            searchError = "Unknown error occurred, please restart the application",
+                        )
                     debugLogManager.log("ASSETS", "UI state updated with empty results due to error")
                 }
                 debugLogManager.log("ASSETS", "=== STOCK SEARCH IN VIEWMODEL COMPLETED ===")
             }
         }
 
-    fun loadAssets() {
-        debugLogManager.log("ASSETS", "Loading assets from repository")
-        viewModelScope.launch {
-            combine(
-                assetRepository.getAllCashAssets(),
-                assetRepository.getAllStockAssets()
-            ) { cashAssets, stockAssets ->
-                debugLogManager.log("ASSETS", "Assets loaded - Cash: ${cashAssets.size}, Stock: ${stockAssets.size}")
-                _uiState.value = _uiState.value.copy(
-                    cashAssets = cashAssets,
-                    stockAssets = stockAssets,
-                    isLoading = false
-                )
-            }.collect { }
-        }
-    }
-
-    fun setSelectedCashCurrency(currency: String) {
-        debugLogManager.log("ASSETS", "Selected cash currency changed to $currency")
-        _selectedCashCurrency.value = currency
-        loadExistingCashAsset()
-    }
-
-    private fun loadExistingCashAsset() {
-        viewModelScope.launch {
-            val currency = _selectedCashCurrency.value
-            existingCashAsset = assetRepository.getCashAssetByCurrencySync(currency)
-            if (existingCashAsset != null) {
-                val amount = existingCashAsset!!.amount
-                _cashAmountInput.value = amount.toString()
-                _cashActionButtonLabel.value = R.string.update
-            } else {
-                _cashAmountInput.value = ""
-                _cashActionButtonLabel.value = R.string.add
+        fun loadAssets() {
+            debugLogManager.log("ASSETS", "Loading assets from repository")
+            viewModelScope.launch {
+                combine(
+                    assetRepository.getAllCashAssets(),
+                    assetRepository.getAllStockAssets(),
+                ) { cashAssets, stockAssets ->
+                    debugLogManager.log(
+                        "ASSETS",
+                        "Assets loaded - Cash: ${cashAssets.size}, Stock: ${stockAssets.size}",
+                    )
+                    _uiState.value =
+                        _uiState.value.copy(
+                            cashAssets = cashAssets,
+                            stockAssets = stockAssets,
+                            isLoading = false,
+                        )
+                }.collect { }
             }
         }
-    }
 
-    fun onCashAmountChanged(value: String) {
-        if (value.isEmpty() || value.matches(Regex("^\\d*\\.?\\d*") )) {
-            _cashAmountInput.value = value
-        }
-    }
-
-    fun addCashAsset(currency: String, amount: Double) {
-        debugLogManager.log("ASSETS", "Adding cash asset: $currency $amount")
-        viewModelScope.launch {
-            val existing = existingCashAsset
-            val twdEquivalent = if (currency == "TWD") amount else (amount * 30.0).toInt().toDouble()
-            if (existing != null) {
-                val updatedAsset = existing.copy(
-                    amount = amount,
-                    twdEquivalent = twdEquivalent,
-                    lastUpdated = System.currentTimeMillis()
-                )
-                debugLogManager.log("ASSETS", "Updating existing cash asset: ${updatedAsset.id}")
-                assetRepository.updateCashAsset(updatedAsset)
-            } else {
-                val cashAsset = CashAsset(
-                    currency = currency,
-                    amount = amount,
-                    twdEquivalent = twdEquivalent
-                )
-                debugLogManager.log("ASSETS", "Cash asset created: $currency $amount (TWD: $twdEquivalent)")
-                assetRepository.insertCashAsset(cashAsset)
-            }
+        fun setSelectedCashCurrency(currency: String) {
+            debugLogManager.log("ASSETS", "Selected cash currency changed to $currency")
+            _selectedCashCurrency.value = currency
             loadExistingCashAsset()
         }
-    }
 
-    fun openAddCashDialog() {
-        loadExistingCashAsset()
-    }
+        private fun loadExistingCashAsset() {
+            viewModelScope.launch {
+                val currency = _selectedCashCurrency.value
+                existingCashAsset = assetRepository.getCashAssetByCurrencySync(currency)
+                if (existingCashAsset != null) {
+                    val amount = existingCashAsset!!.amount
+                    _cashAmountInput.value = amount.toString()
+                    _cashActionButtonLabel.value = R.string.update
+                } else {
+                    _cashAmountInput.value = ""
+                    _cashActionButtonLabel.value = R.string.add
+                }
+            }
+        }
 
-        fun addStockAsset(symbol: String, shares: Double) {
+        fun onCashAmountChanged(value: String) {
+            if (value.isEmpty() || value.matches(Regex("^\\d*\\.?\\d*"))) {
+                _cashAmountInput.value = value
+            }
+        }
+
+        fun addCashAsset(
+            currency: String,
+            amount: Double,
+        ) {
+            debugLogManager.log("ASSETS", "Adding cash asset: $currency $amount")
+            viewModelScope.launch {
+                val existing = existingCashAsset
+                val twdEquivalent = if (currency == "TWD") amount else (amount * 30.0).toInt().toDouble()
+                if (existing != null) {
+                    val updatedAsset =
+                        existing.copy(
+                            amount = amount,
+                            twdEquivalent = twdEquivalent,
+                            lastUpdated = System.currentTimeMillis(),
+                        )
+                    debugLogManager.log("ASSETS", "Updating existing cash asset: ${updatedAsset.id}")
+                    assetRepository.updateCashAsset(updatedAsset)
+                } else {
+                    val cashAsset =
+                        CashAsset(
+                            currency = currency,
+                            amount = amount,
+                            twdEquivalent = twdEquivalent,
+                        )
+                    debugLogManager.log("ASSETS", "Cash asset created: $currency $amount (TWD: $twdEquivalent)")
+                    assetRepository.insertCashAsset(cashAsset)
+                }
+                loadExistingCashAsset()
+            }
+        }
+
+        fun openAddCashDialog() {
+            loadExistingCashAsset()
+        }
+
+        fun addStockAsset(
+            symbol: String,
+            shares: Double,
+        ) {
             debugLogManager.log("ASSETS", "Adding stock asset: $symbol, $shares shares")
             viewModelScope.launch {
                 // Determine if it's a Taiwan stock
-                val isTaiwanStock = symbol.endsWith(".TW", ignoreCase = true) ||
-                                  symbol.endsWith(".T", ignoreCase = true) ||
-                                  symbol.matches(Regex("^\\d{4}$"))
+                val isTaiwanStock =
+                    symbol.endsWith(".TW", ignoreCase = true) ||
+                        symbol.endsWith(".T", ignoreCase = true) ||
+                        symbol.matches(Regex("^\\d{4}$"))
 
                 val currency = if (isTaiwanStock) "TWD" else "USD"
                 debugLogManager.log("ASSETS", "Stock currency determined: $currency for $symbol")
 
-                val stockAsset = StockAsset(
-                    id = System.currentTimeMillis().toString(),
-                    symbol = symbol,
-                    companyName = symbol, // Simple mapping
-                    shares = shares, // Keep Double type
-                    market = "GLOBAL",
-                    currentPrice = 0.0, // Will be fetched later
-                    originalCurrency = currency, // Set correct currency
-                    twdEquivalent = 0.0 // Will be calculated later
-                )
+                val stockAsset =
+                    StockAsset(
+                        id = System.currentTimeMillis().toString(),
+                        symbol = symbol,
+                        companyName = symbol, // Simple mapping
+                        shares = shares, // Keep Double type
+                        market = "GLOBAL",
+                        currentPrice = 0.0, // Will be fetched later
+                        originalCurrency = currency, // Set correct currency
+                        twdEquivalent = 0.0, // Will be calculated later
+                    )
                 debugLogManager.log("ASSETS", "Stock asset created: $symbol, $shares shares, currency: $currency")
                 assetRepository.insertStockAsset(stockAsset)
                 debugLogManager.log("ASSETS", "Stock asset inserted to database")
@@ -336,7 +375,7 @@ class AssetsViewModel @Inject constructor(
                 debugLogManager.log("ASSETS", "Stock asset updated successfully")
             }
         }
-}
+    }
 
 data class AssetsUiState(
     val cashAssets: List<CashAsset> = emptyList(),
@@ -344,5 +383,5 @@ data class AssetsUiState(
     val isLoading: Boolean = true,
     val searchResults: List<StockSearchItem> = emptyList(),
     val isSearching: Boolean = false,
-    val searchError: String = ""
+    val searchError: String = "",
 )

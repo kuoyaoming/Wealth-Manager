@@ -2,29 +2,24 @@ package com.wealthmanager
 
 import android.content.ComponentCallbacks2
 import android.os.Bundle
-import android.os.Build
 import android.view.MotionEvent
-import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
+import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
 import androidx.compose.runtime.*
+import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.Modifier
-import androidx.fragment.app.FragmentActivity
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
+import androidx.fragment.app.FragmentActivity
 import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.data.service.PerformanceMonitor120Hz
 import com.wealthmanager.ui.about.AboutDialog
 import com.wealthmanager.ui.navigation.WealthManagerNavigation
-import androidx.compose.material3.windowsizeclass.calculateWindowSizeClass
-import androidx.compose.material3.windowsizeclass.WindowWidthSizeClass
-import androidx.compose.runtime.CompositionLocalProvider
 import com.wealthmanager.ui.responsive.LocalWindowWidthSizeClass
 import com.wealthmanager.ui.theme.WealthManagerTheme
 import com.wealthmanager.utils.StandardLogger
@@ -46,14 +41,11 @@ import javax.inject.Inject
 @AndroidEntryPoint
 @androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 class MainActivity : FragmentActivity() {
-
     @Inject
     lateinit var firstLaunchManager: FirstLaunchManager
 
     @Inject
     lateinit var performanceMonitor: PerformanceMonitor120Hz
-
-
 
     /**
      * Initializes the activity and sets up the UI.
@@ -95,20 +87,20 @@ class MainActivity : FragmentActivity() {
             WealthManagerTheme {
                 Surface(
                     modifier = Modifier.fillMaxSize(),
-                    color = MaterialTheme.colorScheme.background
+                    color = MaterialTheme.colorScheme.background,
                 ) {
                     CompositionLocalProvider(
-                        LocalWindowWidthSizeClass provides windowSizeClass.widthSizeClass
+                        LocalWindowWidthSizeClass provides windowSizeClass.widthSizeClass,
                     ) {
                         WealthManagerNavigation(
-                            modifier = Modifier.fillMaxSize()
+                            modifier = Modifier.fillMaxSize(),
                         )
                     }
 
                     if (showAboutDialog) {
                         AboutDialog(
                             onDismiss = { showAboutDialog = false },
-                            firstLaunchManager = firstLaunchManager
+                            firstLaunchManager = firstLaunchManager,
                         )
                     }
                 }
@@ -130,8 +122,8 @@ class MainActivity : FragmentActivity() {
         return try {
             if (event.action == MotionEvent.ACTION_DOWN ||
                 event.action == MotionEvent.ACTION_UP ||
-                event.action == MotionEvent.ACTION_MOVE) {
-
+                event.action == MotionEvent.ACTION_MOVE
+            ) {
                 if (isValidTouchPosition(event.x, event.y)) {
                     val result = super.onTouchEvent(event)
                     if (!result) {
@@ -171,7 +163,10 @@ class MainActivity : FragmentActivity() {
      * @param y The y-coordinate of the touch event
      * @return true if the touch position is valid, false otherwise
      */
-    private fun isValidTouchPosition(x: Float, y: Float): Boolean {
+    private fun isValidTouchPosition(
+        x: Float,
+        y: Float,
+    ): Boolean {
         return try {
             val window = window
             val decorView = window?.decorView
@@ -179,11 +174,15 @@ class MainActivity : FragmentActivity() {
                 val width = decorView.width.toFloat()
                 val height = decorView.height.toFloat()
                 val margin = 10f
-                val isValid = x >= margin && x <= (width - margin) &&
-                             y >= margin && y <= (height - margin)
+                val isValid =
+                    x >= margin && x <= (width - margin) &&
+                        y >= margin && y <= (height - margin)
 
                 if (!isValid) {
-                    StandardLogger.debug("MainActivity", "Touch position out of bounds: x=$x, y=$y, width=$width, height=$height")
+                    StandardLogger.debug(
+                        "MainActivity",
+                        "Touch position out of bounds: x=$x, y=$y, width=$width, height=$height",
+                    )
                 }
                 isValid
             } else {
@@ -232,7 +231,8 @@ class MainActivity : FragmentActivity() {
         when (level) {
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,
-            ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE -> {
+            ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE,
+            -> {
                 StandardLogger.warn("MainActivity", "Memory pressure detected - level: $level")
                 System.gc()
             }

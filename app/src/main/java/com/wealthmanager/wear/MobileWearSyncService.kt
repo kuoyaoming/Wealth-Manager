@@ -14,7 +14,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MobileWearSyncService : WearableListenerService() {
-
     @Inject
     lateinit var wearSyncManager: WearSyncManager
 
@@ -46,4 +45,3 @@ class MobileWearSyncService : WearableListenerService() {
         super.onDestroy()
     }
 }
-

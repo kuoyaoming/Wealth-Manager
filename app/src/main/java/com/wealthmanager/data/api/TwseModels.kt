@@ -8,7 +8,7 @@ import com.google.gson.annotations.SerializedName
  * @property value List of stock items from TWSE API
  */
 data class TwseStockResponse(
-    @SerializedName("value") val value: List<TwseStockItem>
+    @SerializedName("value") val value: List<TwseStockItem>,
 )
 
 /**
@@ -37,7 +37,7 @@ data class TwseStockItem(
     @SerializedName("LowestPrice") val LowestPrice: String,
     @SerializedName("ClosingPrice") val ClosingPrice: String,
     @SerializedName("Change") val Change: String,
-    @SerializedName("Transaction") val Transaction: String
+    @SerializedName("Transaction") val Transaction: String,
 )
 
 /**
@@ -69,5 +69,5 @@ data class TwseStockData(
     val close: String,
     val change: String,
     val changePercent: String,
-    val transactionCount: String
+    val transactionCount: String,
 )

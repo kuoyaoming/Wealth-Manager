@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface CashAssetDao {
-
     @Query("SELECT * FROM cash_assets ORDER BY lastUpdated DESC")
     fun getAllCashAssets(): Flow<List<CashAsset>>
 

@@ -25,48 +25,50 @@ import com.wealthmanager.R
 fun NotificationPermissionSection(
     modifier: Modifier = Modifier,
     onPermissionGranted: () -> Unit = {},
-    onPermissionDenied: () -> Unit = {}
+    onPermissionDenied: () -> Unit = {},
 ) {
     val context = LocalContext.current
     var hasNotificationPermission by remember {
         mutableStateOf(checkNotificationPermission(context))
     }
 
-    val notificationPermissionLauncher = rememberLauncherForActivityResult(
-        contract = ActivityResultContracts.RequestPermission()
-    ) { isGranted ->
-        hasNotificationPermission = isGranted
-        if (isGranted) {
-            onPermissionGranted()
-        } else {
-            onPermissionDenied()
+    val notificationPermissionLauncher =
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.RequestPermission(),
+        ) { isGranted ->
+            hasNotificationPermission = isGranted
+            if (isGranted) {
+                onPermissionGranted()
+            } else {
+                onPermissionDenied()
+            }
         }
-    }
 
     // Only show permission request for Android 13+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !hasNotificationPermission) {
         Card(
             modifier = modifier.fillMaxWidth(),
-            colors = CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surfaceVariant
-            )
+            colors =
+                CardDefaults.cardColors(
+                    containerColor = MaterialTheme.colorScheme.surfaceVariant,
+                ),
         ) {
             Column(
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier.padding(16.dp),
             ) {
                 Row(
-                    verticalAlignment = Alignment.CenterVertically
+                    verticalAlignment = Alignment.CenterVertically,
                 ) {
                     Icon(
                         imageVector = Icons.Default.Notifications,
                         contentDescription = stringResource(R.string.cd_notifications),
-                        tint = MaterialTheme.colorScheme.primary
+                        tint = MaterialTheme.colorScheme.primary,
                     )
                     Spacer(modifier = Modifier.width(12.dp))
                     Text(
                         text = stringResource(R.string.notification_permission_title),
                         style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold
+                        fontWeight = FontWeight.Bold,
                     )
                 }
 
@@ -75,17 +77,17 @@ fun NotificationPermissionSection(
                 Text(
                     text = stringResource(R.string.notification_permission_description),
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
 
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.End
+                    horizontalArrangement = Arrangement.End,
                 ) {
                     TextButton(
-                        onClick = { onPermissionDenied() }
+                        onClick = { onPermissionDenied() },
                     ) {
                         Text(stringResource(R.string.action_later))
                     }
@@ -95,7 +97,7 @@ fun NotificationPermissionSection(
                     Button(
                         onClick = {
                             notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
-                        }
+                        },
                     ) {
                         Text(stringResource(R.string.enable_notifications))
                     }
@@ -121,9 +123,7 @@ private fun checkNotificationPermission(context: Context): Boolean {
  * Notification permission status indicator
  */
 @Composable
-fun NotificationPermissionStatus(
-    modifier: Modifier = Modifier
-) {
+fun NotificationPermissionStatus(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     var hasPermission by remember {
         mutableStateOf(checkNotificationPermission(context))
@@ -135,32 +135,35 @@ fun NotificationPermissionStatus(
 
     Row(
         modifier = modifier,
-        verticalAlignment = Alignment.CenterVertically
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Icon(
             imageVector = Icons.Default.Notifications,
             contentDescription = null,
-            tint = if (hasPermission) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.outline
-            }
+            tint =
+                if (hasPermission) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.outline
+                },
         )
 
         Spacer(modifier = Modifier.width(8.dp))
 
         Text(
-            text = if (hasPermission) {
-                stringResource(R.string.notifications_enabled)
-            } else {
-                stringResource(R.string.notifications_disabled)
-            },
+            text =
+                if (hasPermission) {
+                    stringResource(R.string.notifications_enabled)
+                } else {
+                    stringResource(R.string.notifications_disabled)
+                },
             style = MaterialTheme.typography.bodyMedium,
-            color = if (hasPermission) {
-                MaterialTheme.colorScheme.primary
-            } else {
-                MaterialTheme.colorScheme.outline
-            }
+            color =
+                if (hasPermission) {
+                    MaterialTheme.colorScheme.primary
+                } else {
+                    MaterialTheme.colorScheme.outline
+                },
         )
     }
 }

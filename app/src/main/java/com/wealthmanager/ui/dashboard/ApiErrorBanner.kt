@@ -9,9 +9,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.res.stringResource
 import com.wealthmanager.R
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
@@ -23,54 +23,64 @@ fun ApiErrorBanner(
     isDataStale: Boolean,
     onRetry: () -> Unit,
     onDismiss: () -> Unit,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val (hapticManager, view) = rememberHapticFeedbackWithView()
     Card(
         modifier = modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.errorContainer
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp)
+        colors =
+            CardDefaults.cardColors(
+                containerColor = MaterialTheme.colorScheme.errorContainer,
+            ),
+        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
-            verticalAlignment = Alignment.CenterVertically
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
+            verticalAlignment = Alignment.CenterVertically,
         ) {
             Icon(
                 imageVector = Icons.Default.Warning,
                 contentDescription = stringResource(R.string.cd_warning),
                 tint = MaterialTheme.colorScheme.error,
-                modifier = Modifier.size(24.dp)
+                modifier = Modifier.size(24.dp),
             )
 
             Spacer(modifier = Modifier.width(12.dp))
 
             Column(modifier = Modifier.weight(1f)) {
                 Text(
-                    text = if (isDataStale) stringResource(R.string.api_error_data_stale) else stringResource(R.string.api_error_connection_issue),
+                    text =
+                        if (isDataStale) {
+                            stringResource(
+                                R.string.api_error_data_stale,
+                            )
+                        } else {
+                            stringResource(R.string.api_error_connection_issue)
+                        },
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold,
-                    color = MaterialTheme.colorScheme.onErrorContainer
+                    color = MaterialTheme.colorScheme.onErrorContainer,
                 )
 
                 Text(
-                    text = if (isDataStale) {
-                        stringResource(R.string.api_error_show_cached_data)
-                    } else {
-                        errorMessage
-                    },
+                    text =
+                        if (isDataStale) {
+                            stringResource(R.string.api_error_show_cached_data)
+                        } else {
+                            errorMessage
+                        },
                     style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onErrorContainer
+                    color = MaterialTheme.colorScheme.onErrorContainer,
                 )
             }
 
             if (isRetrying) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(20.dp),
-                    color = MaterialTheme.colorScheme.error
+                    color = MaterialTheme.colorScheme.error,
                 )
             } else {
                 Row {
@@ -78,12 +88,12 @@ fun ApiErrorBanner(
                         onClick = {
                             hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                             onRetry()
-                        }
+                        },
                     ) {
                         Icon(
                             imageVector = Icons.Default.Refresh,
                             contentDescription = stringResource(R.string.cd_retry),
-                            modifier = Modifier.size(18.dp)
+                            modifier = Modifier.size(18.dp),
                         )
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(stringResource(R.string.api_error_retry))
@@ -96,7 +106,7 @@ fun ApiErrorBanner(
                         Icon(
                             imageVector = Icons.Default.Close,
                             contentDescription = stringResource(R.string.cd_dismiss),
-                            tint = MaterialTheme.colorScheme.onErrorContainer
+                            tint = MaterialTheme.colorScheme.onErrorContainer,
                         )
                     }
                 }

@@ -13,15 +13,15 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.wealthmanager.auth.AuthStateManager
-import com.wealthmanager.ui.auth.BiometricAuthScreen
 import com.wealthmanager.ui.assets.AssetsScreen
+import com.wealthmanager.ui.auth.BiometricAuthScreen
 import com.wealthmanager.ui.dashboard.DashboardScreen
 import com.wealthmanager.ui.settings.SettingsScreen
 
 @Composable
 fun WealthManagerNavigation(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController()
+    navController: NavHostController = rememberNavController(),
 ) {
     val context = LocalContext.current
     val authStateManager = remember { AuthStateManager(context) }
@@ -39,7 +39,7 @@ fun WealthManagerNavigation(
     NavHost(
         navController = navController,
         startDestination = if (authStateManager.isAuthenticated()) "dashboard" else "auth",
-        modifier = modifier
+        modifier = modifier,
     ) {
         composable("auth") {
             BiometricAuthScreen(
@@ -59,7 +59,7 @@ fun WealthManagerNavigation(
                             popUpTo("auth") { inclusive = true }
                         }
                     }
-                }
+                },
             )
         }
 
@@ -71,7 +71,7 @@ fun WealthManagerNavigation(
                 onNavigateToSettings = {
                     navController.navigate("settings")
                 },
-                navController = navController
+                navController = navController,
             )
         }
 
@@ -79,7 +79,7 @@ fun WealthManagerNavigation(
             AssetsScreen(
                 onNavigateBack = {
                     navController.popBackStack()
-                }
+                },
             )
         }
 
@@ -87,7 +87,7 @@ fun WealthManagerNavigation(
             SettingsScreen(
                 onNavigateBack = {
                     navController.popBackStack()
-                }
+                },
             )
         }
     }

@@ -4,9 +4,9 @@ import android.content.Context
 import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.security.KeyRepository
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
-import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -15,217 +15,235 @@ import javax.inject.Singleton
  * Tests both Finnhub and Exchange Rate API keys
  */
 @Singleton
-class ApiTestService @Inject constructor(
-    @ApplicationContext private val context: Context,
-    private val debugLogManager: DebugLogManager,
-    private val keyRepository: KeyRepository,
-    private val secureApiKeyManager: com.wealthmanager.ui.security.SecureApiKeyManager
-) {
+class ApiTestService
+    @Inject
+    constructor(
+        @ApplicationContext private val context: Context,
+        private val debugLogManager: DebugLogManager,
+        private val keyRepository: KeyRepository,
+        private val secureApiKeyManager: com.wealthmanager.ui.security.SecureApiKeyManager,
+    ) {
+        data class ApiTestResult(
+            val isWorking: Boolean,
+            val message: String,
+            val apiName: String,
+        )
 
-    data class ApiTestResult(
-        val isWorking: Boolean,
-        val message: String,
-        val apiName: String
-    )
+        data class SecureApiTestResult(
+            val securityStatus: com.wealthmanager.ui.security.SecurityStatus,
+            val finnhubResult: ApiTestResult,
+            val exchangeResult: ApiTestResult,
+            val overallSecurity: String,
+        )
 
-    data class SecureApiTestResult(
-        val securityStatus: com.wealthmanager.ui.security.SecurityStatus,
-        val finnhubResult: ApiTestResult,
-        val exchangeResult: ApiTestResult,
-        val overallSecurity: String
-    )
+        /**
+         * Test Finnhub API key by making a simple request
+         */
+        suspend fun testFinnhubApi(): ApiTestResult =
+            withContext(Dispatchers.IO) {
+                try {
+                    debugLogManager.log("API_TEST", "Testing Finnhub API key")
 
-    /**
-     * Test Finnhub API key by making a simple request
-     */
-    suspend fun testFinnhubApi(): ApiTestResult = withContext(Dispatchers.IO) {
-        try {
-            debugLogManager.log("API_TEST", "Testing Finnhub API key")
+                    // Check if API key is available (user key overrides BuildConfig)
+                    val key = keyRepository.getUserFinnhubKey() ?: ""
+                    if (key.isBlank()) {
+                        return@withContext ApiTestResult(
+                            isWorking = false,
+                            message = "API Key not configured",
+                            apiName = "Finnhub",
+                        )
+                    }
 
-            // Check if API key is available (user key overrides BuildConfig)
-            val key = keyRepository.getUserFinnhubKey() ?: ""
-            if (key.isBlank()) {
-                return@withContext ApiTestResult(
-                    isWorking = false,
-                    message = "API Key not configured",
-                    apiName = "Finnhub"
-                )
+                    // Make a simple test request to get AAPL quote
+                    val testUrl = "https://finnhub.io/api/v1/quote?symbol=AAPL&token=$key"
+                    val response =
+                        java.net.URL(testUrl).openConnection().apply {
+                            connectTimeout = 10000
+                            readTimeout = 10000
+                        }.getInputStream().bufferedReader().readText()
+
+                    // Check if response contains expected data
+                    if (response.contains("\"c\":") && response.contains("\"d\":")) {
+                        debugLogManager.log("API_TEST", "Finnhub API test successful")
+                        ApiTestResult(
+                            isWorking = true,
+                            message = "API Working - Test successful",
+                            apiName = "Finnhub",
+                        )
+                    } else {
+                        debugLogManager.log("API_TEST", "Finnhub API test failed - invalid response")
+                        ApiTestResult(
+                            isWorking = false,
+                            message = "API Error - Invalid response",
+                            apiName = "Finnhub",
+                        )
+                    }
+                } catch (e: Exception) {
+                    debugLogManager.logError("API_TEST: Finnhub API test failed", e)
+                    ApiTestResult(
+                        isWorking = false,
+                        message = "API Error - ${e.message}",
+                        apiName = "Finnhub",
+                    )
+                }
             }
 
-            // Make a simple test request to get AAPL quote
-            val testUrl = "https://finnhub.io/api/v1/quote?symbol=AAPL&token=$key"
-            val response = java.net.URL(testUrl).openConnection().apply {
-                connectTimeout = 10000
-                readTimeout = 10000
-            }.getInputStream().bufferedReader().readText()
-
-            // Check if response contains expected data
-            if (response.contains("\"c\":") && response.contains("\"d\":")) {
-                debugLogManager.log("API_TEST", "Finnhub API test successful")
-                ApiTestResult(
-                    isWorking = true,
-                    message = "API Working - Test successful",
-                    apiName = "Finnhub"
-                )
-            } else {
-                debugLogManager.log("API_TEST", "Finnhub API test failed - invalid response")
-                ApiTestResult(
-                    isWorking = false,
-                    message = "API Error - Invalid response",
-                    apiName = "Finnhub"
-                )
+        /**
+         * Test Finnhub API key with an explicitly provided key (used for validate-before-save in settings)
+         */
+        suspend fun testFinnhubApiWithKey(key: String): ApiTestResult =
+            withContext(Dispatchers.IO) {
+                try {
+                    debugLogManager.log("API_TEST", "Testing Finnhub API key (provided)")
+                    if (key.isBlank()) {
+                        return@withContext ApiTestResult(false, "API Key not configured", "Finnhub")
+                    }
+                    val testUrl = "https://finnhub.io/api/v1/quote?symbol=AAPL&token=$key"
+                    val response =
+                        java.net.URL(testUrl).openConnection().apply {
+                            connectTimeout = 10000
+                            readTimeout = 10000
+                        }.getInputStream().bufferedReader().readText()
+                    if (response.contains("\"c\":") && response.contains("\"d\":")) {
+                        ApiTestResult(true, "API Working - Test successful", "Finnhub")
+                    } else {
+                        ApiTestResult(false, "API Error - Invalid response", "Finnhub")
+                    }
+                } catch (e: Exception) {
+                    debugLogManager.logError("API_TEST: Finnhub provided key test failed", e)
+                    ApiTestResult(false, "API Error - ${e.message}", "Finnhub")
+                }
             }
-        } catch (e: Exception) {
-            debugLogManager.logError("API_TEST: Finnhub API test failed", e)
-            ApiTestResult(
-                isWorking = false,
-                message = "API Error - ${e.message}",
-                apiName = "Finnhub"
+
+        /**
+         * Test Exchange Rate API key by making a simple request
+         */
+        suspend fun testExchangeRateApi(): ApiTestResult =
+            withContext(Dispatchers.IO) {
+                try {
+                    debugLogManager.log("API_TEST", "Testing Exchange Rate API key")
+
+                    // Check if API key is available (user key overrides BuildConfig)
+                    val key = keyRepository.getUserExchangeKey() ?: ""
+                    if (key.isBlank()) {
+                        return@withContext ApiTestResult(
+                            isWorking = false,
+                            message = "API Key not configured",
+                            apiName = "Exchange Rate",
+                        )
+                    }
+
+                    // Make a simple test request to get USD to TWD rate
+                    val testUrl = "https://v6.exchangerate-api.com/v6/$key/latest/USD"
+                    val response =
+                        java.net.URL(testUrl).openConnection().apply {
+                            connectTimeout = 10000
+                            readTimeout = 10000
+                        }.getInputStream().bufferedReader().readText()
+
+                    // Check if response contains expected data
+                    if (response.contains("\"result\":\"success\"") && response.contains("\"TWD\"")) {
+                        debugLogManager.log("API_TEST", "Exchange Rate API test successful")
+                        ApiTestResult(
+                            isWorking = true,
+                            message = "API Working - Test successful",
+                            apiName = "Exchange Rate",
+                        )
+                    } else {
+                        debugLogManager.log("API_TEST", "Exchange Rate API test failed - invalid response")
+                        ApiTestResult(
+                            isWorking = false,
+                            message = "API Error - Invalid response",
+                            apiName = "Exchange Rate",
+                        )
+                    }
+                } catch (e: Exception) {
+                    debugLogManager.logError("API_TEST: Exchange Rate API test failed", e)
+                    ApiTestResult(
+                        isWorking = false,
+                        message = "API Error - ${e.message}",
+                        apiName = "Exchange Rate",
+                    )
+                }
+            }
+
+        /**
+         * Test Exchange Rate API key with an explicitly provided key (used for validate-before-save in settings)
+         */
+        suspend fun testExchangeRateApiWithKey(key: String): ApiTestResult =
+            withContext(Dispatchers.IO) {
+                try {
+                    debugLogManager.log("API_TEST", "Testing Exchange Rate API key (provided)")
+                    if (key.isBlank()) {
+                        return@withContext ApiTestResult(false, "API Key not configured", "Exchange Rate")
+                    }
+                    val testUrl = "https://v6.exchangerate-api.com/v6/$key/latest/USD"
+                    val response =
+                        java.net.URL(testUrl).openConnection().apply {
+                            connectTimeout = 10000
+                            readTimeout = 10000
+                        }.getInputStream().bufferedReader().readText()
+                    if (response.contains("\"result\":\"success\"") && response.contains("\"TWD\"")) {
+                        ApiTestResult(true, "API Working - Test successful", "Exchange Rate")
+                    } else {
+                        ApiTestResult(false, "API Error - Invalid response", "Exchange Rate")
+                    }
+                } catch (e: Exception) {
+                    debugLogManager.logError("API_TEST: Exchange Rate provided key test failed", e)
+                    ApiTestResult(false, "API Error - ${e.message}", "Exchange Rate")
+                }
+            }
+
+        /**
+         * Test all APIs and return combined result
+         */
+        suspend fun testAllApis(): List<ApiTestResult> {
+            return listOf(
+                testFinnhubApi(),
+                testExchangeRateApi(),
             )
         }
-    }
 
-    /**
-     * Test Finnhub API key with an explicitly provided key (used for validate-before-save in settings)
-     */
-    suspend fun testFinnhubApiWithKey(key: String): ApiTestResult = withContext(Dispatchers.IO) {
-        try {
-            debugLogManager.log("API_TEST", "Testing Finnhub API key (provided)")
-            if (key.isBlank()) {
-                return@withContext ApiTestResult(false, "API Key not configured", "Finnhub")
-            }
-            val testUrl = "https://finnhub.io/api/v1/quote?symbol=AAPL&token=$key"
-            val response = java.net.URL(testUrl).openConnection().apply {
-                connectTimeout = 10000
-                readTimeout = 10000
-            }.getInputStream().bufferedReader().readText()
-            if (response.contains("\"c\":") && response.contains("\"d\":")) {
-                ApiTestResult(true, "API Working - Test successful", "Finnhub")
-            } else {
-                ApiTestResult(false, "API Error - Invalid response", "Finnhub")
-            }
-        } catch (e: Exception) {
-            debugLogManager.logError("API_TEST: Finnhub provided key test failed", e)
-            ApiTestResult(false, "API Error - ${e.message}", "Finnhub")
-        }
-    }
+        /**
+         * Securely tests API keys (includes security status check).
+         */
+        suspend fun testApiKeysSecurely(): SecureApiTestResult {
+            debugLogManager.log("API_TEST", "Starting secure API key testing")
 
-    /**
-     * Test Exchange Rate API key by making a simple request
-     */
-    suspend fun testExchangeRateApi(): ApiTestResult = withContext(Dispatchers.IO) {
-        try {
-            debugLogManager.log("API_TEST", "Testing Exchange Rate API key")
+            val securityStatus = secureApiKeyManager.getSecurityStatus()
+            debugLogManager.log("API_TEST", "Security status: ${securityStatus.securityLevel}")
 
-            // Check if API key is available (user key overrides BuildConfig)
-            val key = keyRepository.getUserExchangeKey() ?: ""
-            if (key.isBlank()) {
-                return@withContext ApiTestResult(
-                    isWorking = false,
-                    message = "API Key not configured",
-                    apiName = "Exchange Rate"
-                )
-            }
+            val finnhubResult = testFinnhubApi()
+            val exchangeResult = testExchangeRateApi()
 
-            // Make a simple test request to get USD to TWD rate
-            val testUrl = "https://v6.exchangerate-api.com/v6/$key/latest/USD"
-            val response = java.net.URL(testUrl).openConnection().apply {
-                connectTimeout = 10000
-                readTimeout = 10000
-            }.getInputStream().bufferedReader().readText()
-
-            // Check if response contains expected data
-            if (response.contains("\"result\":\"success\"") && response.contains("\"TWD\"")) {
-                debugLogManager.log("API_TEST", "Exchange Rate API test successful")
-                ApiTestResult(
-                    isWorking = true,
-                    message = "API Working - Test successful",
-                    apiName = "Exchange Rate"
-                )
-            } else {
-                debugLogManager.log("API_TEST", "Exchange Rate API test failed - invalid response")
-                ApiTestResult(
-                    isWorking = false,
-                    message = "API Error - Invalid response",
-                    apiName = "Exchange Rate"
-                )
-            }
-        } catch (e: Exception) {
-            debugLogManager.logError("API_TEST: Exchange Rate API test failed", e)
-            ApiTestResult(
-                isWorking = false,
-                message = "API Error - ${e.message}",
-                apiName = "Exchange Rate"
+            return SecureApiTestResult(
+                securityStatus = securityStatus,
+                finnhubResult = finnhubResult,
+                exchangeResult = exchangeResult,
+                overallSecurity =
+                    when {
+                        securityStatus.securityLevel == com.wealthmanager.ui.security.SecurityLevel.HIGH &&
+                            finnhubResult.isWorking && exchangeResult.isWorking ->
+                            context.getString(
+                                R.string.api_test_high_security,
+                            )
+                        securityStatus.securityLevel == com.wealthmanager.ui.security.SecurityLevel.MEDIUM &&
+                            (finnhubResult.isWorking || exchangeResult.isWorking) ->
+                            context.getString(
+                                R.string.api_test_medium_security,
+                            )
+                        else -> context.getString(R.string.api_test_low_security)
+                    },
             )
         }
-    }
 
-    /**
-     * Test Exchange Rate API key with an explicitly provided key (used for validate-before-save in settings)
-     */
-    suspend fun testExchangeRateApiWithKey(key: String): ApiTestResult = withContext(Dispatchers.IO) {
-        try {
-            debugLogManager.log("API_TEST", "Testing Exchange Rate API key (provided)")
-            if (key.isBlank()) {
-                return@withContext ApiTestResult(false, "API Key not configured", "Exchange Rate")
-            }
-            val testUrl = "https://v6.exchangerate-api.com/v6/$key/latest/USD"
-            val response = java.net.URL(testUrl).openConnection().apply {
-                connectTimeout = 10000
-                readTimeout = 10000
-            }.getInputStream().bufferedReader().readText()
-            if (response.contains("\"result\":\"success\"") && response.contains("\"TWD\"")) {
-                ApiTestResult(true, "API Working - Test successful", "Exchange Rate")
-            } else {
-                ApiTestResult(false, "API Error - Invalid response", "Exchange Rate")
-            }
-        } catch (e: Exception) {
-            debugLogManager.logError("API_TEST: Exchange Rate provided key test failed", e)
-            ApiTestResult(false, "API Error - ${e.message}", "Exchange Rate")
+        /**
+         * Tests key strength (without API calls).
+         */
+        fun testKeyStrength(
+            key: String,
+            keyType: String,
+        ): com.wealthmanager.security.KeyValidationResult {
+            return secureApiKeyManager.validateKeyStrength(key, keyType)
         }
     }
-
-    /**
-     * Test all APIs and return combined result
-     */
-    suspend fun testAllApis(): List<ApiTestResult> {
-        return listOf(
-            testFinnhubApi(),
-            testExchangeRateApi()
-        )
-    }
-
-    /**
-     * Securely tests API keys (includes security status check).
-     */
-    suspend fun testApiKeysSecurely(): SecureApiTestResult {
-        debugLogManager.log("API_TEST", "Starting secure API key testing")
-
-        val securityStatus = secureApiKeyManager.getSecurityStatus()
-        debugLogManager.log("API_TEST", "Security status: ${securityStatus.securityLevel}")
-
-        val finnhubResult = testFinnhubApi()
-        val exchangeResult = testExchangeRateApi()
-
-        return SecureApiTestResult(
-            securityStatus = securityStatus,
-            finnhubResult = finnhubResult,
-            exchangeResult = exchangeResult,
-            overallSecurity = when {
-                securityStatus.securityLevel == com.wealthmanager.ui.security.SecurityLevel.HIGH &&
-                finnhubResult.isWorking && exchangeResult.isWorking -> context.getString(R.string.api_test_high_security)
-                securityStatus.securityLevel == com.wealthmanager.ui.security.SecurityLevel.MEDIUM &&
-                (finnhubResult.isWorking || exchangeResult.isWorking) -> context.getString(R.string.api_test_medium_security)
-                else -> context.getString(R.string.api_test_low_security)
-            }
-        )
-    }
-
-    /**
-     * Tests key strength (without API calls).
-     */
-    fun testKeyStrength(key: String, keyType: String): com.wealthmanager.security.KeyValidationResult {
-        return secureApiKeyManager.validateKeyStrength(key, keyType)
-    }
-}
-

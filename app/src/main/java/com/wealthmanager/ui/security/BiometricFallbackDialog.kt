@@ -1,21 +1,17 @@
 package com.wealthmanager.ui.security
 
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Warning
 import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
@@ -24,7 +20,6 @@ import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -48,25 +43,26 @@ fun BiometricFallbackDialog(
     onUseFallback: () -> Unit,
     onRetryBiometric: () -> Unit,
     title: String = stringResource(R.string.biometric_auth_title),
-    message: String = stringResource(R.string.biometric_auth_subtitle)
+    message: String = stringResource(R.string.biometric_auth_subtitle),
 ) {
     Dialog(onDismissRequest = onDismiss) {
         Card(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(16.dp),
+            modifier =
+                Modifier
+                    .fillMaxWidth()
+                    .padding(16.dp),
             shape = RoundedCornerShape(16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
+            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         ) {
             Column(
                 modifier = Modifier.padding(24.dp),
-                horizontalAlignment = Alignment.CenterHorizontally
+                horizontalAlignment = Alignment.CenterHorizontally,
             ) {
                 Icon(
                     imageVector = Icons.Default.Warning,
                     contentDescription = null,
                     modifier = Modifier.size(48.dp),
-                    tint = MaterialTheme.colorScheme.primary
+                    tint = MaterialTheme.colorScheme.primary,
                 )
 
                 Spacer(modifier = Modifier.height(16.dp))
@@ -75,7 +71,7 @@ fun BiometricFallbackDialog(
                     text = title,
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center
+                    textAlign = TextAlign.Center,
                 )
 
                 Spacer(modifier = Modifier.height(12.dp))
@@ -84,44 +80,45 @@ fun BiometricFallbackDialog(
                     text = message,
                     style = MaterialTheme.typography.bodyMedium,
                     textAlign = TextAlign.Center,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Card(
                     modifier = Modifier.fillMaxWidth(),
-                    colors = CardDefaults.cardColors(
-                        containerColor = MaterialTheme.colorScheme.primaryContainer
-                    ),
-                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+                    colors =
+                        CardDefaults.cardColors(
+                            containerColor = MaterialTheme.colorScheme.primaryContainer,
+                        ),
+                    elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
                 ) {
                     Column(
                         modifier = Modifier.padding(16.dp),
-                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                        verticalArrangement = Arrangement.spacedBy(8.dp),
                     ) {
                         Row(
                             verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.spacedBy(8.dp)
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
                         ) {
                             Icon(
                                 imageVector = Icons.Default.Security,
                                 contentDescription = null,
                                 modifier = Modifier.size(20.dp),
-                                tint = MaterialTheme.colorScheme.onPrimaryContainer
+                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
                             )
                             Text(
                                 text = stringResource(R.string.security_level_explanation),
                                 style = MaterialTheme.typography.titleSmall,
                                 fontWeight = FontWeight.Bold,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer
+                                color = MaterialTheme.colorScheme.onPrimaryContainer,
                             )
                         }
 
                         Text(
                             text = stringResource(R.string.security_level_basic),
                             style = MaterialTheme.typography.bodySmall,
-                            color = MaterialTheme.colorScheme.onPrimaryContainer
+                            color = MaterialTheme.colorScheme.onPrimaryContainer,
                         )
                     }
                 }
@@ -129,14 +126,14 @@ fun BiometricFallbackDialog(
                 Spacer(modifier = Modifier.height(24.dp))
 
                 Column(
-                    verticalArrangement = Arrangement.spacedBy(12.dp)
+                    verticalArrangement = Arrangement.spacedBy(12.dp),
                 ) {
                     Button(
                         onClick = {
                             onUseFallback()
                             onDismiss()
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text(stringResource(R.string.dialog_continue_lower_security))
                     }
@@ -146,14 +143,14 @@ fun BiometricFallbackDialog(
                             onRetryBiometric()
                             onDismiss()
                         },
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text(stringResource(R.string.dialog_retry_biometric))
                     }
 
                     TextButton(
                         onClick = onDismiss,
-                        modifier = Modifier.fillMaxWidth()
+                        modifier = Modifier.fillMaxWidth(),
                     ) {
                         Text(stringResource(R.string.dialog_cancel_operation))
                     }
@@ -183,7 +180,7 @@ class BiometricFallbackState {
 
     fun showFallbackDialog(
         title: String = "",
-        message: String = ""
+        message: String = "",
     ) {
         dialogTitle = title
         dialogMessage = message

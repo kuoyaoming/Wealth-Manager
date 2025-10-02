@@ -2,7 +2,6 @@ package com.wealthmanager.haptic
 
 import android.content.Context
 import android.os.VibrationEffect
-import android.os.Vibrator
 import android.os.VibratorManager
 import android.view.HapticFeedbackConstants
 import android.view.View
@@ -21,128 +20,146 @@ import javax.inject.Singleton
  * Provides haptic and sound feedback with multiple intensity levels
  */
 @Singleton
-class HapticFeedbackManager @Inject constructor() {
-
-    /**
-     * Haptic feedback intensity levels
-     */
-    enum class HapticIntensity {
-        LIGHT,      // Light - navigation actions
-        MEDIUM,     // Medium - general actions
-        STRONG,     // Strong - important actions
-        CONFIRM     // Confirm - critical actions
-    }
-
-    /**
-     * Haptic feedback types
-     */
-    enum class HapticType {
-        TAP,        // Tap
-        LONG_PRESS, // Long press
-        SUCCESS,    // Success
-        ERROR,      // Error
-        SELECTION   // Selection
-    }
-
-    /**
-     * Haptic feedback settings
-     */
-    data class HapticSettings(
-        val hapticEnabled: Boolean = true,
-        val soundEnabled: Boolean = true,
-        val intensity: HapticIntensity = HapticIntensity.MEDIUM
-    )
-
-    private var settings = HapticSettings()
-
-    /**
-     * Update haptic feedback settings
-     */
-    fun updateSettings(newSettings: HapticSettings) {
-        settings = newSettings
-    }
-
-    /**
-     * Get current settings
-     */
-    fun getSettings(): HapticSettings = settings
-
-    /**
-     * Trigger haptic feedback
-     */
-    fun triggerHaptic(
-        view: View,
-        intensity: HapticIntensity = HapticIntensity.MEDIUM,
-        @Suppress("UNUSED_PARAMETER") type: HapticType = HapticType.TAP
-    ) {
-        if (!settings.hapticEnabled) return
-
-        val hapticConstant = when (intensity) {
-            HapticIntensity.LIGHT -> HapticFeedbackConstants.KEYBOARD_TAP
-            HapticIntensity.MEDIUM -> HapticFeedbackConstants.VIRTUAL_KEY
-            HapticIntensity.STRONG -> HapticFeedbackConstants.LONG_PRESS
-            HapticIntensity.CONFIRM -> HapticFeedbackConstants.CONFIRM
+class HapticFeedbackManager
+    @Inject
+    constructor() {
+        /**
+         * Haptic feedback intensity levels
+         */
+        enum class HapticIntensity {
+            LIGHT, // Light - navigation actions
+            MEDIUM, // Medium - general actions
+            STRONG, // Strong - important actions
+            CONFIRM, // Confirm - critical actions
         }
 
-        view.performHapticFeedback(hapticConstant)
-    }
-
-    /**
-     * Trigger vibration feedback (for stronger feedback)
-     */
-    fun triggerVibration(
-        context: Context,
-        duration: Long = 50L,
-        intensity: HapticIntensity = HapticIntensity.MEDIUM
-    ) {
-        if (!settings.hapticEnabled) return
-
-        val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
-        val vibrator = vibratorManager.defaultVibrator
-
-        val vibrationEffect = when (intensity) {
-            HapticIntensity.LIGHT -> VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE / 2)
-            HapticIntensity.MEDIUM -> VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE)
-            HapticIntensity.STRONG -> VibrationEffect.createOneShot(duration * 2, VibrationEffect.DEFAULT_AMPLITUDE)
-            HapticIntensity.CONFIRM -> VibrationEffect.createWaveform(
-                longArrayOf(0, 100, 50, 100),
-                intArrayOf(0, 255, 0, 255),
-                -1
-            )
+        /**
+         * Haptic feedback types
+         */
+        enum class HapticType {
+            TAP, // Tap
+            LONG_PRESS, // Long press
+            SUCCESS, // Success
+            ERROR, // Error
+            SELECTION, // Selection
         }
-        vibrator.vibrate(vibrationEffect)
-    }
 
-    /**
-     * Trigger success feedback
-     */
-    fun triggerSuccess(view: View, context: Context) {
-        triggerHaptic(view, HapticIntensity.CONFIRM, HapticType.SUCCESS)
-        triggerVibration(context, 100L, HapticIntensity.CONFIRM)
-    }
+        /**
+         * Haptic feedback settings
+         */
+        data class HapticSettings(
+            val hapticEnabled: Boolean = true,
+            val soundEnabled: Boolean = true,
+            val intensity: HapticIntensity = HapticIntensity.MEDIUM,
+        )
 
-    /**
-     * Trigger error feedback
-     */
-    fun triggerError(view: View, context: Context) {
-        triggerHaptic(view, HapticIntensity.STRONG, HapticType.ERROR)
-        triggerVibration(context, 200L, HapticIntensity.STRONG)
-    }
+        private var settings = HapticSettings()
 
-    /**
-     * Trigger selection feedback
-     */
-    fun triggerSelection(view: View) {
-        triggerHaptic(view, HapticIntensity.LIGHT, HapticType.SELECTION)
-    }
+        /**
+         * Update haptic feedback settings
+         */
+        fun updateSettings(newSettings: HapticSettings) {
+            settings = newSettings
+        }
 
-    /**
-     * Trigger navigation feedback
-     */
-    fun triggerNavigation(view: View) {
-        triggerHaptic(view, HapticIntensity.LIGHT, HapticType.TAP)
+        /**
+         * Get current settings
+         */
+        fun getSettings(): HapticSettings = settings
+
+        /**
+         * Trigger haptic feedback
+         */
+        fun triggerHaptic(
+            view: View,
+            intensity: HapticIntensity = HapticIntensity.MEDIUM,
+            @Suppress("UNUSED_PARAMETER") type: HapticType = HapticType.TAP,
+        ) {
+            if (!settings.hapticEnabled) return
+
+            val hapticConstant =
+                when (intensity) {
+                    HapticIntensity.LIGHT -> HapticFeedbackConstants.KEYBOARD_TAP
+                    HapticIntensity.MEDIUM -> HapticFeedbackConstants.VIRTUAL_KEY
+                    HapticIntensity.STRONG -> HapticFeedbackConstants.LONG_PRESS
+                    HapticIntensity.CONFIRM -> HapticFeedbackConstants.CONFIRM
+                }
+
+            view.performHapticFeedback(hapticConstant)
+        }
+
+        /**
+         * Trigger vibration feedback (for stronger feedback)
+         */
+        fun triggerVibration(
+            context: Context,
+            duration: Long = 50L,
+            intensity: HapticIntensity = HapticIntensity.MEDIUM,
+        ) {
+            if (!settings.hapticEnabled) return
+
+            val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
+            val vibrator = vibratorManager.defaultVibrator
+
+            val vibrationEffect =
+                when (intensity) {
+                    HapticIntensity.LIGHT ->
+                        VibrationEffect.createOneShot(
+                            duration,
+                            VibrationEffect.DEFAULT_AMPLITUDE / 2,
+                        )
+                    HapticIntensity.MEDIUM -> VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE)
+                    HapticIntensity.STRONG ->
+                        VibrationEffect.createOneShot(
+                            duration * 2,
+                            VibrationEffect.DEFAULT_AMPLITUDE,
+                        )
+                    HapticIntensity.CONFIRM ->
+                        VibrationEffect.createWaveform(
+                            longArrayOf(0, 100, 50, 100),
+                            intArrayOf(0, 255, 0, 255),
+                            -1,
+                        )
+                }
+            vibrator.vibrate(vibrationEffect)
+        }
+
+        /**
+         * Trigger success feedback
+         */
+        fun triggerSuccess(
+            view: View,
+            context: Context,
+        ) {
+            triggerHaptic(view, HapticIntensity.CONFIRM, HapticType.SUCCESS)
+            triggerVibration(context, 100L, HapticIntensity.CONFIRM)
+        }
+
+        /**
+         * Trigger error feedback
+         */
+        fun triggerError(
+            view: View,
+            context: Context,
+        ) {
+            triggerHaptic(view, HapticIntensity.STRONG, HapticType.ERROR)
+            triggerVibration(context, 200L, HapticIntensity.STRONG)
+        }
+
+        /**
+         * Trigger selection feedback
+         */
+        fun triggerSelection(view: View) {
+            triggerHaptic(view, HapticIntensity.LIGHT, HapticType.SELECTION)
+        }
+
+        /**
+         * Trigger navigation feedback
+         */
+        fun triggerNavigation(view: View) {
+            triggerHaptic(view, HapticIntensity.LIGHT, HapticType.TAP)
+        }
     }
-}
 
 /**
  * Haptic feedback hook for Compose
@@ -168,7 +185,6 @@ fun rememberHapticFeedbackWithView(): Pair<HapticFeedbackManager, View> {
 @Module
 @InstallIn(SingletonComponent::class)
 object HapticFeedbackModule {
-
     @Provides
     @Singleton
     fun provideHapticFeedbackManager(): HapticFeedbackManager {

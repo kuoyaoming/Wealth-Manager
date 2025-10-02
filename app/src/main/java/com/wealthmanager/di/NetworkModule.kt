@@ -1,49 +1,47 @@
 package com.wealthmanager.di
 
 import android.content.Context
+import com.google.gson.GsonBuilder
 import com.wealthmanager.BuildConfig
+import com.wealthmanager.data.api.ExchangeRateApi
 import com.wealthmanager.data.api.FinnhubApi
 import com.wealthmanager.data.api.TwseApi
-import com.wealthmanager.data.api.ExchangeRateApi
-import com.wealthmanager.data.service.TwseDataParser
+import com.wealthmanager.data.repository.AssetRepository
+import com.wealthmanager.data.service.ApiErrorHandler
+import com.wealthmanager.data.service.ApiProviderService
 import com.wealthmanager.data.service.ApiRetryManager
 import com.wealthmanager.data.service.ApiStatusManager
-import com.wealthmanager.data.service.MarketDataService
-import com.wealthmanager.data.service.ApiErrorHandler
 import com.wealthmanager.data.service.CacheManager
 import com.wealthmanager.data.service.DataValidator
+import com.wealthmanager.data.service.MarketDataService
+import com.wealthmanager.data.service.PerformanceMonitor120Hz
 import com.wealthmanager.data.service.RequestDeduplicationManager
 import com.wealthmanager.data.service.SmartCacheStrategy
-import com.wealthmanager.data.service.PerformanceMonitor120Hz
-import com.wealthmanager.data.service.ApiProviderService
-import com.wealthmanager.data.repository.AssetRepository
-import com.wealthmanager.utils.NumberFormatter
 import com.wealthmanager.data.service.TwseCacheManager
+import com.wealthmanager.data.service.TwseDataParser
 import com.wealthmanager.debug.ApiDiagnostic
-import com.wealthmanager.security.KeyRepository
 import com.wealthmanager.security.AndroidKeystoreManager
-import com.wealthmanager.security.KeyValidator
 import com.wealthmanager.security.BiometricProtectionManager
+import com.wealthmanager.security.KeyRepository
+import com.wealthmanager.security.KeyValidator
+import com.wealthmanager.utils.NumberFormatter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.OkHttpClient
 import okhttp3.Interceptor
-import okhttp3.Response
+import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import javax.inject.Named
 import javax.inject.Singleton
-import com.google.gson.GsonBuilder
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-
     private const val FINNHUB_BASE_URL = "https://finnhub.io/api/v1/"
     private const val TWSE_BASE_URL = "https://openapi.twse.com.tw/"
     private const val EXCHANGE_RATE_BASE_URL = "https://v6.exchangerate-api.com/"
@@ -51,13 +49,14 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-            redactHeader("Authorization")
-            redactHeader("X-Finnhub-Token")
-            redactHeader("X-API-KEY")
-            redactHeader("Api-Key")
-        }
+        val loggingInterceptor =
+            HttpLoggingInterceptor().apply {
+                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                redactHeader("Authorization")
+                redactHeader("X-Finnhub-Token")
+                redactHeader("X-API-KEY")
+                redactHeader("Api-Key")
+            }
 
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
@@ -71,28 +70,31 @@ object NetworkModule {
     @Singleton
     @Named("FinnhubClient")
     fun provideFinnhubOkHttpClient(keyRepository: KeyRepository): OkHttpClient {
-        val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-            redactHeader("Authorization")
-            redactHeader("X-Finnhub-Token")
-            redactHeader("X-API-KEY")
-            redactHeader("Api-Key")
-        }
-
-        val tokenInterceptor = Interceptor { chain ->
-            val original = chain.request()
-            val host = original.url.host
-            val userKey = keyRepository.getUserFinnhubKey()
-            val needsHeader = host.contains("finnhub.io", ignoreCase = true) && !userKey.isNullOrBlank()
-            val request = if (needsHeader) {
-                original.newBuilder()
-                    .header("X-Finnhub-Token", userKey!!)
-                    .build()
-            } else {
-                original
+        val loggingInterceptor =
+            HttpLoggingInterceptor().apply {
+                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+                redactHeader("Authorization")
+                redactHeader("X-Finnhub-Token")
+                redactHeader("X-API-KEY")
+                redactHeader("Api-Key")
             }
-            chain.proceed(request)
-        }
+
+        val tokenInterceptor =
+            Interceptor { chain ->
+                val original = chain.request()
+                val host = original.url.host
+                val userKey = keyRepository.getUserFinnhubKey()
+                val needsHeader = host.contains("finnhub.io", ignoreCase = true) && !userKey.isNullOrBlank()
+                val request =
+                    if (needsHeader) {
+                        original.newBuilder()
+                            .header("X-Finnhub-Token", userKey!!)
+                            .build()
+                    } else {
+                        original
+                    }
+                chain.proceed(request)
+            }
 
         return OkHttpClient.Builder()
             .addInterceptor(tokenInterceptor)
@@ -108,9 +110,10 @@ object NetworkModule {
     @Named("TWSE")
     fun provideTwseRetrofit(okHttpClient: OkHttpClient): Retrofit {
         // Use lenient JSON parsing to handle TWSE API responses
-        val gson = GsonBuilder()
-            .setLenient()
-            .create()
+        val gson =
+            GsonBuilder()
+                .setLenient()
+                .create()
 
         return Retrofit.Builder()
             .baseUrl(TWSE_BASE_URL)
@@ -122,7 +125,9 @@ object NetworkModule {
     @Provides
     @Singleton
     @Named("Finnhub")
-    fun provideFinnhubRetrofit(@Named("FinnhubClient") okHttpClient: OkHttpClient): Retrofit {
+    fun provideFinnhubRetrofit(
+        @Named("FinnhubClient") okHttpClient: OkHttpClient,
+    ): Retrofit {
         return Retrofit.Builder()
             .baseUrl(FINNHUB_BASE_URL)
             .client(okHttpClient)
@@ -132,13 +137,17 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideTwseApi(@Named("TWSE") twseRetrofit: Retrofit): TwseApi {
+    fun provideTwseApi(
+        @Named("TWSE") twseRetrofit: Retrofit,
+    ): TwseApi {
         return twseRetrofit.create(TwseApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideFinnhubApi(@Named("Finnhub") finnhubRetrofit: Retrofit): FinnhubApi {
+    fun provideFinnhubApi(
+        @Named("Finnhub") finnhubRetrofit: Retrofit,
+    ): FinnhubApi {
         return finnhubRetrofit.create(FinnhubApi::class.java)
     }
 
@@ -155,7 +164,9 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideExchangeRateApi(@Named("ExchangeRate") exchangeRateRetrofit: Retrofit): ExchangeRateApi {
+    fun provideExchangeRateApi(
+        @Named("ExchangeRate") exchangeRateRetrofit: Retrofit,
+    ): ExchangeRateApi {
         return exchangeRateRetrofit.create(ExchangeRateApi::class.java)
     }
 
@@ -179,7 +190,9 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRequestDeduplicationManager(debugLogManager: com.wealthmanager.debug.DebugLogManager): RequestDeduplicationManager {
+    fun provideRequestDeduplicationManager(
+        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+    ): RequestDeduplicationManager {
         return RequestDeduplicationManager(debugLogManager)
     }
 
@@ -191,7 +204,9 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun providePerformanceMonitor120Hz(debugLogManager: com.wealthmanager.debug.DebugLogManager): PerformanceMonitor120Hz {
+    fun providePerformanceMonitor120Hz(
+        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+    ): PerformanceMonitor120Hz {
         return PerformanceMonitor120Hz(debugLogManager)
     }
 
@@ -200,7 +215,7 @@ object NetworkModule {
     fun provideCacheManager(
         assetRepository: AssetRepository,
         debugLogManager: com.wealthmanager.debug.DebugLogManager,
-        smartCacheStrategy: SmartCacheStrategy
+        smartCacheStrategy: SmartCacheStrategy,
     ): CacheManager {
         return CacheManager(assetRepository, debugLogManager, smartCacheStrategy)
     }
@@ -215,7 +230,7 @@ object NetworkModule {
     @Singleton
     fun provideApiRetryManager(
         debugLogManager: com.wealthmanager.debug.DebugLogManager,
-        apiErrorHandler: ApiErrorHandler
+        apiErrorHandler: ApiErrorHandler,
     ): ApiRetryManager {
         return ApiRetryManager(debugLogManager, apiErrorHandler)
     }
@@ -226,13 +241,9 @@ object NetworkModule {
         return ApiStatusManager(debugLogManager)
     }
 
-
-
     @Provides
     @Singleton
-    fun provideTwseCacheManager(
-        debugLogManager: com.wealthmanager.debug.DebugLogManager
-    ): TwseCacheManager {
+    fun provideTwseCacheManager(debugLogManager: com.wealthmanager.debug.DebugLogManager): TwseCacheManager {
         return TwseCacheManager(debugLogManager)
     }
 
@@ -240,16 +251,14 @@ object NetworkModule {
     @Singleton
     fun provideAndroidKeystoreManager(
         @ApplicationContext context: Context,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager
+        debugLogManager: com.wealthmanager.debug.DebugLogManager,
     ): AndroidKeystoreManager {
         return AndroidKeystoreManager(context, debugLogManager)
     }
 
     @Provides
     @Singleton
-    fun provideKeyValidator(
-        debugLogManager: com.wealthmanager.debug.DebugLogManager
-    ): KeyValidator {
+    fun provideKeyValidator(debugLogManager: com.wealthmanager.debug.DebugLogManager): KeyValidator {
         return KeyValidator(debugLogManager)
     }
 
@@ -257,7 +266,7 @@ object NetworkModule {
     @Singleton
     fun provideBiometricProtectionManager(
         @ApplicationContext context: Context,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager
+        debugLogManager: com.wealthmanager.debug.DebugLogManager,
     ): BiometricProtectionManager {
         return BiometricProtectionManager(context, debugLogManager)
     }
@@ -266,7 +275,7 @@ object NetworkModule {
     @Singleton
     fun provideDeveloperKeyManager(
         @ApplicationContext context: Context,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager
+        debugLogManager: com.wealthmanager.debug.DebugLogManager,
     ): com.wealthmanager.security.DeveloperKeyManager {
         return com.wealthmanager.security.DeveloperKeyManager(context, debugLogManager)
     }
@@ -276,7 +285,7 @@ object NetworkModule {
     fun provideApiDiagnostic(
         @ApplicationContext context: Context,
         debugLogManager: com.wealthmanager.debug.DebugLogManager,
-        keyRepository: KeyRepository
+        keyRepository: KeyRepository,
     ): ApiDiagnostic {
         return ApiDiagnostic(context, debugLogManager, keyRepository)
     }
@@ -291,9 +300,18 @@ object NetworkModule {
         twseCacheManager: TwseCacheManager,
         debugLogManager: com.wealthmanager.debug.DebugLogManager,
         apiDiagnostic: ApiDiagnostic,
-        keyRepository: KeyRepository
+        keyRepository: KeyRepository,
     ): ApiProviderService {
-        return ApiProviderService(finnhubApi, twseApi, exchangeRateApi, twseDataParser, twseCacheManager, debugLogManager, apiDiagnostic, keyRepository)
+        return ApiProviderService(
+            finnhubApi,
+            twseApi,
+            exchangeRateApi,
+            twseDataParser,
+            twseCacheManager,
+            debugLogManager,
+            apiDiagnostic,
+            keyRepository,
+        )
     }
 
     @Provides
@@ -307,7 +325,7 @@ object NetworkModule {
         dataValidator: DataValidator,
         requestDeduplicationManager: RequestDeduplicationManager,
         apiRetryManager: ApiRetryManager,
-        numberFormatter: NumberFormatter
+        numberFormatter: NumberFormatter,
     ): MarketDataService {
         return MarketDataService(
             apiProviderService,
@@ -318,13 +336,15 @@ object NetworkModule {
             dataValidator,
             requestDeduplicationManager,
             apiRetryManager,
-            numberFormatter
+            numberFormatter,
         )
     }
 
     @Provides
     @Singleton
-    fun provideContext(@ApplicationContext context: Context): Context {
+    fun provideContext(
+        @ApplicationContext context: Context,
+    ): Context {
         return context
     }
 }

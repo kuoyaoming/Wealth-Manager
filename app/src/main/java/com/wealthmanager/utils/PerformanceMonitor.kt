@@ -3,8 +3,8 @@ package com.wealthmanager.utils
 import android.os.SystemClock
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 
@@ -13,7 +13,6 @@ import kotlinx.coroutines.withContext
  * 用於分析 APP 中的性能瓶頸和卡頓問題
  */
 object PerformanceMonitor {
-
     private const val MEMORY_WARNING_THRESHOLD = 80
     private const val SLOW_OPERATION_THRESHOLD = 100
     private const val EXCESSIVE_RECOMPOSITION_THRESHOLD = 10
@@ -24,7 +23,7 @@ object PerformanceMonitor {
     @Composable
     fun trackRenderTime(
         componentName: String,
-        threshold: Long = 16L // Threshold exceeding one frame time
+        threshold: Long = 16L, // Threshold exceeding one frame time
     ) {
         val startTime = remember { SystemClock.elapsedRealtime() }
 
@@ -33,7 +32,9 @@ object PerformanceMonitor {
             val duration = endTime - startTime
 
             if (duration > threshold) {
-                StandardLogger.performanceWarning("⚠️ $componentName render took ${duration}ms (threshold: ${threshold}ms)")
+                StandardLogger.performanceWarning(
+                    "⚠️ $componentName render took ${duration}ms (threshold: ${threshold}ms)",
+                )
             } else {
                 StandardLogger.performance("✅ $componentName render took ${duration}ms")
             }
@@ -45,7 +46,7 @@ object PerformanceMonitor {
      */
     suspend fun <T> measureAsyncOperation(
         operationName: String,
-        operation: suspend () -> T
+        operation: suspend () -> T,
     ): T {
         val startTime = SystemClock.elapsedRealtime()
 
@@ -76,7 +77,9 @@ object PerformanceMonitor {
                 StandardLogger.performance("🧠 $componentName memory usage: ${String.format("%.1f", memoryUsage)}%")
 
                 if (memoryUsage > MEMORY_WARNING_THRESHOLD) {
-                    StandardLogger.performanceWarning("⚠️ High memory usage detected: ${String.format("%.1f", memoryUsage)}%")
+                    StandardLogger.performanceWarning(
+                        "⚠️ High memory usage detected: ${String.format("%.1f", memoryUsage)}%",
+                    )
                 }
             }
         }
@@ -87,7 +90,7 @@ object PerformanceMonitor {
      */
     suspend fun <T> measureCpuIntensiveOperation(
         operationName: String,
-        operation: suspend () -> T
+        operation: suspend () -> T,
     ): T {
         val startTime = SystemClock.elapsedRealtime()
 
@@ -109,9 +112,7 @@ object PerformanceMonitor {
      * 監控重組次數
      */
     @Composable
-    fun trackRecomposition(
-        componentName: String
-    ) {
+    fun trackRecomposition(componentName: String) {
         val recompositionCount = remember { mutableStateOf(0) }
 
         LaunchedEffect(Unit) {
@@ -119,7 +120,9 @@ object PerformanceMonitor {
             StandardLogger.performance("🔄 $componentName recomposed ${recompositionCount.value} times")
 
             if (recompositionCount.value > EXCESSIVE_RECOMPOSITION_THRESHOLD) {
-                StandardLogger.performanceWarning("⚠️ Excessive recomposition detected for $componentName: ${recompositionCount.value} times")
+                StandardLogger.performanceWarning(
+                    "⚠️ Excessive recomposition detected for $componentName: ${recompositionCount.value} times",
+                )
             }
         }
     }
@@ -133,7 +136,7 @@ fun PerformanceTracker(
     componentName: String,
     trackMemory: Boolean = false,
     trackRecomposition: Boolean = false,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     PerformanceMonitor.trackRenderTime(componentName)
 

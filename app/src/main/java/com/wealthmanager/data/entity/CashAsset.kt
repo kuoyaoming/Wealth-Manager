@@ -11,5 +11,5 @@ data class CashAsset(
     val currency: String, // "TWD" or "USD"
     val amount: Double,
     val twdEquivalent: Double = 0.0,
-    val lastUpdated: Long = System.currentTimeMillis()
+    val lastUpdated: Long = System.currentTimeMillis(),
 )

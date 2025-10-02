@@ -6,7 +6,6 @@ import com.wealthmanager.data.dao.CashAssetDao
 import com.wealthmanager.data.dao.ExchangeRateDao
 import com.wealthmanager.data.dao.StockAssetDao
 import com.wealthmanager.data.database.WealthManagerDatabase
-import com.wealthmanager.data.repository.AssetRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,10 +16,11 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
-
     @Provides
     @Singleton
-    fun provideWealthManagerDatabase(@ApplicationContext context: Context): WealthManagerDatabase {
+    fun provideWealthManagerDatabase(
+        @ApplicationContext context: Context,
+    ): WealthManagerDatabase {
         return WealthManagerDatabase.getDatabase(context)
     }
 

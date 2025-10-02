@@ -8,7 +8,6 @@ import androidx.compose.foundation.selection.selectableGroup
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -25,7 +24,6 @@ import com.wealthmanager.data.model.StockSearchItem
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
-import kotlinx.coroutines.delay
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -41,7 +39,7 @@ fun AddAssetDialog(
     onSearchStocks: (String, String) -> Unit = { _, _ -> },
     onSearchQueryChange: (String) -> Unit = {},
     searchResults: List<StockSearchItem> = emptyList(),
-    isSearching: Boolean = false
+    isSearching: Boolean = false,
 ) {
     val debugLogManager = remember { DebugLogManager() }
     val (hapticManager, view) = rememberHapticFeedbackWithView()
@@ -74,45 +72,48 @@ fun AddAssetDialog(
             Column {
                 // Tab Selection
                 Row(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .selectableGroup()
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .selectableGroup(),
                 ) {
                     Row(
-                        modifier = Modifier
-                            .weight(1f)
-                            .selectable(
-                                selected = selectedTab == 0,
-                                onClick = {
-                                    debugLogManager.logUserAction("Cash Tab Selected")
-                                    debugLogManager.log("UI", "User switched to Cash tab in Add Asset dialog")
-                                    selectedTab = 0
-                                },
-                                role = Role.Tab
-                            )
+                        modifier =
+                            Modifier
+                                .weight(1f)
+                                .selectable(
+                                    selected = selectedTab == 0,
+                                    onClick = {
+                                        debugLogManager.logUserAction("Cash Tab Selected")
+                                        debugLogManager.log("UI", "User switched to Cash tab in Add Asset dialog")
+                                        selectedTab = 0
+                                    },
+                                    role = Role.Tab,
+                                ),
                     ) {
                         RadioButton(
                             selected = selectedTab == 0,
-                            onClick = null
+                            onClick = null,
                         )
                         Text(stringResource(R.string.assets_tab_cash), modifier = Modifier.padding(start = 8.dp))
                     }
                     Row(
-                        modifier = Modifier
-                            .weight(1f)
-                            .selectable(
-                                selected = selectedTab == 1,
-                                onClick = {
-                                    debugLogManager.logUserAction("Stock Tab Selected")
-                                    debugLogManager.log("UI", "User switched to Stock tab in Add Asset dialog")
-                                    selectedTab = 1
-                                },
-                                role = Role.Tab
-                            )
+                        modifier =
+                            Modifier
+                                .weight(1f)
+                                .selectable(
+                                    selected = selectedTab == 1,
+                                    onClick = {
+                                        debugLogManager.logUserAction("Stock Tab Selected")
+                                        debugLogManager.log("UI", "User switched to Stock tab in Add Asset dialog")
+                                        selectedTab = 1
+                                    },
+                                    role = Role.Tab,
+                                ),
                     ) {
                         RadioButton(
                             selected = selectedTab == 1,
-                            onClick = null
+                            onClick = null,
                         )
                         Text(stringResource(R.string.assets_tab_stock), modifier = Modifier.padding(start = 8.dp))
                     }
@@ -127,42 +128,56 @@ fun AddAssetDialog(
                             Spacer(modifier = Modifier.height(8.dp))
                             Row {
                                 Row(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .selectable(
-                                            selected = cashCurrency == "TWD",
-                                            onClick = {
-                                                debugLogManager.logUserAction("TWD Currency Selected")
-                                                debugLogManager.log("UI", "User selected TWD currency for cash asset")
-                                                onCurrencyChange("TWD")
-                                            },
-                                            role = Role.RadioButton
-                                        )
+                                    modifier =
+                                        Modifier
+                                            .weight(1f)
+                                            .selectable(
+                                                selected = cashCurrency == "TWD",
+                                                onClick = {
+                                                    debugLogManager.logUserAction("TWD Currency Selected")
+                                                    debugLogManager.log(
+                                                        "UI",
+                                                        "User selected TWD currency for cash asset",
+                                                    )
+                                                    onCurrencyChange("TWD")
+                                                },
+                                                role = Role.RadioButton,
+                                            ),
                                 ) {
                                     RadioButton(
                                         selected = cashCurrency == "TWD",
-                                        onClick = null
+                                        onClick = null,
                                     )
-                                    Text(stringResource(R.string.assets_currency_twd), modifier = Modifier.padding(start = 8.dp))
+                                    Text(
+                                        stringResource(R.string.assets_currency_twd),
+                                        modifier = Modifier.padding(start = 8.dp),
+                                    )
                                 }
                                 Row(
-                                    modifier = Modifier
-                                        .weight(1f)
-                                        .selectable(
-                                            selected = cashCurrency == "USD",
-                                            onClick = {
-                                                debugLogManager.logUserAction("USD Currency Selected")
-                                                debugLogManager.log("UI", "User selected USD currency for cash asset")
-                                                onCurrencyChange("USD")
-                                            },
-                                            role = Role.RadioButton
-                                        )
+                                    modifier =
+                                        Modifier
+                                            .weight(1f)
+                                            .selectable(
+                                                selected = cashCurrency == "USD",
+                                                onClick = {
+                                                    debugLogManager.logUserAction("USD Currency Selected")
+                                                    debugLogManager.log(
+                                                        "UI",
+                                                        "User selected USD currency for cash asset",
+                                                    )
+                                                    onCurrencyChange("USD")
+                                                },
+                                                role = Role.RadioButton,
+                                            ),
                                 ) {
                                     RadioButton(
                                         selected = cashCurrency == "USD",
-                                        onClick = null
+                                        onClick = null,
                                     )
-                                    Text(stringResource(R.string.assets_currency_usd), modifier = Modifier.padding(start = 8.dp))
+                                    Text(
+                                        stringResource(R.string.assets_currency_usd),
+                                        modifier = Modifier.padding(start = 8.dp),
+                                    )
                                 }
                             }
                             Spacer(modifier = Modifier.height(16.dp))
@@ -170,7 +185,7 @@ fun AddAssetDialog(
                                 Text(
                                     text = stringResource(R.string.cash_update_existing, cashCurrency.uppercase()),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                                 Spacer(modifier = Modifier.height(12.dp))
                             }
@@ -186,12 +201,24 @@ fun AddAssetDialog(
                                     }
                                 },
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                                placeholder = { Text(stringResource(R.string.assets_amount_placeholder, amountExample)) },
+                                placeholder = {
+                                    Text(
+                                        stringResource(R.string.assets_amount_placeholder, amountExample),
+                                    )
+                                },
                                 isError = cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null,
-                                supportingText = if (cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null) {
-                                    { Text(stringResource(R.string.validation_enter_valid_number), color = MaterialTheme.colorScheme.error) }
-                                } else null,
-                                modifier = Modifier.fillMaxWidth()
+                                supportingText =
+                                    if (cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null) {
+                                        {
+                                            Text(
+                                                stringResource(R.string.validation_enter_valid_number),
+                                                color = MaterialTheme.colorScheme.error,
+                                            )
+                                        }
+                                    } else {
+                                        null
+                                    },
+                                modifier = Modifier.fillMaxWidth(),
                             )
                         }
                     }
@@ -209,35 +236,49 @@ fun AddAssetDialog(
                                     showSearchResults = it.isNotEmpty()
                                 },
                                 placeholder = { Text(stringResource(R.string.assets_stock_symbol_placeholder)) },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Text, imeAction = ImeAction.Search),
-                                keyboardActions = KeyboardActions(
-                                    onSearch = {
-                                        if (stockSymbol.isNotEmpty()) {
-                                            debugLogManager.logUserAction("IME Search Triggered")
-                                            debugLogManager.log("UI", "IME Search for: $stockSymbol")
-                                            onSearchStocks(stockSymbol, "")
-                                            showSearchResults = true
-                                        }
-                                    }
-                                ),
+                                keyboardOptions =
+                                    KeyboardOptions(
+                                        keyboardType = KeyboardType.Text,
+                                        imeAction = ImeAction.Search,
+                                    ),
+                                keyboardActions =
+                                    KeyboardActions(
+                                        onSearch = {
+                                            if (stockSymbol.isNotEmpty()) {
+                                                debugLogManager.logUserAction("IME Search Triggered")
+                                                debugLogManager.log("UI", "IME Search for: $stockSymbol")
+                                                onSearchStocks(stockSymbol, "")
+                                                showSearchResults = true
+                                            }
+                                        },
+                                    ),
                                 trailingIcon = {
                                     if (isSearching) {
                                         CircularProgressIndicator(modifier = Modifier.size(20.dp))
                                     } else {
                                         IconButton(onClick = {
                                             debugLogManager.logUserAction("Manual Stock Search Clicked")
-                                            debugLogManager.log("UI", "User clicked manual search button for: $stockSymbol")
-                                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                                            debugLogManager.log(
+                                                "UI",
+                                                "User clicked manual search button for: $stockSymbol",
+                                            )
+                                            hapticManager.triggerHaptic(
+                                                view,
+                                                HapticFeedbackManager.HapticIntensity.LIGHT,
+                                            )
                                             if (stockSymbol.isNotEmpty()) {
                                                 onSearchStocks(stockSymbol, "")
                                                 showSearchResults = true
                                             }
                                         }) {
-                                            Icon(Icons.Default.Search, contentDescription = stringResource(R.string.cd_search))
+                                            Icon(
+                                                Icons.Default.Search,
+                                                contentDescription = stringResource(R.string.cd_search),
+                                            )
                                         }
                                     }
                                 },
-                                modifier = Modifier.fillMaxWidth()
+                                modifier = Modifier.fillMaxWidth(),
                             )
 
                             // Show search results when available
@@ -246,40 +287,48 @@ fun AddAssetDialog(
                                 Text(
                                     text = stringResource(R.string.assets_search_results_count, searchResults.size),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                 )
                                 Spacer(modifier = Modifier.height(4.dp))
                                 LazyColumn(
-                                    modifier = Modifier
-                                        .fillMaxWidth()
-                                        .heightIn(max = 150.dp)
+                                    modifier =
+                                        Modifier
+                                            .fillMaxWidth()
+                                            .heightIn(max = 150.dp),
                                 ) {
                                     items(searchResults.take(5)) { result ->
                                         Card(
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(vertical = 2.dp),
+                                            modifier =
+                                                Modifier
+                                                    .fillMaxWidth()
+                                                    .padding(vertical = 2.dp),
                                             onClick = {
                                                 debugLogManager.logUserAction("Stock Selected from Search")
-                                                debugLogManager.log("UI", "User selected stock: ${result.symbol} - ${result.longName}")
-                                                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                                                debugLogManager.log(
+                                                    "UI",
+                                                    "User selected stock: ${result.symbol} - ${result.longName}",
+                                                )
+                                                hapticManager.triggerHaptic(
+                                                    view,
+                                                    HapticFeedbackManager.HapticIntensity.MEDIUM,
+                                                )
                                                 stockSymbol = result.symbol
                                                 showSearchResults = false
                                                 searchError = ""
-                                            }
+                                            },
                                         ) {
                                             Column(
-                                                modifier = Modifier.padding(8.dp)
+                                                modifier = Modifier.padding(8.dp),
                                             ) {
                                                 Text(
                                                     text = result.symbol,
                                                     style = MaterialTheme.typography.bodyMedium,
-                                                    fontWeight = FontWeight.Medium
+                                                    fontWeight = FontWeight.Medium,
                                                 )
                                                 Text(
                                                     text = result.longName,
                                                     style = MaterialTheme.typography.bodySmall,
-                                                    color = MaterialTheme.colorScheme.onSurfaceVariant
+                                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
                                                 )
                                             }
                                         }
@@ -290,14 +339,14 @@ fun AddAssetDialog(
                                 Row(
                                     modifier = Modifier.fillMaxWidth(),
                                     horizontalArrangement = Arrangement.Center,
-                                    verticalAlignment = Alignment.CenterVertically
+                                    verticalAlignment = Alignment.CenterVertically,
                                 ) {
                                     CircularProgressIndicator(modifier = Modifier.size(16.dp))
                                     Spacer(modifier = Modifier.width(8.dp))
-                                Text(
-                                    text = stringResource(R.string.searching),
+                                    Text(
+                                        text = stringResource(R.string.searching),
                                         style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                                     )
                                 }
                             } else if (searchError.isNotEmpty()) {
@@ -305,14 +354,14 @@ fun AddAssetDialog(
                                 Text(
                                     text = searchError,
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.error
+                                    color = MaterialTheme.colorScheme.error,
                                 )
                             } else if (showSearchResults && searchResults.isEmpty() && !isSearching) {
                                 Spacer(modifier = Modifier.height(8.dp))
                                 Text(
                                     text = stringResource(R.string.assets_search_no_match),
                                     style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.error
+                                    color = MaterialTheme.colorScheme.error,
                                 )
                             }
                             Spacer(modifier = Modifier.height(16.dp))
@@ -327,10 +376,18 @@ fun AddAssetDialog(
                                 keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
                                 placeholder = { Text(stringResource(R.string.assets_shares_placeholder)) },
                                 isError = stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null,
-                                supportingText = if (stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null) {
-                                    { Text(stringResource(R.string.validation_enter_valid_shares), color = MaterialTheme.colorScheme.error) }
-                                } else null,
-                                modifier = Modifier.fillMaxWidth()
+                                supportingText =
+                                    if (stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null) {
+                                        {
+                                            Text(
+                                                stringResource(R.string.validation_enter_valid_shares),
+                                                color = MaterialTheme.colorScheme.error,
+                                            )
+                                        }
+                                    } else {
+                                        null
+                                    },
+                                modifier = Modifier.fillMaxWidth(),
                             )
                         }
                     }
@@ -358,18 +415,22 @@ fun AddAssetDialog(
                             if (stockSymbol.isNotEmpty() && shares != null && shares > 0) {
                                 onAddStock(stockSymbol, shares)
                             } else {
-                                debugLogManager.log("UI", "Invalid stock data: symbol=$stockSymbol, shares=$stockShares")
+                                debugLogManager.log(
+                                    "UI",
+                                    "Invalid stock data: symbol=$stockSymbol, shares=$stockShares",
+                                )
                             }
                         }
                     }
-                }
+                },
             ) {
                 Text(
-                    text = if (selectedTab == 0) {
-                        if (isUpdating) stringResource(R.string.update) else stringResource(R.string.add_cash)
-                    } else {
-                        stringResource(R.string.add_stock)
-                    }
+                    text =
+                        if (selectedTab == 0) {
+                            if (isUpdating) stringResource(R.string.update) else stringResource(R.string.add_cash)
+                        } else {
+                            stringResource(R.string.add_stock)
+                        },
                 )
             }
         },
@@ -382,6 +443,6 @@ fun AddAssetDialog(
             }) {
                 Text(stringResource(R.string.dialog_cancel))
             }
-        }
+        },
     )
 }

@@ -35,15 +35,16 @@ class TwseDataParserTest {
 
     @Test
     fun findStockFromAllData_returnsConvertedData_whenPresent() {
-        val items = listOf(
-            sampleItem(code = "1101"),
-            sampleItem(
-                code = "2330",
-                change = "2.00",
-                close = "600.00",
-            ),
-            sampleItem(code = "2603"),
-        )
+        val items =
+            listOf(
+                sampleItem(code = "1101"),
+                sampleItem(
+                    code = "2330",
+                    change = "2.00",
+                    close = "600.00",
+                ),
+                sampleItem(code = "2603"),
+            )
 
         val result = parser.findStockFromAllData(items, "2330")
         assertNotNull(result)
@@ -57,10 +58,11 @@ class TwseDataParserTest {
 
     @Test
     fun findStockFromAllData_returnsNull_whenMissing() {
-        val items = listOf(
-            sampleItem(code = "1101"),
-            sampleItem(code = "2603"),
-        )
+        val items =
+            listOf(
+                sampleItem(code = "1101"),
+                sampleItem(code = "2603"),
+            )
         val result = parser.findStockFromAllData(items, "2330")
         assertNull(result)
     }
@@ -92,4 +94,3 @@ class TwseDataParserTest {
         )
     }
 }
-

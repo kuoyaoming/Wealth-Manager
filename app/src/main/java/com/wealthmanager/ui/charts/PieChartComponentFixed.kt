@@ -8,19 +8,18 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.stringResource
-import com.wealthmanager.utils.MoneyFormatter
-import com.wealthmanager.utils.rememberMoneyText
 import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.geometry.Size
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.drawscope.DrawScope
-import androidx.compose.ui.graphics.drawscope.Stroke
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import com.wealthmanager.ui.dashboard.AssetItem
 import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
+import com.wealthmanager.ui.dashboard.AssetItem
+import com.wealthmanager.utils.MoneyFormatter
+import com.wealthmanager.utils.rememberMoneyText
 import kotlin.math.*
 
 /**
@@ -30,7 +29,7 @@ import kotlin.math.*
 fun PieChartComponentFixed(
     assets: List<AssetItem>,
     isLoading: Boolean,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
 ) {
     val debugLogManager = remember { DebugLogManager() }
 
@@ -40,65 +39,72 @@ fun PieChartComponentFixed(
             val totalValue = assets.sumOf { it.value }
             debugLogManager.log("CHART", "Total chart value: $totalValue")
             assets.forEachIndexed { index, asset ->
-                debugLogManager.log("CHART", "Asset $index: ${asset.name} = ${asset.value} (${(asset.value/totalValue*100).toInt()}%)")
+                debugLogManager.log(
+                    "CHART",
+                    "Asset $index: ${asset.name} = ${asset.value} (${(asset.value / totalValue * 100).toInt()}%)",
+                )
             }
         }
     }
 
     Card(
         modifier = modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
     ) {
         Column(
-            modifier = Modifier.padding(16.dp)
+            modifier = Modifier.padding(16.dp),
         ) {
             Text(
                 text = stringResource(R.string.asset_distribution_title),
                 style = MaterialTheme.typography.titleMedium,
-                modifier = Modifier.padding(bottom = 16.dp)
+                modifier = Modifier.padding(bottom = 16.dp),
             )
 
             if (isLoading) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    contentAlignment = Alignment.Center
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                    contentAlignment = Alignment.Center,
                 ) {
                     CircularProgressIndicator()
                 }
             } else if (assets.isEmpty()) {
                 Box(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .height(200.dp),
-                    contentAlignment = Alignment.Center
+                    modifier =
+                        Modifier
+                            .fillMaxWidth()
+                            .height(200.dp),
+                    contentAlignment = Alignment.Center,
                 ) {
                     Text(
                         text = stringResource(R.string.asset_distribution_empty),
                         style = MaterialTheme.typography.bodyMedium,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                        color = MaterialTheme.colorScheme.onSurfaceVariant,
                     )
                 }
             } else {
                 Row(
                     modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.SpaceBetween
+                    horizontalArrangement = Arrangement.SpaceBetween,
                 ) {
                     // Pie Chart
                     Canvas(
-                        modifier = Modifier
-                            .size(150.dp)
-                            .padding(8.dp)
+                        modifier =
+                            Modifier
+                                .size(150.dp)
+                                .padding(8.dp),
                     ) {
                         drawPieChartFixed(assets)
                     }
 
                     // Legend
                     LazyColumn(
-                        modifier = Modifier
-                            .weight(1f)
-                            .height(150.dp)
+                        modifier =
+                            Modifier
+                                .weight(1f)
+                                .height(150.dp),
                     ) {
                         items(assets) { asset ->
                             LegendItemFixed(asset)
@@ -116,20 +122,22 @@ private fun LegendItemFixed(asset: AssetItem) {
     val percentage = if (asset.percentage > 0) "${(asset.percentage * 100).toInt()}%" else ""
 
     Row(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(vertical = 2.dp),
-        verticalAlignment = Alignment.CenterVertically
+        modifier =
+            Modifier
+                .fillMaxWidth()
+                .padding(vertical = 2.dp),
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Box(
-            modifier = Modifier
-                .size(12.dp)
-                .padding(end = 8.dp)
+            modifier =
+                Modifier
+                    .size(12.dp)
+                    .padding(end = 8.dp),
         ) {
             Canvas(modifier = Modifier.fillMaxSize()) {
                 drawCircle(
                     color = color,
-                    radius = size.minDimension / 2
+                    radius = size.minDimension / 2,
                 )
             }
         }
@@ -138,21 +146,22 @@ private fun LegendItemFixed(asset: AssetItem) {
                 text = asset.name,
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Medium,
-                color = MaterialTheme.colorScheme.onSurface
+                color = MaterialTheme.colorScheme.onSurface,
             )
             Text(
-                text = stringResource(
-                    R.string.asset_distribution_value,
-                    rememberMoneyText(
-                        asset.value,
-                        "TWD",
-                        style = MoneyFormatter.Style.CurrencyCode,
-                        moneyContext = MoneyFormatter.MoneyContext.ChartLabel
+                text =
+                    stringResource(
+                        R.string.asset_distribution_value,
+                        rememberMoneyText(
+                            asset.value,
+                            "TWD",
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.ChartLabel,
+                        ),
+                        percentage,
                     ),
-                    percentage
-                ),
                 style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
         }
     }
@@ -175,11 +184,12 @@ private fun DrawScope.drawPieChartFixed(assets: List<AssetItem>) {
             startAngle = startAngle,
             sweepAngle = sweepAngle,
             useCenter = true,
-            topLeft = Offset(
-                center.x - radius,
-                center.y - radius
-            ),
-            size = Size(radius * 2, radius * 2)
+            topLeft =
+                Offset(
+                    center.x - radius,
+                    center.y - radius,
+                ),
+            size = Size(radius * 2, radius * 2),
         )
 
         startAngle += sweepAngle
@@ -191,16 +201,17 @@ private fun DrawScope.drawPieChartFixed(assets: List<AssetItem>) {
  */
 private fun getAssetColorFixed(assetName: String): Color {
     // Use predefined colors that work well with both light and dark themes
-    val colors = listOf(
-        Color(0xFF2196F3), // Blue
-        Color(0xFF4CAF50), // Green
-        Color(0xFFFF9800), // Orange
-        Color(0xFF9C27B0), // Purple
-        Color(0xFFF44336), // Red
-        Color(0xFF00BCD4), // Cyan
-        Color(0xFFFFEB3B), // Yellow
-        Color(0xFF795548)  // Brown
-    )
+    val colors =
+        listOf(
+            Color(0xFF2196F3), // Blue
+            Color(0xFF4CAF50), // Green
+            Color(0xFFFF9800), // Orange
+            Color(0xFF9C27B0), // Purple
+            Color(0xFFF44336), // Red
+            Color(0xFF00BCD4), // Cyan
+            Color(0xFFFFEB3B), // Yellow
+            Color(0xFF795548), // Brown
+        )
 
     val index = assetName.hashCode().mod(colors.size)
     return colors[abs(index)]

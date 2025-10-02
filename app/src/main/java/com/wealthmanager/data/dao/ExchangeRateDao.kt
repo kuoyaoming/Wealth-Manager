@@ -6,7 +6,6 @@ import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface ExchangeRateDao {
-
     @Query("SELECT * FROM exchange_rates")
     fun getAllExchangeRates(): Flow<List<ExchangeRate>>
 

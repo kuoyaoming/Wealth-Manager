@@ -3,16 +3,15 @@ package com.wealthmanager.ui.utils
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.res.stringResource
 import com.wealthmanager.R
-import com.wealthmanager.data.model.SearchResult
 import com.wealthmanager.data.model.NoResultsReason
 import com.wealthmanager.data.model.SearchErrorType
+import com.wealthmanager.data.model.SearchResult
 
 /**
  * Search result handler
  * Provides unified search result processing logic
  */
 object SearchResultHandler {
-
     /**
      * Get user-friendly message for search results
      */

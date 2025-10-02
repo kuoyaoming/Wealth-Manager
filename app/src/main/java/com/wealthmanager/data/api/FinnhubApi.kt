@@ -11,7 +11,6 @@ import retrofit2.http.Query
  * stock search functionality, and exchange rate data from Finnhub API.
  */
 interface FinnhubApi {
-
     /**
      * Retrieves real-time stock quote data for a given symbol.
      *
@@ -20,7 +19,7 @@ interface FinnhubApi {
      */
     @GET("quote")
     suspend fun getStockQuote(
-        @Query("symbol") symbol: String
+        @Query("symbol") symbol: String,
     ): FinnhubQuoteResponse
 
     /**
@@ -31,7 +30,7 @@ interface FinnhubApi {
      */
     @GET("search")
     suspend fun searchStocks(
-        @Query("q") query: String
+        @Query("q") query: String,
     ): FinnhubSearchResponse
 
     /**
@@ -42,7 +41,7 @@ interface FinnhubApi {
      */
     @GET("forex/rates")
     suspend fun getExchangeRate(
-        @Query("base") baseCurrency: String = "USD"
+        @Query("base") baseCurrency: String = "USD",
     ): FinnhubExchangeResponse
 }
 
@@ -66,7 +65,7 @@ data class FinnhubQuoteResponse(
     @SerializedName("l") val l: Double,
     @SerializedName("o") val o: Double,
     @SerializedName("pc") val pc: Double,
-    @SerializedName("t") val t: Long
+    @SerializedName("t") val t: Long,
 )
 
 /**
@@ -77,7 +76,7 @@ data class FinnhubQuoteResponse(
  */
 data class FinnhubSearchResponse(
     @SerializedName("count") val count: Int,
-    @SerializedName("result") val result: List<FinnhubSearchResult>
+    @SerializedName("result") val result: List<FinnhubSearchResult>,
 )
 
 /**
@@ -92,7 +91,7 @@ data class FinnhubSearchResult(
     @SerializedName("description") val description: String,
     @SerializedName("displaySymbol") val displaySymbol: String,
     @SerializedName("symbol") val symbol: String,
-    @SerializedName("type") val type: String
+    @SerializedName("type") val type: String,
 )
 
 /**
@@ -105,5 +104,5 @@ data class FinnhubSearchResult(
 data class FinnhubExchangeResponse(
     @SerializedName("base") val base: String,
     @SerializedName("quote") val quote: String,
-    @SerializedName("rate") val rate: Double
+    @SerializedName("rate") val rate: Double,
 )
