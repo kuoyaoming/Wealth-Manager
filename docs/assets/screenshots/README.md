@@ -70,18 +70,13 @@ Screenshots are referenced in:
 ```mermaid
 graph TD
     A[screenshots/] --> B[README.md]
-    A --> C[app-demo-optimized.gif]
-    A --> D[portfolio-overview.png]
-    A --> E[asset-management.png]
-    A --> F[biometric-auth.png]
-    A --> G[add-assets.png]
-    A --> H[about-app.png]
     
     B --> B1[This file]
-    C --> C1[Live app demonstration]
-    D --> D1[Main dashboard]
-    E --> E1[Asset management]
-    F --> F1[Authentication]
-    G --> G1[Add asset dialog]
-    H --> H1[About screen]
 ```
+
+### **Current Files**
+- **`README.md`** - This documentation file
+
+### **Video Demo**
+- **YouTube Shorts**: [Wealth Manager App Demo](https://youtube.com/shorts/kW68GsKsGJ0?feature=share)
+- **Embedded in README**: Using YouTube iframe for better performance

@@ -57,36 +57,10 @@ A modern Android personal finance tracker built with Jetpack Compose, featuring 
 <div align="center">
 
 ### Live App Demonstration
-<img src="docs/assets/screenshots/app-demo-optimized.gif" alt="Wealth Manager App Demo" width="100%"/>
+<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000;">
+<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/kW68GsKsGJ0" title="Wealth Manager App Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+</div>
 <p align="center"><em>Complete app workflow: biometric authentication, portfolio management, asset tracking, and real-time market data</em></p>
-
-### Key Features Showcase
-<table>
-<tr>
-<td width="50%">
-<img src="docs/assets/screenshots/portfolio-overview.png" alt="Portfolio Overview" width="100%"/>
-<p align="center"><em>Portfolio overview with real-time valuation</em></p>
-</td>
-<td width="50%">
-<img src="docs/assets/screenshots/asset-management.png" alt="Asset Management" width="100%"/>
-<p align="center"><em>Manage cash and stocks with intuitive workflow</em></p>
-</td>
-</tr>
-</table>
-
-### Security & Privacy
-<table>
-<tr>
-<td width="50%">
-<img src="docs/assets/screenshots/biometric-auth.png" alt="Biometric Authentication" width="100%"/>
-<p align="center"><em>Secure sign-in with biometric authentication</em></p>
-</td>
-<td width="50%">
-<img src="docs/assets/screenshots/about-app.png" alt="About Wealth Manager" width="100%"/>
-<p align="center"><em>Transparent privacy and API disclosure</em></p>
-</td>
-</tr>
-</table>
 
 </div>
 
