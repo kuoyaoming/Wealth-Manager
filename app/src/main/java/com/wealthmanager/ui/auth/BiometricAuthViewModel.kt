@@ -19,16 +19,16 @@ class BiometricAuthViewModel @Inject constructor(
     private val biometricAuthManager: BiometricAuthManager,
     private val debugLogManager: DebugLogManager
 ) : ViewModel() {
-    
+
     private val _uiState = MutableStateFlow(BiometricAuthUiState())
     val uiState: StateFlow<BiometricAuthUiState> = _uiState.asStateFlow()
-    
+
     fun checkBiometricAvailability(context: Context) {
         val status = biometricAuthManager.isBiometricAvailable(context)
         debugLogManager.logBiometric("Biometric Status Check", "Status: $status")
         _uiState.value = _uiState.value.copy(biometricStatus = status)
     }
-    
+
     fun authenticate(context: Context) {
         debugLogManager.logBiometric("Authentication Started", "Context type: ${context::class.simpleName}")
         if (context is FragmentActivity) {
@@ -56,7 +56,7 @@ class BiometricAuthViewModel @Inject constructor(
                     )
                 }
             )
-            
+
             viewModelScope.launch {
                 biometricAuthManager.showBiometricPrompt(
                     prompt = prompt,

@@ -1,7 +1,6 @@
 package com.wealthmanager.ui.theme
 
 import android.app.Activity
-import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
@@ -14,7 +13,6 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalView
 import androidx.core.view.WindowCompat
-import androidx.core.view.WindowInsetsControllerCompat
 
 /**
  * Optimized theme configuration with better color schemes
@@ -71,16 +69,16 @@ fun WealthManagerThemeOptimized(
         darkTheme -> DarkColorScheme
         else -> LightColorScheme
     }
-    
+
     val view = LocalView.current
     if (!view.isInEditMode) {
         SideEffect {
             val window = (view.context as Activity).window
             val insetsController = WindowCompat.getInsetsController(window, view)
-            
+
             // Use modern API for status bar color
             window.statusBarColor = colorScheme.primary.toArgb()
-            
+
             // Set status bar appearance
             insetsController.isAppearanceLightStatusBars = !darkTheme
         }
@@ -102,7 +100,7 @@ object FinancialColors {
     val neutralGray = androidx.compose.ui.graphics.Color(0xFF9E9E9E)
     val warningOrange = androidx.compose.ui.graphics.Color(0xFFFF9800)
     val infoBlue = androidx.compose.ui.graphics.Color(0xFF2196F3)
-    
+
     @Composable
     fun getPositiveColor(): androidx.compose.ui.graphics.Color {
         return if (MaterialTheme.colorScheme.primary == Purple40) {
@@ -111,7 +109,7 @@ object FinancialColors {
             MaterialTheme.colorScheme.primary
         }
     }
-    
+
     @Composable
     fun getNegativeColor(): androidx.compose.ui.graphics.Color {
         return if (MaterialTheme.colorScheme.error == androidx.compose.ui.graphics.Color(0xFFBA1A1A)) {
@@ -120,19 +118,13 @@ object FinancialColors {
             MaterialTheme.colorScheme.error
         }
     }
-    
+
     @Composable
-    fun getNeutralColor(): androidx.compose.ui.graphics.Color {
-        return MaterialTheme.colorScheme.onSurfaceVariant
-    }
-    
+    fun getNeutralColor(): androidx.compose.ui.graphics.Color = MaterialTheme.colorScheme.onSurfaceVariant
+
     @Composable
-    fun getWarningColor(): androidx.compose.ui.graphics.Color {
-        return warningOrange
-    }
-    
+    fun getWarningColor(): androidx.compose.ui.graphics.Color = warningOrange
+
     @Composable
-    fun getInfoColor(): androidx.compose.ui.graphics.Color {
-        return infoBlue
-    }
+    fun getInfoColor(): androidx.compose.ui.graphics.Color = infoBlue
 }

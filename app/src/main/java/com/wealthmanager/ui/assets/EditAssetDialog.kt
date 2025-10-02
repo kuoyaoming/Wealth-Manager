@@ -30,12 +30,12 @@ fun EditCashAssetDialog(
     val (hapticManager, view) = rememberHapticFeedbackWithView()
     var currency by remember { mutableStateOf(asset.currency) }
     var amount by remember { mutableStateOf(asset.amount.toString()) }
-    
+
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Edit Cash Asset Dialog Opened")
         debugLogManager.log("UI", "Editing cash asset: ${asset.currency} ${asset.amount}")
     }
-    
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.dialog_edit_cash_asset)) },
@@ -51,7 +51,7 @@ fun EditCashAssetDialog(
                         Row(
                             Modifier
                                 .selectable(
-                                    selected = (text == currency),
+                                    selected = text == currency,
                                     onClick = {
                                         debugLogManager.logUserAction("Currency Changed to $text")
                                         debugLogManager.log("UI", "User changed currency to $text")
@@ -63,7 +63,7 @@ fun EditCashAssetDialog(
                             verticalAlignment = Alignment.CenterVertically
                         ) {
                             RadioButton(
-                                selected = (text == currency),
+                                selected = text == currency,
                                 onClick = null
                             )
                             Text(
@@ -85,7 +85,7 @@ fun EditCashAssetDialog(
                     onValueChange = {
                         debugLogManager.log("UI", "User typing amount: $it")
                         // Allow decimal input for cash amounts
-                        if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
+                        if (it.isEmpty() || it.matches(Regex("""^\d*\.?\d*$"""))) {
                             amount = it
                         }
                     },
@@ -94,7 +94,9 @@ fun EditCashAssetDialog(
                     isError = amount.isNotEmpty() && amount.toDoubleOrNull() == null,
                     supportingText = if (amount.isNotEmpty() && amount.toDoubleOrNull() == null) {
                         { Text(stringResource(R.string.validation_enter_valid_number), color = MaterialTheme.colorScheme.error) }
-                    } else null,
+                    } else {
+                        null
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
             }
@@ -106,7 +108,7 @@ fun EditCashAssetDialog(
                     hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
                     val newAmount = amount.toDoubleOrNull()
                     if (newAmount != null && newAmount > 0) {
-                        val twdEquivalent = if (currency == "TWD") newAmount else (newAmount * 30.0)
+                        val twdEquivalent = if (currency == "TWD") newAmount else newAmount * 30.0
                         val updatedAsset = asset.copy(
                             currency = currency,
                             amount = newAmount,
@@ -145,12 +147,12 @@ fun EditStockAssetDialog(
     val debugLogManager = remember { DebugLogManager() }
     val (hapticManager, view) = rememberHapticFeedbackWithView()
     var shares by remember { mutableStateOf(asset.shares.toString()) }
-    
+
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Edit Stock Asset Dialog Opened")
         debugLogManager.log("UI", "Editing stock asset: ${asset.symbol}")
     }
-    
+
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.dialog_edit_stock_asset)) },
@@ -172,7 +174,9 @@ fun EditStockAssetDialog(
                     isError = shares.isNotEmpty() && shares.toDoubleOrNull() == null,
                     supportingText = if (shares.isNotEmpty() && shares.toDoubleOrNull() == null) {
                         { Text(stringResource(R.string.validation_enter_valid_shares), color = MaterialTheme.colorScheme.error) }
-                    } else null,
+                    } else {
+                        null
+                    },
                     modifier = Modifier.fillMaxWidth()
                 )
             }

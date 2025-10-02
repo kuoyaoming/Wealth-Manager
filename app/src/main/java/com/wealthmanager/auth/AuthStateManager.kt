@@ -11,14 +11,14 @@ class AuthStateManager @Inject constructor(
     @ApplicationContext private val context: Context
 ) {
     private val prefs: SharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
-    
+
     private val sessionListeners = mutableListOf<SessionListener>()
-    
+
     private val AUTH_KEY = "is_authenticated"
     private val AUTH_TIMESTAMP_KEY = "auth_timestamp"
     private val BIOMETRIC_ENABLED_KEY = "biometric_enabled"
     private val AUTH_SESSION_TIMEOUT = 24 * 60 * 60 * 1000L // 24 hours in milliseconds
-    
+
     fun setAuthenticated(isAuthenticated: Boolean) {
         prefs.edit().apply {
             putBoolean(AUTH_KEY, isAuthenticated)
@@ -30,16 +30,16 @@ class AuthStateManager @Inject constructor(
             apply()
         }
     }
-    
+
     fun isAuthenticated(): Boolean {
         val isAuth = prefs.getBoolean(AUTH_KEY, false)
         val authTimestamp = prefs.getLong(AUTH_TIMESTAMP_KEY, 0L)
         val currentTime = System.currentTimeMillis()
-        
+
         // Check if authentication is still valid (within session timeout)
         return isAuth && (currentTime - authTimestamp) < AUTH_SESSION_TIMEOUT
     }
-    
+
     fun clearAuthentication() {
         prefs.edit().apply {
             remove(AUTH_KEY)
@@ -62,11 +62,11 @@ class AuthStateManager @Inject constructor(
     fun isBiometricEnabled(): Boolean {
         return prefs.getBoolean(BIOMETRIC_ENABLED_KEY, true)
     }
-    
+
     fun getAuthTimestamp(): Long {
         return prefs.getLong(AUTH_TIMESTAMP_KEY, 0L)
     }
-    
+
     /**
      * Checks if session is expiring soon (less than 1 hour remaining).
      */
@@ -76,7 +76,7 @@ class AuthStateManager @Inject constructor(
         val timeRemaining = AUTH_SESSION_TIMEOUT - (currentTime - authTimestamp)
         return timeRemaining < (60 * 60 * 1000L)
     }
-    
+
     /**
      * Refreshes authentication timestamp.
      */
@@ -88,7 +88,7 @@ class AuthStateManager @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Gets remaining session time in milliseconds.
      */
@@ -98,7 +98,7 @@ class AuthStateManager @Inject constructor(
         val elapsed = currentTime - authTimestamp
         return maxOf(0, AUTH_SESSION_TIMEOUT - elapsed)
     }
-    
+
     /**
      * Forces logout.
      */
@@ -106,35 +106,35 @@ class AuthStateManager @Inject constructor(
         clearAuthentication()
         notifySessionExpired()
     }
-    
+
     /**
      * Adds session listener.
      */
     fun addSessionListener(listener: SessionListener) {
         sessionListeners.add(listener)
     }
-    
+
     /**
      * Removes session listener.
      */
     fun removeSessionListener(listener: SessionListener) {
         sessionListeners.remove(listener)
     }
-    
+
     /**
      * Notifies session expiring soon.
      */
     private fun notifySessionExpiringSoon() {
         sessionListeners.forEach { it.onSessionExpiringSoon() }
     }
-    
+
     /**
      * Notifies session expired.
      */
     private fun notifySessionExpired() {
         sessionListeners.forEach { it.onSessionExpired() }
     }
-    
+
     /**
      * Checks and handles session status.
      */

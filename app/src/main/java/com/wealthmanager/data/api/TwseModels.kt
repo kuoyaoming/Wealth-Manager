@@ -4,7 +4,7 @@ import com.google.gson.annotations.SerializedName
 
 /**
  * Response model for TWSE API stock data.
- * 
+ *
  * @property value List of stock items from TWSE API
  */
 data class TwseStockResponse(
@@ -13,7 +13,7 @@ data class TwseStockResponse(
 
 /**
  * Individual stock item from TWSE API response.
- * 
+ *
  * @property Date Trading date
  * @property Code Stock code
  * @property Name Stock name
@@ -42,10 +42,10 @@ data class TwseStockItem(
 
 /**
  * Taiwan stock data model for internal processing.
- * 
+ *
  * This model represents processed stock data from TWSE API
  * with normalized field names for internal use.
- * 
+ *
  * @property stockNo Stock number/code
  * @property stockName Stock name
  * @property tradeVolume Trading volume

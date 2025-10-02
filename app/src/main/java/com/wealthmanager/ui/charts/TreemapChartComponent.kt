@@ -55,7 +55,7 @@ fun TreemapChartComponent(
         trackRecomposition = true
     ) {
     val debugLogManager = remember { DebugLogManager() }
-    
+
     LaunchedEffect(assets.size) {
         debugLogManager.log("CHART", "TreemapChartComponent rendered with ${assets.size} assets")
         if (assets.isNotEmpty()) {
@@ -66,7 +66,7 @@ fun TreemapChartComponent(
             }
         }
     }
-    
+
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -79,9 +79,9 @@ fun TreemapChartComponent(
                 style = MaterialTheme.typography.headlineSmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             if (isLoading) {
                 Box(
                     modifier = Modifier
@@ -114,9 +114,9 @@ fun TreemapChartComponent(
                         .height(300.dp)
                         .padding(vertical = 8.dp)
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 // Legend below the chart - sorted by percentage (largest to smallest)
                 Column(
                     modifier = Modifier.fillMaxWidth()
@@ -148,10 +148,10 @@ private fun TreemapCompose(
     // Use secondary color for better contrast against background
     val unifiedColor = colorScheme.secondary.copy(alpha = 0.7f) // Secondary color with transparency for subtle contrast
     val cornerRadius = 12.dp // Rounded corners like the FAB
-    
+
     val contentDescription = stringResource(R.string.chart_treemap_content_description)
     val othersGroupName = stringResource(R.string.chart_others_group)
-    
+
     BoxWithConstraints(
         modifier = modifier
             .semantics {
@@ -161,7 +161,7 @@ private fun TreemapCompose(
         // Use actual container dimensions
         val containerWidth = maxWidth.value * density.density
         val containerHeight = maxHeight.value * density.density
-        
+
         // Compute treemap layout with actual dimensions
         val treemapRects by remember(assets, containerWidth, containerHeight) {
             derivedStateOf {
@@ -174,7 +174,7 @@ private fun TreemapCompose(
                 )
             }
         }
-        
+
         // Draw each rectangle as a Compose Box
         treemapRects.forEach { rect ->
             Box(
@@ -203,7 +203,7 @@ private fun DrawScope.drawTreemap(
     onAssetClick: (AssetItem) -> Unit
 ) {
     val unifiedColor = Color(0xFF2196F3) // Unified blue color for all rectangles
-    
+
     rects.forEach { rect ->
         // Draw rectangle background with unified color
         drawRect(
@@ -211,7 +211,7 @@ private fun DrawScope.drawTreemap(
             topLeft = Offset(rect.x, rect.y),
             size = Size(rect.width, rect.height)
         )
-        
+
         // Draw subtle border
         drawRect(
             color = Color.White.copy(alpha = 0.3f),
@@ -219,7 +219,7 @@ private fun DrawScope.drawTreemap(
             size = Size(rect.width, rect.height),
             style = Stroke(width = 2.dp.toPx())
         )
-        
+
         // For now, skip text drawing to avoid Canvas complexity
         // TODO: Implement proper text drawing with Compose Canvas
     }
@@ -242,9 +242,9 @@ private fun TreemapLegendItem(asset: AssetItem) {
                     shape = MaterialTheme.shapes.small
                 )
         )
-        
+
         Spacer(modifier = Modifier.width(12.dp))
-        
+
         // Asset info
         Column(
             modifier = Modifier.weight(1f)
@@ -260,7 +260,7 @@ private fun TreemapLegendItem(asset: AssetItem) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
         }
-        
+
         // Percentage
         Text(
             text = "${asset.percentage.toInt()}%",
@@ -285,7 +285,7 @@ private fun getAssetColor(assetName: String): Color {
         Color(0xFFFFEB3B), // Yellow
         Color(0xFF795548)  // Brown
     )
-    
+
     val index = assetName.hashCode().mod(colors.size)
     return colors[abs(index)]
 }

@@ -49,7 +49,7 @@ class TwseDataParserTest {
         assertEquals("2330 Name", result.stockName)
         assertEquals("600.00", result.close)
         // changePercent = change / (close - change) * 100 = 2 / 598 * 100
-        assertEquals(String.format("%.2f", (2.0 / 598.0) * 100.0), result.changePercent)
+        assertEquals(String.format("%.2f", 2.0 / 598.0 * 100.0), result.changePercent)
     }
 
     @Test

@@ -21,17 +21,17 @@ import kotlinx.coroutines.delay
  * 120Hz optimized animation configuration
  */
 object HighRefreshRateAnimations {
-    
+
     // 120Hz optimized animation specifications
     val FastEasing = CubicBezierEasing(0.4f, 0.0f, 0.2f, 1.0f)
     val MediumEasing = CubicBezierEasing(0.0f, 0.0f, 0.2f, 1.0f)
     val SlowEasing = CubicBezierEasing(0.4f, 0.0f, 0.6f, 1.0f)
-    
+
     // Animation durations for 120Hz
     const val FAST_DURATION = 150 // milliseconds
     const val MEDIUM_DURATION = 300 // milliseconds
     const val SLOW_DURATION = 500 // milliseconds
-    
+
     /**
      * 120Hz optimized spring animation
      */
@@ -40,7 +40,7 @@ object HighRefreshRateAnimations {
         stiffness = Spring.StiffnessMedium,
         visibilityThreshold = null
     )
-    
+
     /**
      * 120Hz optimized tween animation
      */
@@ -48,7 +48,7 @@ object HighRefreshRateAnimations {
         durationMillis = durationMillis,
         easing = FastEasing
     )
-    
+
     /**
      * 120Hz optimized medium speed animation
      */
@@ -56,7 +56,7 @@ object HighRefreshRateAnimations {
         durationMillis = durationMillis,
         easing = MediumEasing
     )
-    
+
     /**
      * 120Hz optimized slow animation
      */
@@ -64,7 +64,7 @@ object HighRefreshRateAnimations {
         durationMillis = durationMillis,
         easing = SlowEasing
     )
-    
+
 }
 
 /**
@@ -80,7 +80,7 @@ fun Modifier.highRefreshRateClickable(
         animationSpec = HighRefreshRateAnimations.smoothSpring(),
         label = "click_scale"
     )
-    
+
     return this
         .graphicsLayer {
             scaleX = scale
@@ -89,7 +89,7 @@ fun Modifier.highRefreshRateClickable(
         .pointerInput(Unit) {
             detectDragGestures(
                 onDragStart = { isPressed = true },
-                onDragEnd = { 
+                onDragEnd = {
                     isPressed = false
                     onClick()
                 }
@@ -109,19 +109,19 @@ fun HighRefreshRateButton(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    
+
     val scale by animateFloatAsState(
         targetValue = if (isPressed) 0.95f else 1.0f,
         animationSpec = HighRefreshRateAnimations.smoothSpring(),
         label = "button_scale"
     )
-    
+
     val alpha by animateFloatAsState(
         targetValue = if (enabled) 1.0f else 0.6f,
         animationSpec = HighRefreshRateAnimations.fastTween(),
         label = "button_alpha"
     )
-    
+
     Button(
         onClick = onClick,
         modifier = modifier
@@ -148,19 +148,19 @@ fun HighRefreshRateCard(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    
+
     val elevation by animateFloatAsState(
         targetValue = if (isPressed) 2f else 4f,
         animationSpec = HighRefreshRateAnimations.fastTween(),
         label = "card_elevation"
     )
-    
+
     val scale by animateFloatAsState(
         targetValue = if (isPressed) 0.98f else 1.0f,
         animationSpec = HighRefreshRateAnimations.smoothSpring(),
         label = "card_scale"
     )
-    
+
     Card(
         onClick = onClick,
         modifier = modifier
@@ -186,11 +186,11 @@ fun HighRefreshRateListItem(
 ) {
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
-    
+
     val backgroundColor by animateColorAsState(
-        targetValue = if (isPressed) 
+        targetValue = if (isPressed)
             MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-        else 
+        else
             MaterialTheme.colorScheme.surface,
         animationSpec = tween<Color>(
             durationMillis = HighRefreshRateAnimations.FAST_DURATION,
@@ -198,13 +198,13 @@ fun HighRefreshRateListItem(
         ),
         label = "list_item_background"
     )
-    
+
     val scale by animateFloatAsState(
         targetValue = if (isPressed) 0.99f else 1.0f,
         animationSpec = HighRefreshRateAnimations.smoothSpring(),
         label = "list_item_scale"
     )
-    
+
     Surface(
         onClick = onClick,
         modifier = modifier
@@ -232,13 +232,13 @@ fun HighRefreshRateProgressIndicator(
         animationSpec = HighRefreshRateAnimations.fastTween(),
         label = "progress_alpha"
     )
-    
+
     val scale by animateFloatAsState(
         targetValue = if (isVisible) 1.0f else 0.8f,
         animationSpec = HighRefreshRateAnimations.smoothSpring(),
         label = "progress_scale"
     )
-    
+
     if (alpha > 0.01f) {
         CircularProgressIndicator(
             modifier = modifier
@@ -260,24 +260,24 @@ fun <T> rememberHighRefreshRateAnimatedVisibility(
     content: @Composable (T) -> Unit
 ): T {
     var currentState by remember { mutableStateOf(targetState) }
-    
+
     LaunchedEffect(targetState) {
         if (targetState != currentState) {
             delay(50) // Brief delay to ensure smooth transition
             currentState = targetState
         }
     }
-    
+
     val alpha by animateFloatAsState(
         targetValue = if (currentState == targetState) 1.0f else 0.0f,
         animationSpec = HighRefreshRateAnimations.fastTween(),
         label = "visibility_alpha"
     )
-    
+
     if (alpha > 0.01f) {
         content(currentState)
     }
-    
+
     return currentState
 }
 
@@ -298,25 +298,25 @@ fun <T> rememberHighRefreshRatePageTransition(
     content: @Composable (T) -> Unit
 ) {
     var currentPage by remember { mutableStateOf(targetPage) }
-    
+
     LaunchedEffect(targetPage) {
         if (targetPage != currentPage) {
             delay(100) // Page transition delay
             currentPage = targetPage
         }
     }
-    
+
     // val offsetX by animateFloatAsState(
     //     targetValue = if (currentPage == targetPage) 0f else 300f,
     //     animationSpec = HighRefreshRateAnimations.mediumTween(),
     //     label = "page_offset"
     // )
-    
+
     // val alpha by animateFloatAsState(
     //     targetValue = if (currentPage == targetPage) 1.0f else 0.0f,
     //     animationSpec = HighRefreshRateAnimations.fastTween(),
     //     label = "page_alpha"
     // )
-    
+
     content(currentPage)
 }

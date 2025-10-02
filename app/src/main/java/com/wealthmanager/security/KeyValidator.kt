@@ -8,33 +8,33 @@ import javax.inject.Singleton
 class KeyValidator @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     companion object {
         private const val MIN_KEY_LENGTH = 16
         private const val MAX_KEY_LENGTH = 128
         private const val MIN_ENTROPY_SCORE = 3.0
-        
+
         private val WEAK_PATTERNS = listOf(
             "test", "demo", "sample", "example", "default",
             "123456", "password", "admin", "user", "key",
             "api", "secret", "token", "auth"
         )
-        
+
         private val REPEAT_PATTERNS = listOf(
             "111111", "222222", "333333", "444444", "555555",
             "aaaaaa", "bbbbbb", "cccccc", "dddddd", "eeeeee"
         )
     }
-    
+
     /**
      * Validates API key strength.
      */
     fun validateApiKey(key: String, keyType: String): KeyValidationResult {
         debugLogManager.log("KEY_VALIDATOR", "Validating $keyType key")
-        
+
         val issues = mutableListOf<String>()
         var score = 0.0
-        
+
         if (key.length < MIN_KEY_LENGTH) {
             issues.add("Key too short (minimum $MIN_KEY_LENGTH characters)")
         } else if (key.length > MAX_KEY_LENGTH) {
@@ -42,41 +42,41 @@ class KeyValidator @Inject constructor(
         } else {
             score += 1.0
         }
-        
+
         val diversityScore = calculateCharacterDiversity(key)
         if (diversityScore < MIN_ENTROPY_SCORE) {
             issues.add("Key lacks character diversity (entropy: $diversityScore)")
         } else {
             score += 1.0
         }
-        
+
         if (containsWeakPatterns(key)) {
             issues.add("Key contains weak patterns")
         } else {
             score += 1.0
         }
-        
+
         if (containsRepeatPatterns(key)) {
             issues.add("Key contains repetitive patterns")
         } else {
             score += 1.0
         }
-        
+
         val formatIssues = validateKeyFormat(key, keyType)
         issues.addAll(formatIssues)
         if (formatIssues.isEmpty()) {
             score += 1.0
         }
-        
+
         val isValid = issues.isEmpty()
         val strength = when {
             score >= 4.5 -> KeyStrength.STRONG
             score >= 3.0 -> KeyStrength.MEDIUM
             else -> KeyStrength.WEAK
         }
-        
+
         debugLogManager.log("KEY_VALIDATOR", "Validation result: $strength (score: $score)")
-        
+
         return KeyValidationResult(
             isValid = isValid,
             strength = strength,
@@ -84,7 +84,7 @@ class KeyValidator @Inject constructor(
             score = score
         )
     }
-    
+
     /**
      * Calculates character diversity score.
      */
@@ -92,16 +92,16 @@ class KeyValidator @Inject constructor(
         val charCounts = key.groupingBy { it }.eachCount()
         val uniqueChars = charCounts.size
         val totalChars = key.length
-        
+
         var entropy = 0.0
         charCounts.values.forEach { count ->
             val probability = count.toDouble() / totalChars
             entropy -= probability * kotlin.math.log2(probability)
         }
-        
+
         return entropy
     }
-    
+
     /**
      * Checks for weak patterns.
      */
@@ -111,7 +111,7 @@ class KeyValidator @Inject constructor(
             lowerKey.contains(pattern)
         }
     }
-    
+
     /**
      * Checks for repetitive patterns.
      */
@@ -120,13 +120,13 @@ class KeyValidator @Inject constructor(
             key.contains(pattern)
         }
     }
-    
+
     /**
      * Validates key format based on key type.
      */
     private fun validateKeyFormat(key: String, keyType: String): List<String> {
         val issues = mutableListOf<String>()
-        
+
         when (keyType.lowercase()) {
             "finnhub" -> {
                 if (!key.matches(Regex("^[a-zA-Z0-9]{40}$"))) {
@@ -144,16 +144,16 @@ class KeyValidator @Inject constructor(
                 }
             }
         }
-        
+
         return issues
     }
-    
+
     /**
      * Generates key strength suggestions.
      */
     fun generateKeyStrengthSuggestions(result: KeyValidationResult): List<String> {
         val suggestions = mutableListOf<String>()
-        
+
         when (result.strength) {
             KeyStrength.WEAK -> {
                 suggestions.add("Consider generating a new key with higher entropy")
@@ -168,14 +168,14 @@ class KeyValidator @Inject constructor(
                 suggestions.add("Key strength is excellent")
             }
         }
-        
+
         if (result.issues.isNotEmpty()) {
             suggestions.add("Address the following issues:")
             result.issues.forEach { issue ->
                 suggestions.add("• $issue")
             }
         }
-        
+
         return suggestions
     }
 }

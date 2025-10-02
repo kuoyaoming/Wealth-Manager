@@ -24,7 +24,7 @@ fun TotalAssetsCardOptimized(
     isLoading: Boolean
 ) {
     val responsiveLayout = rememberResponsiveLayout()
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(
@@ -43,9 +43,9 @@ fun TotalAssetsCardOptimized(
                 style = MaterialTheme.typography.titleMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(responsiveLayout.paddingMedium))
-            
+
             if (isLoading) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(if (responsiveLayout.isTablet) 40.dp else 32.dp),
@@ -75,7 +75,7 @@ fun CashAssetsCardOptimized(
     isLoading: Boolean
 ) {
     val responsiveLayout = rememberResponsiveLayout()
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(
@@ -93,9 +93,9 @@ fun CashAssetsCardOptimized(
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             if (isLoading) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -136,7 +136,7 @@ fun StockAssetsCardOptimized(
     isLoading: Boolean
 ) {
     val responsiveLayout = rememberResponsiveLayout()
-    
+
     Card(
         modifier = Modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(
@@ -154,9 +154,9 @@ fun StockAssetsCardOptimized(
                 style = MaterialTheme.typography.titleSmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             if (isLoading) {
                 Row(
                     verticalAlignment = Alignment.CenterVertically
@@ -217,7 +217,7 @@ fun FinancialValueDisplay(
         isPositive == false -> financialColors.negative
         else -> MaterialTheme.colorScheme.onSurface
     }
-    
+
     Text(
         text = rememberMoneyText(
             value,
@@ -248,7 +248,7 @@ fun StatusIndicator(
         isSuccess -> financialColors.positive
         else -> MaterialTheme.colorScheme.onSurfaceVariant
     }
-    
+
     Text(
         text = status,
         style = MaterialTheme.typography.bodyMedium,

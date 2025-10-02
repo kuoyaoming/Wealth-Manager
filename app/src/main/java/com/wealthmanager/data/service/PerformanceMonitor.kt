@@ -18,7 +18,7 @@ import javax.inject.Singleton
 class PerformanceMonitor @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     companion object {
         private const val MAIN_THREAD_BLOCK_THRESHOLD_MS = 16L
         private const val CRITICAL_BLOCK_THRESHOLD_MS = 100L
@@ -26,24 +26,24 @@ class PerformanceMonitor @Inject constructor(
         private const val MEMORY_WARNING_THRESHOLD_MB = 100L
         private const val MEMORY_CRITICAL_THRESHOLD_MB = 200L
     }
-    
+
     private val mainHandler = Handler(Looper.getMainLooper())
     private val performanceScope = CoroutineScope(Dispatchers.Default + SupervisorJob())
-    
+
     private val frameDropCount = AtomicLong(0)
     private val mainThreadBlockCount = AtomicLong(0)
     private val criticalBlockCount = AtomicLong(0)
     private var isMonitoring = false
-    
+
     /**
      * Start performance monitoring
      */
     fun startMonitoring() {
         if (isMonitoring) return
-        
+
         isMonitoring = true
         debugLogManager.log("PERFORMANCE", "Starting performance monitoring")
-        
+
         performanceScope.launch {
             while (isMonitoring) {
                 monitorMainThreadPerformance()
@@ -51,7 +51,7 @@ class PerformanceMonitor @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Stop performance monitoring
      */
@@ -59,21 +59,21 @@ class PerformanceMonitor @Inject constructor(
         isMonitoring = false
         debugLogManager.log("PERFORMANCE", "Stop performance monitoring")
     }
-    
+
     /**
      * Monitor main thread performance
      */
     private suspend fun monitorMainThreadPerformance() {
         val startTime = System.currentTimeMillis()
-        
+
         val blockTime = withContext(Dispatchers.Main) {
             val taskStart = System.currentTimeMillis()
             Thread.sleep(1)
             System.currentTimeMillis() - taskStart
         }
-        
+
         val totalTime = System.currentTimeMillis() - startTime
-        
+
         when {
             blockTime > CRITICAL_BLOCK_THRESHOLD_MS -> {
                 criticalBlockCount.incrementAndGet()
@@ -85,12 +85,12 @@ class PerformanceMonitor @Inject constructor(
                 debugLogManager.log("PERFORMANCE", "Main thread blocking: ${blockTime}ms")
             }
         }
-        
+
         if (totalTime > 1000L) {
             debugLogManager.logWarning("PERFORMANCE", "Slow response time: ${totalTime}ms")
         }
     }
-    
+
     /**
      * Monitor memory usage
      */
@@ -102,7 +102,7 @@ class PerformanceMonitor @Inject constructor(
             val usedMemoryMB = usedMemory / (1024 * 1024)
             val maxMemoryMB = maxMemory / (1024 * 1024)
             val memoryUsagePercent = (usedMemoryMB * 100) / maxMemoryMB
-            
+
             val status = when {
                 usedMemoryMB > MEMORY_CRITICAL_THRESHOLD_MB -> {
                     MemoryStatus.CRITICAL(usedMemoryMB, maxMemoryMB, memoryUsagePercent.toInt())
@@ -114,18 +114,18 @@ class PerformanceMonitor @Inject constructor(
                     MemoryStatus.NORMAL(usedMemoryMB, maxMemoryMB, memoryUsagePercent.toInt())
                 }
             }
-            
+
             emit(status)
             delay(5000L)
         }
     }
-    
+
     /**
      * Record performance issues
      */
     private fun recordPerformanceIssue(issue: String) {
         debugLogManager.logError("Performance issue: $issue")
-        
+
         when {
             issue.contains("Critical main thread block") -> {
                 System.gc()
@@ -136,7 +136,7 @@ class PerformanceMonitor @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Get performance statistics
      */
@@ -148,7 +148,7 @@ class PerformanceMonitor @Inject constructor(
             isMonitoring = isMonitoring
         )
     }
-    
+
     /**
      * Reset statistics
      */
@@ -158,7 +158,7 @@ class PerformanceMonitor @Inject constructor(
         criticalBlockCount.set(0)
         debugLogManager.log("PERFORMANCE", "Performance statistics reset")
     }
-    
+
     /**
      * Memory status
      */
@@ -167,7 +167,7 @@ class PerformanceMonitor @Inject constructor(
         data class WARNING(val usedMB: Long, val maxMB: Long, val usagePercent: Int) : MemoryStatus()
         data class CRITICAL(val usedMB: Long, val maxMB: Long, val usagePercent: Int) : MemoryStatus()
     }
-    
+
     /**
      * Performance statistics
      */

@@ -6,15 +6,15 @@ import retrofit2.http.Query
 
 /**
  * API interface for Finnhub financial data service.
- * 
+ *
  * This interface provides methods to access real-time stock quotes,
  * stock search functionality, and exchange rate data from Finnhub API.
  */
 interface FinnhubApi {
-    
+
     /**
      * Retrieves real-time stock quote data for a given symbol.
-     * 
+     *
      * @param symbol The stock symbol to get quote for (e.g., "AAPL", "MSFT")
      * @return [FinnhubQuoteResponse] containing current price, change, and other quote data
      */
@@ -22,10 +22,10 @@ interface FinnhubApi {
     suspend fun getStockQuote(
         @Query("symbol") symbol: String
     ): FinnhubQuoteResponse
-    
+
     /**
      * Searches for stocks matching the given query.
-     * 
+     *
      * @param query The search query string
      * @return [FinnhubSearchResponse] containing matching stock results
      */
@@ -33,10 +33,10 @@ interface FinnhubApi {
     suspend fun searchStocks(
         @Query("q") query: String
     ): FinnhubSearchResponse
-    
+
     /**
      * Gets current exchange rates for a base currency.
-     * 
+     *
      * @param baseCurrency The base currency code (defaults to "USD")
      * @return [FinnhubExchangeResponse] containing exchange rate data
      */
@@ -48,7 +48,7 @@ interface FinnhubApi {
 
 /**
  * Response model for Finnhub stock quote API.
- * 
+ *
  * @property c Current price
  * @property d Change amount
  * @property dp Change percentage
@@ -71,7 +71,7 @@ data class FinnhubQuoteResponse(
 
 /**
  * Response model for Finnhub stock search API.
- * 
+ *
  * @property count Total number of search results
  * @property result List of matching stock search results
  */
@@ -82,7 +82,7 @@ data class FinnhubSearchResponse(
 
 /**
  * Individual stock search result from Finnhub API.
- * 
+ *
  * @property description Full description of the stock
  * @property displaySymbol Display symbol for the stock
  * @property symbol Trading symbol
@@ -97,7 +97,7 @@ data class FinnhubSearchResult(
 
 /**
  * Response model for Finnhub exchange rate API.
- * 
+ *
  * @property base Base currency code
  * @property quote Quote currency code
  * @property rate Exchange rate from base to quote currency

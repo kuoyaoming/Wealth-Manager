@@ -32,13 +32,13 @@ fun AssetsScreen(
     var showEditStockDialog by remember { mutableStateOf<StockAsset?>(null) }
     val debugLogManager = remember { DebugLogManager() }
     val (hapticManager, view) = rememberHapticFeedbackWithView()
-    
+
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Assets Screen Opened")
         debugLogManager.log("UI", "Assets screen loaded, starting to load assets")
         viewModel.loadAssets()
     }
-    
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
@@ -47,11 +47,11 @@ fun AssetsScreen(
                 modifier = Modifier.statusBarsPadding(),
                 title = { Text(stringResource(R.string.assets_title)) },
                 navigationIcon = {
-                    IconButton(onClick = { 
+                    IconButton(onClick = {
                         debugLogManager.logUserAction("Back Button Clicked")
                         debugLogManager.log("UI", "User clicked back button to return to dashboard")
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                        onNavigateBack() 
+                        onNavigateBack()
                     }) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
@@ -63,7 +63,7 @@ fun AssetsScreen(
         },
         floatingActionButton = {
             FloatingActionButton(
-                onClick = { 
+                onClick = {
                     debugLogManager.logUserAction("Add Asset FAB Clicked")
                     debugLogManager.log("UI", "User clicked FAB to open Add Asset dialog")
                     hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
@@ -90,7 +90,7 @@ fun AssetsScreen(
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
-            
+
             if (uiState.cashAssets.isEmpty()) {
                 item {
                     Text(
@@ -116,7 +116,7 @@ fun AssetsScreen(
                     )
                 }
             }
-            
+
             // Stock Assets Section
             item {
                 Text(
@@ -125,7 +125,7 @@ fun AssetsScreen(
                     modifier = Modifier.padding(vertical = 8.dp)
                 )
             }
-            
+
             if (uiState.stockAssets.isEmpty()) {
                 item {
                     Text(
@@ -185,7 +185,7 @@ fun AssetsScreen(
             isSearching = uiState.isSearching
         )
     }
-        
+
         // Edit Cash Asset Dialog
         showEditCashDialog?.let { asset ->
             EditCashAssetDialog(
@@ -197,7 +197,7 @@ fun AssetsScreen(
                 }
             )
         }
-        
+
         // Edit Stock Asset Dialog
         showEditStockDialog?.let { asset ->
             EditStockAssetDialog(

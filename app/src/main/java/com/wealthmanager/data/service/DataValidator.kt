@@ -13,12 +13,12 @@ import javax.inject.Singleton
 class DataValidator @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     sealed class ValidationResult {
         object Valid : ValidationResult()
         data class Invalid(val reason: String) : ValidationResult()
     }
-    
+
     fun validateStockData(stock: StockAsset): ValidationResult {
         return when {
             stock.symbol.isBlank() -> {
@@ -51,7 +51,7 @@ class DataValidator @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Validate exchange rate data
      */
@@ -87,7 +87,7 @@ class DataValidator @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Clean and standardize stock symbol
      */
@@ -98,7 +98,7 @@ class DataValidator @Inject constructor(
             .replace(Regex("[^A-Z0-9.]"), "") // Only keep letters, numbers and dots
             .take(10) // Limit length
     }
-    
+
     /**
      * Clean and standardize price data
      */
@@ -108,7 +108,7 @@ class DataValidator @Inject constructor(
                 .replace(Regex("[^0-9.-]"), "") // Only keep numbers, dots and minus
                 .replace(",", "") // Remove commas
                 .trim()
-            
+
             if (cleanedPrice.isBlank()) {
                 debugLogManager.logWarning("DATA_VALIDATION", "Price string is empty")
                 null
@@ -126,7 +126,7 @@ class DataValidator @Inject constructor(
             null
         }
     }
-    
+
     /**
      * Clean and standardize exchange rate data
      */
@@ -136,7 +136,7 @@ class DataValidator @Inject constructor(
                 .replace(Regex("[^0-9.-]"), "") // Only keep numbers, dots and minus
                 .replace(",", "") // Remove commas
                 .trim()
-            
+
             if (cleanedRate.isBlank()) {
                 debugLogManager.logWarning("DATA_VALIDATION", "Exchange rate string is empty")
                 null
@@ -154,7 +154,7 @@ class DataValidator @Inject constructor(
             null
         }
     }
-    
+
     /**
      * Validate API response data
      */
@@ -182,7 +182,7 @@ class DataValidator @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Check if data is stale
      */
@@ -193,18 +193,18 @@ class DataValidator @Inject constructor(
         }
         return isStale
     }
-    
+
     /**
      * Get data quality score
      */
     fun getDataQualityScore(stock: StockAsset): Int {
         var score = 100
-        
+
         // Check data integrity
         if (stock.symbol.isBlank()) score -= 30
         if (stock.currentPrice <= 0) score -= 40
         if (stock.lastUpdated <= 0) score -= 20
-        
+
         // Check data freshness
         val ageMinutes = (System.currentTimeMillis() - stock.lastUpdated) / (60 * 1000)
         when {
@@ -212,21 +212,21 @@ class DataValidator @Inject constructor(
             ageMinutes > 30 -> score -= 10 // Over 30 minutes
             ageMinutes > 15 -> score -= 5  // Over 15 minutes
         }
-        
+
         // Check data reasonableness
         if (stock.currentPrice > 10000) score -= 10 // Price abnormally high
         if (stock.currentPrice < 0.01) score -= 10  // Price abnormally low
-        
+
         return maxOf(0, score)
     }
-    
+
     /**
      * Log validation statistics
      */
     fun logValidationStats(validCount: Int, invalidCount: Int, dataType: String) {
         val total = validCount + invalidCount
         val validPercent = if (total > 0) (validCount.toFloat() / total * 100) else 0f
-        
+
         debugLogManager.log("DATA_VALIDATION", "$dataType validation stats: valid=$validCount, invalid=$invalidCount, validity rate=${validPercent.toInt()}%")
     }
 }

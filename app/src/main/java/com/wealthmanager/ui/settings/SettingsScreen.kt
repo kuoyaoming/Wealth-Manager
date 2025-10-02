@@ -25,13 +25,9 @@ import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.Vibration
 import androidx.compose.material.icons.filled.Wifi
-import androidx.compose.material.icons.filled.Notifications
-import androidx.compose.material.icons.filled.HelpOutline
 import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Security
-import androidx.compose.material.icons.filled.Warning
-import androidx.compose.material.icons.filled.OpenInNew
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -79,7 +75,7 @@ import com.wealthmanager.ui.permissions.NotificationPermissionStatus
 
 /**
  * Settings screen for configuring app preferences and security options.
- * 
+ *
  * This screen provides:
  * - API key management and configuration
  * - Security settings including biometric authentication
@@ -87,7 +83,7 @@ import com.wealthmanager.ui.permissions.NotificationPermissionStatus
  * - Haptic feedback and notification settings
  * - Backup and restore functionality
  * - About dialog and help information
- * 
+ *
  * @param onNavigateBack Callback to navigate back to previous screen
  * @param viewModel ViewModel managing settings state and data
  */
@@ -305,13 +301,13 @@ fun SettingsScreen(
             firstLaunchManager = viewModel.firstLaunchManager
         )
     }
-    
+
     if (showApiKeyGuide) {
         ApiKeyGuideDialog(
             onDismiss = { showApiKeyGuide = false }
         )
     }
-    
+
     // Biometric fallback dialog
     if (uiState.showBiometricFallbackDialog) {
         BiometricFallbackDialog(
@@ -320,7 +316,7 @@ fun SettingsScreen(
             onRetryBiometric = { viewModel.onBiometricFallbackRetry() }
         )
     }
-    
+
     // Security level dialog has been removed - security is now handled automatically
     // if (showSecurityLevelDialog) {
     //     SecurityLevelDialog(
@@ -511,16 +507,16 @@ private fun ApiKeyApplicationCard(
                         color = MaterialTheme.colorScheme.onSurfaceVariant
                     )
                 }
-                
+
                 Spacer(modifier = Modifier.width(8.dp))
-                
+
                 Button(onClick = onShowGuide) {
                     Text(stringResource(R.string.dialog_apply_tutorial))
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Text(
                 text = stringResource(R.string.settings_api_tip),
                 style = MaterialTheme.typography.bodySmall,
@@ -559,7 +555,7 @@ private fun DeveloperKeyCard(
                         color = MaterialTheme.colorScheme.onPrimaryContainer
                     )
                 }
-                
+
                 Button(
                     onClick = onUseDeveloperKeys,
                     colors = ButtonDefaults.buttonColors(
@@ -575,9 +571,9 @@ private fun DeveloperKeyCard(
                     Text(stringResource(R.string.dialog_use_developer_api))
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = stringResource(R.string.settings_developer_warning),
                 style = MaterialTheme.typography.bodySmall,
@@ -616,9 +612,9 @@ private fun SecurityStatusCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -639,9 +635,9 @@ private fun SecurityStatusCard(
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -652,7 +648,7 @@ private fun SecurityStatusCard(
                     color = if (securityStatus.keystoreAvailable) Color.Green else Color.Red
                 )
             }
-            
+
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween
@@ -665,9 +661,10 @@ private fun SecurityStatusCard(
                         com.wealthmanager.security.BiometricStatus.NO_HARDWARE -> stringResource(R.string.security_status_not_supported)
                         else -> stringResource(R.string.security_status_unavailable)
                     },
-                    color = when (securityStatus.biometricStatus) {
-                        com.wealthmanager.security.BiometricStatus.AVAILABLE -> Color.Green
-                        else -> Color(0xFFFF9800) // Orange
+                    color = if (securityStatus.biometricStatus == com.wealthmanager.security.BiometricStatus.AVAILABLE) {
+                        Color.Green
+                    } else {
+                        Color(0xFFFF9800) // Orange
                     }
                 )
             }
@@ -688,7 +685,7 @@ private fun ApiKeyManagementCard(
     var finnhubInput by remember { mutableStateOf("") }
     var exchangeInput by remember { mutableStateOf("") }
     val context = LocalContext.current
-    
+
     fun hideKeyboard() {
         val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
         imm?.hideSoftInputFromWindow((context as? Activity)?.currentFocus?.windowToken, 0)
@@ -731,13 +728,13 @@ private fun ApiKeyManagementCard(
                 placeholder = { Text(stringResource(R.string.settings_api_input_placeholder)) }
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = { 
+                Button(onClick = {
                     hideKeyboard()
                     onValidateAndSaveFinnhub(finnhubInput)
                 }) {
                     Text(stringResource(R.string.settings_api_validate_and_save))
                 }
-                TextButton(onClick = { 
+                TextButton(onClick = {
                     hideKeyboard()
                     finnhubInput = ""
                     onClearFinnhub()
@@ -759,13 +756,13 @@ private fun ApiKeyManagementCard(
                 placeholder = { Text(stringResource(R.string.settings_api_input_placeholder)) }
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = { 
+                Button(onClick = {
                     hideKeyboard()
                     onValidateAndSaveExchange(exchangeInput)
                 }) {
                     Text(stringResource(R.string.settings_api_validate_and_save))
                 }
-                TextButton(onClick = { 
+                TextButton(onClick = {
                     hideKeyboard()
                     exchangeInput = ""
                     onClearExchange()
@@ -808,13 +805,13 @@ private fun SecurityLevelSettingsCard(
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Text(
                 text = stringResource(R.string.security_level_description),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Button(
                 onClick = onShowSecurityLevelDialog,
                 modifier = Modifier.fillMaxWidth()
@@ -1018,9 +1015,9 @@ private fun ApiKeyCheckCard(
                         Icon(
                             imageVector = if (result.isWorking) Icons.Default.CheckCircle else Icons.Default.Error,
                             contentDescription = null,
-                            tint = if (result.isWorking) 
-                                MaterialTheme.colorScheme.primary 
-                            else 
+                            tint = if (result.isWorking)
+                                MaterialTheme.colorScheme.primary
+                            else
                                 MaterialTheme.colorScheme.error
                         )
                         Column(modifier = Modifier.weight(1f)) {
@@ -1032,10 +1029,11 @@ private fun ApiKeyCheckCard(
                             Text(
                                 text = result.message,
                                 style = MaterialTheme.typography.bodySmall,
-                                color = if (result.isWorking) 
-                                    MaterialTheme.colorScheme.primary 
-                                else 
+                                color = if (result.isWorking) {
+                                    MaterialTheme.colorScheme.primary
+                                } else {
                                     MaterialTheme.colorScheme.error
+                                }
                             )
                         }
                     }

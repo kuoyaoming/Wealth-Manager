@@ -9,13 +9,13 @@ import javax.inject.Singleton
 
 /**
  * Security level manager for controlling feature access based on security requirements.
- * 
+ *
  * This manager handles:
  * - Security level configuration and management
  * - Feature permission control based on security level
  * - Biometric authentication requirements
  * - Fallback security modes
- * 
+ *
  * @property context Android context for preferences access
  * @property debugLogManager Manager for debug logging
  */
@@ -24,17 +24,17 @@ class SecurityLevelManager @Inject constructor(
     private val context: Context,
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     companion object {
         private const val PREFS_NAME = "security_level_prefs"
         private const val KEY_SECURITY_LEVEL = "security_level"
         private const val KEY_BIOMETRIC_ENABLED = "biometric_enabled"
         private const val KEY_FALLBACK_MODE = "fallback_mode"
     }
-    
-    private val prefs: SharedPreferences = 
+
+    private val prefs: SharedPreferences =
         context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
-    
+
     /**
      * Enumeration of security levels for feature access control.
      */
@@ -44,7 +44,7 @@ class SecurityLevelManager @Inject constructor(
         LOW,       // Low security: basic authentication
         FALLBACK   // Fallback level: minimum security requirements
     }
-    
+
     /**
      * Enumeration of feature permission levels.
      */
@@ -53,10 +53,10 @@ class SecurityLevelManager @Inject constructor(
         LIMITED_ACCESS,     // Limited access
         NO_ACCESS          // No access
     }
-    
+
     /**
      * Gets the current security level configuration.
-     * 
+     *
      * @return Current security level, defaults to HIGH if not set
      */
     fun getCurrentSecurityLevel(): SecurityLevel {
@@ -67,10 +67,10 @@ class SecurityLevelManager @Inject constructor(
             SecurityLevel.HIGH
         }
     }
-    
+
     /**
      * Sets the security level configuration.
-     * 
+     *
      * @param level The security level to set
      */
     fun setSecurityLevel(level: SecurityLevel) {
@@ -80,7 +80,7 @@ class SecurityLevelManager @Inject constructor(
         }
         debugLogManager.log("SECURITY_LEVEL", "Security level set to: $level")
     }
-    
+
     /**
      * 檢查功能權限
      */
@@ -121,7 +121,7 @@ class SecurityLevelManager @Inject constructor(
             }
         }
     }
-    
+
     /**
      * 檢查是否需要生物驗證
      */
@@ -134,7 +134,7 @@ class SecurityLevelManager @Inject constructor(
             SecurityLevel.FALLBACK -> false
         }
     }
-    
+
     /**
      * 獲取功能描述
      */
@@ -146,7 +146,7 @@ class SecurityLevelManager @Inject constructor(
             FeaturePermission.NO_ACCESS -> context.getString(R.string.feature_permission_no_access)
         }
     }
-    
+
     /**
      * 設定備案模式
      */
@@ -160,14 +160,14 @@ class SecurityLevelManager @Inject constructor(
         }
         debugLogManager.log("SECURITY_LEVEL", "Fallback mode set to: $enabled")
     }
-    
+
     /**
      * 檢查是否在備案模式
      */
     fun isInFallbackMode(): Boolean {
         return prefs.getBoolean(KEY_FALLBACK_MODE, false)
     }
-    
+
     /**
      * 獲取安全級別建議
      */

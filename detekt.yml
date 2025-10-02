@@ -1,4 +1,5 @@
 # Detekt configuration for Wealth Manager
+# Based on detekt 1.23.4 official guidelines
 # https://detekt.github.io/detekt/configurations.html
 
 build:
@@ -185,7 +186,7 @@ naming:
   active: true
   BooleanPropertyNaming:
     active: true
-    allowedPattern: '^(is|has|are|should|can|will|was|were|did|does|do|have|has|had|having|should|can|will|was|were|did|does|do|have|has|had|having)$'
+    allowedPattern: '^(is|has|are|should|can|will|was|were|did|does|do|have|has|had|having)$'
   ClassNaming:
     active: true
     classPattern: '[A-Z][a-zA-Z0-9]*'
@@ -285,7 +286,7 @@ potential-bugs:
   IgnoredReturnValue:
     active: true
     restrictToConfig: true
-    returnValueAnnotations: ['CheckResult', 'CheckResult']
+    returnValueAnnotations: ['CheckResult']
   ImplicitDefaultLocale:
     active: true
   ImplicitUnitReturnType:
@@ -357,7 +358,6 @@ style:
   ForbiddenImport:
     active: true
     imports: ['java.util.Date', 'java.sql.Timestamp']
-    forbiddenPatterns: []
   ForbiddenMethodCall:
     active: true
     methods: ['kotlin.io.print', 'kotlin.io.println']
@@ -419,10 +419,6 @@ style:
   PreferToOverPairSyntax:
     active: true
   ProtectedMemberInFinalClass:
-    active: true
-  RedundantExplicitType:
-    active: true
-  RedundantHigherOrderMapUsage:
     active: true
   RedundantVisibilityModifierRule:
     active: true

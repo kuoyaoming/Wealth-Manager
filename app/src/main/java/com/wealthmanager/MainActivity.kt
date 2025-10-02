@@ -33,31 +33,31 @@ import javax.inject.Inject
 
 /**
  * Main activity for the Wealth Manager application.
- * 
+ *
  * This activity serves as the entry point for the app and handles:
  * - Initial setup and configuration
  * - Performance monitoring
  * - Navigation and UI state management
  * - Memory management and optimization
- * 
+ *
  * @property firstLaunchManager Manages first-time app launch logic
  * @property performanceMonitor Monitors app performance metrics
  */
 @AndroidEntryPoint
 @androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 class MainActivity : FragmentActivity() {
-    
+
     @Inject
     lateinit var firstLaunchManager: FirstLaunchManager
-    
+
     @Inject
     lateinit var performanceMonitor: PerformanceMonitor120Hz
-    
-    
-    
+
+
+
     /**
      * Initializes the activity and sets up the UI.
-     * 
+     *
      * This method handles:
      * - Splash screen installation
      * - Edge-to-edge display configuration
@@ -67,30 +67,30 @@ class MainActivity : FragmentActivity() {
      */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        
+
         // Install splash screen for smooth app startup
         installSplashScreen()
         WindowCompat.setDecorFitsSystemWindows(window, false)
         enableEdgeToEdge()
-        
+
         // Configure system bars behavior for immersive experience
         val insetsController = WindowCompat.getInsetsController(window, window.decorView)
-        insetsController.systemBarsBehavior = 
+        insetsController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
-        
+
         // Start performance monitoring
         performanceMonitor.startMonitoring()
         setupInputEventHandling()
-        
+
         setContent {
             var showAboutDialog by remember { mutableStateOf(false) }
-            
+
             LaunchedEffect(Unit) {
                 if (firstLaunchManager.shouldShowAboutDialog() && !firstLaunchManager.hasAboutDialogBeenShown()) {
                     showAboutDialog = true
                 }
             }
-            
+
             val windowSizeClass = calculateWindowSizeClass(this)
             WealthManagerTheme {
                 Surface(
@@ -125,13 +125,13 @@ class MainActivity : FragmentActivity() {
         super.onPause()
         hintFrameRate(0f)
     }
-    
+
     override fun onTouchEvent(event: MotionEvent): Boolean {
         return try {
-            if (event.action == MotionEvent.ACTION_DOWN || 
-                event.action == MotionEvent.ACTION_UP || 
+            if (event.action == MotionEvent.ACTION_DOWN ||
+                event.action == MotionEvent.ACTION_UP ||
                 event.action == MotionEvent.ACTION_MOVE) {
-                
+
                 if (isValidTouchPosition(event.x, event.y)) {
                     val result = super.onTouchEvent(event)
                     if (!result) {
@@ -149,10 +149,10 @@ class MainActivity : FragmentActivity() {
             false
         }
     }
-    
+
     /**
      * Sets up input event handling for the activity.
-     * 
+     *
      * This method configures touch event processing and error handling
      * for user interactions throughout the app.
      */
@@ -163,10 +163,10 @@ class MainActivity : FragmentActivity() {
             StandardLogger.error("MainActivity", "Error setting up input event handling", e)
         }
     }
-    
+
     /**
      * Validates if a touch position is within valid bounds.
-     * 
+     *
      * @param x The x-coordinate of the touch event
      * @param y The y-coordinate of the touch event
      * @return true if the touch position is valid, false otherwise
@@ -179,9 +179,9 @@ class MainActivity : FragmentActivity() {
                 val width = decorView.width.toFloat()
                 val height = decorView.height.toFloat()
                 val margin = 10f
-                val isValid = x >= margin && x <= (width - margin) && 
+                val isValid = x >= margin && x <= (width - margin) &&
                              y >= margin && y <= (height - margin)
-                
+
                 if (!isValid) {
                     StandardLogger.debug("MainActivity", "Touch position out of bounds: x=$x, y=$y, width=$width, height=$height")
                 }
@@ -198,7 +198,7 @@ class MainActivity : FragmentActivity() {
 
     /**
      * Hints the system about the preferred frame rate for smooth rendering.
-     * 
+     *
      * @param frameRate The desired frame rate (0 to disable hinting)
      */
     private fun hintFrameRate(frameRate: Float) {
@@ -210,25 +210,25 @@ class MainActivity : FragmentActivity() {
             StandardLogger.warn("MainActivity", "Failed to hint frame rate: $frameRate", e)
         }
     }
-    
+
     override fun onDestroy() {
         super.onDestroy()
         StandardLogger.debug("MainActivity", "onDestroy called")
-        
+
         performanceMonitor.stopMonitoring()
     }
-    
+
     override fun onLowMemory() {
         super.onLowMemory()
         StandardLogger.warn("MainActivity", "onLowMemory called - trigger memory optimization")
         System.gc()
         performanceMonitor.getPerformanceStats()
     }
-    
+
     override fun onTrimMemory(level: Int) {
         super.onTrimMemory(level)
         StandardLogger.debug("MainActivity", "onTrimMemory called with level: $level")
-        
+
         when (level) {
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,

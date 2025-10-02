@@ -14,7 +14,7 @@ class ApiProviderTest @Inject constructor(
     private val apiProviderService: ApiProviderService,
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     /**
      * Test stock quote functionality
      */
@@ -22,7 +22,7 @@ class ApiProviderTest @Inject constructor(
         return try {
             debugLogManager.log("API_TEST", "Testing stock quote for $symbol")
             val result = apiProviderService.getStockQuote(symbol)
-            
+
             if (result.isSuccess) {
                 val quoteData = result.getOrThrow()
                 debugLogManager.log("API_TEST", "Stock quote test passed: ${quoteData.symbol} = ${quoteData.price} (Provider: ${quoteData.provider})")
@@ -36,7 +36,7 @@ class ApiProviderTest @Inject constructor(
             false
         }
     }
-    
+
     /**
      * Test stock search functionality
      */
@@ -44,7 +44,7 @@ class ApiProviderTest @Inject constructor(
         return try {
             debugLogManager.log("API_TEST", "Testing stock search for '$query'")
             var success = false
-            
+
             apiProviderService.searchStocks(query, "US").collect { result ->
                 when (result) {
                     is com.wealthmanager.data.model.SearchResult.Success -> {
@@ -60,14 +60,14 @@ class ApiProviderTest @Inject constructor(
                     }
                 }
             }
-            
+
             success
         } catch (e: Exception) {
             debugLogManager.logError("Stock search test exception: ${e.message}", e)
             false
         }
     }
-    
+
     /**
      * Test exchange rate functionality
      */
@@ -75,7 +75,7 @@ class ApiProviderTest @Inject constructor(
         return try {
             debugLogManager.log("API_TEST", "Testing exchange rate")
             val result = apiProviderService.getExchangeRate("USD", "TWD")
-            
+
             if (result.isSuccess) {
                 val rateData = result.getOrThrow()
                 debugLogManager.log("API_TEST", "Exchange rate test passed: ${rateData.fromCurrency}/${rateData.toCurrency} = ${rateData.rate} (Provider: ${rateData.provider})")
@@ -89,25 +89,25 @@ class ApiProviderTest @Inject constructor(
             false
         }
     }
-    
+
     /**
      * Run all tests
      */
     suspend fun runAllTests(): Boolean {
         debugLogManager.log("API_TEST", "Starting API Provider tests...")
-        
+
         val stockQuoteTest = testStockQuote()
         val stockSearchTest = testStockSearch()
         val exchangeRateTest = testExchangeRate()
-        
+
         val allPassed = stockQuoteTest && stockSearchTest && exchangeRateTest
-        
+
         debugLogManager.log("API_TEST", "API Provider tests completed. Results:")
         debugLogManager.log("API_TEST", "- Stock Quote: ${if (stockQuoteTest) "PASS" else "FAIL"}")
         debugLogManager.log("API_TEST", "- Stock Search: ${if (stockSearchTest) "PASS" else "FAIL"}")
         debugLogManager.log("API_TEST", "- Exchange Rate: ${if (exchangeRateTest) "PASS" else "FAIL"}")
         debugLogManager.log("API_TEST", "- Overall: ${if (allPassed) "PASS" else "FAIL"}")
-        
+
         return allPassed
     }
 }

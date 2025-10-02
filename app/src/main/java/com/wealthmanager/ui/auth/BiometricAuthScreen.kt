@@ -30,12 +30,12 @@ fun BiometricAuthScreen(
     val uiState by viewModel.uiState.collectAsState()
     val debugLogManager = remember { DebugLogManager() }
     val (hapticManager, view) = rememberHapticFeedbackWithView()
-    
+
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Biometric Auth Screen Opened")
         viewModel.checkBiometricAvailability(context)
     }
-    
+
     Box(
         modifier = Modifier
             .fillMaxSize()
@@ -57,26 +57,26 @@ fun BiometricAuthScreen(
                     modifier = Modifier.size(64.dp),
                     tint = MaterialTheme.colorScheme.primary
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Text(
                     text = stringResource(R.string.biometric_auth_title),
                     style = MaterialTheme.typography.headlineMedium,
                     textAlign = TextAlign.Center
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Text(
                     text = stringResource(R.string.biometric_auth_subtitle),
                     style = MaterialTheme.typography.bodyLarge,
                     textAlign = TextAlign.Center,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Privacy Protection Notice
                 Card(
                     modifier = Modifier.fillMaxWidth(),
@@ -95,14 +95,14 @@ fun BiometricAuthScreen(
                             fontWeight = FontWeight.Bold,
                             color = MaterialTheme.colorScheme.onPrimaryContainer
                         )
-                        
+
                         Text(
                             text = stringResource(R.string.privacy_protection_description),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onPrimaryContainer,
                             textAlign = TextAlign.Center
                         )
-                        
+
                         Text(
                             text = stringResource(R.string.privacy_protection_points),
                             style = MaterialTheme.typography.bodySmall,
@@ -110,31 +110,31 @@ fun BiometricAuthScreen(
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(24.dp))
-                
+
                 when (uiState.biometricStatus) {
                     BiometricStatus.AVAILABLE -> {
                         Button(
-                            onClick = { 
+                            onClick = {
                                 debugLogManager.logUserAction("Biometric Authenticate Button Clicked")
                                 debugLogManager.log("UI", "User clicked biometric authenticate button")
                                 hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
-                                viewModel.authenticate(context) 
+                                viewModel.authenticate(context)
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
                             Text(stringResource(R.string.biometric_auth_button))
                         }
-                        
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         TextButton(
-                            onClick = { 
+                            onClick = {
                                 debugLogManager.logUserAction("Skip Authentication Button Clicked")
                                 debugLogManager.log("UI", "User clicked skip authentication button")
                                 hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                                onSkipAuth() 
+                                onSkipAuth()
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -148,14 +148,14 @@ fun BiometricAuthScreen(
                             color = MaterialTheme.colorScheme.error,
                             textAlign = TextAlign.Center
                         )
-                        
+
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         Button(
-                            onClick = { 
+                            onClick = {
                                 debugLogManager.logUserAction("Continue Without Biometric (No Hardware)")
                                 debugLogManager.log("UI", "User clicked continue without biometric - no hardware available")
-                                onSkipAuth() 
+                                onSkipAuth()
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -169,14 +169,14 @@ fun BiometricAuthScreen(
                             color = MaterialTheme.colorScheme.error,
                             textAlign = TextAlign.Center
                         )
-                        
+
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         Button(
-                            onClick = { 
+                            onClick = {
                                 debugLogManager.logUserAction("Continue Without Biometric (HW Unavailable)")
                                 debugLogManager.log("UI", "User clicked continue without biometric - hardware unavailable")
-                                onSkipAuth() 
+                                onSkipAuth()
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -190,14 +190,14 @@ fun BiometricAuthScreen(
                             color = MaterialTheme.colorScheme.error,
                             textAlign = TextAlign.Center
                         )
-                        
+
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         Button(
-                            onClick = { 
+                            onClick = {
                                 debugLogManager.logUserAction("Continue Without Biometric (None Enrolled)")
                                 debugLogManager.log("UI", "User clicked continue without biometric - no biometrics enrolled")
-                                onSkipAuth() 
+                                onSkipAuth()
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -211,14 +211,14 @@ fun BiometricAuthScreen(
                             color = MaterialTheme.colorScheme.error,
                             textAlign = TextAlign.Center
                         )
-                        
+
                         Spacer(modifier = Modifier.height(16.dp))
-                        
+
                         Button(
-                            onClick = { 
+                            onClick = {
                                 debugLogManager.logUserAction("Continue Without Biometric (Unknown Error)")
                                 debugLogManager.log("UI", "User clicked continue without biometric - unknown error occurred")
-                                onSkipAuth() 
+                                onSkipAuth()
                             },
                             modifier = Modifier.fillMaxWidth()
                         ) {
@@ -226,7 +226,7 @@ fun BiometricAuthScreen(
                         }
                     }
                 }
-                
+
                 if (uiState.errorMessage.isNotEmpty()) {
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(
@@ -239,7 +239,7 @@ fun BiometricAuthScreen(
             }
         }
     }
-    
+
     // Handle authentication success
     LaunchedEffect(uiState.isAuthenticated) {
         if (uiState.isAuthenticated) {

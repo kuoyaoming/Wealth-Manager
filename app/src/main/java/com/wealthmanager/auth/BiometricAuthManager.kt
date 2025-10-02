@@ -10,7 +10,7 @@ import javax.inject.Singleton
 
 @Singleton
 class BiometricAuthManager @Inject constructor() {
-    
+
     fun isBiometricAvailable(context: Context): BiometricStatus {
         val biometricManager = BiometricManager.from(context)
         return when (biometricManager.canAuthenticate(BiometricManager.Authenticators.BIOMETRIC_WEAK)) {
@@ -21,7 +21,7 @@ class BiometricAuthManager @Inject constructor() {
             else -> BiometricStatus.UNKNOWN_ERROR
         }
     }
-    
+
     fun createBiometricPrompt(
         activity: FragmentActivity,
         onSuccess: () -> Unit,
@@ -29,13 +29,13 @@ class BiometricAuthManager @Inject constructor() {
         onCancel: () -> Unit
     ): BiometricPrompt {
         val executor = ContextCompat.getMainExecutor(activity)
-        
+
         val callback = object : BiometricPrompt.AuthenticationCallback() {
             override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
                 super.onAuthenticationSucceeded(result)
                 onSuccess()
             }
-            
+
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
                 super.onAuthenticationError(errorCode, errString)
                 when (errorCode) {
@@ -49,16 +49,16 @@ class BiometricAuthManager @Inject constructor() {
                     else -> onError("Authentication failed: $errString")
                 }
             }
-            
+
             override fun onAuthenticationFailed() {
                 super.onAuthenticationFailed()
                 onError("Authentication failed")
             }
         }
-        
+
         return BiometricPrompt(activity, executor, callback)
     }
-    
+
     fun showBiometricPrompt(
         prompt: BiometricPrompt,
         title: String,
@@ -70,7 +70,7 @@ class BiometricAuthManager @Inject constructor() {
             .setSubtitle(subtitle)
             .setNegativeButtonText(negativeButtonText)
             .build()
-        
+
         prompt.authenticate(promptInfo)
     }
 }

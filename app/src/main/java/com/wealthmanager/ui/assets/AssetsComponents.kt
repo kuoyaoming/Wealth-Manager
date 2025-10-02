@@ -77,7 +77,7 @@ fun CashAssetItem(
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-            
+
             Row {
                 IconButton(onClick = onEdit) {
                     Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.edit))
@@ -153,7 +153,7 @@ fun StockAssetItem(
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-            
+
             Row {
                 IconButton(onClick = onEdit) {
                     Icon(Icons.Default.Edit, contentDescription = stringResource(R.string.edit))

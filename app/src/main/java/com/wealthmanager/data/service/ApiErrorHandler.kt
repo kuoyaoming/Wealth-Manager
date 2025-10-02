@@ -14,7 +14,7 @@ import javax.inject.Singleton
 class ApiErrorHandler @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     /**
      * API error type enumeration
      */
@@ -26,7 +26,7 @@ class ApiErrorHandler @Inject constructor(
         object DataValidationError : ApiErrorType()
         object UnknownError : ApiErrorType()
     }
-    
+
     /**
      * Error recovery strategy
      */
@@ -36,7 +36,7 @@ class ApiErrorHandler @Inject constructor(
         val maxRetries: Int,
         val fallbackAction: String
     )
-    
+
     /**
      * Analyze error and return error type
      */
@@ -85,7 +85,7 @@ class ApiErrorHandler @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Get recovery strategy based on error type
      */
@@ -129,7 +129,7 @@ class ApiErrorHandler @Inject constructor(
             )
         }
     }
-    
+
     /**
      * Get user-friendly error message
      */
@@ -143,7 +143,7 @@ class ApiErrorHandler @Inject constructor(
             ApiErrorType.UnknownError -> "Unknown error occurred, please restart the application"
         }
     }
-    
+
     /**
      * Log error statistics
      */
@@ -154,7 +154,7 @@ class ApiErrorHandler @Inject constructor(
             "duration_ms" to duration,
             "timestamp" to System.currentTimeMillis()
         )
-        
+
         debugLogManager.log("API_ERROR_STATS", "Error occurred: $stats")
     }
 }

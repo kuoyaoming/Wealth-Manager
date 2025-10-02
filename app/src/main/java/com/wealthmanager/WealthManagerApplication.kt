@@ -11,13 +11,13 @@ import javax.inject.Inject
 
 /**
  * Main application class for the Wealth Manager app.
- * 
+ *
  * This class handles:
  * - Dependency injection setup with Hilt
  * - Authentication state management
  * - Locale and language preferences
  * - Application lifecycle management
- * 
+ *
  * @property authStateManager Manages user authentication state
  * @property localePreferencesManager Handles language and locale preferences
  */
@@ -36,7 +36,7 @@ class WealthManagerApplication : Application(), AuthStateManagerEntryPoint {
 
     /**
      * Initializes the application and sets up language preferences.
-     * 
+     *
      * This method is called when the application starts and handles:
      * - Language preference restoration
      * - Error handling for locale setup

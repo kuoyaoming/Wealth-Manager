@@ -28,10 +28,10 @@ fun NotificationPermissionSection(
     onPermissionDenied: () -> Unit = {}
 ) {
     val context = LocalContext.current
-    var hasNotificationPermission by remember { 
-        mutableStateOf(checkNotificationPermission(context)) 
+    var hasNotificationPermission by remember {
+        mutableStateOf(checkNotificationPermission(context))
     }
-    
+
     val notificationPermissionLauncher = rememberLauncherForActivityResult(
         contract = ActivityResultContracts.RequestPermission()
     ) { isGranted ->
@@ -42,7 +42,7 @@ fun NotificationPermissionSection(
             onPermissionDenied()
         }
     }
-    
+
     // Only show permission request for Android 13+
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU && !hasNotificationPermission) {
         Card(
@@ -69,17 +69,17 @@ fun NotificationPermissionSection(
                         fontWeight = FontWeight.Bold
                     )
                 }
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 Text(
                     text = stringResource(R.string.notification_permission_description),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
@@ -89,9 +89,9 @@ fun NotificationPermissionSection(
                     ) {
                         Text(stringResource(R.string.action_later))
                     }
-                    
+
                     Spacer(modifier = Modifier.width(8.dp))
-                    
+
                     Button(
                         onClick = {
                             notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
@@ -110,7 +110,7 @@ fun NotificationPermissionSection(
  */
 private fun checkNotificationPermission(context: Context): Boolean {
     return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-        context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) == 
+        context.checkSelfPermission(Manifest.permission.POST_NOTIFICATIONS) ==
             android.content.pm.PackageManager.PERMISSION_GRANTED
     } else {
         true // Permission not required for older versions
@@ -125,14 +125,14 @@ fun NotificationPermissionStatus(
     modifier: Modifier = Modifier
 ) {
     val context = LocalContext.current
-    var hasPermission by remember { 
-        mutableStateOf(checkNotificationPermission(context)) 
+    var hasPermission by remember {
+        mutableStateOf(checkNotificationPermission(context))
     }
-    
+
     LaunchedEffect(Unit) {
         hasPermission = checkNotificationPermission(context)
     }
-    
+
     Row(
         modifier = modifier,
         verticalAlignment = Alignment.CenterVertically
@@ -146,9 +146,9 @@ fun NotificationPermissionStatus(
                 MaterialTheme.colorScheme.outline
             }
         )
-        
+
         Spacer(modifier = Modifier.width(8.dp))
-        
+
         Text(
             text = if (hasPermission) {
                 stringResource(R.string.notifications_enabled)

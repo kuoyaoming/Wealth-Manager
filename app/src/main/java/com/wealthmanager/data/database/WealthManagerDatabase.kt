@@ -19,15 +19,15 @@ import com.wealthmanager.data.entity.StockAsset
     exportSchema = false
 )
 abstract class WealthManagerDatabase : RoomDatabase() {
-    
+
     abstract fun cashAssetDao(): CashAssetDao
     abstract fun stockAssetDao(): StockAssetDao
     abstract fun exchangeRateDao(): ExchangeRateDao
-    
+
     companion object {
         @Volatile
         private var INSTANCE: WealthManagerDatabase? = null
-        
+
         // Database migration strategy: from version 1 to version 2
         private val MIGRATION_1_2 = object : Migration(1, 2) {
             override fun migrate(database: SupportSQLiteDatabase) {
@@ -45,23 +45,23 @@ abstract class WealthManagerDatabase : RoomDatabase() {
                         lastUpdated INTEGER NOT NULL
                     )
                 """)
-                
+
                 // Copy data, convert INTEGER shares to REAL
                 database.execSQL("""
-                    INSERT INTO stock_assets_new 
-                    SELECT id, symbol, companyName, CAST(shares AS REAL), market, 
+                    INSERT INTO stock_assets_new
+                    SELECT id, symbol, companyName, CAST(shares AS REAL), market,
                            currentPrice, originalCurrency, twdEquivalent, lastUpdated
                     FROM stock_assets
                 """)
-                
+
                 // Delete old table
                 database.execSQL("DROP TABLE stock_assets")
-                
+
                 // Rename new table
                 database.execSQL("ALTER TABLE stock_assets_new RENAME TO stock_assets")
             }
         }
-        
+
         fun getDatabase(context: Context): WealthManagerDatabase {
             return INSTANCE ?: synchronized(this) {
                 val instance = Room.databaseBuilder(

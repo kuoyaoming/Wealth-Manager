@@ -87,10 +87,18 @@ object MoneyFormatter {
         val dfs = (NumberFormat.getInstance(locale) as java.text.DecimalFormat).decimalFormatSymbols
         val sep = dfs.decimalSeparator
         // Remove trailing zeros after decimal separator, also remove separator if no decimals remain
-        return if (text.contains(sep)) text.replace(Regex("\\${sep}0+") ) { match ->
-            val withoutZeros = match.value.trimEnd('0')
-            if (withoutZeros == "$sep") "" else withoutZeros
-        } else text
+        return if (text.contains(sep)) {
+            text.replace(Regex("""\${sep}0+""") ) { match ->
+                val withoutZeros = match.value.trimEnd('0')
+                if (withoutZeros == "$sep") {
+                    ""
+                } else {
+                    withoutZeros
+                }
+            }
+        } else {
+            text
+        }
     }
 }
 

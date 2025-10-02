@@ -16,7 +16,7 @@ import javax.inject.Singleton
 class TwseDataParser @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     /**
      * Find specific stock from all stock data
      */
@@ -29,7 +29,7 @@ class TwseDataParser @Inject constructor(
             null
         }
     }
-    
+
     /**
      * Convert TwseStockItem to TwseStockData
      */
@@ -48,7 +48,7 @@ class TwseDataParser @Inject constructor(
             transactionCount = item.Transaction
         )
     }
-    
+
     /**
      * Calculate change percentage
      */
@@ -67,7 +67,7 @@ class TwseDataParser @Inject constructor(
             "0.00"
         }
     }
-    
+
     /**
      * Get today's date string (YYYYMMDD format)
      */
@@ -75,14 +75,14 @@ class TwseDataParser @Inject constructor(
         val dateFormat = SimpleDateFormat("yyyyMMdd", Locale.getDefault())
         return dateFormat.format(Date())
     }
-    
+
     /**
      * Clean Taiwan stock symbol format
      */
     fun cleanTaiwanStockSymbol(symbol: String): String {
         return symbol.removeSuffix(".TW").removeSuffix(":TW")
     }
-    
+
     /**
      * Validate TWSE API response
      */

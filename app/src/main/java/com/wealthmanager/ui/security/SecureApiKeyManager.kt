@@ -22,7 +22,7 @@ class SecureApiKeyManager @Inject constructor(
     private val securityLevelManager: SecurityLevelManager,
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     /**
      * Securely sets API key.
      */
@@ -36,7 +36,7 @@ class SecureApiKeyManager @Inject constructor(
         onFallbackRequired: () -> Unit = {}
     ) {
         debugLogManager.log("SECURE_KEY_MANAGER", "Setting $keyType key securely")
-        
+
         val permission = securityLevelManager.checkFeaturePermission(SecurityFeature.API_KEY_MANAGEMENT)
         when (permission) {
             com.wealthmanager.security.SecurityLevelManager.FeaturePermission.NO_ACCESS -> {
@@ -50,9 +50,9 @@ class SecureApiKeyManager @Inject constructor(
             com.wealthmanager.security.SecurityLevelManager.FeaturePermission.FULL_ACCESS -> {
             }
         }
-        
+
         val requiresBiometric = securityLevelManager.requiresBiometricAuth(SecurityFeature.API_KEY_MANAGEMENT)
-        
+
         if (requiresBiometric && biometricProtectionManager.isBiometricAvailable() == BiometricStatus.AVAILABLE) {
             if (activity != null) {
                 biometricProtectionManager.showBiometricPrompt(
@@ -74,7 +74,7 @@ class SecureApiKeyManager @Inject constructor(
             setKeyWithValidation(key, keyType, onSuccess, onError)
         }
     }
-    
+
     /**
      * Validates and sets key.
      */
@@ -93,7 +93,7 @@ class SecureApiKeyManager @Inject constructor(
                     return
                 }
             }
-            
+
             if (validation.isValid) {
                 debugLogManager.log("SECURE_KEY_MANAGER", "$keyType key set successfully")
                 onSuccess(validation)
@@ -106,7 +106,7 @@ class SecureApiKeyManager @Inject constructor(
             onError(context.getString(R.string.api_key_setup_error, e.message))
         }
     }
-    
+
     /**
      * Securely gets API key.
      */
@@ -119,7 +119,7 @@ class SecureApiKeyManager @Inject constructor(
         onFallbackRequired: () -> Unit = {}
     ) {
         debugLogManager.log("SECURE_KEY_MANAGER", "Getting $keyType key securely")
-        
+
         if (keyRepository.isAuthenticationRequired()) {
             if (activity != null) {
                 biometricProtectionManager.showBiometricPrompt(
@@ -151,21 +151,19 @@ class SecureApiKeyManager @Inject constructor(
             onSuccess(key)
         }
     }
-    
+
     /**
      * Validates key strength (without saving).
      */
-    fun validateKeyStrength(key: String, keyType: String): KeyValidationResult {
-        return keyRepository.validateKeyStrength(key, keyType)
-    }
-    
+    fun validateKeyStrength(key: String, keyType: String): KeyValidationResult = 
+        keyRepository.validateKeyStrength(key, keyType)
+
     /**
      * Generates key suggestions.
      */
-    fun generateKeySuggestions(validationResult: KeyValidationResult): List<String> {
-        return keyRepository.generateKeySuggestions(validationResult)
-    }
-    
+    fun generateKeySuggestions(validationResult: KeyValidationResult): List<String> = 
+        keyRepository.generateKeySuggestions(validationResult)
+
     /**
      * Checks security status.
      */
@@ -173,7 +171,7 @@ class SecureApiKeyManager @Inject constructor(
         val keystoreAvailable = keyRepository.isKeystoreAvailable()
         val biometricStatus = biometricProtectionManager.isBiometricAvailable()
         val authenticationRequired = keyRepository.isAuthenticationRequired()
-        
+
         return SecurityStatus(
             keystoreAvailable = keystoreAvailable,
             biometricStatus = biometricStatus,
@@ -185,7 +183,7 @@ class SecureApiKeyManager @Inject constructor(
             }
         )
     }
-    
+
     /**
      * Sets API key with fallback security (lower security level).
      */
@@ -196,14 +194,13 @@ class SecureApiKeyManager @Inject constructor(
         onError: (String) -> Unit
     ) {
         debugLogManager.log("SECURE_KEY_MANAGER", "Setting $keyType key with fallback security")
-        
-        val originalAuthRequired = keyRepository.isAuthenticationRequired()
+
         try {
             setKeyWithValidation(key, keyType, onSuccess, onError)
         } finally {
         }
     }
-    
+
     /**
      * Gets API key with fallback security (lower security level).
      */
@@ -213,7 +210,7 @@ class SecureApiKeyManager @Inject constructor(
         onError: (String) -> Unit
     ) {
         debugLogManager.log("SECURE_KEY_MANAGER", "Getting $keyType key with fallback security")
-        
+
         try {
             val key = when (keyType.lowercase()) {
                 "finnhub" -> keyRepository.getUserFinnhubKey()
@@ -226,7 +223,7 @@ class SecureApiKeyManager @Inject constructor(
             onError(context.getString(R.string.api_key_setup_error, e.message))
         }
     }
-    
+
     /**
      * Handles security level fallback for API key operations.
      */
@@ -234,7 +231,7 @@ class SecureApiKeyManager @Inject constructor(
         debugLogManager.log("SECURE_KEY_MANAGER", "Handling security fallback")
         securityLevelManager.setFallbackMode(true)
     }
-    
+
     /**
      * Gets current security level information.
      */
@@ -243,7 +240,7 @@ class SecureApiKeyManager @Inject constructor(
         val recommendation = securityLevelManager.getSecurityLevelRecommendation()
         return context.getString(R.string.api_key_current_security_level, currentLevel, recommendation)
     }
-    
+
     /**
      * Clears all keys.
      */

@@ -16,14 +16,14 @@ class DeveloperKeyManager @Inject constructor(
     private val context: Context,
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     companion object {
         private const val ENCRYPTED_FINNHUB_KEY = "encrypted_finnhub_key_here"
         private const val ENCRYPTED_EXCHANGE_KEY = "encrypted_exchange_key_here"
-        
+
         private const val DECRYPTION_KEY = "dev_key_2024_secure"
     }
-    
+
     /**
      * Checks if in developer mode.
      */
@@ -37,7 +37,7 @@ class DeveloperKeyManager @Inject constructor(
             false
         }
     }
-    
+
     /**
      * Gets developer Finnhub API key.
      */
@@ -46,7 +46,7 @@ class DeveloperKeyManager @Inject constructor(
             debugLogManager.log("DEV_KEY", "Not in developer mode, skipping developer key")
             return null
         }
-        
+
         return try {
             val decryptedKey = decryptKey(ENCRYPTED_FINNHUB_KEY)
             debugLogManager.log("DEV_KEY", "Developer Finnhub key retrieved")
@@ -56,7 +56,7 @@ class DeveloperKeyManager @Inject constructor(
             null
         }
     }
-    
+
     /**
      * Gets developer Exchange Rate API key.
      */
@@ -65,7 +65,7 @@ class DeveloperKeyManager @Inject constructor(
             debugLogManager.log("DEV_KEY", "Not in developer mode, skipping developer key")
             return null
         }
-        
+
         return try {
             val decryptedKey = decryptKey(ENCRYPTED_EXCHANGE_KEY)
             debugLogManager.log("DEV_KEY", "Developer Exchange Rate key retrieved")
@@ -75,7 +75,7 @@ class DeveloperKeyManager @Inject constructor(
             null
         }
     }
-    
+
     /**
      * Decrypts API key.
      */
@@ -84,7 +84,7 @@ class DeveloperKeyManager @Inject constructor(
             val keySpec = SecretKeySpec(DECRYPTION_KEY.toByteArray(), "AES")
             val cipher = Cipher.getInstance("AES")
             cipher.init(Cipher.DECRYPT_MODE, keySpec)
-            
+
             val encryptedBytes = Base64.decode(encryptedKey, Base64.DEFAULT)
             val decryptedBytes = cipher.doFinal(encryptedBytes)
             String(decryptedBytes)
@@ -93,13 +93,13 @@ class DeveloperKeyManager @Inject constructor(
             throw e
         }
     }
-    
+
     /**
      * Checks if developer keys are available.
      */
     fun areDeveloperKeysAvailable(): Boolean {
         if (!isDeveloperMode()) return false
-        
+
         return try {
             val finnhubKey = getDeveloperFinnhubKey()
             val exchangeKey = getDeveloperExchangeKey()
@@ -109,7 +109,7 @@ class DeveloperKeyManager @Inject constructor(
             false
         }
     }
-    
+
     /**
      * Gets developer key status.
      */

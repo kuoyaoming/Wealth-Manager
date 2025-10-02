@@ -16,11 +16,10 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
- 
 
 /**
  * UI state data class for the settings screen.
- * 
+ *
  * @property biometricEnabled Whether biometric authentication is enabled
  * @property financialBackupEnabled Whether financial data backup is enabled
  * @property currentLanguageCode Currently selected language code
@@ -51,7 +50,7 @@ data class SettingsUiState(
 
 /**
  * Data class representing a language option for the settings screen.
- * 
+ *
  * @property languageCode The language code (e.g., "en", "zh-TW")
  * @property displayNameRes Resource ID for the display name string
  */
@@ -62,14 +61,14 @@ data class LanguageOption(
 
 /**
  * ViewModel for the settings screen managing user preferences and configuration.
- * 
+ *
  * This ViewModel handles:
  * - Biometric authentication settings
  * - Language and locale preferences
  * - API key management and testing
  * - Backup and restore settings
  * - Security configuration
- * 
+ *
  * @property authStateManager Manager for authentication state
  * @property backupPreferencesManager Manager for backup preferences
  * @property localePreferencesManager Manager for locale preferences
@@ -125,7 +124,7 @@ class SettingsViewModel @Inject constructor(
             _uiState.value = _uiState.value.copy(currentLanguageCode = languageCode)
         }
     }
-    
+
     /**
      * Test all API keys
      */
@@ -143,7 +142,7 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Securely tests all API keys (includes security status).
      */
@@ -153,7 +152,7 @@ class SettingsViewModel @Inject constructor(
             try {
                 val secureResult = apiTestService.testApiKeysSecurely()
                 val results = listOf(secureResult.finnhubResult, secureResult.exchangeResult)
-                
+
                 _uiState.value = _uiState.value.copy(
                     apiTestResults = results,
                     isTestingApis = false,
@@ -231,7 +230,7 @@ class SettingsViewModel @Inject constructor(
             lastKeyActionMessage = "Exchange Rate key cleared"
         )
     }
-    
+
     /**
      * Sets API key using secure mechanism with biometric fallback.
      */
@@ -245,7 +244,7 @@ class SettingsViewModel @Inject constructor(
                     )
                     return@launch
                 }
-                
+
                 val testResult = when (keyType.lowercase()) {
                     "finnhub" -> apiTestService.testFinnhubApiWithKey(key)
                     "exchange" -> apiTestService.testExchangeRateApiWithKey(key)
@@ -256,7 +255,7 @@ class SettingsViewModel @Inject constructor(
                         return@launch
                     }
                 }
-                
+
                 if (testResult.isWorking) {
                     secureApiKeyManager.setApiKeySecurely(
                         key = key,
@@ -298,7 +297,7 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Sets API key with fallback security (lower security level).
      */
@@ -328,12 +327,12 @@ class SettingsViewModel @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Gets security status.
      */
     fun getSecurityStatus() = secureApiKeyManager.getSecurityStatus()
-    
+
     /**
      * Handles biometric fallback dialog actions.
      */
@@ -344,7 +343,7 @@ class SettingsViewModel @Inject constructor(
             pendingKeyAction = null
         )
     }
-    
+
     fun onBiometricFallbackRetry() {
         _uiState.value = _uiState.value.copy(
             showBiometricFallbackDialog = false,
@@ -354,7 +353,7 @@ class SettingsViewModel @Inject constructor(
             lastKeyActionMessage = "請重新嘗試生物識別驗證"
         )
     }
-    
+
     fun onBiometricFallbackCancel() {
         _uiState.value = _uiState.value.copy(
             showBiometricFallbackDialog = false,
@@ -362,7 +361,7 @@ class SettingsViewModel @Inject constructor(
             lastKeyActionMessage = "操作已取消"
         )
     }
-    
+
     /**
      * Sets security level.
      */
@@ -378,6 +377,6 @@ class SettingsViewModel @Inject constructor(
         }
     }
     */
-    
+
 }
 

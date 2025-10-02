@@ -38,10 +38,10 @@ class AssetsViewModel @Inject constructor(
     private val marketDataService: MarketDataService,
     private val debugLogManager: DebugLogManager
 ) : ViewModel() {
-    
+
     private val _uiState = MutableStateFlow(AssetsUiState())
     val uiState: StateFlow<AssetsUiState> = _uiState.asStateFlow()
-    
+
     private val _selectedCashCurrency = MutableStateFlow("TWD")
     val selectedCashCurrency: StateFlow<String> = _selectedCashCurrency.asStateFlow()
 
@@ -203,7 +203,7 @@ class AssetsViewModel @Inject constructor(
                 debugLogManager.log("ASSETS", "=== STOCK SEARCH IN VIEWMODEL COMPLETED ===")
             }
         }
-    
+
     fun loadAssets() {
         debugLogManager.log("ASSETS", "Loading assets from repository")
         viewModelScope.launch {
@@ -220,7 +220,7 @@ class AssetsViewModel @Inject constructor(
             }.collect { }
         }
     }
-    
+
     fun setSelectedCashCurrency(currency: String) {
         debugLogManager.log("ASSETS", "Selected cash currency changed to $currency")
         _selectedCashCurrency.value = currency
@@ -277,7 +277,7 @@ class AssetsViewModel @Inject constructor(
     fun openAddCashDialog() {
         loadExistingCashAsset()
     }
-    
+
         fun addStockAsset(symbol: String, shares: Double) {
             debugLogManager.log("ASSETS", "Adding stock asset: $symbol, $shares shares")
             viewModelScope.launch {
@@ -285,10 +285,10 @@ class AssetsViewModel @Inject constructor(
                 val isTaiwanStock = symbol.endsWith(".TW", ignoreCase = true) ||
                                   symbol.endsWith(".T", ignoreCase = true) ||
                                   symbol.matches(Regex("^\\d{4}$"))
-                
+
                 val currency = if (isTaiwanStock) "TWD" else "USD"
                 debugLogManager.log("ASSETS", "Stock currency determined: $currency for $symbol")
-                
+
                 val stockAsset = StockAsset(
                     id = System.currentTimeMillis().toString(),
                     symbol = symbol,

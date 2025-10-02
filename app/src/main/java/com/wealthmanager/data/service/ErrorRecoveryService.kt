@@ -15,7 +15,7 @@ import javax.inject.Singleton
 class ErrorRecoveryService @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     /**
      * Execute operation with retry mechanism and exponential backoff
      */
@@ -25,22 +25,22 @@ class ErrorRecoveryService @Inject constructor(
         initialDelay: Long = 1000L,
         operationName: String = "Unknown Operation"
     ): Flow<Result<T>> = flow {
-        
+
         var lastException: Exception? = null
-        
+
         repeat(maxRetries) { attempt ->
             try {
                 debugLogManager.log("ERROR_RECOVERY", "$operationName - Attempt ${attempt + 1}/$maxRetries")
-                
+
                 val result = operation()
                 debugLogManager.log("ERROR_RECOVERY", "$operationName - Success on attempt ${attempt + 1}")
                 emit(Result.success(result))
                 return@flow
-                
+
             } catch (e: Exception) {
                 lastException = e
                 debugLogManager.log("ERROR_RECOVERY", "$operationName - Attempt ${attempt + 1} failed: ${e.message}")
-                
+
                 if (attempt < maxRetries - 1) {
                     val delayTime = initialDelay * (1L shl attempt) // Exponential backoff
                     debugLogManager.log("ERROR_RECOVERY", "$operationName - Retrying in ${delayTime}ms")
@@ -48,11 +48,11 @@ class ErrorRecoveryService @Inject constructor(
                 }
             }
         }
-        
+
         debugLogManager.log("ERROR_RECOVERY", "$operationName - All attempts failed")
         emit(Result.failure(lastException ?: Exception("All retry attempts failed")))
     }
-    
+
     /**
      * Handle API rate limiting with intelligent backoff
      */
@@ -60,17 +60,17 @@ class ErrorRecoveryService @Inject constructor(
         operation: suspend () -> Unit,
         retryAfter: Long = 60000L // 1 minute default
     ): Flow<Result<Unit>> = flow {
-        
+
         try {
             operation()
             emit(Result.success(Unit))
         } catch (e: Exception) {
             if (e.message?.contains("rate limit", ignoreCase = true) == true ||
                 e.message?.contains("too many requests", ignoreCase = true) == true) {
-                
+
                 debugLogManager.log("ERROR_RECOVERY", "Rate limit detected, backing off for ${retryAfter}ms")
                 delay(retryAfter)
-                
+
                 try {
                     operation()
                     emit(Result.success(Unit))
@@ -83,7 +83,7 @@ class ErrorRecoveryService @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Handle network connectivity issues
      */
@@ -91,9 +91,9 @@ class ErrorRecoveryService @Inject constructor(
         operation: suspend () -> Unit,
         maxRetries: Int = 3
     ): Flow<Result<Unit>> = flow {
-        
+
         var lastException: Exception? = null
-        
+
         repeat(maxRetries) { attempt ->
             try {
                 operation()
@@ -101,10 +101,10 @@ class ErrorRecoveryService @Inject constructor(
                 return@flow
             } catch (e: Exception) {
                 lastException = e
-                
+
                 if (isNetworkError(e)) {
                     debugLogManager.log("ERROR_RECOVERY", "Network error on attempt ${attempt + 1}: ${e.message}")
-                    
+
                     if (attempt < maxRetries - 1) {
                         val delayTime = 2000L * (attempt + 1) // Linear backoff for network
                         debugLogManager.log("ERROR_RECOVERY", "Retrying network operation in ${delayTime}ms")
@@ -117,11 +117,11 @@ class ErrorRecoveryService @Inject constructor(
                 }
             }
         }
-        
+
         debugLogManager.log("ERROR_RECOVERY", "Network operation failed after $maxRetries attempts")
         emit(Result.failure(lastException ?: Exception("Network operation failed")))
     }
-    
+
     /**
      * Check if exception is network-related
      */
@@ -133,7 +133,7 @@ class ErrorRecoveryService @Inject constructor(
                 message.contains("unreachable") ||
                 message.contains("no route to host")
     }
-    
+
     /**
      * Handle data validation errors gracefully
      */
@@ -142,7 +142,7 @@ class ErrorRecoveryService @Inject constructor(
         validator: (Any?) -> Boolean,
         fallbackValue: Any? = null
     ): Flow<Result<Any?>> = flow {
-        
+
         try {
             if (validator(data)) {
                 debugLogManager.log("ERROR_RECOVERY", "Data validation successful")
@@ -156,7 +156,7 @@ class ErrorRecoveryService @Inject constructor(
             emit(Result.success(fallbackValue))
         }
     }
-    
+
     /**
      * Circuit breaker pattern for failing services
      */
@@ -168,13 +168,13 @@ class ErrorRecoveryService @Inject constructor(
         private var failureCount = 0
         private var lastFailureTime = 0L
         private var state = CircuitState.CLOSED
-        
+
         enum class CircuitState {
             CLOSED,    // Normal operation
             OPEN,      // Failing, blocking requests
             HALF_OPEN  // Testing if service is back
         }
-        
+
         suspend fun <T> execute(operation: suspend () -> T): Flow<Result<T>> = flow {
             when (state) {
                 CircuitState.OPEN -> {
@@ -194,7 +194,7 @@ class ErrorRecoveryService @Inject constructor(
                     // Normal operation
                 }
             }
-            
+
             try {
                 val result = operation()
                 onSuccess()
@@ -204,17 +204,17 @@ class ErrorRecoveryService @Inject constructor(
                 emit(Result.failure(e))
             }
         }
-        
+
         private fun onSuccess() {
             failureCount = 0
             state = CircuitState.CLOSED
             debugLogManager.log("CIRCUIT_BREAKER", "Circuit breaker reset to closed")
         }
-        
+
         private fun onFailure() {
             failureCount++
             lastFailureTime = System.currentTimeMillis()
-            
+
             if (failureCount >= failureThreshold) {
                 state = CircuitState.OPEN
                 debugLogManager.log("CIRCUIT_BREAKER", "Circuit breaker opened after $failureCount failures")

@@ -15,11 +15,11 @@ import javax.inject.Singleton
 class AppHealthMonitor @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     private var errorCount = 0
     private var lastErrorTime = 0L
     private var isHealthy = true
-    
+
     /**
      * Monitor API health
      */
@@ -30,7 +30,7 @@ class AppHealthMonitor @Inject constructor(
             delay(30000L) // Check every 30 seconds
         }
     }
-    
+
     /**
      * Check API health status
      */
@@ -39,7 +39,7 @@ class AppHealthMonitor @Inject constructor(
             // Simulate API health check
             val responseTime = measureApiResponseTime()
             val errorRate = calculateErrorRate()
-            
+
             when {
                 errorRate > 0.5 -> {
                     isHealthy = false
@@ -59,7 +59,7 @@ class AppHealthMonitor @Inject constructor(
             HealthStatus.UNHEALTHY("Health check failed: ${e.message}")
         }
     }
-    
+
     /**
      * Record error for monitoring
      */
@@ -68,14 +68,14 @@ class AppHealthMonitor @Inject constructor(
         lastErrorTime = System.currentTimeMillis()
         debugLogManager.log("HEALTH_MONITOR", "Error recorded: $error (Total: $errorCount)")
     }
-    
+
     /**
      * Record successful operation
      */
     fun recordSuccess() {
         debugLogManager.log("HEALTH_MONITOR", "Success recorded")
     }
-    
+
     /**
      * Get current health status
      */
@@ -86,7 +86,7 @@ class AppHealthMonitor @Inject constructor(
             HealthStatus.UNHEALTHY("Application has issues")
         }
     }
-    
+
     /**
      * Measure API response time
      */
@@ -100,21 +100,21 @@ class AppHealthMonitor @Inject constructor(
             return Long.MAX_VALUE
         }
     }
-    
+
     /**
      * Calculate error rate
      */
     private fun calculateErrorRate(): Double {
         val timeSinceLastError = System.currentTimeMillis() - lastErrorTime
         val timeWindow = 300000L // 5 minutes
-        
+
         return if (timeSinceLastError < timeWindow) {
             errorCount.toDouble() / (timeWindow / 1000.0)
         } else {
             0.0
         }
     }
-    
+
     /**
      * Reset health status
      */

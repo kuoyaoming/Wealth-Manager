@@ -41,10 +41,10 @@ fun AboutDialog(
     // val context = LocalContext.current
     val (hapticManager, view) = rememberHapticFeedbackWithView()
     val scrollState = rememberScrollState()
-    
+
     val canScrollDown = scrollState.value < scrollState.maxValue
     val canScrollUp = scrollState.value > 0
-    
+
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(
@@ -78,7 +78,7 @@ fun AboutDialog(
                         style = MaterialTheme.typography.headlineMedium,
                         fontWeight = FontWeight.Bold
                     )
-                    
+
                     IconButton(onClick = {
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                         onDismiss()
@@ -89,35 +89,35 @@ fun AboutDialog(
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Content (cards are added directly, scrolling handled by outer Column)
                 // App Version and Info
                 AppVersionSection()
-                
+
                 Spacer(modifier = Modifier.height(12.dp))
-                
+
                 // Data Usage Policy
                 DataUsageSection()
-                
+
                 Spacer(modifier = Modifier.height(12.dp))
-                
+
                 // Third-party API Usage
                 ThirdPartyApiSection()
-                
+
                 Spacer(modifier = Modifier.height(12.dp))
-                
+
                 // Security and Compliance
                 SecurityComplianceSection()
-                
+
                 Spacer(modifier = Modifier.height(12.dp))
-                
+
                 // Privacy Policy
                 PrivacyPolicySection()
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 // Action Buttons
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -129,7 +129,7 @@ fun AboutDialog(
                     }) {
                         Text(stringResource(R.string.action_later))
                     }
-                    
+
                     Button(
                         onClick = {
                             hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
@@ -142,7 +142,7 @@ fun AboutDialog(
                 }
             }
         }
-                
+
                 if (canScrollUp) {
                     Box(
                         modifier = Modifier
@@ -158,7 +158,7 @@ fun AboutDialog(
                             )
                     )
                 }
-                
+
                 if (canScrollDown) {
                     Column(
                         modifier = Modifier
@@ -178,7 +178,7 @@ fun AboutDialog(
                                     )
                                 )
                         )
-                        
+
                         Surface(
                             modifier = Modifier
                                 .padding(bottom = 16.dp),
@@ -235,7 +235,7 @@ private fun AppVersionSection() {
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Text(
                 text = stringResource(
                     R.string.about_version_format,
@@ -245,7 +245,7 @@ private fun AppVersionSection() {
                 style = MaterialTheme.typography.bodyLarge,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Text(
                 text = stringResource(R.string.about_information_description),
                 style = MaterialTheme.typography.bodyMedium
@@ -279,7 +279,7 @@ private fun DataUsageSection() {
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Text(
                 text = stringResource(R.string.about_data_usage_description),
                 style = MaterialTheme.typography.bodyMedium
@@ -308,12 +308,12 @@ private fun ThirdPartyApiSection() {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Text(
                 text = stringResource(R.string.about_third_party_description),
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Text(
                 text = stringResource(R.string.about_third_party_points),
                 style = MaterialTheme.typography.bodySmall
@@ -347,7 +347,7 @@ private fun SecurityComplianceSection() {
                     fontWeight = FontWeight.Bold
                 )
             }
-            
+
             Text(
                 text = stringResource(R.string.about_security_points),
                 style = MaterialTheme.typography.bodySmall
@@ -371,19 +371,19 @@ private fun PrivacyPolicySection() {
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Text(
                 text = stringResource(R.string.about_privacy_description),
                 style = MaterialTheme.typography.bodyMedium
             )
-            
+
             Text(
                 text = stringResource(R.string.about_privacy_points),
                 style = MaterialTheme.typography.bodySmall
             )
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = stringResource(R.string.about_privacy_acknowledgement),
                 style = MaterialTheme.typography.bodySmall,

@@ -17,28 +17,28 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DatabaseModule {
-    
+
     @Provides
     @Singleton
     fun provideWealthManagerDatabase(@ApplicationContext context: Context): WealthManagerDatabase {
         return WealthManagerDatabase.getDatabase(context)
     }
-    
+
     @Provides
     fun provideCashAssetDao(database: WealthManagerDatabase): CashAssetDao {
         return database.cashAssetDao()
     }
-    
+
     @Provides
     fun provideStockAssetDao(database: WealthManagerDatabase): StockAssetDao {
         return database.stockAssetDao()
     }
-    
+
     @Provides
     fun provideExchangeRateDao(database: WealthManagerDatabase): ExchangeRateDao {
         return database.exchangeRateDao()
     }
-    
+
     @Provides
     @Singleton
     fun provideBiometricAuthManager(): BiometricAuthManager {

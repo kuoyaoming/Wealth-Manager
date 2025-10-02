@@ -26,7 +26,7 @@ fun WealthManagerNavigation(
     val context = LocalContext.current
     val authStateManager = remember { AuthStateManager(context) }
     var isAuthenticated by remember { mutableStateOf(authStateManager.isAuthenticated()) }
-    
+
     // Check authentication status on app start
     LaunchedEffect(Unit) {
         if (authStateManager.isAuthenticated()) {
@@ -35,7 +35,7 @@ fun WealthManagerNavigation(
             }
         }
     }
-    
+
     NavHost(
         navController = navController,
         startDestination = if (authStateManager.isAuthenticated()) "dashboard" else "auth",
@@ -62,7 +62,7 @@ fun WealthManagerNavigation(
                 }
             )
         }
-        
+
         composable("dashboard") {
             DashboardScreen(
                 onNavigateToAssets = {
@@ -74,7 +74,7 @@ fun WealthManagerNavigation(
                 navController = navController
             )
         }
-        
+
         composable("assets") {
             AssetsScreen(
                 onNavigateBack = {

@@ -24,14 +24,14 @@ import javax.inject.Inject
 
 /**
  * ViewModel for the dashboard screen managing portfolio data and UI state.
- * 
+ *
  * This ViewModel handles:
  * - Portfolio data aggregation and calculation
  * - Real-time market data updates
  * - API status monitoring and error handling
  * - Wear OS synchronization
  * - Asset loading and refresh operations
- * 
+ *
  * @property assetRepository Repository for asset data operations
  * @property marketDataService Service for fetching market data
  * @property debugLogManager Manager for debug logging
@@ -48,24 +48,24 @@ class DashboardViewModel @Inject constructor(
     private val wearSyncManager: WearSyncManager,
     private val keyRepository: KeyRepository,
 ) : ViewModel() {
-    
+
     private val _uiState = MutableStateFlow(DashboardUiState())
     val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
     val apiStatus: StateFlow<ApiStatus> = apiStatusManager.apiStatus
-    
+
     private val _manualSyncStatus = MutableStateFlow<ManualSyncStatus?>(null)
     val manualSyncStatus: StateFlow<ManualSyncStatus?> = _manualSyncStatus.asStateFlow()
-    
+
     init {
         debugLogManager.log("DASHBOARD", "DashboardViewModel initialized")
         observeAssets()
     }
-    
+
     fun hasRequiredKeys(): Boolean {
         val finnhub = keyRepository.getUserFinnhubKey()?.isNotBlank() == true
         val exchange = keyRepository.getUserExchangeKey()?.isNotBlank() == true
         debugLogManager.log("DASHBOARD", "Key status - Finnhub: ${finnhub}, Exchange: ${exchange}")
-        
+
         return finnhub && exchange
     }
 
@@ -77,16 +77,16 @@ class DashboardViewModel @Inject constructor(
                 assetRepository.getAllStockAssets()
             ) { cashAssets, stockAssets ->
                 debugLogManager.log("DASHBOARD", "Assets updated - Cash: ${cashAssets.size}, Stock: ${stockAssets.size}")
-                
+
                 val totalCash = cashAssets.sumOf { it.twdEquivalent }
                 val totalStock = stockAssets.sumOf { it.twdEquivalent }
                 val totalAssets = totalCash + totalStock
                 val lastUpdatedCash = cashAssets.maxOfOrNull { it.lastUpdated } ?: 0L
                 val lastUpdatedStock = stockAssets.maxOfOrNull { it.lastUpdated } ?: 0L
                 val lastUpdated = maxOf(lastUpdatedCash, lastUpdatedStock, System.currentTimeMillis())
-                
+
                 debugLogManager.log("DASHBOARD", "Total Assets: $totalAssets, Cash: $totalCash, Stock: $totalStock")
-                
+
                 _uiState.value = _uiState.value.copy(
                     totalAssets = totalAssets,
                     cashAssets = totalCash,
@@ -111,12 +111,12 @@ class DashboardViewModel @Inject constructor(
             }.collect { }
         }
     }
-    
+
     fun loadPortfolioData() {
         debugLogManager.log("DASHBOARD", "Loading portfolio data")
         refreshData()
     }
-    
+
     fun onReturnFromAssets() {
         debugLogManager.log("DASHBOARD", "Returned from Assets screen - checking if data needs refresh")
         // When returning from Assets, only check if update is needed, do not force refresh
@@ -135,20 +135,20 @@ class DashboardViewModel @Inject constructor(
             }
         }
     }
-    
+
     fun refreshData() {
         debugLogManager.log("DASHBOARD", "Refreshing data - starting market data update")
         _uiState.value = _uiState.value.copy(isLoading = true)
         apiStatusManager.setRetrying(true)
-        
+
         viewModelScope.launch {
             try {
                 // Check if we have any assets that need updating
                 val stockAssets = assetRepository.getAllStockAssets().first()
                 val hasStockAssets = stockAssets.isNotEmpty()
-                
+
                 debugLogManager.log("DASHBOARD", "Asset check - Stock assets: ${stockAssets.size}")
-                
+
                 // Smart update: only update market data when needed
                 if (hasStockAssets) {
                     debugLogManager.log("DASHBOARD", "Updating exchange rates and stock prices")
@@ -157,7 +157,7 @@ class DashboardViewModel @Inject constructor(
                 } else {
                     debugLogManager.log("DASHBOARD", "No stock assets found, skipping market data update")
                 }
-                
+
                 debugLogManager.log("DASHBOARD", "Market data update completed")
                 apiStatusManager.setApiSuccess()
                 _uiState.value = _uiState.value.copy(isLoading = false)
@@ -176,12 +176,12 @@ class DashboardViewModel @Inject constructor(
             }
         }
     }
-    
+
     fun retryApiCall() {
         debugLogManager.logUserAction("Retry API Call")
         refreshData()
     }
-    
+
     fun dismissApiError() {
         debugLogManager.logUserAction("Dismiss API Error")
         apiStatusManager.clearError()

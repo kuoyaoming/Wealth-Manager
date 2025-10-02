@@ -57,14 +57,14 @@ import com.wealthmanager.debug.DebugLogManager
 
 /**
  * Main dashboard screen displaying portfolio overview and asset information.
- * 
+ *
  * This screen provides:
  * - Total assets summary
  * - Cash and stock asset breakdowns
  * - Interactive treemap chart
  * - Manual sync functionality with Wear OS
  * - Performance monitoring and optimization
- * 
+ *
  * @param onNavigateToAssets Callback to navigate to assets management screen
  * @param onNavigateToSettings Callback to navigate to settings screen
  * @param navController Navigation controller for screen transitions
@@ -94,7 +94,7 @@ fun DashboardScreen(
     var showMissingKeysDialog = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     val wearSyncMissingAppMessage = stringResource(R.string.wear_sync_missing_app)
     val wearSyncFailedMessage = stringResource(R.string.wear_sync_failed)
-    
+
     // Auto-refresh when entering or returning to dashboard
     LaunchedEffect(Unit) {
         debugLogManager.log("DASHBOARD", "Dashboard screen launched/resumed - loading portfolio data")
@@ -182,7 +182,7 @@ fun DashboardScreen(
                         isLoading = uiState.isLoading
                     )
                 }
-                
+
                 item {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -196,7 +196,7 @@ fun DashboardScreen(
                                 isLoading = uiState.isLoading
                             )
                         }
-                        
+
                         // Stock Assets Card
                         Box(modifier = Modifier.weight(1f)) {
                             StockAssetsCardOptimized(
@@ -207,7 +207,7 @@ fun DashboardScreen(
                         }
                     }
                 }
-                
+
                 // Treemap Chart
                 if (uiState.totalAssets > 0) {
                     item {
@@ -222,7 +222,7 @@ fun DashboardScreen(
                     }
                 }
             }
-        
+
         // Show API error banner if needed
         if (apiStatus.hasError) {
             ApiErrorBanner(

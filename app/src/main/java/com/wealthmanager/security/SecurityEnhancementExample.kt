@@ -15,7 +15,7 @@ class SecurityEnhancementExample @Inject constructor(
     private val secureApiKeyManager: SecureApiKeyManager,
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     /**
      * 範例：安全地設定Finnhub API金鑰
      */
@@ -26,7 +26,7 @@ class SecurityEnhancementExample @Inject constructor(
         onError: (String) -> Unit
     ) {
         debugLogManager.log("SECURITY_EXAMPLE", "Setting Finnhub API key with enhanced security")
-        
+
         secureApiKeyManager.setApiKeySecurely(
             key = apiKey,
             keyType = "finnhub",
@@ -45,7 +45,7 @@ class SecurityEnhancementExample @Inject constructor(
             }
         )
     }
-    
+
     /**
      * 範例：安全地取得Exchange Rate API金鑰
      */
@@ -55,7 +55,7 @@ class SecurityEnhancementExample @Inject constructor(
         onError: (String) -> Unit
     ) {
         debugLogManager.log("SECURITY_EXAMPLE", "Getting Exchange Rate API key securely")
-        
+
         secureApiKeyManager.getApiKeySecurely(
             keyType = "exchange",
             activity = activity,
@@ -73,27 +73,27 @@ class SecurityEnhancementExample @Inject constructor(
             }
         )
     }
-    
+
     /**
      * 範例：驗證金鑰強度
      */
     fun validateKeyStrengthExample(apiKey: String, keyType: String) {
         debugLogManager.log("SECURITY_EXAMPLE", "Validating key strength for $keyType")
-        
+
         val validationResult = secureApiKeyManager.validateKeyStrength(apiKey, keyType)
-        
+
         debugLogManager.log("SECURITY_EXAMPLE", "Key validation result:")
         debugLogManager.log("SECURITY_EXAMPLE", "- Valid: ${validationResult.isValid}")
         debugLogManager.log("SECURITY_EXAMPLE", "- Strength: ${validationResult.strength}")
         debugLogManager.log("SECURITY_EXAMPLE", "- Score: ${validationResult.score}")
-        
+
         if (validationResult.issues.isNotEmpty()) {
             debugLogManager.log("SECURITY_EXAMPLE", "Issues found:")
             validationResult.issues.forEach { issue ->
                 debugLogManager.log("SECURITY_EXAMPLE", "- $issue")
             }
         }
-        
+
         val suggestions = secureApiKeyManager.generateKeySuggestions(validationResult)
         if (suggestions.isNotEmpty()) {
             debugLogManager.log("SECURITY_EXAMPLE", "Suggestions:")
@@ -102,22 +102,22 @@ class SecurityEnhancementExample @Inject constructor(
             }
         }
     }
-    
+
     /**
      * 範例：檢查安全狀態
      */
     fun checkSecurityStatusExample() {
         debugLogManager.log("SECURITY_EXAMPLE", "Checking security status")
-        
+
         val securityStatus = secureApiKeyManager.getSecurityStatus()
-        
+
         debugLogManager.log("SECURITY_EXAMPLE", "Security Status:")
         debugLogManager.log("SECURITY_EXAMPLE", "- Keystore Available: ${securityStatus.keystoreAvailable}")
         debugLogManager.log("SECURITY_EXAMPLE", "- Biometric Status: ${securityStatus.biometricStatus}")
         debugLogManager.log("SECURITY_EXAMPLE", "- Authentication Required: ${securityStatus.authenticationRequired}")
         debugLogManager.log("SECURITY_EXAMPLE", "- Security Level: ${securityStatus.securityLevel}")
     }
-    
+
     /**
      * 範例：完整的安全設定流程
      */
@@ -129,22 +129,22 @@ class SecurityEnhancementExample @Inject constructor(
         onError: (String) -> Unit
     ) {
         debugLogManager.log("SECURITY_EXAMPLE", "Starting complete security setup")
-        
+
         checkSecurityStatusExample()
-        
+
         validateKeyStrengthExample(finnhubKey, "finnhub")
         validateKeyStrengthExample(exchangeKey, "exchange")
-        
+
         var finnhubSet = false
         var exchangeSet = false
-        
+
         fun checkCompletion() {
             if (finnhubSet && exchangeSet) {
                 debugLogManager.log("SECURITY_EXAMPLE", "All keys set successfully")
                 onComplete()
             }
         }
-        
+
         secureApiKeyManager.setApiKeySecurely(
             key = finnhubKey,
             keyType = "finnhub",
@@ -160,7 +160,7 @@ class SecurityEnhancementExample @Inject constructor(
                 onError("需要生物識別驗證")
             }
         )
-        
+
         secureApiKeyManager.setApiKeySecurely(
             key = exchangeKey,
             keyType = "exchange",

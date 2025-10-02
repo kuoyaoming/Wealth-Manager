@@ -33,7 +33,7 @@ fun PieChartComponentFixed(
     modifier: Modifier = Modifier
 ) {
     val debugLogManager = remember { DebugLogManager() }
-    
+
     LaunchedEffect(assets.size) {
         debugLogManager.log("CHART", "PieChartComponent rendered with ${assets.size} assets")
         if (assets.isNotEmpty()) {
@@ -44,7 +44,7 @@ fun PieChartComponentFixed(
             }
         }
     }
-    
+
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -57,7 +57,7 @@ fun PieChartComponentFixed(
                 style = MaterialTheme.typography.titleMedium,
                 modifier = Modifier.padding(bottom = 16.dp)
             )
-            
+
             if (isLoading) {
                 Box(
                     modifier = Modifier
@@ -93,7 +93,7 @@ fun PieChartComponentFixed(
                     ) {
                         drawPieChartFixed(assets)
                     }
-                    
+
                     // Legend
                     LazyColumn(
                         modifier = Modifier
@@ -114,7 +114,7 @@ fun PieChartComponentFixed(
 private fun LegendItemFixed(asset: AssetItem) {
     val color = getAssetColorFixed(asset.name)
     val percentage = if (asset.percentage > 0) "${(asset.percentage * 100).toInt()}%" else ""
-    
+
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -161,15 +161,15 @@ private fun LegendItemFixed(asset: AssetItem) {
 private fun DrawScope.drawPieChartFixed(assets: List<AssetItem>) {
     val total = assets.sumOf { it.value }
     if (total <= 0) return
-    
+
     val center = Offset(size.width / 2, size.height / 2)
     val radius = minOf(size.width, size.height) / 2 - 20f
     var startAngle = -90f
-    
+
     assets.forEach { asset ->
         val sweepAngle = (asset.value / total * 360f).toFloat()
         val color = getAssetColorFixed(asset.name)
-        
+
         drawArc(
             color = color,
             startAngle = startAngle,
@@ -181,7 +181,7 @@ private fun DrawScope.drawPieChartFixed(assets: List<AssetItem>) {
             ),
             size = Size(radius * 2, radius * 2)
         )
-        
+
         startAngle += sweepAngle
     }
 }
@@ -201,7 +201,7 @@ private fun getAssetColorFixed(assetName: String): Color {
         Color(0xFFFFEB3B), // Yellow
         Color(0xFF795548)  // Brown
     )
-    
+
     val index = assetName.hashCode().mod(colors.size)
     return colors[abs(index)]
 }

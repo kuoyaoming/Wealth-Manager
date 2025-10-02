@@ -38,7 +38,7 @@ class KeyRepository @Inject constructor(
         val encryptedKey = prefs.getString(KEY_FINNHUB, null)?.takeIf { it.isNotBlank() }
         return encryptedKey?.let { androidKeystoreManager.decryptData(it) }
     }
-    
+
     fun getUserExchangeKey(): String? {
         val encryptedKey = prefs.getString(KEY_EXCHANGE, null)?.takeIf { it.isNotBlank() }
         return encryptedKey?.let { androidKeystoreManager.decryptData(it) }
@@ -47,28 +47,28 @@ class KeyRepository @Inject constructor(
     fun setUserFinnhubKey(value: String): KeyValidationResult {
         val trimmedValue = value.trim()
         val validation = keyValidator.validateApiKey(trimmedValue, "finnhub")
-        
+
         if (validation.isValid) {
             val encryptedKey = androidKeystoreManager.encryptData(trimmedValue)
             if (encryptedKey != null) {
                 prefs.edit().putString(KEY_FINNHUB, encryptedKey).apply()
             }
         }
-        
+
         return validation
     }
 
     fun setUserExchangeKey(value: String): KeyValidationResult {
         val trimmedValue = value.trim()
         val validation = keyValidator.validateApiKey(trimmedValue, "exchange")
-        
+
         if (validation.isValid) {
             val encryptedKey = androidKeystoreManager.encryptData(trimmedValue)
             if (encryptedKey != null) {
                 prefs.edit().putString(KEY_EXCHANGE, encryptedKey).apply()
             }
         }
-        
+
         return validation
     }
 
@@ -85,28 +85,28 @@ class KeyRepository @Inject constructor(
         val shown = key.take(take)
         return "$shown..."
     }
-    
+
     /**
      * 檢查是否需要生物識別驗證
      */
     fun isAuthenticationRequired(): Boolean {
         return androidKeystoreManager.isAuthenticationRequired()
     }
-    
+
     /**
      * 檢查Keystore是否可用
      */
     fun isKeystoreAvailable(): Boolean {
         return androidKeystoreManager.isKeystoreAvailable()
     }
-    
+
     /**
      * 驗證金鑰強度（不儲存）
      */
     fun validateKeyStrength(key: String, keyType: String): KeyValidationResult {
         return keyValidator.validateApiKey(key.trim(), keyType)
     }
-    
+
     /**
      * 生成金鑰強度建議
      */

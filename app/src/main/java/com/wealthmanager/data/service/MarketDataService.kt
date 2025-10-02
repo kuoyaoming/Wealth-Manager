@@ -26,14 +26,14 @@ import javax.inject.Singleton
 
 /**
  * Service for managing market data operations and real-time updates.
- * 
+ *
  * This service handles:
  * - Stock price updates and market data fetching
  * - Exchange rate management
  * - Data caching and optimization
  * - API error handling and retry logic
  * - Data validation and formatting
- * 
+ *
  * @property apiProviderService Service for API data access
  * @property assetRepository Repository for asset data operations
  * @property debugLogManager Manager for debug logging
@@ -56,24 +56,24 @@ class MarketDataService @Inject constructor(
     private val apiRetryManager: ApiRetryManager,
     private val numberFormatter: NumberFormatter
 ) {
-    
-    
+
+
     suspend fun updateStockPrices() {
         try {
             debugLogManager.log("MARKET_DATA", "Starting stock price update")
             val stockAssets = assetRepository.getAllStockAssets().first()
-            
+
             if (stockAssets.isEmpty()) {
                 debugLogManager.log("MARKET_DATA", "No stock assets to update")
                 return
             }
-            
+
             for (stock in stockAssets) {
                 try {
                     val result = apiRetryManager.executeWithFallback(
                         operation = {
                             val quoteResult = apiProviderService.getStockQuote(stock.symbol)
-                            
+
                             if (quoteResult.isSuccess) {
                                 val quoteData = quoteResult.getOrThrow()
                                 debugLogManager.log("MARKET_DATA", "Quote data for ${stock.symbol}: price=${quoteData.price}")
@@ -104,21 +104,21 @@ class MarketDataService @Inject constructor(
                         },
                         operationName = "API Provider Stock Price Update for ${stock.symbol}"
                     )
-                    
+
                     if (result.isSuccess) {
                         val quoteData = result.getOrThrow()
                         val price = quoteData.price
-                        
+
                         val currency = if (isTaiwanStock(stock.symbol)) "TWD" else "USD"
-                        
+
                         val twdEquivalent = calculateTwdEquivalent(price, stock.shares, currency)
-                        
+
                         val updatedStock = stock.copy(
                             currentPrice = price,
                             twdEquivalent = twdEquivalent,
                             lastUpdated = System.currentTimeMillis()
                         )
-                        
+
                         val validationResult = dataValidator.validateStockData(updatedStock)
                         if (validationResult is DataValidator.ValidationResult.Valid) {
                             assetRepository.updateStockAsset(updatedStock)
@@ -134,37 +134,37 @@ class MarketDataService @Inject constructor(
                     } else {
                         debugLogManager.log("MARKET_DATA", "Failed to update ${stock.symbol}, keeping existing price")
                     }
-                    
+
                 } catch (e: Exception) {
                     debugLogManager.logError("Failed to update ${stock.symbol}: ${e.message}", e)
                 }
             }
-            
+
             debugLogManager.log("MARKET_DATA", "Stock price update completed")
-            
+
         } catch (e: Exception) {
             debugLogManager.logError("Failed to update stock prices: ${e.message}", e)
         }
     }
-    
+
     private fun validateApiResponse(response: Any, symbol: String) {
         try {
             val responseClass = response::class.java
             val errorMessageField = responseClass.getDeclaredField("errorMessage")
             errorMessageField.isAccessible = true
             val errorMessage = errorMessageField.get(response) as? String
-            
+
             if (!errorMessage.isNullOrEmpty()) {
                 val errorType = apiErrorHandler.analyzeError(Exception(errorMessage))
                 val userMessage = apiErrorHandler.getUserFriendlyMessage(errorType)
                 debugLogManager.logWarning("API_VALIDATION", "API Error for $symbol: $userMessage")
                 throw Exception("API Error: $errorMessage")
             }
-            
+
             val noteField = responseClass.getDeclaredField("note")
             noteField.isAccessible = true
             val note = noteField.get(response) as? String
-            
+
             if (!note.isNullOrEmpty()) {
                 debugLogManager.logWarning("API_VALIDATION", "API Note for $symbol: $note")
                 throw Exception("API Note: $note")
@@ -173,7 +173,7 @@ class MarketDataService @Inject constructor(
             debugLogManager.logWarning("API_VALIDATION", "Could not validate API response: ${e.message}")
         }
     }
-    
+
     private fun createMockGlobalQuote(stock: StockAsset): Any {
         return object {
             val price = stock.currentPrice.toString()
@@ -186,7 +186,7 @@ class MarketDataService @Inject constructor(
             val low = stock.currentPrice.toString()
         }
     }
-    
+
     private fun createMockExchangeRate(cachedRate: ExchangeRate): Any {
         return object {
             val exchangeRate = cachedRate.rate.toString()
@@ -195,15 +195,15 @@ class MarketDataService @Inject constructor(
             val lastRefreshed = java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss").format(java.util.Date(cachedRate.lastUpdated))
         }
     }
-    
+
     suspend fun updateExchangeRates() {
         try {
             debugLogManager.log("MARKET_DATA", "Starting exchange rate update")
-            
+
             val result = apiRetryManager.executeWithFallback(
                 operation = {
                     val rateResult = apiProviderService.getExchangeRate("USD", "TWD")
-                    
+
                     if (rateResult.isSuccess) {
                         val rateData = rateResult.getOrThrow()
                         debugLogManager.log("MARKET_DATA", "Exchange rate data: USD/TWD = ${rateData.rate}")
@@ -228,7 +228,7 @@ class MarketDataService @Inject constructor(
                 },
                 operationName = "API Provider Exchange Rate Update"
             )
-            
+
             if (result.isSuccess) {
                 val rateData = result.getOrThrow()
                 val exchangeRate = ExchangeRate(
@@ -236,7 +236,7 @@ class MarketDataService @Inject constructor(
                     rate = rateData.rate,
                     lastUpdated = System.currentTimeMillis()
                 )
-                
+
                 assetRepository.insertExchangeRate(exchangeRate)
                 debugLogManager.log("MARKET_DATA", "Exchange rate updated: USD/TWD = ${rateData.rate}")
             } else {
@@ -248,7 +248,7 @@ class MarketDataService @Inject constructor(
                     debugLogManager.logWarning("MARKET_DATA", "No cached rate available, using default 30.0")
                 }
             }
-            
+
         } catch (e: Exception) {
             debugLogManager.logError("Failed to update exchange rates: ${e.message}", e)
             val cachedRate = runBlocking { assetRepository.getExchangeRateSync("USD_TWD") }
@@ -257,11 +257,11 @@ class MarketDataService @Inject constructor(
             }
         }
     }
-    
+
     suspend fun searchStocks(query: String, market: String): Flow<SearchResult> = flow {
         try {
             debugLogManager.logMarketData("SEARCH", "Searching stocks: '$query' in market: '$market'")
-            
+
             if (query.isBlank() || query.length < 1) {
                 debugLogManager.logWarning("Invalid search query: '$query'", "MARKET_DATA")
                 emit(SearchResult.NoResults(NoResultsReason.INVALID_QUERY))
@@ -270,59 +270,59 @@ class MarketDataService @Inject constructor(
             apiProviderService.searchStocks(query, market).collect { result ->
                 emit(result)
             }
-            
+
         } catch (e: Exception) {
             debugLogManager.logMarketData("ERROR", "Search failed for '$query' in market '$market': ${e.message}")
             val errorType = analyzeException(e)
             emit(SearchResult.Error(errorType))
         }
     }
-    
+
     private fun analyzeApiErrorMessage(errorMessage: String): SearchErrorType {
         return when {
-            errorMessage.contains("limit", ignoreCase = true) || 
+            errorMessage.contains("limit", ignoreCase = true) ||
             errorMessage.contains("quota", ignoreCase = true) ||
             errorMessage.contains("exceeded", ignoreCase = true) -> SearchErrorType.API_LIMIT
-            
+
             errorMessage.contains("network", ignoreCase = true) ||
             errorMessage.contains("connection", ignoreCase = true) ||
             errorMessage.contains("timeout", ignoreCase = true) -> SearchErrorType.NETWORK_ERROR
-            
+
             errorMessage.contains("server", ignoreCase = true) ||
             errorMessage.contains("internal", ignoreCase = true) ||
             errorMessage.contains("500", ignoreCase = true) -> SearchErrorType.SERVER_ERROR
-            
+
             errorMessage.contains("invalid", ignoreCase = true) ||
             errorMessage.contains("key", ignoreCase = true) ||
             errorMessage.contains("401", ignoreCase = true) ||
             errorMessage.contains("403", ignoreCase = true) -> SearchErrorType.INVALID_API_KEY
-            
+
             else -> SearchErrorType.UNKNOWN_ERROR
         }
     }
-    
+
     private fun analyzeApiNote(note: String): SearchErrorType {
         return when {
             note.contains("limit", ignoreCase = true) ||
             note.contains("quota", ignoreCase = true) ||
             note.contains("exceeded", ignoreCase = true) ||
             note.contains("daily", ignoreCase = true) -> SearchErrorType.API_LIMIT
-            
+
             note.contains("network", ignoreCase = true) ||
             note.contains("connection", ignoreCase = true) -> SearchErrorType.NETWORK_ERROR
-            
+
             note.contains("server", ignoreCase = true) ||
             note.contains("internal", ignoreCase = true) -> SearchErrorType.SERVER_ERROR
-            
+
             else -> SearchErrorType.UNKNOWN_ERROR
         }
     }
-    
+
     private fun analyzeException(exception: Exception): SearchErrorType {
         return when (exception) {
             is java.net.UnknownHostException,
             is java.io.IOException -> SearchErrorType.NETWORK_ERROR
-            
+
             is retrofit2.HttpException -> {
                 when (exception.code()) {
                     429 -> SearchErrorType.API_LIMIT
@@ -331,17 +331,17 @@ class MarketDataService @Inject constructor(
                     else -> SearchErrorType.UNKNOWN_ERROR
                 }
             }
-            
+
             else -> SearchErrorType.UNKNOWN_ERROR
         }
     }
-    
+
     private fun determineMarketState(timezone: String): String {
         return try {
             val currentTime = System.currentTimeMillis()
             val timeZone = java.util.TimeZone.getTimeZone(timezone)
             val hour = timeZone.getOffset(currentTime) / (1000 * 60 * 60)
-            
+
             when {
                 timezone.contains("America") -> {
                     val localHour = (hour + 8) % 24
@@ -362,7 +362,7 @@ class MarketDataService @Inject constructor(
             "UNKNOWN"
         }
     }
-    
+
     private suspend fun calculateTwdEquivalent(
         price: Double,
         shares: Double,
@@ -376,7 +376,7 @@ class MarketDataService @Inject constructor(
             price * shares * rate
         }
     }
-    
+
     private fun isTaiwanStock(symbol: String): Boolean {
         return symbol.endsWith(".TW", ignoreCase = true) ||
                symbol.endsWith(".T", ignoreCase = true) ||

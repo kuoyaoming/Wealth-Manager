@@ -1,6 +1,5 @@
 package com.wealthmanager.util
 
-import android.annotation.SuppressLint
 import android.content.Context
 import android.content.ContextWrapper
 import android.os.Build
@@ -12,14 +11,14 @@ object LocaleHelper {
         try {
             val locale = resolveLocale(languageCode)
             Locale.setDefault(locale)
-            
+
             val configuration = context.resources.configuration
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 configuration.setLocales(android.os.LocaleList(locale))
             } else {
                 configuration.setLocale(locale)
             }
-            
+
             // Update the context with the new configuration
             context.resources.updateConfiguration(configuration, context.resources.displayMetrics)
         } catch (e: Exception) {

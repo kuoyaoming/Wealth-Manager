@@ -16,17 +16,17 @@ import javax.inject.Singleton
 class TwseCacheManager @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     companion object {
         // TWSE API cache time: 15 minutes (within Taiwan stock trading hours)
         private const val TWSE_CACHE_EXPIRY_MS = 15 * 60 * 1000L
     }
-    
+
     // Cached data
     private var cachedData: List<TwseStockItem>? = null
     private var cacheTimestamp: Long = 0
     private val cacheMutex = Mutex()
-    
+
     /**
      * Get cached Taiwan stock data
      */
@@ -41,7 +41,7 @@ class TwseCacheManager @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Update cached Taiwan stock data
      */
@@ -52,7 +52,7 @@ class TwseCacheManager @Inject constructor(
             debugLogManager.log("TWSE_CACHE", "Updated TWSE cache with ${data.size} stocks")
         }
     }
-    
+
     /**
      * Check if cache is valid
      */
@@ -61,14 +61,14 @@ class TwseCacheManager @Inject constructor(
         val cacheAge = currentTime - cacheTimestamp
         return cachedData != null && cacheAge < TWSE_CACHE_EXPIRY_MS
     }
-    
+
     /**
      * Get cache age
      */
     private fun getCacheAge(): Long {
         return System.currentTimeMillis() - cacheTimestamp
     }
-    
+
     /**
      * Clear cache
      */
@@ -79,7 +79,7 @@ class TwseCacheManager @Inject constructor(
             debugLogManager.log("TWSE_CACHE", "Cleared TWSE cache")
         }
     }
-    
+
     /**
      * Get cache status
      */

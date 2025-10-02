@@ -14,16 +14,16 @@ import javax.inject.Singleton
 class RequestDeduplicationManager @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     companion object {
         private const val DEDUPLICATION_WINDOW_MS = 30_000L
         private const val MAX_CONCURRENT_REQUESTS = 3
     }
-    
+
     private val ongoingRequests = ConcurrentHashMap<String, OngoingRequest>()
     private val requestMutex = Mutex()
     private var concurrentRequestCount = 0
-    
+
     /**
      * Ongoing request
      */
@@ -32,7 +32,7 @@ class RequestDeduplicationManager @Inject constructor(
         val startTime: Long,
         val requestType: String
     )
-    
+
     /**
      * Request result
      */
@@ -41,7 +41,7 @@ class RequestDeduplicationManager @Inject constructor(
         data class Failure<T>(val error: Throwable) : RequestResult<T>()
         data class Duplicate<T>(val requestId: String) : RequestResult<T>()
     }
-    
+
     /**
      * Execute deduplicated request
      */
@@ -51,7 +51,7 @@ class RequestDeduplicationManager @Inject constructor(
         operation: suspend () -> T
     ): RequestResult<T> {
         val requestId = generateRequestId(requestKey, requestType)
-        
+
         return requestMutex.withLock {
             // Check if same request is already in progress
             val existingRequest = ongoingRequests[requestKey]
@@ -65,20 +65,20 @@ class RequestDeduplicationManager @Inject constructor(
                     ongoingRequests.remove(requestKey)
                 }
             }
-            
+
             // Check concurrent request limit
             if (concurrentRequestCount >= MAX_CONCURRENT_REQUESTS) {
                 debugLogManager.logWarning("REQUEST_DEDUP", "Reached maximum concurrent request limit: $concurrentRequestCount")
                 return RequestResult.Failure(Exception("Too many concurrent requests"))
             }
-            
+
             // Record new request
             val newRequest = OngoingRequest(requestId, System.currentTimeMillis(), requestType)
             ongoingRequests[requestKey] = newRequest
             concurrentRequestCount++
-            
+
             debugLogManager.log("REQUEST_DEDUP", "Starting request execution: $requestKey (ID: $requestId)")
-            
+
             try {
                 val result = operation()
                 debugLogManager.log("REQUEST_DEDUP", "Request completed successfully: $requestKey")
@@ -94,14 +94,14 @@ class RequestDeduplicationManager @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Generate request ID
      */
     private fun generateRequestId(requestKey: String, requestType: String): String {
         return "${requestType}_${requestKey}_${System.currentTimeMillis()}"
     }
-    
+
     /**
      * Get current statistics
      */
@@ -112,7 +112,7 @@ class RequestDeduplicationManager @Inject constructor(
             maxConcurrentRequests = MAX_CONCURRENT_REQUESTS
         )
     }
-    
+
     /**
      * Clean up expired requests
      */
@@ -121,7 +121,7 @@ class RequestDeduplicationManager @Inject constructor(
         val expiredRequests = ongoingRequests.filter { (_, request) ->
             currentTime - request.startTime > DEDUPLICATION_WINDOW_MS
         }
-        
+
         if (expiredRequests.isNotEmpty()) {
             debugLogManager.log("REQUEST_DEDUP", "Clean up expired requests: ${expiredRequests.size} items")
             expiredRequests.keys.forEach { key ->
@@ -130,7 +130,7 @@ class RequestDeduplicationManager @Inject constructor(
             }
         }
     }
-    
+
     /**
      * Request statistics
      */

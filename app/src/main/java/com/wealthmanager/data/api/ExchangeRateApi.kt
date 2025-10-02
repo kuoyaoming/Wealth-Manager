@@ -6,15 +6,15 @@ import retrofit2.http.Path
 
 /**
  * API interface for exchange rate data service.
- * 
+ *
  * This interface provides methods to access real-time exchange rates
  * for currency conversion calculations.
  */
 interface ExchangeRateApi {
-    
+
     /**
      * Retrieves current exchange rates for a base currency.
-     * 
+     *
      * @param apiKey API key for authentication
      * @param baseCurrency Base currency code (e.g., "USD", "TWD")
      * @return [ExchangeRateResponse] containing exchange rate data
@@ -28,7 +28,7 @@ interface ExchangeRateApi {
 
 /**
  * Response model for exchange rate API.
- * 
+ *
  * @property result API result status
  * @property documentation API documentation URL
  * @property terms_of_use Terms of use URL

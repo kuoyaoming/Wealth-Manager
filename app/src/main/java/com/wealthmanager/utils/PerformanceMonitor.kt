@@ -13,7 +13,11 @@ import kotlinx.coroutines.withContext
  * 用於分析 APP 中的性能瓶頸和卡頓問題
  */
 object PerformanceMonitor {
-    
+
+    private const val MEMORY_WARNING_THRESHOLD = 80
+    private const val SLOW_OPERATION_THRESHOLD = 100
+    private const val EXCESSIVE_RECOMPOSITION_THRESHOLD = 10
+
     /**
      * 測量組件渲染時間
      */
@@ -23,11 +27,11 @@ object PerformanceMonitor {
         threshold: Long = 16L // Threshold exceeding one frame time
     ) {
         val startTime = remember { SystemClock.elapsedRealtime() }
-        
+
         LaunchedEffect(Unit) {
             val endTime = SystemClock.elapsedRealtime()
             val duration = endTime - startTime
-            
+
             if (duration > threshold) {
                 StandardLogger.performanceWarning("⚠️ $componentName render took ${duration}ms (threshold: ${threshold}ms)")
             } else {
@@ -35,7 +39,7 @@ object PerformanceMonitor {
             }
         }
     }
-    
+
     /**
      * 測量異步操作時間
      */
@@ -44,7 +48,7 @@ object PerformanceMonitor {
         operation: suspend () -> T
     ): T {
         val startTime = SystemClock.elapsedRealtime()
-        
+
         return try {
             val result = operation()
             val duration = SystemClock.elapsedRealtime() - startTime
@@ -56,7 +60,7 @@ object PerformanceMonitor {
             throw e
         }
     }
-    
+
     /**
      * 監控記憶體使用
      */
@@ -67,17 +71,17 @@ object PerformanceMonitor {
                 val runtime = Runtime.getRuntime()
                 val usedMemory = runtime.totalMemory() - runtime.freeMemory()
                 val maxMemory = runtime.maxMemory()
-                val memoryUsage = (usedMemory.toFloat() / maxMemory.toFloat()) * 100
-                
+                val memoryUsage = usedMemory.toFloat() / maxMemory.toFloat() * 100
+
                 StandardLogger.performance("🧠 $componentName memory usage: ${String.format("%.1f", memoryUsage)}%")
-                
-                if (memoryUsage > 80) {
+
+                if (memoryUsage > MEMORY_WARNING_THRESHOLD) {
                     StandardLogger.performanceWarning("⚠️ High memory usage detected: ${String.format("%.1f", memoryUsage)}%")
                 }
             }
         }
     }
-    
+
     /**
      * 監控 CPU 密集型操作
      */
@@ -86,21 +90,21 @@ object PerformanceMonitor {
         operation: suspend () -> T
     ): T {
         val startTime = SystemClock.elapsedRealtime()
-        
+
         return withContext(Dispatchers.Default) {
             val result = operation()
             val duration = SystemClock.elapsedRealtime() - startTime
-            
+
             StandardLogger.performance("⚡ CPU intensive $operationName took ${duration}ms")
-            
-            if (duration > 100) {
+
+            if (duration > SLOW_OPERATION_THRESHOLD) {
                 StandardLogger.performanceWarning("⚠️ Slow CPU operation: $operationName took ${duration}ms")
             }
-            
+
             result
         }
     }
-    
+
     /**
      * 監控重組次數
      */
@@ -109,12 +113,12 @@ object PerformanceMonitor {
         componentName: String
     ) {
         val recompositionCount = remember { mutableStateOf(0) }
-        
+
         LaunchedEffect(Unit) {
             recompositionCount.value = recompositionCount.value + 1
             StandardLogger.performance("🔄 $componentName recomposed ${recompositionCount.value} times")
-            
-            if (recompositionCount.value > 10) {
+
+            if (recompositionCount.value > EXCESSIVE_RECOMPOSITION_THRESHOLD) {
                 StandardLogger.performanceWarning("⚠️ Excessive recomposition detected for $componentName: ${recompositionCount.value} times")
             }
         }
@@ -132,14 +136,14 @@ fun PerformanceTracker(
     content: @Composable () -> Unit
 ) {
     PerformanceMonitor.trackRenderTime(componentName)
-    
+
     if (trackMemory) {
         PerformanceMonitor.trackMemoryUsage(componentName)
     }
-    
+
     if (trackRecomposition) {
         PerformanceMonitor.trackRecomposition(componentName)
     }
-    
+
     content()
 }

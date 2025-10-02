@@ -11,10 +11,10 @@ import javax.inject.Singleton
 class ApiStatusManager @Inject constructor(
     private val debugLogManager: DebugLogManager
 ) {
-    
+
     private val _apiStatus = MutableStateFlow(ApiStatus())
     val apiStatus: StateFlow<ApiStatus> = _apiStatus.asStateFlow()
-    
+
     fun setApiError(error: String, isDataStale: Boolean = false, isRetrying: Boolean = false) {
         debugLogManager.logWarning("API_STATUS", "API Error: $error, Data Stale: $isDataStale, Retrying: $isRetrying")
         _apiStatus.value = ApiStatus(
@@ -25,7 +25,7 @@ class ApiStatusManager @Inject constructor(
             lastErrorTime = System.currentTimeMillis()
         )
     }
-    
+
     fun setApiSuccess() {
         debugLogManager.log("API_STATUS", "API Success - clearing error state")
         _apiStatus.value = ApiStatus(
@@ -36,12 +36,12 @@ class ApiStatusManager @Inject constructor(
             lastErrorTime = 0L
         )
     }
-    
+
     fun setRetrying(isRetrying: Boolean) {
         debugLogManager.log("API_STATUS", "Retry state changed: $isRetrying")
         _apiStatus.value = _apiStatus.value.copy(isRetrying = isRetrying)
     }
-    
+
     fun clearError() {
         debugLogManager.log("API_STATUS", "Error state cleared by user")
         _apiStatus.value = ApiStatus()

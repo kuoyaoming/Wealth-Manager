@@ -42,47 +42,47 @@ data class ResponsiveLayout(
     // Screen type detection
     val isTablet: Boolean
         get() = screenWidth >= 600.dp || screenHeight >= 600.dp
-    
+
     val isPhone: Boolean
         get() = !isTablet
-    
+
     val isLargeScreen: Boolean
         get() = screenWidth >= 840.dp || screenHeight >= 840.dp
-    
+
     // Dynamic spacing
     val paddingSmall: Dp
         get() = if (isTablet) 8.dp else 4.dp
-    
+
     val paddingMedium: Dp
         get() = if (isTablet) 16.dp else 8.dp
-    
+
     val paddingLarge: Dp
         get() = if (isTablet) 24.dp else 16.dp
-    
+
     val paddingExtraLarge: Dp
         get() = if (isTablet) 32.dp else 24.dp
-    
+
     // Dynamic font size
     val titleLargeSize: Dp
         get() = if (isTablet) 28.dp else 24.dp
-    
+
     val titleMediumSize: Dp
         get() = if (isTablet) 24.dp else 20.dp
-    
+
     val bodyLargeSize: Dp
         get() = if (isTablet) 18.dp else 16.dp
-    
+
     val bodyMediumSize: Dp
         get() = if (isTablet) 16.dp else 14.dp
-    
+
     // Card spacing
     val cardSpacing: Dp
         get() = if (isTablet) 16.dp else 12.dp
-    
+
     // Chart height
     val chartHeight: Dp
         get() = if (isTablet) 300.dp else 200.dp
-    
+
     // Dialog width
     val dialogWidth: Dp
         get() = when {
@@ -90,7 +90,7 @@ data class ResponsiveLayout(
             isTablet -> 500.dp
             else -> screenWidth * 0.9f
         }
-    
+
     // Dialog height
     val dialogHeight: Dp
         get() = when {
@@ -98,7 +98,7 @@ data class ResponsiveLayout(
             isTablet -> 400.dp
             else -> screenHeight * 0.8f
         }
-    
+
     // Column configuration
     val columns: Int
         get() = when (widthSizeClass) {
@@ -107,7 +107,7 @@ data class ResponsiveLayout(
             WindowWidthSizeClass.Expanded -> 2 // Mobile target only, no large screen specialization yet
             else -> 1
         }
-    
+
     // Grid spacing
     val gridSpacing: Dp
         get() = when (widthSizeClass) {
@@ -127,7 +127,7 @@ fun ResponsiveCard(
     content: @Composable ColumnScope.() -> Unit
 ) {
     val responsiveLayout = rememberResponsiveLayout()
-    
+
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(
@@ -155,7 +155,7 @@ fun ResponsiveSpacer(
         ResponsiveSpacerSize.Large -> responsiveLayout.paddingLarge
         ResponsiveSpacerSize.ExtraLarge -> responsiveLayout.paddingExtraLarge
     }
-    
+
     Spacer(modifier = Modifier.height(spacerSize))
 }
 
@@ -172,7 +172,7 @@ fun ResponsiveGrid(
     content: @Composable () -> Unit
 ) {
     val responsiveLayout = rememberResponsiveLayout()
-    
+
     if (responsiveLayout.columns > 1) {
         // Use grid layout
         LazyVerticalGrid(

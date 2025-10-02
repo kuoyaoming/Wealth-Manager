@@ -38,7 +38,7 @@ fun StockAssetItem(
 ) {
     val debugLogManager = remember { DebugLogManager() }
     val (hapticManager, view) = rememberHapticFeedbackWithView()
-    
+
     Card(
         modifier = modifier.fillMaxWidth(),
         elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
@@ -94,7 +94,7 @@ fun StockAssetItem(
                     color = MaterialTheme.colorScheme.primary
                 )
             }
-            
+
             Row {
                 IconButton(
                     onClick = {
@@ -110,7 +110,7 @@ fun StockAssetItem(
                         tint = MaterialTheme.colorScheme.primary
                     )
                 }
-                
+
                 IconButton(
                     onClick = {
                         debugLogManager.logUserAction("Delete Stock Asset Clicked")

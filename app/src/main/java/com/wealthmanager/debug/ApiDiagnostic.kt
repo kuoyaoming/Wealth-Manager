@@ -17,33 +17,33 @@ class ApiDiagnostic @Inject constructor(
     private val debugLogManager: DebugLogManager,
     private val keyRepository: KeyRepository
 ) {
-    
+
     suspend fun runDiagnostic(): DiagnosticResult {
         debugLogManager.log("DIAGNOSTIC", "Starting API diagnostic...")
-        
+
         val networkStatus = checkNetworkConnectivity()
         val apiKeyStatus = checkApiKey()
         val finnhubStatus = testFinnhubApi()
-        
+
         return DiagnosticResult(
             networkStatus = networkStatus,
             apiKeyStatus = apiKeyStatus,
             finnhubStatus = finnhubStatus
         )
     }
-    
+
     private fun checkNetworkConnectivity(): NetworkStatus {
         return try {
             val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val network = connectivityManager.activeNetwork
             val capabilities = connectivityManager.getNetworkCapabilities(network)
-            
+
             val hasInternet = capabilities?.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET) == true
             val hasWifi = capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) == true
             val hasCellular = capabilities?.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) == true
-            
+
             debugLogManager.log("DIAGNOSTIC", "Network status: Internet=$hasInternet, WiFi=$hasWifi, Cellular=$hasCellular")
-            
+
             NetworkStatus(
                 isConnected = hasInternet,
                 hasWifi = hasWifi,
@@ -54,14 +54,14 @@ class ApiDiagnostic @Inject constructor(
             NetworkStatus(isConnected = false, hasWifi = false, hasCellular = false)
         }
     }
-    
+
     private fun checkApiKey(): ApiKeyStatus {
         val finnhubKey = keyRepository.getUserFinnhubKey() ?: ""
         val exchangeKey = keyRepository.getUserExchangeKey() ?: ""
-        
+
         debugLogManager.log("DIAGNOSTIC", "Finnhub key length: ${finnhubKey.length}")
         debugLogManager.log("DIAGNOSTIC", "Exchange key length: ${exchangeKey.length}")
-        
+
         return ApiKeyStatus(
             finnhubKeyValid = finnhubKey.isNotEmpty() && finnhubKey.length > 10,
             exchangeKeyValid = exchangeKey.isNotEmpty() && exchangeKey.length > 10,
@@ -69,26 +69,26 @@ class ApiDiagnostic @Inject constructor(
             exchangeKeyPreview = exchangeKey.take(8) + "..."
         )
     }
-    
+
     private suspend fun testFinnhubApi(): FinnhubStatus {
         return withContext(Dispatchers.IO) {
             try {
                 debugLogManager.log("DIAGNOSTIC", "Testing Finnhub API connectivity...")
-                
+
                 val key = keyRepository.getUserFinnhubKey() ?: ""
                 val url = URL("https://finnhub.io/api/v1/quote?symbol=AAPL&token=$key")
                 val connection = url.openConnection() as HttpURLConnection
                 connection.requestMethod = "GET"
                 connection.connectTimeout = 10000
                 connection.readTimeout = 10000
-                
+
                 val responseCode = connection.responseCode
                 val responseMessage = connection.responseMessage
-                
+
                 debugLogManager.log("DIAGNOSTIC", "Finnhub API response: $responseCode - $responseMessage")
-                
+
                 connection.disconnect()
-                
+
                 FinnhubStatus(
                     isReachable = responseCode in 200..299,
                     responseCode = responseCode,

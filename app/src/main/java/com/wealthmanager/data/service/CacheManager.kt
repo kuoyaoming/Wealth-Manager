@@ -18,15 +18,15 @@ class CacheManager @Inject constructor(
     private val debugLogManager: DebugLogManager,
     private val smartCacheStrategy: SmartCacheStrategy
 ) {
-    
+
     companion object {
         private const val STOCK_CACHE_EXPIRY_MS = 5 * 60 * 1000L
         private const val EXCHANGE_RATE_CACHE_EXPIRY_MS = 60 * 60 * 1000L
         private const val STALE_DATA_THRESHOLD_MS = 24 * 60 * 60 * 1000L
     }
-    
+
     private val memoryCache = mutableMapOf<String, CacheEntry<Any>>()
-    
+
     data class CacheEntry<T>(
         val data: T,
         val timestamp: Long,
@@ -35,21 +35,21 @@ class CacheManager @Inject constructor(
         fun isExpired(expiryMs: Long): Boolean {
             return System.currentTimeMillis() - timestamp > expiryMs
         }
-        
+
         fun isStaleData(): Boolean {
             return System.currentTimeMillis() - timestamp > STALE_DATA_THRESHOLD_MS
         }
     }
-    
+
     enum class CacheLevel {
         MEMORY,
         DATABASE,
         API
     }
-    
+
     suspend fun getStockPrice(symbol: String): Flow<StockPriceResult> = flow {
         debugLogManager.log("CACHE", "Starting to get stock price: $symbol")
-        
+
         val memoryKey = "stock_$symbol"
         val memoryEntry = memoryCache[memoryKey]?.let { entry ->
             if (entry.data is StockAsset) {
@@ -57,7 +57,7 @@ class CacheManager @Inject constructor(
                 entry as CacheEntry<StockAsset>
             } else null
         }
-        
+
         if (memoryEntry != null) {
             val smartExpiryTime = smartCacheStrategy.getCacheExpiryTime(memoryKey)
             if (!memoryEntry.isExpired(smartExpiryTime)) {
@@ -87,10 +87,10 @@ class CacheManager @Inject constructor(
             emit(StockPriceResult.Failure("No available stock data"))
         }
     }
-    
+
     suspend fun getExchangeRate(currencyPair: String): Flow<ExchangeRateResult> = flow {
         debugLogManager.log("CACHE", "Starting to get exchange rate: $currencyPair")
-        
+
         val memoryKey = "exchange_$currencyPair"
         val memoryEntry = memoryCache[memoryKey]?.let { entry ->
             if (entry.data is ExchangeRate) {
@@ -98,7 +98,7 @@ class CacheManager @Inject constructor(
                 entry as CacheEntry<ExchangeRate>
             } else null
         }
-        
+
         if (memoryEntry != null && !memoryEntry.isExpired(EXCHANGE_RATE_CACHE_EXPIRY_MS)) {
             debugLogManager.log("CACHE", "Using memory cache: $currencyPair")
             emit(ExchangeRateResult.Success(memoryEntry.data, CacheLevel.MEMORY, false))
@@ -125,44 +125,44 @@ class CacheManager @Inject constructor(
             emit(ExchangeRateResult.Failure("No available exchange rate data"))
         }
     }
-    
+
     suspend fun updateStockCache(stock: StockAsset) {
         val memoryKey = "stock_${stock.symbol}"
         memoryCache[memoryKey] = CacheEntry(stock, stock.lastUpdated)
-        
+
         debugLogManager.log("CACHE", "Update stock cache: ${stock.symbol}")
     }
-    
+
     suspend fun updateExchangeRateCache(exchangeRate: ExchangeRate) {
         val memoryKey = "exchange_${exchangeRate.currencyPair}"
         memoryCache[memoryKey] = CacheEntry(exchangeRate, exchangeRate.lastUpdated)
-        
+
         debugLogManager.log("CACHE", "Update exchange rate cache: ${exchangeRate.currencyPair}")
     }
-    
+
     fun cleanupExpiredCache() {
         // val currentTime = System.currentTimeMillis()
         val expiredKeys = memoryCache.filter { (_, entry) ->
             entry.isExpired(STOCK_CACHE_EXPIRY_MS)
         }.keys
-        
+
         expiredKeys.forEach { key ->
             memoryCache.remove(key)
         }
-        
+
         debugLogManager.log("CACHE", "Clean up expired cache: ${expiredKeys.size} items")
     }
-    
+
     private fun isDataExpired(lastUpdated: Long, expiryMs: Long): Boolean {
         return System.currentTimeMillis() - lastUpdated > expiryMs
     }
-    
+
     fun getCacheStats(): CacheStats {
         val totalEntries = memoryCache.size
         val expiredEntries = memoryCache.count { (_, entry) ->
             entry.isExpired(STOCK_CACHE_EXPIRY_MS)
         }
-        
+
         return CacheStats(
             totalEntries = totalEntries,
             expiredEntries = expiredEntries,
@@ -177,7 +177,7 @@ sealed class StockPriceResult {
         val cacheLevel: CacheManager.CacheLevel,
         val isStale: Boolean
     ) : StockPriceResult()
-    
+
     data class Failure(val error: String) : StockPriceResult()
 }
 
@@ -187,7 +187,7 @@ sealed class ExchangeRateResult {
         val cacheLevel: CacheManager.CacheLevel,
         val isStale: Boolean
     ) : ExchangeRateResult()
-    
+
     data class Failure(val error: String) : ExchangeRateResult()
 }
 

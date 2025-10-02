@@ -45,9 +45,9 @@ fun ApiErrorBanner(
                 tint = MaterialTheme.colorScheme.error,
                 modifier = Modifier.size(24.dp)
             )
-            
+
             Spacer(modifier = Modifier.width(12.dp))
-            
+
             Column(modifier = Modifier.weight(1f)) {
                 Text(
                     text = if (isDataStale) stringResource(R.string.api_error_data_stale) else stringResource(R.string.api_error_connection_issue),
@@ -55,7 +55,7 @@ fun ApiErrorBanner(
                     fontWeight = FontWeight.Bold,
                     color = MaterialTheme.colorScheme.onErrorContainer
                 )
-                
+
                 Text(
                     text = if (isDataStale) {
                         stringResource(R.string.api_error_show_cached_data)
@@ -66,7 +66,7 @@ fun ApiErrorBanner(
                     color = MaterialTheme.colorScheme.onErrorContainer
                 )
             }
-            
+
             if (isRetrying) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(20.dp),
@@ -88,7 +88,7 @@ fun ApiErrorBanner(
                         Spacer(modifier = Modifier.width(4.dp))
                         Text(stringResource(R.string.api_error_retry))
                     }
-                    
+
                     IconButton(onClick = {
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                         onDismiss()

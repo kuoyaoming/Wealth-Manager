@@ -35,11 +35,11 @@ fun ApiKeyGuideDialog(
 ) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
-    
+
     // 檢測是否可以向下滾動（用於顯示滾動提示）
     val canScrollDown = scrollState.value < scrollState.maxValue
     val canScrollUp = scrollState.value > 0
-    
+
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(usePlatformDefaultWidth = false)
@@ -75,17 +75,17 @@ fun ApiKeyGuideDialog(
                         fontWeight = FontWeight.Bold
                     )
                 }
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 Text(
                     text = stringResource(R.string.api_guide_description),
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onSurfaceVariant
                 )
-                
+
                 Spacer(modifier = Modifier.height(20.dp))
-                
+
                 ApiKeyGuideCard(
                     title = "Finnhub API",
                     description = stringResource(R.string.api_guide_finnhub_description),
@@ -97,9 +97,9 @@ fun ApiKeyGuideDialog(
                         openBrowser(context, "https://finnhub.io/register")
                     }
                 )
-                
+
                 Spacer(modifier = Modifier.height(16.dp))
-                
+
                 ApiKeyGuideCard(
                     title = "Exchange Rate API",
                     description = stringResource(R.string.api_guide_exchange_description),
@@ -111,19 +111,19 @@ fun ApiKeyGuideDialog(
                         openBrowser(context, "https://v6.exchangerate-api.com/")
                     }
                 )
-                
+
                 Spacer(modifier = Modifier.height(20.dp))
-                
+
                 Text(
                     text = stringResource(R.string.api_guide_steps_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
-                
+
                 Spacer(modifier = Modifier.height(8.dp))
-                
+
                 val steps = stringResource(R.string.api_guide_steps).split("\n")
-                
+
                 steps.forEach { step ->
                     Row(
                         modifier = Modifier
@@ -136,9 +136,9 @@ fun ApiKeyGuideDialog(
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(20.dp))
-                
+
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors = CardDefaults.cardColors(
@@ -165,9 +165,9 @@ fun ApiKeyGuideDialog(
                                 color = MaterialTheme.colorScheme.error
                             )
                         }
-                        
+
                         Spacer(modifier = Modifier.height(8.dp))
-                        
+
                         Text(
                             text = stringResource(R.string.api_guide_reminder_points),
                             style = MaterialTheme.typography.bodySmall,
@@ -175,9 +175,9 @@ fun ApiKeyGuideDialog(
                         )
                     }
                 }
-                
+
                 Spacer(modifier = Modifier.height(20.dp))
-                
+
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End
@@ -192,7 +192,7 @@ fun ApiKeyGuideDialog(
                     }
                 }
                 }  // End of Column (scrollable content)
-                
+
                 // 頂部漸變遮罩 - 提示可以向上滾動
                 if (canScrollUp) {
                     Box(
@@ -210,7 +210,7 @@ fun ApiKeyGuideDialog(
                             .align(Alignment.TopCenter)
                     )
                 }
-                
+
                 // 底部漸變遮罩 + 向下箭頭 - 提示可以向下滾動
                 if (canScrollDown) {
                     Column(
@@ -233,7 +233,7 @@ fun ApiKeyGuideDialog(
                                     )
                                 )
                         )
-                        
+
                         // 向下箭頭指示器
                         Surface(
                             modifier = Modifier
@@ -289,25 +289,25 @@ private fun ApiKeyGuideCard(
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             Text(
                 text = description,
                 style = MaterialTheme.typography.bodyMedium,
                 color = MaterialTheme.colorScheme.onSurfaceVariant
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Text(
                 text = stringResource(R.string.api_guide_main_features),
                 style = MaterialTheme.typography.bodySmall,
                 fontWeight = FontWeight.Bold
             )
-            
+
             Spacer(modifier = Modifier.height(4.dp))
-            
+
             features.forEach { feature ->
                 Row(
                     modifier = Modifier
@@ -324,18 +324,18 @@ private fun ApiKeyGuideCard(
                     )
                 }
             }
-            
+
             Spacer(modifier = Modifier.height(8.dp))
-            
+
             Text(
                 text = stringResource(R.string.api_guide_free_quota, freeLimit),
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.primary,
                 fontWeight = FontWeight.Medium
             )
-            
+
             Spacer(modifier = Modifier.height(12.dp))
-            
+
             Button(
                 onClick = onApplyClick,
                 modifier = Modifier.fillMaxWidth(),

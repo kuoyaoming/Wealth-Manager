@@ -12,7 +12,7 @@ import com.wealthmanager.data.model.SearchErrorType
  * Provides unified search result processing logic
  */
 object SearchResultHandler {
-    
+
     /**
      * Get user-friendly message for search results
      */
@@ -48,7 +48,7 @@ object SearchResultHandler {
             }
         }
     }
-    
+
     /**
      * Check if it's an error state
      */
@@ -59,7 +59,7 @@ object SearchResultHandler {
             is SearchResult.Error -> true
         }
     }
-    
+
     /**
      * Check if it's an API limit error
      */
@@ -70,7 +70,7 @@ object SearchResultHandler {
             else -> false
         }
     }
-    
+
     /**
      * Check if it's a stock not found error
      */
@@ -81,14 +81,15 @@ object SearchResultHandler {
             else -> false
         }
     }
-    
+
     /**
      * Get search results list
      */
     fun getSearchResults(searchResult: SearchResult): List<com.wealthmanager.data.model.StockSearchItem> {
-        return when (searchResult) {
-            is SearchResult.Success -> searchResult.results
-            else -> emptyList()
+        return if (searchResult is SearchResult.Success) {
+            searchResult.results
+        } else {
+            emptyList()
         }
     }
 }

@@ -111,15 +111,15 @@ class WearSyncManager @Inject constructor(
 
     private fun shouldSync(totalAssets: Double, lastUpdated: Long, hasError: Boolean): Boolean {
         val currentTime = System.currentTimeMillis()
-        
+
         // Debounce check: skip if too soon since last sync attempt
         if (currentTime - lastSyncAttemptTime < MIN_SYNC_INTERVAL_MS) {
             debugLogManager.log("WEAR_SYNC", "Sync throttled - too soon since last attempt")
             return false
         }
-        
+
         lastSyncAttemptTime = currentTime
-        
+
         if (hasError) {
             // Always propagate error state
             return !lastSyncResultWasError
