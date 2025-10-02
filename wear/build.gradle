@@ -61,24 +61,24 @@ android {
 }
 
 dependencies {
-    implementation 'androidx.core:core-ktx:1.13.1'
-    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
+    implementation 'androidx.core:core-ktx:1.17.0'
+    implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.9.4'
 
     // Compose for Wear OS
-    implementation platform('androidx.compose:compose-bom:2024.12.01')
-    implementation 'androidx.wear.compose:compose-material:1.3.0'
-    implementation 'androidx.wear.compose:compose-foundation:1.3.0'
-    implementation 'androidx.wear.compose:compose-navigation:1.3.0'
+    implementation platform('androidx.compose:compose-bom:2025.09.01')
+    implementation 'androidx.wear.compose:compose-material:1.5.2'
+    implementation 'androidx.wear.compose:compose-foundation:1.5.2'
+    implementation 'androidx.wear.compose:compose-navigation:1.5.2'
     implementation 'androidx.compose.ui:ui'
     implementation 'androidx.compose.ui:ui-tooling-preview'
     debugImplementation 'androidx.compose.ui:ui-tooling'
 
     // Tiles
-    implementation 'androidx.wear.tiles:tiles:1.3.0'
-    implementation 'androidx.wear.tiles:tiles-material:1.3.0'
+    implementation 'androidx.wear.tiles:tiles:1.5.0'
+    implementation 'androidx.wear.tiles:tiles-material:1.5.0'
 
     // Wearable services
-    implementation 'com.google.android.gms:play-services-wearable:18.2.0'
+    implementation 'com.google.android.gms:play-services-wearable:19.0.0'
 
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
@@ -94,6 +94,6 @@ dependencies {
     // Testing
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.3.0'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.7.0'
 }
 
