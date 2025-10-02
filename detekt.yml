@@ -87,7 +87,6 @@ complexity:
   StringLiteralDuplication:
     active: true
     excludeStringsWithLessThan5Characters: true
-    excludeStringsMatchingRegex: '$^'
     threshold: 3
   TooManyFunctions:
     active: true
@@ -215,9 +214,6 @@ naming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
     excludeClassPattern: '$^'
-  InvalidPackageName:
-    active: true
-    rootPackage: 'com.wealthmanager'
   LambdaParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
@@ -310,18 +306,6 @@ potential-bugs:
     active: true
   NullableToStringCall:
     active: true
-  RedundantElseInWhen:
-    active: true
-  RedundantExplicitType:
-    active: true
-  RedundantHigherOrderMapUsage:
-    active: true
-  RedundantIfInWhen:
-    active: true
-  RedundantUnitExpression:
-    active: true
-  SafeCast:
-    active: true
   UnconditionalJumpStatementInLoop:
     active: true
   UnnecessaryNotNullOperator:
@@ -353,16 +337,12 @@ style:
     active: true
   CollapsibleIfStatements:
     active: true
-  DataClassContainsFunction:
-    active: true
   DataClassShouldBeImmutable:
     active: true
   DestructuringDeclarationWithTooManyEntries:
     active: true
     maxDestructuringEntries: 3
   EqualsNullCall:
-    active: true
-  EqualsOnNullSafe:
     active: true
   ExplicitCollectionElementAccessMethod:
     active: true
@@ -453,8 +433,6 @@ style:
     excludeLabeled: false
     excludeReturnFromLambda: true
     excludeGuardClauses: false
-  SafeCast:
-    active: true
   SerialVersionUIDInSerializableClass:
     active: true
   SpacingBetweenPackageAndImports:
