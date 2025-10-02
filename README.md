@@ -57,9 +57,7 @@ A modern Android personal finance tracker built with Jetpack Compose, featuring 
 <div align="center">
 
 ### Live App Demonstration
-<div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; background: #000;">
-<iframe style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;" src="https://www.youtube.com/embed/kW68GsKsGJ0" title="Wealth Manager App Demo" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-</div>
+[![Wealth Manager App Demo](https://img.youtube.com/vi/kW68GsKsGJ0/0.jpg)](https://youtube.com/shorts/kW68GsKsGJ0?feature=share)
 <p align="center"><em>Complete app workflow: biometric authentication, portfolio management, asset tracking, and real-time market data</em></p>
 
 </div>

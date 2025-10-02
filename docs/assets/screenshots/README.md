@@ -79,4 +79,5 @@ graph TD
 
 ### **Video Demo**
 - **YouTube Shorts**: [Wealth Manager App Demo](https://youtube.com/shorts/kW68GsKsGJ0?feature=share)
-- **Embedded in README**: Using YouTube iframe for better performance
+- **GitHub Compatible**: Using YouTube thumbnail with click-to-play link
+- **Note**: GitHub doesn't support iframe embeds, so we use thumbnail images that link to YouTube
