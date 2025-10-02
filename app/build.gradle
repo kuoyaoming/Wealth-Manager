@@ -7,8 +7,8 @@ plugins {
 }
 
 // Versioning: receive from CI or command line to avoid git calls during configuration
-def wmVersionName = (project.findProperty('wmVersionName') ?: System.getenv('WM_VERSION_NAME') ?: '1.4.5') as String
-def wmVersionCodeStr = (project.findProperty('wmVersionCode') ?: System.getenv('WM_VERSION_CODE') ?: '145').toString()
+def wmVersionName = (project.findProperty('wmVersionName') ?: System.getenv('WM_VERSION_NAME') ?: '1.4.6') as String
+def wmVersionCodeStr = (project.findProperty('wmVersionCode') ?: System.getenv('WM_VERSION_CODE') ?: '146').toString()
 def wmVersionCode
 try {
     wmVersionCode = Integer.parseInt(wmVersionCodeStr)
