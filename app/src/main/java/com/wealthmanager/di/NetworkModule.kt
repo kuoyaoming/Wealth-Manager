@@ -1,6 +1,7 @@
 package com.wealthmanager.di
 
 import android.content.Context
+import com.wealthmanager.BuildConfig
 import com.wealthmanager.data.api.FinnhubApi
 import com.wealthmanager.data.api.TwseApi
 import com.wealthmanager.data.api.ExchangeRateApi
@@ -46,7 +47,11 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+            redactHeader("Authorization")
+            redactHeader("X-Finnhub-Token")
+            redactHeader("X-API-KEY")
+            redactHeader("Api-Key")
         }
         
         return OkHttpClient.Builder()

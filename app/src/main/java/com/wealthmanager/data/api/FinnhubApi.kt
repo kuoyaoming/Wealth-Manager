@@ -1,5 +1,6 @@
 package com.wealthmanager.data.api
 
+import com.google.gson.annotations.SerializedName
 import retrofit2.http.GET
 import retrofit2.http.Query
 
@@ -26,30 +27,30 @@ interface FinnhubApi {
 
 // Finnhub API Response Models
 data class FinnhubQuoteResponse(
-    val c: Double, // Current price
-    val d: Double, // Change
-    val dp: Double, // Percent change
-    val h: Double, // High price of the day
-    val l: Double, // Low price of the day
-    val o: Double, // Open price of the day
-    val pc: Double, // Previous close price
-    val t: Long // Timestamp
+    @SerializedName("c") val c: Double,
+    @SerializedName("d") val d: Double,
+    @SerializedName("dp") val dp: Double,
+    @SerializedName("h") val h: Double,
+    @SerializedName("l") val l: Double,
+    @SerializedName("o") val o: Double,
+    @SerializedName("pc") val pc: Double,
+    @SerializedName("t") val t: Long
 )
 
 data class FinnhubSearchResponse(
-    val count: Int,
-    val result: List<FinnhubSearchResult>
+    @SerializedName("count") val count: Int,
+    @SerializedName("result") val result: List<FinnhubSearchResult>
 )
 
 data class FinnhubSearchResult(
-    val description: String,
-    val displaySymbol: String,
-    val symbol: String,
-    val type: String
+    @SerializedName("description") val description: String,
+    @SerializedName("displaySymbol") val displaySymbol: String,
+    @SerializedName("symbol") val symbol: String,
+    @SerializedName("type") val type: String
 )
 
 data class FinnhubExchangeResponse(
-    val base: String,
-    val quote: String,
-    val rate: Double
+    @SerializedName("base") val base: String,
+    @SerializedName("quote") val quote: String,
+    @SerializedName("rate") val rate: Double
 )

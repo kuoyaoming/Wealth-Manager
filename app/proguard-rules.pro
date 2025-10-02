@@ -13,3 +13,21 @@
 # 防止 Compose 相關類被混淆
 -keep class androidx.compose.** { *; }
 -dontwarn androidx.compose.**
+
+# -------- Gson/Retrofit/Model 保護規則（避免 release 解析失敗） --------
+# 保留泛型與註解資訊，供 Gson/Retrofit 於執行時反射使用
+-keepattributes Signature, RuntimeVisibleAnnotations, RuntimeInvisibleAnnotations, RuntimeVisibleParameterAnnotations, RuntimeInvisibleParameterAnnotations, *Annotation*
+
+# 保留 Gson 本身
+-keep class com.google.gson.** { *; }
+-dontwarn sun.misc.**
+
+# 保留 Retrofit 介面（方法簽名與註解）
+-keep interface retrofit2.** { *; }
+-keep class retrofit2.** { *; }
+
+# 關鍵：保留 API 資料類與其欄位名稱，避免欄位被混淆
+-keep class com.wealthmanager.data.api.** { *; }
+
+# 可選：若有使用反射的 Debug/Diagnostic 類別
+-keep class com.wealthmanager.debug.** { *; }
