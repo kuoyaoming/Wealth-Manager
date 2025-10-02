@@ -155,13 +155,13 @@ class SecureApiKeyManager @Inject constructor(
     /**
      * Validates key strength (without saving).
      */
-    fun validateKeyStrength(key: String, keyType: String): KeyValidationResult = 
+    fun validateKeyStrength(key: String, keyType: String): KeyValidationResult =
         keyRepository.validateKeyStrength(key, keyType)
 
     /**
      * Generates key suggestions.
      */
-    fun generateKeySuggestions(validationResult: KeyValidationResult): List<String> = 
+    fun generateKeySuggestions(validationResult: KeyValidationResult): List<String> =
         keyRepository.generateKeySuggestions(validationResult)
 
     /**

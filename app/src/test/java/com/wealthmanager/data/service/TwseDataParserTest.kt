@@ -11,7 +11,6 @@ import org.junit.Test
 private class FakeDebugLogManager : DebugLogManager()
 
 class TwseDataParserTest {
-
     private lateinit var parser: TwseDataParser
 
     @Before
@@ -38,8 +37,12 @@ class TwseDataParserTest {
     fun findStockFromAllData_returnsConvertedData_whenPresent() {
         val items = listOf(
             sampleItem(code = "1101"),
-            sampleItem(code = "2330", change = "2.00", close = "600.00"),
-            sampleItem(code = "2603")
+            sampleItem(
+                code = "2330",
+                change = "2.00",
+                close = "600.00",
+            ),
+            sampleItem(code = "2603"),
         )
 
         val result = parser.findStockFromAllData(items, "2330")
@@ -56,7 +59,7 @@ class TwseDataParserTest {
     fun findStockFromAllData_returnsNull_whenMissing() {
         val items = listOf(
             sampleItem(code = "1101"),
-            sampleItem(code = "2603")
+            sampleItem(code = "2603"),
         )
         val result = parser.findStockFromAllData(items, "2330")
         assertNull(result)
@@ -72,7 +75,7 @@ class TwseDataParserTest {
         low: String = "580.00",
         close: String = "600.00",
         change: String = "1.00",
-        tx: String = "100"
+        tx: String = "100",
     ): TwseStockItem {
         return TwseStockItem(
             Date = "20250101",
@@ -85,7 +88,7 @@ class TwseDataParserTest {
             LowestPrice = low,
             ClosingPrice = close,
             Change = change,
-            Transaction = tx
+            Transaction = tx,
         )
     }
 }
