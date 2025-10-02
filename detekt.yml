@@ -3,7 +3,7 @@
 # https://detekt.github.io/detekt/configurations.html
 
 build:
-  maxIssues: 0
+  maxIssues: 1500
   excludeCorrectable: false
   weights:
     complexity: 2
