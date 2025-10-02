@@ -221,9 +221,6 @@ naming:
   LambdaParameterNaming:
     active: true
     parameterPattern: '[a-z][A-Za-z0-9]*'
-  LongVariableName:
-    active: true
-    maximumNameLength: 64
   MatchingDeclarationName:
     active: true
     mustBeFirst: true
@@ -245,12 +242,6 @@ naming:
     active: true
     constantPattern: '[A-Z][_A-Z0-9]*'
     propertyPattern: '[A-Za-z][_A-Za-z0-9]*'
-  VariableMaxLength:
-    active: true
-    maximumNameLength: 64
-  VariableMinLength:
-    active: true
-    minimumNameLength: 1
   VariableNaming:
     active: true
     variablePattern: '[a-z][A-Za-z0-9]*'
@@ -279,8 +270,6 @@ potential-bugs:
     active: true
   Deprecation:
     active: true
-    deprecateMain: true
-    deprecateTest: true
   DontDowncastCollectionTypes:
     active: true
   DoubleMutabilityForCollection:
@@ -384,7 +373,7 @@ style:
     includeLineWrapping: false
   ForbiddenComment:
     active: true
-    values: ['FIXME:', 'STOPSHIP:', 'TODO:']
+    comments: ['FIXME:', 'STOPSHIP:', 'TODO:']
   ForbiddenImport:
     active: true
     imports: ['java.util.Date', 'java.sql.Timestamp']
@@ -392,8 +381,6 @@ style:
   ForbiddenMethodCall:
     active: true
     methods: ['kotlin.io.print', 'kotlin.io.println']
-  ForbiddenPublicDataClass:
-    active: true
   ForbiddenVoid:
     active: true
     ignoreOverridden: true
@@ -401,12 +388,6 @@ style:
     active: true
     ignoreOverridableFunction: true
     ignoreActualFunction: true
-  LibraryCodeMustSpecifyReturnType:
-    active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
-  LibraryEntitiesShouldNotBePublic:
-    active: true
-    excludes: ['**/test/**', '**/androidTest/**', '**/commonTest/**', '**/jvmTest/**', '**/jsTest/**', '**/iosTest/**']
   LoopWithTooManyJumpStatements:
     active: true
     maxJumpCount: 1
@@ -424,10 +405,7 @@ style:
     ignoreEnums: false
     ignoreRanges: false
     ignoreExtensionFunctions: false
-    ignorePackageDeclaration: false
-    ignoreImportStatements: false
-    ignoreDefaultValues: false
-  MandatoryBracesIfStatements:
+  BracesOnIfStatements:
     active: true
     singleLine: 'never'
   MandatoryBracesLoops:
@@ -438,7 +416,6 @@ style:
   MaxLineLength:
     active: true
     maxLineLength: 120
-    ignoreBackTickedIdentifier: true
   MayBeConst:
     active: true
   ModifierOrder:
