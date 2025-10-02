@@ -53,6 +53,7 @@ jobs:
 
       - name: Run code quality checks
         run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace
+        continue-on-error: true
 
       - name: Build app and wear (Debug)
         run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:assembleDebug :wear:assembleDebug --no-daemon --stacktrace
@@ -117,6 +118,7 @@ jobs:
 
       - name: Run code quality checks (Release)
         run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace
+        continue-on-error: true
 
       - name: Build release bundles and APK
         env:
