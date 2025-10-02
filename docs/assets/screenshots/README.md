@@ -70,16 +70,18 @@ Screenshots are referenced in:
 ```mermaid
 graph TD
     A[screenshots/] --> B[README.md]
-    A --> C[portfolio-overview.png]
-    A --> D[asset-management.png]
-    A --> E[biometric-auth.png]
-    A --> F[add-assets.png]
-    A --> G[about-app.png]
+    A --> C[app-demo-optimized.gif]
+    A --> D[portfolio-overview.png]
+    A --> E[asset-management.png]
+    A --> F[biometric-auth.png]
+    A --> G[add-assets.png]
+    A --> H[about-app.png]
     
     B --> B1[This file]
-    C --> C1[Main dashboard]
-    D --> D1[Asset management]
-    E --> E1[Authentication]
-    F --> F1[Add asset dialog]
-    G --> G1[About screen]
+    C --> C1[Live app demonstration]
+    D --> D1[Main dashboard]
+    E --> E1[Asset management]
+    F --> F1[Authentication]
+    G --> G1[Add asset dialog]
+    H --> H1[About screen]
 ```

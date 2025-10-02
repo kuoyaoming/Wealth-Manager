@@ -52,11 +52,15 @@ A modern Android personal finance tracker built with Jetpack Compose, featuring 
 - **Notification Permissions**: Android 13+ notification management
 - **Modern Architecture**: MVVM + Repository pattern with Hilt DI
 
-## 📱 Screenshots
+## 📱 App Demo
 
 <div align="center">
 
-### Portfolio Overview & Asset Management
+### Live App Demonstration
+<img src="docs/assets/screenshots/app-demo-optimized.gif" alt="Wealth Manager App Demo" width="100%"/>
+<p align="center"><em>Complete app workflow: biometric authentication, portfolio management, asset tracking, and real-time market data</em></p>
+
+### Key Features Showcase
 <table>
 <tr>
 <td width="50%">
@@ -70,7 +74,7 @@ A modern Android personal finance tracker built with Jetpack Compose, featuring 
 </tr>
 </table>
 
-### Biometric Authentication & Add Assets
+### Security & Privacy
 <table>
 <tr>
 <td width="50%">
@@ -78,21 +82,8 @@ A modern Android personal finance tracker built with Jetpack Compose, featuring 
 <p align="center"><em>Secure sign-in with biometric authentication</em></p>
 </td>
 <td width="50%">
-<img src="docs/assets/screenshots/add-assets.png" alt="Add Assets" width="100%"/>
-<p align="center"><em>Smart asset addition with stock search</em></p>
-</td>
-</tr>
-</table>
-
-### About & Privacy
-<table>
-<tr>
-<td width="50%">
 <img src="docs/assets/screenshots/about-app.png" alt="About Wealth Manager" width="100%"/>
 <p align="center"><em>Transparent privacy and API disclosure</em></p>
-</td>
-<td width="50%">
-<!-- Empty cell for balanced layout -->
 </td>
 </tr>
 </table>
