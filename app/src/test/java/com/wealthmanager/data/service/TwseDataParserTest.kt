@@ -8,7 +8,9 @@ import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
 
-private class FakeDebugLogManager : DebugLogManager()
+private class FakeDebugLogManager : DebugLogManager() {
+    // Mock implementation - no overrides needed
+}
 
 class TwseDataParserTest {
     private lateinit var parser: TwseDataParser

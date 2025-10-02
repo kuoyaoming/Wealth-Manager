@@ -4,6 +4,7 @@ plugins {
     id 'kotlin-parcelize'
     id 'com.google.devtools.ksp'
     id 'dagger.hilt.android.plugin'
+    id 'org.jetbrains.kotlin.plugin.compose'
 }
 
 android {
@@ -51,9 +52,6 @@ android {
         buildConfig = true
     }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = '1.5.15'
-    }
 
     packagingOptions {
         resources {
@@ -83,19 +81,19 @@ dependencies {
     implementation 'com.google.android.gms:play-services-wearable:18.2.0'
 
     // Coroutines
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3'
-    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.7.3'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
+    implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2'
 
     // Hilt
-    implementation 'com.google.dagger:hilt-android:2.48'
-    ksp 'com.google.dagger:hilt-compiler:2.48'
+    implementation 'com.google.dagger:hilt-android:2.57.2'
+    ksp 'com.google.dagger:hilt-compiler:2.57.2'
     
     // Guava for Futures
     implementation 'com.google.guava:guava:31.0.1-android'
 
     // Testing
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.5'
+    androidTestImplementation 'androidx.test.ext:junit:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
 }
 

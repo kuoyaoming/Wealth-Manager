@@ -5,6 +5,7 @@ import com.wealthmanager.data.model.SearchErrorType
 import com.wealthmanager.data.model.SearchResult
 import com.wealthmanager.data.model.StockSearchItem
 import com.wealthmanager.ui.utils.SearchResultHandler
+import org.junit.Assert.assertEquals
 import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
