@@ -1,6 +1,6 @@
 # Changelog
 
-All notable changes to the Wealth Manager project will be documented in this file.
+All notable changes to the Wealth Manager project are documented in this file.
 
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
@@ -15,96 +15,102 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.4.7] - 2025-10-02
 
 ### Fixed
-- 🔧 修復 API 金鑰管理相關問題
-- 🛡️ 強化安全性管理機制
-- 📱 改善使用者體驗與介面穩定性
+- 🔧 Fixed API key management issues
+- 🛡️ Enhanced security mechanisms
+- 📱 Improved user experience and interface stability
 
 ### Security
-- 🔒 增強 API 金鑰加密儲存
-- 🔒 改善生物識別認證流程
-- 🔒 強化資料保護機制
+- 🔒 Enhanced API key encryption storage
+- 🔒 Improved biometric authentication flow
+- 🔒 Strengthened data protection mechanisms
 
 ### Performance
-- ⚡ 優化應用程式啟動速度
-- ⚡ 改善記憶體使用效率
-- ⚡ 提升整體系統穩定性
+- ⚡ Optimized app startup speed
+- ⚡ Improved memory usage efficiency
+- ⚡ Enhanced overall system stability
 
-## [1.4.6] - 2025-10-02
+### Code Quality
+- 🧹 Fixed detekt configuration issues
+- 🧹 Removed duplicate excludeClassPattern in detekt.yml
+- 🧹 Updated detekt.yml configuration to resolve validation errors
+- 🧹 Comprehensive detekt code quality improvements
+
+## [1.4.6] - 2025-10-01
 
 ### Fixed
-- 🛠 修復 release 版 API 查詢失效：R8 混淆導致 Gson 欄位對應失敗
-- 🛡️ 針對 Retrofit/Gson 增加 ProGuard 規則、為 DTO 加上 `@SerializedName`
-- 🔇 Release 關閉 OkHttp BODY 級別日誌並遮蔽敏感標頭，避免外洩 token
+- 🛠️ Fixed release version API query failures: R8 obfuscation causing Gson field mapping failures
+- 🛡️ Added ProGuard rules for Retrofit/Gson, added @SerializedName to DTOs
+- 🔇 Disabled OkHttp BODY level logging in release and masked sensitive headers to prevent token leakage
 
 ### Notes
-- 測試與設定頁「API Key 測試」一致，實際搜尋/報價恢復正常
+- Testing and settings page "API Key Test" consistent, actual search/quotes restored to normal
 
-## [1.4.5] - 2025-01-02
+## [1.4.5] - 2025-10-01
 
 ### Added
-- 🚀 **Android 2025 官方設計指南合規性**：
-  - 更新至 Android API 36 (compileSdk/targetSdk 36)
-  - 實現 Splash Screen API 提供專業啟動體驗
-  - 完善 Edge-to-Edge 實現，支援沉浸式全螢幕體驗
-  - 添加 Android 13+ 通知權限處理
-- 🔔 **通知系統**：
-  - 新增 `NotificationPermissionManager` 組件
-  - 支援 Android 13+ 通知權限請求
-  - 整合到設定頁面，提供完整的通知管理
-- 🎨 **UI/UX 改進**：
-  - 平滑的應用啟動畫面，消除黑屏閃爍
-  - 沉浸式全螢幕設計，內容延伸到狀態欄
-  - 現代化的系統欄行為配置
-- 🌐 **多語言支援**：
-  - 新增通知權限相關的中英文字符串
-  - 完善無障礙設計的內容描述
+- 🚀 **Android 2025 Official Design Guidelines Compliance**:
+  - Updated to Android API 36 (compileSdk/targetSdk 36)
+  - Implemented Splash Screen API for professional launch experience
+  - Complete Edge-to-Edge implementation with immersive full-screen experience
+  - Added Android 13+ notification permission handling
+- 🔔 **Notification System**:
+  - Added `NotificationPermissionManager` component
+  - Support for Android 13+ notification permission requests
+  - Integrated into settings page with complete notification management
+- 🎨 **UI/UX Improvements**:
+  - Smooth app launch screen, eliminating black screen flicker
+  - Immersive full-screen design with content extending to status bar
+  - Modern system bar behavior configuration
+- 🌐 **Multi-language Support**:
+  - Added notification permission related Chinese and English strings
+  - Complete accessibility design content descriptions
 
 ### Changed
-- 📱 **目標平台**：minSdk 34 → 34, targetSdk 35 → 36, compileSdk 35 → 36
-- 🏗️ **構建配置**：添加 Splash Screen 依賴 `androidx.core:core-splashscreen:1.0.1`
-- 🎯 **權限聲明**：添加 Android 13+ 通知權限聲明
-- 🔧 **代碼修復**：修復 TreemapChartComponent 中的 @Composable 問題
+- 📱 **Target Platform**: minSdk 34 → 34, targetSdk 35 → 36, compileSdk 35 → 36
+- 🏗️ **Build Configuration**: Added Splash Screen dependency `androidx.core:core-splashscreen:1.0.1`
+- 🎯 **Permission Declaration**: Added Android 13+ notification permission declaration
+- 🔧 **Code Fixes**: Fixed @Composable issues in TreemapChartComponent
 
 ### Fixed
-- 🐛 修復 TreemapChartComponent 中的 @Composable 調用問題
-- 🐛 修復 semantics 塊中的賦值問題
-- 🐛 確保所有改進都能正常編譯和運行
+- 🐛 Fixed @Composable calling issues in TreemapChartComponent
+- 🐛 Fixed assignment issues in semantics blocks
+- 🐛 Ensured all improvements compile and run normally
 
 ### Security
-- 🔒 符合 2025 年 Android 官方安全指南
-- 🔒 支援最新的 Android 安全機制
-- 🔒 完整的通知權限管理
+- 🔒 Compliant with 2025 Android official security guidelines
+- 🔒 Support for latest Android security mechanisms
+- 🔒 Complete notification permission management
 
 ### Performance
-- ⚡ 優化應用啟動性能
-- ⚡ 改善全螢幕渲染性能
-- ⚡ 更好的記憶體管理
+- ⚡ Optimized app startup performance
+- ⚡ Improved full-screen rendering performance
+- ⚡ Better memory management
 
-## [1.4.0] - 2025-10-01
+## [1.4.0] - 2025-09-30
 
 ### Added
-- 🚀 CI 版控與發佈流程：
-  - versionName 由 Git Tag（`vX.Y.Z` → `X.Y.Z`）決定
-  - versionCode 由 GitHub Actions `GITHUB_RUN_NUMBER` 自動產生（嚴格遞增）
-  - Tag 觸發產出簽章 `:app:bundleRelease` 與 `mapping.txt`
-- 🧭 響應式佈局：新增 `WindowSizeClass`，優化平板與大螢幕體驗
-- 💵 `MoneyFormatter` 公用模組：一致的金額格式化與本地化顯示
-- 🔐 安全性/診斷：優化 `ApiDiagnostic` 與網路模組可觀測性
+- 🚀 **CI Version Control and Release Process**:
+  - versionName determined by Git Tag (`vX.Y.Z` → `X.Y.Z`)
+  - versionCode automatically generated by GitHub Actions `GITHUB_RUN_NUMBER` (strictly incremental)
+  - Tag triggers signed `:app:bundleRelease` and `mapping.txt` output
+- 🧭 **Responsive Layout**: Added `WindowSizeClass` for optimized tablet and large screen experience
+- 💵 **MoneyFormatter Utility Module**: Consistent amount formatting and localized display
+- 🔐 **Security/Diagnostics**: Optimized `ApiDiagnostic` and network module observability
 
 ### Changed
-- 📦 Gradle：`app/build.gradle` 改為接收 `-PwmVersionName/-PwmVersionCode`，避免設定期呼叫 git，並新增非 CI 禁止 release AAB 保護
-- 🧱 Build/Targets：minSdk 34、targetSdk 35、compileSdk 35、Build Tools 36.1.0
-- 🧭 Dashboard/Charts：最佳化重組與記憶體配置，改善效能與流暢度
-- 🌐 多語言：優化設定頁與語言切換流程，符合 2025 per-app-language 指南
+- 📦 **Gradle**: `app/build.gradle` now receives `-PwmVersionName/-PwmVersionCode`, avoiding git calls during configuration, added non-CI release AAB protection
+- 🧱 **Build/Targets**: minSdk 34, targetSdk 35, compileSdk 35, Build Tools 36.1.0
+- 🧭 **Dashboard/Charts**: Optimized reorganization and memory allocation, improved performance and smoothness
+- 🌐 **Multi-language**: Optimized settings page and language switching flow, compliant with 2025 per-app-language guidelines
 
 ### Fixed
-- 🛠️ 修正市場數據查詢穩定性與錯誤處理；改善網路異常情境下的回復能力
-- 🧹 修正部分 UI 元件的狀態同步與邏輯邊界條件
+- 🛠️ Fixed market data query stability and error handling; improved recovery capability under network exception scenarios
+- 🧹 Fixed state synchronization and logic boundary conditions for some UI components
 
 ### Notes
-- 正式釋出 AAB 僅由 CI 產出；本地禁止 `bundleRelease`
+- Official AAB release only produced by CI; local `bundleRelease` prohibited
 
-## [1.2.0] - 2025-09-30
+## [1.2.0] - 2025-09-29
 
 ### Changed
 - Version bump for app and wear modules: versionCode 15, versionName 1.2.0
@@ -113,9 +119,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ### Fixed
 - Cancelled outdated stock search requests using flatMapLatest to prevent stale results
 
----
-
-## [1.1.0] - 2025-01-30
+## [1.1.0] - 2025-09-29
 
 ### Added
 - 🌐 **Multi-language Support**
@@ -144,7 +148,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Improved error handling for locale management
   - Enhanced application startup stability
 
-## [1.0.0] - 2025-01-XX
+## [1.0.0] - 2025-09-29
 
 ### Added
 - 🔐 **Biometric Authentication System**
@@ -213,7 +217,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Secure API key management
 - HTTPS-only communications
 
-## [0.1.6] - 2024-XX-XX
+## [0.1.6] - 2025-09-28
 
 ### Added
 - Initial release preparation
@@ -226,7 +230,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Enhanced UI components
 - Improved performance
 
-## [0.1.0] - 2024-XX-XX
+## [0.1.0] - 2025-09-28
 
 ### Added
 - Initial project setup
@@ -239,11 +243,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 | Version | Release Date | Key Features |
 |---------|-------------|--------------|
-| 1.4.0   | 2025-10-01  | CI-driven versioning, responsive layout, MoneyFormatter |
-| 1.1.0   | 2025-01-30  | Multi-language support, improved UX |
-| 1.0.0   | 2025-01-XX  | Complete feature set, production ready |
-| 0.1.6   | 2024-XX-XX  | Play Store optimization |
-| 0.1.0   | 2024-XX-XX  | Initial release |
+| 1.4.7   | 2025-10-02  | API key management fixes, security enhancements, performance improvements |
+| 1.4.6   | 2025-10-01  | R8 obfuscation fixes, ProGuard rules, release optimization |
+| 1.4.5   | 2025-10-01  | Android 2025 compliance, Splash Screen, Edge-to-Edge, notification permissions |
+| 1.4.0   | 2025-09-30  | CI-driven versioning, responsive layout, MoneyFormatter |
+| 1.2.0   | 2025-09-29  | Stock search UX improvements, debounce optimization |
+| 1.1.0   | 2025-09-29  | Multi-language support, improved UX |
+| 1.0.0   | 2025-09-29  | Complete feature set, production ready |
+| 0.1.6   | 2025-09-28  | Play Store optimization |
+| 0.1.0   | 2025-09-28  | Initial release |
 
 ## Release Notes
 
@@ -269,5 +277,5 @@ None - this is the initial release.
 ---
 
 **Maintainer**: Wealth Manager Team  
-**Last Updated**: 2025年1月  
+**Last Updated**: October 2025  
 **Next Release**: TBD

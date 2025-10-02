@@ -77,6 +77,6 @@ For answers to common questions about this code of conduct, see the FAQ at https
 
 ---
 
-**Last Updated**: January 2025  
+**Last Updated**: October 2025  
 **Version**: 1.2.0  
 **Applies to**: Wealth Manager Project

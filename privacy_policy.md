@@ -1,7 +1,7 @@
 # Privacy Policy for Wealth Manager
 
-**Effective Date:** January 2025  
-**Last Updated:** January 2025
+**Effective Date:** September 28, 2025  
+**Last Updated:** October 2025
 
 ## Introduction
 
@@ -152,4 +152,4 @@ Your privacy and data security are our top priorities. This App is designed to g
 ---
 
 **Wealth Manager Privacy Policy**  
-*Last Updated: January 2025*
+*Last Updated: October 2025*
