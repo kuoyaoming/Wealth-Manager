@@ -122,11 +122,10 @@ We may update this Privacy Policy from time to time. We will notify you of any c
 
 ## Contact Information
 
-If you have any questions about this Privacy Policy or our data practices, please contact us at:
+If you have any questions about this Privacy Policy or our data practices, please create a GitHub issue or discussion:
 
-- **Email**: [Your Contact Email]
-- **GitHub**: [Your GitHub Repository URL]
-- **App Support**: Through the App's About section
+- **GitHub Issues**: [Report Issues](https://github.com/kuoyaoming/Wealth-Manager/issues)
+- **GitHub Discussions**: [Ask Questions](https://github.com/kuoyaoming/Wealth-Manager/discussions)
 
 ## Compliance
 

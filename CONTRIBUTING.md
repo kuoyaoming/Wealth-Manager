@@ -392,9 +392,9 @@ Any other relevant information
 
 ### **Response Time**
 
-- **Issues**: Within 48 hours
-- **Pull Requests**: Within 72 hours
-- **Questions**: Within 24 hours
+- **Issues**: When available
+- **Pull Requests**: When available
+- **Questions**: When available
 
 ## 🏆 Recognition
 

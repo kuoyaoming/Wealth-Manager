@@ -61,7 +61,7 @@ We take security vulnerabilities seriously. If you discover a security vulnerabi
 3. Fill out the security advisory form
 
 #### **Alternative Method: Email**
-Send an email to: `security@wealthmanager.app`
+Create a GitHub issue with the "security" label
 
 ### **What to Include**
 
@@ -76,13 +76,13 @@ Please include the following information:
 
 ### **Response Timeline**
 
-- **Initial Response**: Within 24 hours
-- **Status Update**: Within 72 hours
-- **Resolution**: Within 30 days (depending on severity)
+- **Initial Response**: When available
+- **Status Update**: As time permits
+- **Resolution**: When possible
 
 ### **What Happens Next**
 
-1. **Acknowledgment**: We'll acknowledge receipt within 24 hours
+1. **Acknowledgment**: We'll acknowledge receipt when possible
 2. **Investigation**: We'll investigate the vulnerability
 3. **Status Updates**: Regular updates on progress
 4. **Fix Development**: We'll develop and test a fix
@@ -233,8 +233,8 @@ Request → TLS 1.3 → Certificate Pinning → API Server
 ### **Security Team**
 
 - **GitHub Security**: [Security Advisories](https://github.com/kuoyaoming/Wealth-Manager/security)
-- **Email**: `security@wealthmanager.app`
-- **Response Time**: Within 24 hours
+- **GitHub Issues**: [Security Issues](https://github.com/kuoyaoming/Wealth-Manager/issues)
+- **Response Time**: When available
 
 ### **General Support**
 
@@ -262,4 +262,4 @@ Request → TLS 1.3 → Certificate Pinning → API Server
 **Last Updated**: October 2025  
 **Next Review**: March 2025
 
-**Questions?** Contact us at `security@wealthmanager.app`
+**Questions?** Create a GitHub issue or discussion
