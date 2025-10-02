@@ -91,7 +91,13 @@
     <string name="settings_haptic_test_title">測試觸覺回饋</string>
     <string name="settings_haptic_test_desc">點擊下方按鈕預覽各種強度</string>
     
+    <!-- Language -->
+    <string name="settings_language_title">語言</string>
+    <string name="settings_language_desc">選擇應用程式中使用的語言。</string>
+    
     <!-- Common -->
+    <string name="add">新增</string>
+    <string name="update">更新</string>
     <string name="loading">載入中...</string>
     <string name="error">錯誤</string>
     <string name="retry">重試</string>
@@ -135,7 +141,7 @@
     <!-- Input Validation -->
     <string name="validation_enter_valid_number">請輸入有效數字。</string>
     <string name="validation_enter_valid_shares">請輸入有效股數。</string>
-    <string name="validation_search_minimum_chars">請輸入至少 3 個字元進行搜尋。</string>
+    <string name="validation_search_minimum_chars">請輸入至少 1 個字元進行搜尋。</string>
     <string name="validation_no_matching_stock">查無符合的股票，請確認代號。</string>
 
     <!-- Search Error Messages -->
@@ -147,7 +153,7 @@
     <string name="search_error_authentication">API 驗證失敗，請確認金鑰設定。</string>
     <string name="search_error_rate_limit">請求速度過快，請稍後再試。</string>
     <string name="search_error_unknown">發生未知錯誤，請重新啟動應用程式。</string>
-    <string name="search_error_invalid_query">請輸入至少 2 個字元進行搜尋。</string>
+    <string name="search_error_invalid_query">請輸入至少 1 個字元進行搜尋。</string>
     <string name="search_error_api_limit_reached">API 請求次數已達上限，請明天再試。</string>
 
     <!-- Dialog Messages -->
@@ -266,9 +272,124 @@
     <string name="missing_api_keys_message">請至「設定」新增 Finnhub 與 Exchange Rate 的 API 金鑰後，才能刷新市場資料。</string>
     <string name="go_to_settings">前往設定</string>
     
+    <!-- API Key Guide Dialog -->
+    <string name="api_guide_title">申請API金鑰</string>
+    <string name="api_guide_description">為了使用完整的財富管理功能，您需要申請以下API金鑰：</string>
+    <string name="api_guide_steps_title">申請步驟：</string>
+    <string name="api_guide_important_reminder">重要提醒</string>
+    <string name="api_guide_reminder_points">• 請妥善保存您的API金鑰，不要分享給他人\n• 免費額度有限，建議申請自己的金鑰\n• 如遇問題，請查看API提供商的官方文檔</string>
+    <string name="api_guide_main_features">主要功能：</string>
+    <string name="api_guide_free_quota">免費額度：%1$s</string>
+    
+    <!-- Settings Screen -->
+    <string name="settings_apply_api_keys">申請API金鑰</string>
+    <string name="settings_apply_api_keys_desc">獲取免費API金鑰以使用完整功能</string>
+    <string name="settings_api_tip">💡 提示：申請免費API金鑰後，您將可以：\n• 獲取即時股票價格\n• 查詢匯率資訊\n• 存取完整的市場數據</string>
+    <string name="settings_developer_mode">開發者模式</string>
+    <string name="settings_developer_mode_desc">使用內建測試用API金鑰</string>
+    <string name="settings_developer_warning">⚠️ 注意：此功能僅在開發者模式下可用，將自動填入測試用API金鑰</string>
+    <string name="settings_security_status">安全狀態</string>
+    
     <!-- Chart Components -->
+    <string name="asset_distribution_title">資產分布</string>
+    <string name="asset_distribution_empty">無可顯示資產</string>
+    <string name="asset_distribution_value">%1$s  %2$s</string>
     <string name="chart_portfolio_distribution">投資組合分布</string>
     <string name="chart_no_assets_available">無可用資產</string>
     <string name="chart_treemap_content_description">顯示投資組合分布的樹狀圖</string>
     <string name="chart_others_group">其他</string>
+    
+    <!-- Security Level -->
+    <string name="security_level_settings">安全級別設定</string>
+    <string name="security_level_description">選擇適合您需求的安全級別。較高的安全級別提供更好的保護，但可能需要更多驗證步驟。</string>
+    <string name="security_level_choose">選擇安全級別</string>
+    <string name="security_level_explanation">安全級別說明</string>
+    <string name="security_level_basic">• 基本功能：完全可用\n• API 密鑰：降低安全級別儲存\n• 敏感操作：需要重新驗證</string>
+    <string name="scroll_down_more">向下滑動查看更多</string>
+    <string name="cd_refresh_security_status">刷新安全狀態</string>
+    <string name="cd_scroll_down_more">向下滾動查看更多內容</string>
+    
+    <!-- Hardcoded String Replacements -->
+    <string name="biometric_prompt_title">API金鑰存取驗證</string>
+    <string name="biometric_prompt_subtitle">請使用生物識別驗證以存取API金鑰</string>
+    <string name="biometric_prompt_negative">取消</string>
+    <string name="biometric_error_retry">生物識別驗證失敗，請重試</string>
+    <string name="biometric_error_cannot_show">無法顯示生物識別提示</string>
+    
+    <!-- Biometric Status Descriptions -->
+    <string name="biometric_status_available">生物識別驗證可用</string>
+    <string name="biometric_status_no_hardware">裝置不支援生物識別</string>
+    <string name="biometric_status_hardware_unavailable">生物識別硬體暫時不可用</string>
+    <string name="biometric_status_none_enrolled">請先在系統設定中註冊生物識別</string>
+    <string name="biometric_status_security_update_required">需要安全更新</string>
+    <string name="biometric_status_unsupported">不支援生物識別</string>
+    <string name="biometric_status_unknown">生物識別狀態未知</string>
+    
+    <!-- Security Level Messages -->
+    <string name="security_level_high_title">高安全級別</string>
+    <string name="security_level_high_desc">• 需要生物識別驗證\n• 所有功能完全可用\n• 最高安全保護</string>
+    <string name="security_level_medium_title">中等安全級別</string>
+    <string name="security_level_medium_desc">• 部分功能需要驗證\n• 大部分功能可用\n• 平衡安全與便利</string>
+    <string name="security_level_low_title">低安全級別</string>
+    <string name="security_level_low_desc">• 基本驗證要求\n• 核心功能可用\n• 適合日常使用</string>
+    <string name="security_level_fallback_title">備案安全級別</string>
+    <string name="security_level_fallback_desc">• 最低安全要求\n• 基本功能可用\n• 某些功能可能受限</string>
+    
+    <!-- Security Status Messages -->
+    <string name="security_status_high">高 (硬體保護 + 生物識別)</string>
+    <string name="security_status_medium">中 (硬體保護)</string>
+    <string name="security_status_low">低 (基本保護)</string>
+    <string name="security_status_available">可用</string>
+    <string name="security_status_unavailable">不可用</string>
+    <string name="security_status_not_set">未設定</string>
+    <string name="security_status_not_supported">不支援</string>
+    
+    <!-- API Key Management Messages -->
+    <string name="api_key_current_security_level">當前安全級別: %1$s\n%2$s</string>
+    <string name="api_key_security_test_complete">安全測試完成: %1$s</string>
+    <string name="api_key_security_test_failed">安全測試失敗: %1$s</string>
+    <string name="api_key_validation_failed">金鑰驗證失敗: %1$s</string>
+    <string name="api_key_unsupported_type">不支援的金鑰類型: %1$s</string>
+    <string name="api_key_saved_securely">%1$s金鑰已安全儲存 (強度: %2$s)</string>
+    <string name="api_key_save_failed">金鑰儲存失敗: %1$s</string>
+    <string name="api_key_biometric_required">需要生物識別驗證才能儲存金鑰</string>
+    <string name="api_key_invalid">%1$s金鑰無效: %2$s</string>
+    <string name="api_key_setup_error">設定金鑰時發生錯誤: %1$s</string>
+    <string name="api_key_saved_fallback">%1$s金鑰已儲存 (備案安全級別)</string>
+    <string name="api_key_biometric_retry_required">請重新嘗試生物識別驗證</string>
+    <string name="api_key_operation_cancelled">操作已取消</string>
+    <string name="api_key_security_level_set">安全級別已設定為: %1$s</string>
+    
+    <!-- Feature Permission Messages -->
+    <string name="feature_permission_full_access">完全功能可用</string>
+    <string name="feature_permission_limited_access">部分功能可用（安全級別較低）</string>
+    <string name="feature_permission_no_access">此功能需要更高安全級別</string>
+    
+    <!-- Security Recommendations -->
+    <string name="security_recommendation_high">建議：保持當前高安全級別設定</string>
+    <string name="security_recommendation_medium">建議：考慮啟用生物驗證以提高安全性</string>
+    <string name="security_recommendation_low">建議：啟用生物驗證或設定強密碼</string>
+    <string name="security_recommendation_fallback">注意：當前使用備案安全級別，某些功能可能受限</string>
+    
+    <!-- API Test Results -->
+    <string name="api_test_high_security">高安全等級 - 所有API正常</string>
+    <string name="api_test_medium_security">中安全等級 - 部分API正常</string>
+    <string name="api_test_low_security">低安全等級 - 需要檢查設定</string>
+    
+    <!-- Dialog Messages -->
+    <string name="dialog_continue_lower_security">繼續使用（降低安全級別）</string>
+    <string name="dialog_retry_biometric">重新嘗試生物識別</string>
+    <string name="dialog_cancel_operation">取消操作</string>
+    <string name="dialog_choose_security_level">選擇安全級別</string>
+    <string name="dialog_apply_tutorial">申請教學</string>
+    <string name="dialog_use_developer_api">使用開發者API KEY</string>
+    <string name="dialog_i_understand">我知道了</string>
+    <string name="dialog_go_apply">前往申請</string>
+    
+    <!-- API Guide Content -->
+    <string name="api_guide_finnhub_description">用於獲取股票價格和市場數據</string>
+    <string name="api_guide_finnhub_features">即時股票報價\n歷史價格數據\n公司財務資訊\n市場新聞</string>
+    <string name="api_guide_exchange_description">用於獲取即時匯率數據</string>
+    <string name="api_guide_exchange_features">即時匯率查詢\n多種貨幣支援\n歷史匯率數據\n匯率趨勢分析</string>
+    <string name="api_guide_steps">1. 點擊上方「前往申請」按鈕\n2. 在官網註冊或登入帳戶\n3. 找到API金鑰管理頁面\n4. 複製生成的API金鑰\n5. 回到此APP並貼上金鑰</string>
 </resources>

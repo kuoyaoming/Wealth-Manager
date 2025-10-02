@@ -12,6 +12,8 @@ class AuthStateManager @Inject constructor(
 ) {
     private val prefs: SharedPreferences = context.getSharedPreferences("auth_prefs", Context.MODE_PRIVATE)
     
+    private val sessionListeners = mutableListOf<SessionListener>()
+    
     private val AUTH_KEY = "is_authenticated"
     private val AUTH_TIMESTAMP_KEY = "auth_timestamp"
     private val BIOMETRIC_ENABLED_KEY = "biometric_enabled"
@@ -64,4 +66,93 @@ class AuthStateManager @Inject constructor(
     fun getAuthTimestamp(): Long {
         return prefs.getLong(AUTH_TIMESTAMP_KEY, 0L)
     }
+    
+    /**
+     * Checks if session is expiring soon (less than 1 hour remaining).
+     */
+    fun isSessionExpiringSoon(): Boolean {
+        val authTimestamp = getAuthTimestamp()
+        val currentTime = System.currentTimeMillis()
+        val timeRemaining = AUTH_SESSION_TIMEOUT - (currentTime - authTimestamp)
+        return timeRemaining < (60 * 60 * 1000L)
+    }
+    
+    /**
+     * Refreshes authentication timestamp.
+     */
+    fun refreshAuthTimestamp() {
+        if (isAuthenticated()) {
+            prefs.edit().apply {
+                putLong(AUTH_TIMESTAMP_KEY, System.currentTimeMillis())
+                apply()
+            }
+        }
+    }
+    
+    /**
+     * Gets remaining session time in milliseconds.
+     */
+    fun getRemainingSessionTime(): Long {
+        val authTimestamp = getAuthTimestamp()
+        val currentTime = System.currentTimeMillis()
+        val elapsed = currentTime - authTimestamp
+        return maxOf(0, AUTH_SESSION_TIMEOUT - elapsed)
+    }
+    
+    /**
+     * Forces logout.
+     */
+    fun forceLogout() {
+        clearAuthentication()
+        notifySessionExpired()
+    }
+    
+    /**
+     * Adds session listener.
+     */
+    fun addSessionListener(listener: SessionListener) {
+        sessionListeners.add(listener)
+    }
+    
+    /**
+     * Removes session listener.
+     */
+    fun removeSessionListener(listener: SessionListener) {
+        sessionListeners.remove(listener)
+    }
+    
+    /**
+     * Notifies session expiring soon.
+     */
+    private fun notifySessionExpiringSoon() {
+        sessionListeners.forEach { it.onSessionExpiringSoon() }
+    }
+    
+    /**
+     * Notifies session expired.
+     */
+    private fun notifySessionExpired() {
+        sessionListeners.forEach { it.onSessionExpired() }
+    }
+    
+    /**
+     * Checks and handles session status.
+     */
+    fun checkSessionStatus() {
+        if (isAuthenticated()) {
+            if (isSessionExpiringSoon()) {
+                notifySessionExpiringSoon()
+            }
+        } else {
+            notifySessionExpired()
+        }
+    }
+}
+
+/**
+ * Session listener interface.
+ */
+interface SessionListener {
+    fun onSessionExpiringSoon()
+    fun onSessionExpired()
 }

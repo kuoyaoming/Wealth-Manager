@@ -33,9 +33,6 @@
     <string name="cash_assets">Cash Assets</string>
     <string name="stock_assets">Stock Assets</string>
     <string name="refresh_data">Refresh Data</string>
-    <string name="asset_distribution_title">Asset Distribution</string>
-    <string name="asset_distribution_empty">No assets to display</string>
-    <string name="asset_distribution_value">%1$s  %2$s</string>
 
     <!-- Assets -->
     <string name="assets_title">Manage Assets</string>
@@ -241,12 +238,127 @@
 
     <!-- Missing API Keys Dialog -->
     <string name="missing_api_keys_title">API keys required</string>
-    <string name="missing_api_keys_message">Please add your Finnhub and Exchange Rate API keys in Settings to refresh market data.</string>
+    <string name="missing_api_keys_message">Please add Finnhub and Exchange Rate API keys in Settings to refresh market data.</string>
     <string name="go_to_settings">Go to Settings</string>
     
+    <!-- API Key Guide Dialog -->
+    <string name="api_guide_title">Apply for API Keys</string>
+    <string name="api_guide_description">To use the full wealth management features, you need to apply for the following API keys:</string>
+    <string name="api_guide_steps_title">Application Steps:</string>
+    <string name="api_guide_important_reminder">Important Reminder</string>
+    <string name="api_guide_reminder_points">• Please keep your API keys safe and do not share them with others\n• Free quotas are limited, we recommend applying for your own keys\n• If you encounter problems, please check the official documentation of the API provider</string>
+    <string name="api_guide_main_features">Main Features:</string>
+    <string name="api_guide_free_quota">Free quota: %1$s</string>
+    
+    <!-- Settings Screen -->
+    <string name="settings_apply_api_keys">Apply for API Keys</string>
+    <string name="settings_apply_api_keys_desc">Get free API keys to use full features</string>
+    <string name="settings_api_tip">💡 Tip: After applying for free API keys, you will be able to:\n• Get real-time stock prices\n• Query exchange rate information\n• Access comprehensive market data</string>
+    <string name="settings_developer_mode">Developer Mode</string>
+    <string name="settings_developer_mode_desc">Use built-in test API keys</string>
+    <string name="settings_developer_warning">⚠️ Note: This feature is only available in developer mode and will automatically fill in test API keys</string>
+    <string name="settings_security_status">Security Status</string>
+    
     <!-- Chart Components -->
+    <string name="asset_distribution_title">Asset Distribution</string>
+    <string name="asset_distribution_empty">No assets to display</string>
+    <string name="asset_distribution_value">%1$s  %2$s</string>
     <string name="chart_portfolio_distribution">Portfolio Distribution</string>
     <string name="chart_no_assets_available">No assets available</string>
     <string name="chart_treemap_content_description">Treemap chart showing portfolio distribution</string>
     <string name="chart_others_group">Others</string>
+    
+    <!-- Security Level -->
+    <string name="security_level_settings">Security Level Settings</string>
+    <string name="security_level_description">Choose the security level that suits your needs. Higher security levels provide better protection but may require more verification steps.</string>
+    <string name="security_level_choose">Choose Security Level</string>
+    <string name="security_level_explanation">Security Level Explanation</string>
+    <string name="security_level_basic">• Basic features: Fully available\n• API keys: Stored with reduced security level\n• Sensitive operations: Require re-authentication</string>
+    <string name="scroll_down_more">Scroll down for more</string>
+    <string name="cd_refresh_security_status">Refresh security status</string>
+    <string name="cd_scroll_down_more">Scroll down for more content</string>
+    
+    <!-- Hardcoded String Replacements -->
+    <string name="biometric_prompt_title">API Key Access Authentication</string>
+    <string name="biometric_prompt_subtitle">Please use biometric authentication to access API keys</string>
+    <string name="biometric_prompt_negative">Cancel</string>
+    <string name="biometric_error_retry">Biometric authentication failed, please try again</string>
+    <string name="biometric_error_cannot_show">Cannot display biometric prompt</string>
+    
+    <!-- Biometric Status Descriptions -->
+    <string name="biometric_status_available">Biometric authentication available</string>
+    <string name="biometric_status_no_hardware">Device does not support biometrics</string>
+    <string name="biometric_status_hardware_unavailable">Biometric hardware temporarily unavailable</string>
+    <string name="biometric_status_none_enrolled">Please register biometrics in system settings first</string>
+    <string name="biometric_status_security_update_required">Security update required</string>
+    <string name="biometric_status_unsupported">Biometric authentication not supported</string>
+    <string name="biometric_status_unknown">Biometric status unknown</string>
+    
+    <!-- Security Level Messages -->
+    <string name="security_level_high_title">High Security Level</string>
+    <string name="security_level_high_desc">• Biometric authentication required\n• All features fully available\n• Highest security protection</string>
+    <string name="security_level_medium_title">Medium Security Level</string>
+    <string name="security_level_medium_desc">• Some features require authentication\n• Most features available\n• Balanced security and convenience</string>
+    <string name="security_level_low_title">Low Security Level</string>
+    <string name="security_level_low_desc">• Basic authentication requirements\n• Core features available\n• Suitable for daily use</string>
+    <string name="security_level_fallback_title">Fallback Security Level</string>
+    <string name="security_level_fallback_desc">• Minimum security requirements\n• Basic features available\n• Some features may be limited</string>
+    
+    <!-- Security Status Messages -->
+    <string name="security_status_high">High (Hardware Protection + Biometric)</string>
+    <string name="security_status_medium">Medium (Hardware Protection)</string>
+    <string name="security_status_low">Low (Basic Protection)</string>
+    <string name="security_status_available">Available</string>
+    <string name="security_status_unavailable">Unavailable</string>
+    <string name="security_status_not_set">Not Set</string>
+    <string name="security_status_not_supported">Not Supported</string>
+    
+    <!-- API Key Management Messages -->
+    <string name="api_key_current_security_level">Current security level: %1$s\n%2$s</string>
+    <string name="api_key_security_test_complete">Security test completed: %1$s</string>
+    <string name="api_key_security_test_failed">Security test failed: %1$s</string>
+    <string name="api_key_validation_failed">Key validation failed: %1$s</string>
+    <string name="api_key_unsupported_type">Unsupported key type: %1$s</string>
+    <string name="api_key_saved_securely">%1$s key saved securely (Strength: %2$s)</string>
+    <string name="api_key_save_failed">Key save failed: %1$s</string>
+    <string name="api_key_biometric_required">Biometric authentication required to save key</string>
+    <string name="api_key_invalid">%1$s key invalid: %2$s</string>
+    <string name="api_key_setup_error">Error setting up key: %1$s</string>
+    <string name="api_key_saved_fallback">%1$s key saved (Fallback security level)</string>
+    <string name="api_key_biometric_retry_required">Please retry biometric authentication</string>
+    <string name="api_key_operation_cancelled">Operation cancelled</string>
+    <string name="api_key_security_level_set">Security level set to: %1$s</string>
+    
+    <!-- Feature Permission Messages -->
+    <string name="feature_permission_full_access">Full functionality available</string>
+    <string name="feature_permission_limited_access">Limited functionality (lower security level)</string>
+    <string name="feature_permission_no_access">This feature requires higher security level</string>
+    
+    <!-- Security Recommendations -->
+    <string name="security_recommendation_high">Recommendation: Maintain current high security level settings</string>
+    <string name="security_recommendation_medium">Recommendation: Consider enabling biometric authentication for higher security</string>
+    <string name="security_recommendation_low">Recommendation: Enable biometric authentication or set strong password</string>
+    <string name="security_recommendation_fallback">Note: Currently using fallback security level, some features may be limited</string>
+    
+    <!-- API Test Results -->
+    <string name="api_test_high_security">High security level - All APIs working</string>
+    <string name="api_test_medium_security">Medium security level - Some APIs working</string>
+    <string name="api_test_low_security">Low security level - Settings need checking</string>
+    
+    <!-- Dialog Messages -->
+    <string name="dialog_continue_lower_security">Continue with lower security</string>
+    <string name="dialog_retry_biometric">Retry biometric authentication</string>
+    <string name="dialog_cancel_operation">Cancel operation</string>
+    <string name="dialog_choose_security_level">Choose security level</string>
+    <string name="dialog_apply_tutorial">Application tutorial</string>
+    <string name="dialog_use_developer_api">Use developer API key</string>
+    <string name="dialog_i_understand">I understand</string>
+    <string name="dialog_go_apply">Go to application</string>
+    
+    <!-- API Guide Content -->
+    <string name="api_guide_finnhub_description">For getting stock prices and market data</string>
+    <string name="api_guide_finnhub_features">Real-time stock quotes\nHistorical price data\nCompany financial information\nMarket news</string>
+    <string name="api_guide_exchange_description">For getting real-time exchange rate data</string>
+    <string name="api_guide_exchange_features">Real-time exchange rate queries\nMulti-currency support\nHistorical exchange rate data\nExchange rate trend analysis</string>
+    <string name="api_guide_steps">1. Click the "Go to application" button above\n2. Register or login on the official website\n3. Find the API key management page\n4. Copy the generated API key\n5. Return to this app and paste the key</string>
 </resources>

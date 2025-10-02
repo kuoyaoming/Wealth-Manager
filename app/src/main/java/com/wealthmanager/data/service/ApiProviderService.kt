@@ -20,6 +20,25 @@ import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Service for providing unified access to various financial data APIs.
+ * 
+ * This service acts as a facade for multiple API providers including:
+ * - Finnhub API for US stock data
+ * - TWSE API for Taiwanese stock data
+ * - Exchange rate APIs for currency conversion
+ * 
+ * It handles API key management, caching, and error handling across all providers.
+ * 
+ * @property finnhubApi Finnhub API client for US stock data
+ * @property twseApi TWSE API client for Taiwanese stock data
+ * @property exchangeRateApi Exchange rate API client
+ * @property twseDataParser Parser for TWSE data format
+ * @property twseCacheManager Cache manager for TWSE data
+ * @property debugLogManager Manager for debug logging
+ * @property apiDiagnostic Diagnostic tools for API monitoring
+ * @property keyRepository Repository for API key management
+ */
 @Singleton
 class ApiProviderService @Inject constructor(
     private val finnhubApi: FinnhubApi,
@@ -35,6 +54,16 @@ class ApiProviderService @Inject constructor(
     companion object {}
     
     suspend fun getStockQuote(symbol: String): Result<StockQuoteData> {
+        if (keyRepository.isAuthenticationRequired()) {
+            debugLogManager.log("API_PROVIDER", "Biometric authentication required for stock quote")
+            return Result.failure(Exception("Biometric authentication required"))
+        }
+        
+        if (!keyRepository.isKeystoreAvailable()) {
+            debugLogManager.logError("API_PROVIDER", "Android Keystore not available for stock quote")
+            return Result.failure(Exception("Android Keystore not available"))
+        }
+        
         return if (isTaiwanStock(symbol)) {
             tryTwseQuote(symbol)
         } else {
@@ -45,6 +74,19 @@ class ApiProviderService @Inject constructor(
     suspend fun searchStocks(query: String, market: String): Flow<SearchResult> = flow {
         try {
             debugLogManager.log("API_PROVIDER", "Searching stocks: '$query' in market: '$market'")
+            
+            if (keyRepository.isAuthenticationRequired()) {
+                debugLogManager.log("API_PROVIDER", "Biometric authentication required for API access")
+                emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.AUTHENTICATION_ERROR))
+                return@flow
+            }
+            
+            if (!keyRepository.isKeystoreAvailable()) {
+                debugLogManager.logError("API_PROVIDER", "Android Keystore not available")
+                emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.AUTHENTICATION_ERROR))
+                return@flow
+            }
+            
             val effectiveKey = keyRepository.getUserFinnhubKey() ?: ""
             debugLogManager.log("API_PROVIDER", "Using API key: ${effectiveKey.take(8)}...")
             
@@ -69,8 +111,8 @@ class ApiProviderService @Inject constructor(
                 }
             }
             
-            val response = finnhubApi.searchStocks(query, effectiveKey)
-            debugLogManager.log("API_PROVIDER", "Finnhub response received: ${response.result.size} results")
+            val response = finnhubApi.searchStocks(query)
+            debugLogManager.logInfo("API_PROVIDER", "Finnhub search returns ${response.result.size} results")
             emit(processFinnhubSearchResults(response.result))
         } catch (e: Exception) {
             debugLogManager.logError("Finnhub search failed for '$query': ${e.message}", e)
@@ -98,13 +140,23 @@ class ApiProviderService @Inject constructor(
     }
     
     suspend fun getExchangeRate(fromCurrency: String = "USD", toCurrency: String = "TWD"): Result<ExchangeRateData> {
+        if (keyRepository.isAuthenticationRequired()) {
+            debugLogManager.log("API_PROVIDER", "Biometric authentication required for exchange rate")
+            return Result.failure(Exception("Biometric authentication required"))
+        }
+        
+        if (!keyRepository.isKeystoreAvailable()) {
+            debugLogManager.logError("API_PROVIDER", "Android Keystore not available for exchange rate")
+            return Result.failure(Exception("Android Keystore not available"))
+        }
+        
         return tryExchangeRateApi(fromCurrency, toCurrency)
     }
     
     private suspend fun tryFinnhubQuote(symbol: String): Result<StockQuoteData> {
         return try {
-            debugLogManager.log("API_PROVIDER", "Getting stock quote for $symbol")
-            val response = finnhubApi.getStockQuote(symbol, keyRepository.getUserFinnhubKey() ?: "")
+            debugLogManager.logInfo("API_PROVIDER", "Finnhub quote request for $symbol")
+            val response = finnhubApi.getStockQuote(symbol)
             
             Result.success(StockQuoteData(
                 symbol = symbol,

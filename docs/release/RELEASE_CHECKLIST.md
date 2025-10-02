@@ -1,15 +1,15 @@
-# Release Checklist (v1.4.0)
+# Release Checklist (v1.4.6)
 
 ## Pre-release
 - [ ] Confirm all CI checks are green on main branch
-- [ ] Update `CHANGELOG.md` with 1.4.0 notes
+- [ ] Update `CHANGELOG.md` with 1.4.6 notes
 - [ ] Verify `README.md` and `README_zh.md` versioning sections
 - [ ] Ensure no secrets or API keys are in source
 - [ ] Confirm Play Console service account and signing configs are valid
 
 ## Tag & Build
-- [ ] Create release tag: `git tag v1.4.0`
-- [ ] Push tag: `git push origin v1.4.0`
+- [ ] Create release tag: `git tag v1.4.6`
+- [ ] Push tag: `git push origin v1.4.6`
 - [ ] Wait for CI to finish release job
 
 ## Artifacts
@@ -23,7 +23,7 @@
 - [ ] Submit for review
 
 ## Post-release
-- [ ] Create GitHub Release with tag `v1.4.0` and changelog
+- [ ] Create GitHub Release with tag `v1.4.6` and changelog
 - [ ] Monitor crash reports and user feedback
 - [ ] Plan minor fixes (1.4.1) if needed
 

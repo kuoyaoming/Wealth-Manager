@@ -1,11 +1,13 @@
 package com.wealthmanager.ui.about
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Storage
 import androidx.compose.material3.*
@@ -38,25 +40,33 @@ fun AboutDialog(
     // Context is available but not currently used in this dialog
     // val context = LocalContext.current
     val (hapticManager, view) = rememberHapticFeedbackWithView()
+    val scrollState = rememberScrollState()
+    
+    val canScrollDown = scrollState.value < scrollState.maxValue
+    val canScrollUp = scrollState.value > 0
     
     Dialog(
         onDismissRequest = onDismiss,
         properties = DialogProperties(
             dismissOnBackPress = true,
-            dismissOnClickOutside = false
+            dismissOnClickOutside = false,
+            usePlatformDefaultWidth = false
         )
     ) {
         Card(
             modifier = Modifier
-                .fillMaxWidth()
-                .fillMaxHeight(0.9f),
+                .fillMaxWidth(0.92f)
+                .fillMaxHeight(0.92f)
+                .padding(vertical = 16.dp, horizontal = 16.dp),
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp)
         ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp)
-            ) {
+            Box(modifier = Modifier.fillMaxSize()) {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(16.dp)
+                        .verticalScroll(scrollState)
+                ) {
                 // Header
                 Row(
                     modifier = Modifier.fillMaxWidth(),
@@ -82,27 +92,29 @@ fun AboutDialog(
                 
                 Spacer(modifier = Modifier.height(16.dp))
                 
-                // Content
-                Column(
-                    modifier = Modifier
-                        .weight(1f)
-                        .verticalScroll(rememberScrollState())
-                ) {
-                    // App Version and Info
-                    AppVersionSection()
-                    
-                    // Data Usage Policy
-                    DataUsageSection()
-                    
-                    // Third-party API Usage
-                    ThirdPartyApiSection()
-                    
-                    // Security and Compliance
-                    SecurityComplianceSection()
-                    
-                    // Privacy Policy
-                    PrivacyPolicySection()
-                }
+                // Content (cards are added directly, scrolling handled by outer Column)
+                // App Version and Info
+                AppVersionSection()
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                // Data Usage Policy
+                DataUsageSection()
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                // Third-party API Usage
+                ThirdPartyApiSection()
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                // Security and Compliance
+                SecurityComplianceSection()
+                
+                Spacer(modifier = Modifier.height(12.dp))
+                
+                // Privacy Policy
+                PrivacyPolicySection()
                 
                 Spacer(modifier = Modifier.height(16.dp))
                 
@@ -130,8 +142,73 @@ fun AboutDialog(
                 }
             }
         }
+                
+                if (canScrollUp) {
+                    Box(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .height(32.dp)
+                            .background(
+                                brush = androidx.compose.ui.graphics.Brush.verticalGradient(
+                                    colors = listOf(
+                                        MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
+                                        MaterialTheme.colorScheme.surface.copy(alpha = 0f)
+                                    )
+                                )
+                            )
+                    )
+                }
+                
+                if (canScrollDown) {
+                    Column(
+                        modifier = Modifier
+                            .fillMaxWidth(),
+                        horizontalAlignment = Alignment.CenterHorizontally  // This is correct for Column
+                    ) {
+                        Box(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .height(80.dp)
+                                .background(
+                                    brush = androidx.compose.ui.graphics.Brush.verticalGradient(
+                                        colors = listOf(
+                                            MaterialTheme.colorScheme.surface.copy(alpha = 0f),
+                                            MaterialTheme.colorScheme.surface.copy(alpha = 0.95f)
+                                        )
+                                    )
+                                )
+                        )
+                        
+                        Surface(
+                            modifier = Modifier
+                                .padding(bottom = 16.dp),
+                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f),
+                            shape = MaterialTheme.shapes.small
+                        ) {
+                            Row(
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowDown,
+                                    contentDescription = stringResource(R.string.cd_scroll_down_more),
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    modifier = Modifier.size(20.dp)
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = stringResource(R.string.scroll_down_more),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer
+                                )
+                            }
+                        }
+                    }
+                }
+            }
+        }
     }
-}
 
 @Composable
 private fun AppVersionSection() {

@@ -12,6 +12,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code of Conduct
 - Changelog documentation
 
+## [1.4.7] - 2025-10-02
+
+### Fixed
+- 🔧 修復 API 金鑰管理相關問題
+- 🛡️ 強化安全性管理機制
+- 📱 改善使用者體驗與介面穩定性
+
+### Security
+- 🔒 增強 API 金鑰加密儲存
+- 🔒 改善生物識別認證流程
+- 🔒 強化資料保護機制
+
+### Performance
+- ⚡ 優化應用程式啟動速度
+- ⚡ 改善記憶體使用效率
+- ⚡ 提升整體系統穩定性
+
+## [1.4.6] - 2025-10-02
+
+### Fixed
+- 🛠 修復 release 版 API 查詢失效：R8 混淆導致 Gson 欄位對應失敗
+- 🛡️ 針對 Retrofit/Gson 增加 ProGuard 規則、為 DTO 加上 `@SerializedName`
+- 🔇 Release 關閉 OkHttp BODY 級別日誌並遮蔽敏感標頭，避免外洩 token
+
+### Notes
+- 測試與設定頁「API Key 測試」一致，實際搜尋/報價恢復正常
+
 ## [1.4.5] - 2025-01-02
 
 ### Added

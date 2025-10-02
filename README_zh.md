@@ -233,7 +233,7 @@ MIT License — 見 [LICENSE](LICENSE)
 
 ---
 
-版本：1.4.0  
+版本：1.4.7  
 最後更新：2025  
 最低支援：Android 14（API 34）  
 目標 SDK：35（Android 15）
@@ -247,8 +247,8 @@ MIT License — 見 [LICENSE](LICENSE)
 範例
 ```bash
 # 建立並推送釋出標籤
-git tag v1.4.0
-git push origin v1.4.0
+git tag v1.4.7
+git push origin v1.4.7
 
 # 本地 Debug（Release 僅限 CI）
 ./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug

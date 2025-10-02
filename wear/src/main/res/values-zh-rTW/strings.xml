@@ -11,7 +11,7 @@
     <string name="tile_tap_to_open">點擊開啟</string>
     <string name="tile_error">資料錯誤</string>
 
-    <string name="wear_home_title">Wealth Manager</string>
+    <string name="wear_home_title">財富管理</string>
     <string name="wear_home_tile_instructions">長按手錶主畫面，新增 Tiles 並選擇 Wealth Manager。</string>
     <string name="wear_home_sync_button">立即同步</string>
     <string name="wear_home_sync_success">同步成功</string>

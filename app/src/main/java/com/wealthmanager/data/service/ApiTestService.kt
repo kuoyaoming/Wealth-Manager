@@ -1,9 +1,12 @@
 package com.wealthmanager.data.service
 
+import android.content.Context
+import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.security.KeyRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -13,14 +16,23 @@ import javax.inject.Singleton
  */
 @Singleton
 class ApiTestService @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val debugLogManager: DebugLogManager,
-    private val keyRepository: KeyRepository
+    private val keyRepository: KeyRepository,
+    private val secureApiKeyManager: com.wealthmanager.ui.security.SecureApiKeyManager
 ) {
     
     data class ApiTestResult(
         val isWorking: Boolean,
         val message: String,
         val apiName: String
+    )
+    
+    data class SecureApiTestResult(
+        val securityStatus: com.wealthmanager.ui.security.SecurityStatus,
+        val finnhubResult: ApiTestResult,
+        val exchangeResult: ApiTestResult,
+        val overallSecurity: String
     )
     
     /**
@@ -181,6 +193,39 @@ class ApiTestService @Inject constructor(
             testFinnhubApi(),
             testExchangeRateApi()
         )
+    }
+    
+    /**
+     * Securely tests API keys (includes security status check).
+     */
+    suspend fun testApiKeysSecurely(): SecureApiTestResult {
+        debugLogManager.log("API_TEST", "Starting secure API key testing")
+        
+        val securityStatus = secureApiKeyManager.getSecurityStatus()
+        debugLogManager.log("API_TEST", "Security status: ${securityStatus.securityLevel}")
+        
+        val finnhubResult = testFinnhubApi()
+        val exchangeResult = testExchangeRateApi()
+        
+        return SecureApiTestResult(
+            securityStatus = securityStatus,
+            finnhubResult = finnhubResult,
+            exchangeResult = exchangeResult,
+            overallSecurity = when {
+                securityStatus.securityLevel == com.wealthmanager.ui.security.SecurityLevel.HIGH && 
+                finnhubResult.isWorking && exchangeResult.isWorking -> context.getString(R.string.api_test_high_security)
+                securityStatus.securityLevel == com.wealthmanager.ui.security.SecurityLevel.MEDIUM && 
+                (finnhubResult.isWorking || exchangeResult.isWorking) -> context.getString(R.string.api_test_medium_security)
+                else -> context.getString(R.string.api_test_low_security)
+            }
+        )
+    }
+    
+    /**
+     * Tests key strength (without API calls).
+     */
+    fun testKeyStrength(key: String, keyType: String): com.wealthmanager.security.KeyValidationResult {
+        return secureApiKeyManager.validateKeyStrength(key, keyType)
     }
 }
 

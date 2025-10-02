@@ -236,7 +236,7 @@ MIT License — see [LICENSE](LICENSE)
 
 ---
 
-Version: 1.4.0  
+Version: 1.4.7  
 Last Updated: 2025  
 Min SDK: 34 (Android 14)  
 Target SDK: 35 (Android 15)
@@ -250,8 +250,8 @@ Target SDK: 35 (Android 15)
 Examples
 ```bash
 # Create and push release tag
-git tag v1.4.0
-git push origin v1.4.0
+git tag v1.4.7
+git push origin v1.4.7
 
 # Local debug build (release bundles are CI‑only)
 ./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug

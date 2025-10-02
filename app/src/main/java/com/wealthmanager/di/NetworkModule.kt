@@ -1,6 +1,7 @@
 package com.wealthmanager.di
 
 import android.content.Context
+import com.wealthmanager.BuildConfig
 import com.wealthmanager.data.api.FinnhubApi
 import com.wealthmanager.data.api.TwseApi
 import com.wealthmanager.data.api.ExchangeRateApi
@@ -20,12 +21,17 @@ import com.wealthmanager.utils.NumberFormatter
 import com.wealthmanager.data.service.TwseCacheManager
 import com.wealthmanager.debug.ApiDiagnostic
 import com.wealthmanager.security.KeyRepository
+import com.wealthmanager.security.AndroidKeystoreManager
+import com.wealthmanager.security.KeyValidator
+import com.wealthmanager.security.BiometricProtectionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import okhttp3.OkHttpClient
+import okhttp3.Interceptor
+import okhttp3.Response
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -46,10 +52,50 @@ object NetworkModule {
     @Singleton
     fun provideOkHttpClient(): OkHttpClient {
         val loggingInterceptor = HttpLoggingInterceptor().apply {
-            level = HttpLoggingInterceptor.Level.BODY
+            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+            redactHeader("Authorization")
+            redactHeader("X-Finnhub-Token")
+            redactHeader("X-API-KEY")
+            redactHeader("Api-Key")
         }
         
         return OkHttpClient.Builder()
+            .addInterceptor(loggingInterceptor)
+            .connectTimeout(30, TimeUnit.SECONDS)
+            .readTimeout(30, TimeUnit.SECONDS)
+            .writeTimeout(30, TimeUnit.SECONDS)
+            .build()
+    }
+
+    @Provides
+    @Singleton
+    @Named("FinnhubClient")
+    fun provideFinnhubOkHttpClient(keyRepository: KeyRepository): OkHttpClient {
+        val loggingInterceptor = HttpLoggingInterceptor().apply {
+            level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
+            redactHeader("Authorization")
+            redactHeader("X-Finnhub-Token")
+            redactHeader("X-API-KEY")
+            redactHeader("Api-Key")
+        }
+
+        val tokenInterceptor = Interceptor { chain ->
+            val original = chain.request()
+            val host = original.url.host
+            val userKey = keyRepository.getUserFinnhubKey()
+            val needsHeader = host.contains("finnhub.io", ignoreCase = true) && !userKey.isNullOrBlank()
+            val request = if (needsHeader) {
+                original.newBuilder()
+                    .header("X-Finnhub-Token", userKey!!)
+                    .build()
+            } else {
+                original
+            }
+            chain.proceed(request)
+        }
+
+        return OkHttpClient.Builder()
+            .addInterceptor(tokenInterceptor)
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
             .readTimeout(30, TimeUnit.SECONDS)
@@ -76,7 +122,7 @@ object NetworkModule {
     @Provides
     @Singleton
     @Named("Finnhub")
-    fun provideFinnhubRetrofit(okHttpClient: OkHttpClient): Retrofit {
+    fun provideFinnhubRetrofit(@Named("FinnhubClient") okHttpClient: OkHttpClient): Retrofit {
         return Retrofit.Builder()
             .baseUrl(FINNHUB_BASE_URL)
             .client(okHttpClient)
@@ -190,6 +236,41 @@ object NetworkModule {
         return TwseCacheManager(debugLogManager)
     }
 
+    @Provides
+    @Singleton
+    fun provideAndroidKeystoreManager(
+        @ApplicationContext context: Context,
+        debugLogManager: com.wealthmanager.debug.DebugLogManager
+    ): AndroidKeystoreManager {
+        return AndroidKeystoreManager(context, debugLogManager)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideKeyValidator(
+        debugLogManager: com.wealthmanager.debug.DebugLogManager
+    ): KeyValidator {
+        return KeyValidator(debugLogManager)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideBiometricProtectionManager(
+        @ApplicationContext context: Context,
+        debugLogManager: com.wealthmanager.debug.DebugLogManager
+    ): BiometricProtectionManager {
+        return BiometricProtectionManager(context, debugLogManager)
+    }
+    
+    @Provides
+    @Singleton
+    fun provideDeveloperKeyManager(
+        @ApplicationContext context: Context,
+        debugLogManager: com.wealthmanager.debug.DebugLogManager
+    ): com.wealthmanager.security.DeveloperKeyManager {
+        return com.wealthmanager.security.DeveloperKeyManager(context, debugLogManager)
+    }
+    
     @Provides
     @Singleton
     fun provideApiDiagnostic(

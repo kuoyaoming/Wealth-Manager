@@ -4,11 +4,14 @@ plugins {
     id 'com.google.devtools.ksp'
     id 'dagger.hilt.android.plugin'
     id 'kotlin-parcelize'
+    id 'jacoco'
+    id 'io.gitlab.arturbosch.detekt'
+    id 'org.jlleitschuh.gradle.ktlint'
 }
 
 // Versioning: receive from CI or command line to avoid git calls during configuration
-def wmVersionName = (project.findProperty('wmVersionName') ?: System.getenv('WM_VERSION_NAME') ?: '1.4.5') as String
-def wmVersionCodeStr = (project.findProperty('wmVersionCode') ?: System.getenv('WM_VERSION_CODE') ?: '145').toString()
+def wmVersionName = (project.findProperty('wmVersionName') ?: System.getenv('WM_VERSION_NAME') ?: '1.4.7') as String
+def wmVersionCodeStr = (project.findProperty('wmVersionCode') ?: System.getenv('WM_VERSION_CODE') ?: '147').toString()
 def wmVersionCode
 try {
     wmVersionCode = Integer.parseInt(wmVersionCodeStr)
@@ -180,3 +183,131 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-tooling'
     debugImplementation 'androidx.compose.ui:ui-test-manifest:1.7.6'
 }
+
+// JaCoCo configuration for test coverage
+jacoco {
+    toolVersion = "0.8.8"
+}
+
+android {
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+    }
+}
+
+// Test coverage configuration
+tasks.withType(Test) {
+    jacoco.includeNoLocationClasses = true
+    jacoco.excludes = ['jdk.internal.*']
+}
+
+// Generate test coverage report
+task jacocoTestReport(type: JacocoReport, dependsOn: ['testDebugUnitTest', 'createDebugCoverageReport']) {
+    reports {
+        xml.required = true
+        html.required = true
+        csv.required = false
+    }
+
+    def fileFilter = [
+        '**/R.class',
+        '**/R$*.class',
+        '**/BuildConfig.*',
+        '**/Manifest*.*',
+        '**/*Test*.*',
+        'android/**/*.*',
+        '**/di/**',
+        '**/hilt/**',
+        '**/Hilt*.*',
+        '**/*_Hilt*.*',
+        '**/Hilt_*.*',
+        '**/*_Factory.*',
+        '**/*_Impl.*',
+        '**/*_MembersInjector.*',
+        '**/*_GeneratedInjector.*',
+        '**/Dagger*.*',
+        '**/*_Generated*.*'
+    ]
+
+    def debugTree = fileTree(dir: "${buildDir}/intermediates/javac/debug/classes", excludes: fileFilter)
+    def mainSrc = "${project.projectDir}/src/main/java"
+
+    sourceDirectories.setFrom(files([mainSrc]))
+    classDirectories.setFrom(files([debugTree]))
+    executionData.setFrom(fileTree(dir: buildDir, includes: [
+        'jacoco/testDebugUnitTest.exec',
+        'outputs/code-coverage/connected/*coverage.ec'
+    ]))
+}
+
+// Enforce minimum test coverage
+task jacocoTestCoverageVerification(type: JacocoCoverageVerification) {
+    dependsOn jacocoTestReport
+    violationRules {
+        rule {
+            limit {
+                minimum = 0.80 // 80% minimum coverage
+            }
+        }
+    }
+}
+
+// Run coverage verification after tests
+check.dependsOn jacocoTestCoverageVerification
+
+// Detekt configuration
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    config.setFrom("$projectDir/../detekt.yml")
+    baseline = file("$projectDir/../detekt-baseline.xml")
+}
+
+// ktlint configuration
+ktlint {
+    version = "1.0.1"
+    debug = true
+    verbose = true
+    android = true
+    outputToConsole = true
+    outputColorName = "RED"
+    ignoreFailures = false
+    enableExperimentalRules = true
+    filter {
+        exclude("**/generated/**")
+        include("**/kotlin/**")
+    }
+}
+
+// Custom Gradle tasks for code quality
+task codeQualityCheck {
+    group = 'verification'
+    description = 'Run all code quality checks (detekt + ktlint + tests)'
+    dependsOn 'detekt', 'ktlintCheck', 'testDebugUnitTest'
+}
+
+task codeQualityFormat {
+    group = 'formatting'
+    description = 'Format code with ktlint and fix auto-fixable detekt issues'
+    dependsOn 'ktlintFormat'
+    finalizedBy 'detekt'
+}
+
+task codeQualityReport {
+    group = 'reporting'
+    description = 'Generate comprehensive code quality report'
+    dependsOn 'detekt', 'ktlintCheck', 'jacocoTestReport'
+    doLast {
+        println "=== Code Quality Report ==="
+        println "Detekt: Check build/reports/detekt/detekt.html"
+        println "ktlint: Check build/reports/ktlint/ktlint.html"
+        println "Test Coverage: Check build/reports/jacoco/testDebugUnitTest/html/index.html"
+        println "=========================="
+    }
+}
+
+// Make check task depend on code quality checks
+check.dependsOn 'codeQualityCheck'

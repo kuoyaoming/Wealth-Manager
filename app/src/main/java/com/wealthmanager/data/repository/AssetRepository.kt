@@ -12,6 +12,20 @@ import kotlinx.coroutines.flow.first
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Repository for managing asset data operations.
+ * 
+ * This repository provides a unified interface for:
+ * - Cash asset management (CRUD operations)
+ * - Stock asset management (CRUD operations)
+ * - Exchange rate data management
+ * - Data validation and error handling
+ * 
+ * @property cashAssetDao DAO for cash asset database operations
+ * @property stockAssetDao DAO for stock asset database operations
+ * @property exchangeRateDao DAO for exchange rate database operations
+ * @property debugLogManager Manager for debug logging
+ */
 @Singleton
 class AssetRepository @Inject constructor(
     private val cashAssetDao: CashAssetDao,

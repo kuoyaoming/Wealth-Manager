@@ -24,6 +24,26 @@ import kotlinx.coroutines.runBlocking
 import javax.inject.Inject
 import javax.inject.Singleton
 
+/**
+ * Service for managing market data operations and real-time updates.
+ * 
+ * This service handles:
+ * - Stock price updates and market data fetching
+ * - Exchange rate management
+ * - Data caching and optimization
+ * - API error handling and retry logic
+ * - Data validation and formatting
+ * 
+ * @property apiProviderService Service for API data access
+ * @property assetRepository Repository for asset data operations
+ * @property debugLogManager Manager for debug logging
+ * @property cacheManager Manager for data caching
+ * @property apiErrorHandler Handler for API error management
+ * @property dataValidator Validator for data integrity
+ * @property requestDeduplicationManager Manager for request deduplication
+ * @property apiRetryManager Manager for API retry logic
+ * @property numberFormatter Formatter for numeric data
+ */
 @Singleton
 class MarketDataService @Inject constructor(
     private val apiProviderService: ApiProviderService,

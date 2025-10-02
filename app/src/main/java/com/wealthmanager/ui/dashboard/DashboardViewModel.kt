@@ -22,6 +22,23 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
+/**
+ * ViewModel for the dashboard screen managing portfolio data and UI state.
+ * 
+ * This ViewModel handles:
+ * - Portfolio data aggregation and calculation
+ * - Real-time market data updates
+ * - API status monitoring and error handling
+ * - Wear OS synchronization
+ * - Asset loading and refresh operations
+ * 
+ * @property assetRepository Repository for asset data operations
+ * @property marketDataService Service for fetching market data
+ * @property debugLogManager Manager for debug logging
+ * @property apiStatusManager Manager for API status monitoring
+ * @property wearSyncManager Manager for Wear OS synchronization
+ * @property keyRepository Repository for API key management
+ */
 @HiltViewModel
 class DashboardViewModel @Inject constructor(
     private val assetRepository: AssetRepository,
@@ -47,6 +64,8 @@ class DashboardViewModel @Inject constructor(
     fun hasRequiredKeys(): Boolean {
         val finnhub = keyRepository.getUserFinnhubKey()?.isNotBlank() == true
         val exchange = keyRepository.getUserExchangeKey()?.isNotBlank() == true
+        debugLogManager.log("DASHBOARD", "Key status - Finnhub: ${finnhub}, Exchange: ${exchange}")
+        
         return finnhub && exchange
     }
 

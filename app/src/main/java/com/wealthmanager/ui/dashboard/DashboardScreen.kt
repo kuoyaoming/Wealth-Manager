@@ -1,15 +1,17 @@
 package com.wealthmanager.ui.dashboard
 
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.grid.GridCells
-import androidx.compose.foundation.lazy.grid.GridItemSpan
-import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Refresh
@@ -51,7 +53,23 @@ import com.wealthmanager.ui.dashboard.ManualSyncStatus
 import com.wealthmanager.utils.PerformanceTracker
 import kotlinx.coroutines.flow.collectLatest
 import androidx.compose.ui.draw.alpha
+import com.wealthmanager.debug.DebugLogManager
 
+/**
+ * Main dashboard screen displaying portfolio overview and asset information.
+ * 
+ * This screen provides:
+ * - Total assets summary
+ * - Cash and stock asset breakdowns
+ * - Interactive treemap chart
+ * - Manual sync functionality with Wear OS
+ * - Performance monitoring and optimization
+ * 
+ * @param onNavigateToAssets Callback to navigate to assets management screen
+ * @param onNavigateToSettings Callback to navigate to settings screen
+ * @param navController Navigation controller for screen transitions
+ * @param viewModel ViewModel managing dashboard state and data
+ */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DashboardScreen(
@@ -71,21 +89,16 @@ fun DashboardScreen(
     val (hapticManager, view) = rememberHapticFeedbackWithView()
     val responsiveLayout = rememberResponsiveLayout()
     val snackbarHostState = remember { SnackbarHostState() }
+    val debugLogManager = remember { DebugLogManager() }
     val wearSyncSuccessMessage = stringResource(R.string.wear_sync_success)
     var showMissingKeysDialog = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
     val wearSyncMissingAppMessage = stringResource(R.string.wear_sync_missing_app)
     val wearSyncFailedMessage = stringResource(R.string.wear_sync_failed)
     
-    // Auto-refresh when returning from assets page
-    LaunchedEffect(navController.currentBackStackEntry) {
-        val currentDestination = navController.currentBackStackEntry?.destination?.route
-        if (currentDestination == "dashboard") {
-            // Check if we just returned from assets page by looking at the back stack
-            val previousEntry = navController.previousBackStackEntry
-            if (previousEntry?.destination?.route == "assets") {
-                viewModel.refreshData()
-            }
-        }
+    // Auto-refresh when entering or returning to dashboard
+    LaunchedEffect(Unit) {
+        debugLogManager.log("DASHBOARD", "Dashboard screen launched/resumed - loading portfolio data")
+        viewModel.loadPortfolioData()
     }
 
     LaunchedEffect(manualSyncStatus) {
@@ -101,8 +114,11 @@ fun DashboardScreen(
     }
 
     Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        contentWindowInsets = WindowInsets(0, 0, 0, 0),
         topBar = {
             TopAppBar(
+                modifier = Modifier.statusBarsPadding(),
                 title = { Text(stringResource(R.string.dashboard_title)) },
                 actions = {
                     IconButton(
@@ -154,54 +170,58 @@ fun DashboardScreen(
         },
         snackbarHost = { SnackbarHost(snackbarHostState) }
     ) { paddingValues ->
-			val columns = responsiveLayout.columns
-			LazyVerticalGrid(
-				columns = GridCells.Fixed(columns),
-            contentPadding = PaddingValues(responsiveLayout.paddingMedium),
-            horizontalArrangement = Arrangement.spacedBy(responsiveLayout.paddingMedium),
-            verticalArrangement = Arrangement.spacedBy(responsiveLayout.paddingMedium),
-            modifier = Modifier.padding(paddingValues)
-        ) {
-            // Total Assets Card
-				item(span = { GridItemSpan(columns) }) {
-                TotalAssetsCardOptimized(
-                    totalValue = uiState.totalAssets,
-                    isLoading = uiState.isLoading
-                )
-            }
-            
-            // Cash Assets Card
-            item {
-                CashAssetsCardOptimized(
-                    cashValue = uiState.cashAssets,
-                    totalAssets = uiState.totalAssets,
-                    isLoading = uiState.isLoading
-                )
-            }
-            
-            // Stock Assets Card
-            item {
-                StockAssetsCardOptimized(
-                    stockValue = uiState.stockAssets,
-                    totalAssets = uiState.totalAssets,
-                    isLoading = uiState.isLoading
-                )
-            }
-            
-            // Treemap Chart
-            if (uiState.totalAssets > 0) {
-					item(span = { GridItemSpan(columns) }) {
-                    TreemapChartComponent(
-                        assets = uiState.assets,
-                        isLoading = uiState.isLoading,
-                        onAssetClick = { asset ->
-                            // TODO: Navigate to asset details or show details dialog
-                            // For now, just log the click
-                        }
+            LazyColumn(
+                contentPadding = PaddingValues(responsiveLayout.paddingMedium),
+                verticalArrangement = Arrangement.spacedBy(responsiveLayout.paddingMedium),
+                modifier = Modifier.padding(paddingValues)
+            ) {
+                // Total Assets Card
+                item {
+                    TotalAssetsCardOptimized(
+                        totalValue = uiState.totalAssets,
+                        isLoading = uiState.isLoading
                     )
                 }
+                
+                item {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(responsiveLayout.paddingMedium)
+                    ) {
+                        // Cash Assets Card
+                        Box(modifier = Modifier.weight(1f)) {
+                            CashAssetsCardOptimized(
+                                cashValue = uiState.cashAssets,
+                                totalAssets = uiState.totalAssets,
+                                isLoading = uiState.isLoading
+                            )
+                        }
+                        
+                        // Stock Assets Card
+                        Box(modifier = Modifier.weight(1f)) {
+                            StockAssetsCardOptimized(
+                                stockValue = uiState.stockAssets,
+                                totalAssets = uiState.totalAssets,
+                                isLoading = uiState.isLoading
+                            )
+                        }
+                    }
+                }
+                
+                // Treemap Chart
+                if (uiState.totalAssets > 0) {
+                    item {
+                        TreemapChartComponent(
+                            assets = uiState.assets,
+                            isLoading = uiState.isLoading,
+                            onAssetClick = { asset ->
+                                // TODO: Navigate to asset details or show details dialog
+                                // For now, just log the click
+                            }
+                        )
+                    }
+                }
             }
-        }
         
         // Show API error banner if needed
         if (apiStatus.hasError) {

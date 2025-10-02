@@ -31,6 +31,18 @@ import com.wealthmanager.utils.StandardLogger
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
+/**
+ * Main activity for the Wealth Manager application.
+ * 
+ * This activity serves as the entry point for the app and handles:
+ * - Initial setup and configuration
+ * - Performance monitoring
+ * - Navigation and UI state management
+ * - Memory management and optimization
+ * 
+ * @property firstLaunchManager Manages first-time app launch logic
+ * @property performanceMonitor Monitors app performance metrics
+ */
 @AndroidEntryPoint
 @androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
 class MainActivity : FragmentActivity() {
@@ -43,13 +55,21 @@ class MainActivity : FragmentActivity() {
     
     
     
+    /**
+     * Initializes the activity and sets up the UI.
+     * 
+     * This method handles:
+     * - Splash screen installation
+     * - Edge-to-edge display configuration
+     * - Performance monitoring initialization
+     * - Input event handling setup
+     * - Navigation and theme setup
+     */
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         
-        // Install Splash Screen API for smooth app launch
+        // Install splash screen for smooth app startup
         installSplashScreen()
-        
-        // Complete Edge-to-Edge implementation
         WindowCompat.setDecorFitsSystemWindows(window, false)
         enableEdgeToEdge()
         
@@ -58,6 +78,7 @@ class MainActivity : FragmentActivity() {
         insetsController.systemBarsBehavior = 
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
         
+        // Start performance monitoring
         performanceMonitor.startMonitoring()
         setupInputEventHandling()
         
@@ -79,11 +100,9 @@ class MainActivity : FragmentActivity() {
                     CompositionLocalProvider(
                         LocalWindowWidthSizeClass provides windowSizeClass.widthSizeClass
                     ) {
-                        Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                            WealthManagerNavigation(
-                                modifier = Modifier.padding(innerPadding)
-                            )
-                        }
+                        WealthManagerNavigation(
+                            modifier = Modifier.fillMaxSize()
+                        )
                     }
 
                     if (showAboutDialog) {
@@ -99,13 +118,11 @@ class MainActivity : FragmentActivity() {
 
     override fun onResume() {
         super.onResume()
-        // Hint system to auto-manage refresh rate by default
         hintFrameRate(0f)
     }
 
     override fun onPause() {
         super.onPause()
-        // Return control to system when leaving the screen
         hintFrameRate(0f)
     }
     
@@ -133,6 +150,12 @@ class MainActivity : FragmentActivity() {
         }
     }
     
+    /**
+     * Sets up input event handling for the activity.
+     * 
+     * This method configures touch event processing and error handling
+     * for user interactions throughout the app.
+     */
     private fun setupInputEventHandling() {
         try {
             StandardLogger.debug("MainActivity", "Input event handling configured")
@@ -141,6 +164,13 @@ class MainActivity : FragmentActivity() {
         }
     }
     
+    /**
+     * Validates if a touch position is within valid bounds.
+     * 
+     * @param x The x-coordinate of the touch event
+     * @param y The y-coordinate of the touch event
+     * @return true if the touch position is valid, false otherwise
+     */
     private fun isValidTouchPosition(x: Float, y: Float): Boolean {
         return try {
             val window = window
@@ -166,10 +196,13 @@ class MainActivity : FragmentActivity() {
         }
     }
 
+    /**
+     * Hints the system about the preferred frame rate for smooth rendering.
+     * 
+     * @param frameRate The desired frame rate (0 to disable hinting)
+     */
     private fun hintFrameRate(frameRate: Float) {
         try {
-            // Provide a non-binding refresh rate preference to the system
-            // On API 30+ the system supports dynamic refresh rate; using LayoutParams hint keeps control with the system
             val lp = window.attributes
             lp.preferredRefreshRate = if (frameRate > 0f) frameRate else 0f
             window.attributes = lp
@@ -201,7 +234,6 @@ class MainActivity : FragmentActivity() {
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE -> {
                 StandardLogger.warn("MainActivity", "Memory pressure detected - level: $level")
-                // Trigger garbage collection for memory cleanup
                 System.gc()
             }
             ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
