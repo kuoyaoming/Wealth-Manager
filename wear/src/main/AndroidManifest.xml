@@ -5,6 +5,9 @@
     <uses-feature
         android:name="android.hardware.type.watch"
         android:required="true" />
+    
+    <!-- Vibration permission for haptic feedback -->
+    <uses-permission android:name="android.permission.VIBRATE" />
 
     <application
         android:name=".WealthWearApplication"
@@ -56,6 +59,11 @@
         <meta-data
             android:name="com.google.android.wearable.node.capabilities"
             android:resource="@xml/wear_capabilities" />
+            
+        <!-- Wear standalone app configuration -->
+        <meta-data
+            android:name="com.google.android.wearable.standalone"
+            android:value="false" />
 
     </application>
 

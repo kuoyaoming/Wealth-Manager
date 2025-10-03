@@ -36,6 +36,8 @@ import androidx.compose.ui.unit.sp
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.size
+import com.wealthmanager.wear.haptic.rememberWearHapticManagerWithView
+import com.wealthmanager.wear.haptic.WearHapticManager
 
 class MainWearActivity : ComponentActivity() {
 
@@ -73,6 +75,7 @@ fun WearApp(
     WealthManagerWearTheme {
         var tileAdded by remember { mutableStateOf(false) }
         var isSyncing by remember { mutableStateOf(false) }
+        val (hapticManager, view) = rememberWearHapticManagerWithView()
 
         LaunchedEffect(Unit) {
             tileAdded = loadTileAdded()
@@ -141,15 +144,17 @@ fun WearApp(
             }
             item {
                 Button(
-                    onClick = { if (!isSyncing) isSyncing = true },
+                    onClick = { 
+                        hapticManager.triggerCombinedFeedback(view, view.context, WearHapticManager.WearHapticIntensity.MEDIUM)
+                        if (!isSyncing) isSyncing = true 
+                    },
                     enabled = !isSyncing,
                     modifier = Modifier.size(width = 120.dp, height = 40.dp)
                 ) {
                     if (isSyncing) {
                         CircularProgressIndicator(
                             modifier = Modifier.size(20.dp), 
-                            strokeWidth = 2.dp,
-                            color = MaterialTheme.colors.onPrimary
+                            strokeWidth = 2.dp
                         )
                     } else {
                         Text(

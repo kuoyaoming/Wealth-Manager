@@ -7,9 +7,11 @@ import org.junit.Assert.assertNotNull
 import org.junit.Assert.assertNull
 import org.junit.Before
 import org.junit.Test
+import org.mockito.Mockito
 
-private class FakeDebugLogManager : DebugLogManager() {
-    // Mock implementation - no overrides needed
+// Create a mock DebugLogManager for testing
+private fun createMockDebugLogManager(): DebugLogManager {
+    return Mockito.mock(DebugLogManager::class.java)
 }
 
 class TwseDataParserTest {
@@ -17,7 +19,7 @@ class TwseDataParserTest {
 
     @Before
     fun setup() {
-        parser = TwseDataParser(FakeDebugLogManager())
+        parser = TwseDataParser(createMockDebugLogManager())
     }
 
     @Test

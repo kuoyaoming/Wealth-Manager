@@ -86,6 +86,7 @@ fun AddAssetDialog(
                                     onClick = {
                                         debugLogManager.logUserAction("Cash Tab Selected")
                                         debugLogManager.log("UI", "User switched to Cash tab in Add Asset dialog")
+                                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                                         selectedTab = 0
                                     },
                                     role = Role.Tab,
@@ -106,6 +107,7 @@ fun AddAssetDialog(
                                     onClick = {
                                         debugLogManager.logUserAction("Stock Tab Selected")
                                         debugLogManager.log("UI", "User switched to Stock tab in Add Asset dialog")
+                                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                                         selectedTab = 1
                                     },
                                     role = Role.Tab,
@@ -139,6 +141,7 @@ fun AddAssetDialog(
                                                         "UI",
                                                         "User selected TWD currency for cash asset",
                                                     )
+                                                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                                                     onCurrencyChange("TWD")
                                                 },
                                                 role = Role.RadioButton,
@@ -165,6 +168,7 @@ fun AddAssetDialog(
                                                         "UI",
                                                         "User selected USD currency for cash asset",
                                                     )
+                                                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                                                     onCurrencyChange("USD")
                                                 },
                                                 role = Role.RadioButton,
@@ -262,10 +266,7 @@ fun AddAssetDialog(
                                                 "UI",
                                                 "User clicked manual search button for: $stockSymbol",
                                             )
-                                            hapticManager.triggerHaptic(
-                                                view,
-                                                HapticFeedbackManager.HapticIntensity.LIGHT,
-                                            )
+                                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                                             if (stockSymbol.isNotEmpty()) {
                                                 onSearchStocks(stockSymbol, "")
                                                 showSearchResults = true
@@ -308,10 +309,7 @@ fun AddAssetDialog(
                                                     "UI",
                                                     "User selected stock: ${result.symbol} - ${result.longName}",
                                                 )
-                                                hapticManager.triggerHaptic(
-                                                    view,
-                                                    HapticFeedbackManager.HapticIntensity.MEDIUM,
-                                                )
+                                                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                                                 stockSymbol = result.symbol
                                                 showSearchResults = false
                                                 searchError = ""

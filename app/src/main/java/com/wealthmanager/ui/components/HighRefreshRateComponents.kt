@@ -13,7 +13,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
+import com.wealthmanager.haptic.HapticFeedbackManager
+import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 import kotlinx.coroutines.delay
 
 /**
@@ -74,6 +77,7 @@ object HighRefreshRateAnimations {
 @Composable
 fun Modifier.highRefreshRateClickable(onClick: () -> Unit): Modifier {
     var isPressed by remember { mutableStateOf(false) }
+    val (hapticManager, view) = rememberHapticFeedbackWithView()
     val scale by animateFloatAsState(
         targetValue = if (isPressed) 0.96f else 1.0f,
         animationSpec = HighRefreshRateAnimations.smoothSpring(),
@@ -87,9 +91,13 @@ fun Modifier.highRefreshRateClickable(onClick: () -> Unit): Modifier {
         }
         .pointerInput(Unit) {
             detectDragGestures(
-                onDragStart = { isPressed = true },
+                onDragStart = { 
+                    isPressed = true
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                },
                 onDragEnd = {
                     isPressed = false
+                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                     onClick()
                 },
             ) { _, _ -> }
@@ -106,6 +114,7 @@ fun HighRefreshRateButton(
     enabled: Boolean = true,
     content: @Composable () -> Unit,
 ) {
+    val (hapticManager, view) = rememberHapticFeedbackWithView()
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
 
@@ -122,7 +131,10 @@ fun HighRefreshRateButton(
     )
 
     Button(
-        onClick = onClick,
+        onClick = {
+            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+            onClick()
+        },
         modifier =
             modifier
                 .graphicsLayer {
@@ -146,6 +158,7 @@ fun HighRefreshRateCard(
     modifier: Modifier = Modifier,
     content: @Composable () -> Unit,
 ) {
+    val (hapticManager, view) = rememberHapticFeedbackWithView()
     val interactionSource = remember { MutableInteractionSource() }
     val isPressed by interactionSource.collectIsPressedAsState()
 
@@ -162,7 +175,10 @@ fun HighRefreshRateCard(
     )
 
     Card(
-        onClick = onClick,
+        onClick = {
+            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+            onClick()
+        },
         modifier =
             modifier
                 .graphicsLayer {

@@ -29,13 +29,20 @@ android {
     signingConfigs {
         release {
             def keystorePath = System.getenv('ANDROID_KEYSTORE_PATH') ?: new File(rootDir, 'keystore.jks').absolutePath
-            storeFile file(keystorePath)
-            storePassword System.getenv('ANDROID_KEYSTORE_PASSWORD') ?: ''
-            keyAlias System.getenv('ANDROID_KEY_ALIAS') ?: ''
-            keyPassword System.getenv('ANDROID_KEY_PASSWORD') ?: ''
-            def keystoreType = System.getenv('ANDROID_KEYSTORE_TYPE')
-            if (keystoreType != null && !keystoreType.isEmpty()) {
-                storeType keystoreType
+            def storePassword = System.getenv('ANDROID_KEYSTORE_PASSWORD')
+            def keyAlias = System.getenv('ANDROID_KEY_ALIAS')
+            def keyPassword = System.getenv('ANDROID_KEY_PASSWORD')
+            
+            // Only configure signing if all required environment variables are set
+            if (storePassword && keyAlias && keyPassword) {
+                storeFile file(keystorePath)
+                storePassword storePassword
+                keyAlias keyAlias
+                keyPassword keyPassword
+                def keystoreType = System.getenv('ANDROID_KEYSTORE_TYPE')
+                if (keystoreType != null && !keystoreType.isEmpty()) {
+                    storeType keystoreType
+                }
             }
         }
     }
@@ -68,7 +75,17 @@ android {
             ndk {
                 debugSymbolLevel = 'FULL'
             }
-            signingConfig signingConfigs.release
+            
+            // Use release signing if environment variables are set, otherwise use debug signing
+            def hasSigningConfig = System.getenv('ANDROID_KEYSTORE_PASSWORD') && 
+                                 System.getenv('ANDROID_KEY_ALIAS') && 
+                                 System.getenv('ANDROID_KEY_PASSWORD')
+            if (hasSigningConfig) {
+                signingConfig signingConfigs.release
+            } else {
+                // Use debug signing for development builds
+                signingConfig signingConfigs.debug
+            }
         }
         debug {
             minifyEnabled = false
@@ -175,6 +192,7 @@ dependencies {
     
     // Testing
     testImplementation 'junit:junit:4.13.2'
+    testImplementation 'org.mockito:mockito-core:5.8.0'
     androidTestImplementation 'androidx.test.ext:junit:1.3.0'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation platform('androidx.compose:compose-bom:2024.12.01')

@@ -79,106 +79,95 @@ class WealthTileService : TileService() {
         val totalAssets = state.formattedTotalAssets
         val lastUpdated = state.lastUpdated
 
-        // 使用 PrimaryLayout 符合 Wear OS 設計指南
-        val primaryLayoutBuilder = PrimaryLayout.Builder()
+        // 創建主要標籤文本
+        val primaryLabelText = LayoutElementBuilders.Text.Builder()
+            .setText(title)
+            .setFontStyle(
+                LayoutElementBuilders.FontStyle.Builder()
+                    .setSize(DimensionBuilders.SpProp.Builder().setValue(14f).build())
+                    .build()
+            )
+            .build()
 
-        // 設置主要標籤（標題）
-        primaryLayoutBuilder.setPrimaryLabelContent(
+        // 創建次要標籤文本
+        val secondaryLabelText = if (state.isLoading) {
             LayoutElementBuilders.Text.Builder()
-                .setText(title)
+                .setText(context.getString(R.string.tile_loading))
                 .setFontStyle(
                     LayoutElementBuilders.FontStyle.Builder()
-                        .setSize(DimensionBuilders.SpProp.Builder().setValue(14f).build())
+                        .setSize(DimensionBuilders.SpProp.Builder().setValue(12f).build())
                         .build()
                 )
                 .build()
-        )
-
-        // 設置次要標籤（總資產或載入狀態）
-        if (state.isLoading) {
-            primaryLayoutBuilder.setSecondaryLabelContent(
-                LayoutElementBuilders.Text.Builder()
-                    .setText(context.getString(R.string.tile_loading))
-                    .setFontStyle(
-                        LayoutElementBuilders.FontStyle.Builder()
-                            .setSize(DimensionBuilders.SpProp.Builder().setValue(12f).build())
-                            .build()
-                    )
-                    .build()
-            )
         } else {
-            primaryLayoutBuilder.setSecondaryLabelContent(
-                LayoutElementBuilders.Text.Builder()
-                    .setText(totalAssets)
-                    .setFontStyle(
-                        LayoutElementBuilders.FontStyle.Builder()
-                            .setSize(DimensionBuilders.SpProp.Builder().setValue(12f).build())
-                            .build()
-                    )
-                    .build()
-            )
+            LayoutElementBuilders.Text.Builder()
+                .setText(totalAssets)
+                .setFontStyle(
+                    LayoutElementBuilders.FontStyle.Builder()
+                        .setSize(DimensionBuilders.SpProp.Builder().setValue(12f).build())
+                        .build()
+                )
+                .build()
         }
 
-        // 如果有更新時間，設置內容區域
-        if (lastUpdated.isNotEmpty()) {
-            primaryLayoutBuilder.setContent(
-                LayoutElementBuilders.Text.Builder()
-                    .setText(context.getString(R.string.tile_last_updated_format, lastUpdatedLabel, lastUpdated))
-                    .setFontStyle(
-                        LayoutElementBuilders.FontStyle.Builder()
-                            .setSize(DimensionBuilders.SpProp.Builder().setValue(10f).build())
-                            .build()
-                    )
-                    .build()
-            )
-        }
-
-        // 如果有錯誤，顯示錯誤信息和重試按鈕
-        if (state.hasError) {
-            primaryLayoutBuilder.setContent(
-                LayoutElementBuilders.Column.Builder()
-                    .addContent(
-                        LayoutElementBuilders.Text.Builder()
-                            .setText(context.getString(R.string.tile_error))
-                            .setFontStyle(
-                                LayoutElementBuilders.FontStyle.Builder()
-                                    .setSize(DimensionBuilders.SpProp.Builder().setValue(10f).build())
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .addContent(
-                        LayoutElementBuilders.Text.Builder()
-                            .setText(context.getString(R.string.tile_tap_to_open))
-                            .setFontStyle(
-                                LayoutElementBuilders.FontStyle.Builder()
-                                    .setSize(DimensionBuilders.SpProp.Builder().setValue(8f).build())
-                                    .build()
-                            )
-                            .build()
-                    )
-                    .build()
-            )
-        }
-
-        // 添加點擊動作：打開主應用
-        primaryLayoutBuilder.setClickable(
-            ActionBuilders.Clickable.Builder()
-                .setOnClick(
-                    ActionBuilders.LaunchAction.Builder()
-                        .setAndroidActivity(
-                            ActionBuilders.AndroidActivity.Builder()
-                                .setClassName("com.wealthmanager.wear.ui.MainWearActivity")
-                                .setPackageName("com.wealthmanager.wear")
+        // 創建內容區域
+        val contentText = if (state.hasError) {
+            LayoutElementBuilders.Column.Builder()
+                .addContent(
+                    LayoutElementBuilders.Text.Builder()
+                        .setText(context.getString(R.string.tile_error))
+                        .setFontStyle(
+                            LayoutElementBuilders.FontStyle.Builder()
+                                .setSize(DimensionBuilders.SpProp.Builder().setValue(10f).build())
+                                .build()
+                        )
+                        .build()
+                )
+                .addContent(
+                    LayoutElementBuilders.Text.Builder()
+                        .setText(context.getString(R.string.tile_tap_to_open))
+                        .setFontStyle(
+                            LayoutElementBuilders.FontStyle.Builder()
+                                .setSize(DimensionBuilders.SpProp.Builder().setValue(8f).build())
                                 .build()
                         )
                         .build()
                 )
                 .build()
-        )
+        } else if (lastUpdated.isNotEmpty()) {
+            LayoutElementBuilders.Text.Builder()
+                .setText(context.getString(R.string.tile_last_updated_format, lastUpdatedLabel, lastUpdated))
+                .setFontStyle(
+                    LayoutElementBuilders.FontStyle.Builder()
+                        .setSize(DimensionBuilders.SpProp.Builder().setValue(10f).build())
+                        .build()
+                )
+                .build()
+        } else {
+            null
+        }
+
+        // 創建設備參數
+        val deviceParameters = androidx.wear.tiles.DeviceParametersBuilders.DeviceParameters.Builder()
+            .setScreenWidthDp(100)
+            .setScreenHeightDp(100)
+            .setScreenDensity(1f)
+            .setScreenShape(androidx.wear.tiles.DeviceParametersBuilders.SCREEN_SHAPE_ROUND)
+            .build()
+
+        // 使用 PrimaryLayout 符合 Wear OS 設計指南
+        val primaryLayout = PrimaryLayout.Builder(deviceParameters)
+            .setPrimaryLabelTextContent(primaryLabelText)
+            .setSecondaryLabelTextContent(secondaryLabelText)
+            .apply {
+                if (contentText != null) {
+                    setContent(contentText)
+                }
+            }
+            .build()
 
         return LayoutElementBuilders.Layout.Builder()
-            .setRoot(primaryLayoutBuilder.build())
+            .setRoot(primaryLayout)
             .build()
     }
 
