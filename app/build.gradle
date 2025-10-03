@@ -123,6 +123,13 @@ android {
     }
     
     buildToolsVersion = '36.1.0'
+    
+    testOptions {
+        unitTests {
+            includeAndroidResources = true
+            returnDefaultValues = true
+        }
+    }
 }
 
 // Guard: Only allow release AAB builds on CI (bundleRelease/publishRelease*)
@@ -215,15 +222,6 @@ dependencies {
 // jacoco {
 //     toolVersion = "0.8.8"
 // }
-
-android {
-    testOptions {
-        unitTests {
-            includeAndroidResources = true
-            returnDefaultValues = true
-        }
-    }
-}
 
 // DISABLED BY USER REQUEST - Test coverage configuration temporarily disabled
 // User requested to disable coverage checks until further notice
