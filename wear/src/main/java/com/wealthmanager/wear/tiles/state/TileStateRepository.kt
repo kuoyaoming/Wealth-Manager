@@ -71,12 +71,23 @@ class TileStateRepository(private val context: Context) {
                 ""
             }
 
-            preferences.edit {
-                putString(KEY_TOTAL_ASSETS, totalAssets.toString())
-                putString(KEY_LAST_UPDATED, formattedDate)
-                putBoolean(KEY_HAS_ERROR, hasError)
-                putBoolean(KEY_TILE_ADDED, true)
-                putBoolean(KEY_IS_LOADING, false) // 清除載入狀態
+            // 只有當數據真正改變時才更新緩存
+            val currentTotal = preferences.getString(KEY_TOTAL_ASSETS, "--") ?: "--"
+            val currentLastUpdated = preferences.getString(KEY_LAST_UPDATED, "") ?: ""
+            val currentHasError = preferences.getBoolean(KEY_HAS_ERROR, false)
+
+            if (currentTotal != totalAssets.toString() || 
+                currentLastUpdated != formattedDate || 
+                currentHasError != hasError) {
+                
+                preferences.edit {
+                    putString(KEY_TOTAL_ASSETS, totalAssets.toString())
+                    putString(KEY_LAST_UPDATED, formattedDate)
+                    putBoolean(KEY_HAS_ERROR, hasError)
+                    putBoolean(KEY_TILE_ADDED, true)
+                    putBoolean(KEY_IS_LOADING, false) // 清除載入狀態
+                    putLong(KEY_CACHE_TIMESTAMP, System.currentTimeMillis())
+                }
             }
         }
     }
@@ -106,6 +117,7 @@ class TileStateRepository(private val context: Context) {
         const val KEY_TIMESTAMP = "timestamp"
         private const val KEY_TILE_ADDED = "tile_added"
         private const val KEY_IS_LOADING = "is_loading"
+        private const val KEY_CACHE_TIMESTAMP = "cache_timestamp"
     }
 }
 
