@@ -55,23 +55,14 @@ git checkout main
 ### **2. Environment Configuration**
 
 ```bash
-# Copy environment template
-cp local.properties.template local.properties
+# Configure Android SDK
+export ANDROID_HOME=/path/to/android/sdk
 
-# Edit local.properties with your configuration
-# Add your Android SDK path and API keys
+# Or create local.properties for SDK path only
+echo "sdk.dir=/path/to/android/sdk" > local.properties
 ```
 
-**Example `local.properties`:**
-```properties
-# Android SDK
-sdk.dir=/path/to/android/sdk
-
-# API Keys (for development)
-FINNHUB_API_KEY=your_finnhub_key_here
-TWSE_API_KEY=your_twse_key_here
-EXCHANGE_RATE_API_KEY=your_exchange_rate_key_here
-```
+**Note**: API keys are now managed through the app's settings interface. No need to configure them in build files.
 
 ### **3. API Keys Setup**
 
@@ -454,10 +445,10 @@ adb shell dumpsys activity service com.google.android.gms.wearable
 ### **Common Questions**
 
 1. **Q: Build fails with "SDK location not found"**
-   - A: Set `sdk.dir` in `local.properties`
+   - A: Set `ANDROID_HOME` environment variable or `sdk.dir` in `local.properties`
 
 2. **Q: API calls fail with authentication error**
-   - A: Check API keys in `local.properties`
+   - A: Configure API keys through the app's settings interface
 
 3. **Q: Wear OS app doesn't sync**
    - A: Ensure both apps are installed and data layer is enabled

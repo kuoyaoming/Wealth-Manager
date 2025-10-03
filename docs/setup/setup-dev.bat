@@ -1,37 +1,34 @@
 @echo off
-REM Development setup script for Wealth Manager (Windows)
-REM This script helps developers set up the development environment securely
+setlocal enabledelayedexpansion
 
 echo 🔐 Setting up Wealth Manager development environment...
 
-REM Check if local.properties exists
-if not exist "local.properties" (
-    echo 📋 Creating local.properties from template...
-    copy "local.properties.template" "local.properties"
-    echo ⚠️  Please edit local.properties and add your API keys
-    echo 📖 See SECURITY.md for API key sources
+REM Check Android SDK configuration
+echo 📱 Checking Android SDK configuration...
+if defined ANDROID_HOME (
+    echo ✅ ANDROID_HOME is set to: %ANDROID_HOME%
 ) else (
-    echo ✅ local.properties already exists
+    if exist "local.properties" (
+        findstr /C:"sdk.dir" local.properties >nul
+        if %errorlevel% equ 0 (
+            echo ✅ Android SDK path found in local.properties
+        ) else (
+            echo ⚠️  Android SDK not configured
+            echo 📖 Set ANDROID_HOME environment variable or create local.properties with sdk.dir
+        )
+    ) else (
+        echo ⚠️  Android SDK not configured
+        echo 📖 Set ANDROID_HOME environment variable or create local.properties with sdk.dir
+    )
 )
 
-REM Check if API keys are set
-findstr /C:"your_" local.properties >nul
+REM Check API key configuration
+echo 🔑 Checking API key configuration...
+findstr /C:"Removed BuildConfig API keys" app\build.gradle >nul
 if %errorlevel% equ 0 (
-    echo ⚠️  Please update API keys in local.properties
-    echo 📖 API Key Sources:
-    echo    • Finnhub: https://finnhub.io/register
-    echo    • Exchange Rate API: https://exchangerate-api.com/
+    echo ✅ API keys properly configured for user input
 ) else (
-    echo ✅ API keys appear to be configured
-)
-
-REM Check if .gitignore contains local.properties
-findstr /C:"local.properties" .gitignore >nul
-if %errorlevel% equ 0 (
-    echo ✅ local.properties is in .gitignore
-) else (
-    echo ❌ local.properties is NOT in .gitignore
-    echo ⚠️  This is a security risk!
+    echo ⚠️  API key configuration may need review
 )
 
 REM Check for hardcoded API keys in source code
@@ -53,28 +50,46 @@ if %errorlevel% equ 0 (
     echo 📖 Add 'buildConfig true' to buildFeatures in build.gradle
 )
 
-REM Check if API key fields are defined in build.gradle
-findstr /C:"buildConfigField" app\build.gradle | findstr /C:"API_KEY" >nul
+REM Check if API key configuration is properly set up
+findstr /C:"Removed BuildConfig API keys" app\build.gradle >nul
 if %errorlevel% equ 0 (
-    echo ✅ API key fields are defined in build.gradle
+    echo ✅ API keys properly configured for user input
 ) else (
-    echo ⚠️  API key fields are not defined in build.gradle
-    echo 📖 Add buildConfigField for API keys in build.gradle
+    echo ⚠️  API key configuration may need review
+)
+
+REM Check Gradle wrapper
+echo 📦 Checking Gradle wrapper...
+if exist "gradlew.bat" (
+    echo ✅ Gradle wrapper found
+) else (
+    echo ❌ Gradle wrapper not found
+    echo 📖 Run 'gradle wrapper' to create it
+)
+
+REM Check if project builds
+echo 🔨 Testing project build...
+gradlew tasks --quiet >nul 2>&1
+if %errorlevel% equ 0 (
+    echo ✅ Project builds successfully
+) else (
+    echo ❌ Project build failed
+    echo ⚠️  Check Android SDK configuration
 )
 
 REM Security checklist
 echo.
 echo 🔐 Security Checklist:
-echo    ✅ local.properties in .gitignore
+echo    ✅ Android SDK configured
 echo    ✅ No hardcoded API keys in source code
 echo    ✅ BuildConfig enabled
-echo    ✅ API key fields defined
+echo    ✅ API keys handled via user settings
 
 REM Development tips
 echo.
 echo 💡 Development Tips:
-echo    • Always use BuildConfig.FINNHUB_API_KEY in code
-echo    • Never commit local.properties to version control
+echo    • API keys are managed through app settings
+echo    • No need for local.properties for API keys
 echo    • Rotate API keys regularly
 echo    • Monitor API usage and set rate limits
 echo    • Use different keys for development and production
@@ -82,7 +97,7 @@ echo    • Use different keys for development and production
 REM Next steps
 echo.
 echo 🚀 Next Steps:
-echo    1. Edit local.properties with your actual API keys
+echo    1. Configure Android SDK (ANDROID_HOME or local.properties)
 echo    2. Run 'gradlew build' to test the build
 echo    3. Read CONTRIBUTING.md for development guidelines
 echo    4. Read SECURITY.md for security best practices

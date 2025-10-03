@@ -80,21 +80,16 @@ All API keys are stored securely on your device using Android Keystore encryptio
 
 ### **Method 2: Environment Configuration (Development)**
 
-1. **Copy the template**:
+1. **Configure Android SDK**:
    ```bash
-   cp local.properties.template local.properties
+   # Option 1: Set environment variable
+   export ANDROID_HOME=/path/to/android/sdk
+   
+   # Option 2: Create local.properties (SDK path only)
+   echo "sdk.dir=/path/to/android/sdk" > local.properties
    ```
 
-2. **Edit `local.properties`**:
-   ```properties
-   # Android SDK
-   sdk.dir=/path/to/android/sdk
-   
-   # API Keys
-   FINNHUB_API_KEY=your_finnhub_key_here
-   TWSE_API_KEY=your_twse_key_here
-   EXCHANGE_RATE_API_KEY=your_exchange_rate_key_here
-   ```
+2. **API Keys**: Configure through the app's settings interface - no build configuration needed.
 
 3. **Build and run**:
    ```bash
@@ -105,11 +100,7 @@ All API keys are stored securely on your device using Android Keystore encryptio
 
 Set environment variables in your CI/CD system:
 
-```bash
-export FINNHUB_API_KEY="your_finnhub_key_here"
-export TWSE_API_KEY="your_twse_key_here"
-export EXCHANGE_RATE_API_KEY="your_exchange_rate_key_here"
-```
+API keys are now managed through the app's settings interface. No environment variables needed.
 
 ## 🔧 Configuration
 

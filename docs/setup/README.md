@@ -46,9 +46,9 @@ git push origin v1.4.0
 
 ## 🔍 What These Scripts Do
 
-- ✅ Check if `local.properties` exists and create from template if needed
-- ✅ Verify API keys are configured
-- ✅ Check security configuration (`.gitignore`, no hardcoded keys)
+- ✅ Check Android SDK configuration
+- ✅ Verify API key configuration (user-managed)
+- ✅ Check security configuration (no hardcoded keys)
 - ✅ Validate build configuration
 - ✅ Provide development tips and next steps
 
@@ -56,7 +56,7 @@ git push origin v1.4.0
 
 If you encounter issues:
 
-1. **API Keys Not Loading**: Check `local.properties` format
+1. **SDK Not Found**: Set ANDROID_HOME or create local.properties with sdk.dir
 2. **Build Errors**: Run `.\gradlew clean` and try again
 3. **Permission Issues**: Run PowerShell as Administrator
 

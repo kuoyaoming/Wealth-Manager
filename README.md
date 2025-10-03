@@ -78,13 +78,13 @@ A modern Android personal finance tracker built with Jetpack Compose, featuring 
    cd Wealth-Manager
    ```
 
-2. **Set up API keys**
+2. **Configure Android SDK**
 ```bash
-   # Copy the template
-   cp local.properties.template local.properties
+   # Option 1: Set environment variable
+   export ANDROID_HOME=/path/to/android/sdk
    
-   # Edit local.properties and add your API keys
-   # See docs/API_SETUP.md for detailed instructions
+   # Option 2: Create local.properties (for SDK path only)
+   echo "sdk.dir=/path/to/android/sdk" > local.properties
    ```
 
 3. **Build and run**
@@ -144,7 +144,6 @@ graph TD
     A[Wealth-Manager] --> B[app/]
     A --> C[wear/]
     A --> D[docs/]
-    A --> E[local.properties.template]
     
     B --> B1[src/main/java/com/wealthmanager/]
     B --> B2[src/main/res/]

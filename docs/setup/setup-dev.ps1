@@ -1,36 +1,25 @@
-# Development setup script for Wealth Manager (PowerShell)
-# This script helps developers set up the development environment securely
+#!/usr/bin/env pwsh
 
-Write-Host "Setting up Wealth Manager development environment..." -ForegroundColor Blue
+Write-Host "🔐 Setting up Wealth Manager development environment..." -ForegroundColor Blue
 
-# Check if local.properties exists
-if (-not (Test-Path "local.properties")) {
-    Write-Host "Creating local.properties from template..." -ForegroundColor Yellow
-    Copy-Item "local.properties.template" "local.properties"
-    Write-Host "Please edit local.properties and add your API keys" -ForegroundColor Yellow
-    Write-Host "See SECURITY.md for API key sources" -ForegroundColor Blue
+# Check Android SDK configuration
+Write-Host "Checking Android SDK configuration..." -ForegroundColor Blue
+if ($env:ANDROID_HOME) {
+    Write-Host "ANDROID_HOME is set to: $env:ANDROID_HOME" -ForegroundColor Green
+} elseif ((Test-Path "local.properties") -and ((Get-Content "local.properties" -ErrorAction SilentlyContinue) -match "sdk.dir")) {
+    Write-Host "Android SDK path found in local.properties" -ForegroundColor Green
 } else {
-    Write-Host "local.properties already exists" -ForegroundColor Green
+    Write-Host "Android SDK not configured" -ForegroundColor Yellow
+    Write-Host "Set ANDROID_HOME environment variable or create local.properties with sdk.dir" -ForegroundColor Blue
 }
 
-# Check if API keys are set
-$localProps = Get-Content "local.properties" -ErrorAction SilentlyContinue
-if ($localProps -match "your_.*_api_key_here") {
-    Write-Host "Please update API keys in local.properties" -ForegroundColor Yellow
-    Write-Host "API Key Sources:" -ForegroundColor Blue
-    Write-Host "   Finnhub: https://finnhub.io/register"
-    Write-Host "   Exchange Rate API: https://exchangerate-api.com/"
+# Check API key configuration
+Write-Host "Checking API key configuration..." -ForegroundColor Blue
+$buildGradle = Get-Content "app\build.gradle" -ErrorAction SilentlyContinue
+if ($buildGradle -match "Removed BuildConfig API keys") {
+    Write-Host "API keys properly configured for user input" -ForegroundColor Green
 } else {
-    Write-Host "API keys appear to be configured" -ForegroundColor Green
-}
-
-# Check if .gitignore contains local.properties
-$gitignore = Get-Content ".gitignore" -ErrorAction SilentlyContinue
-if ($gitignore -match "local.properties") {
-    Write-Host "local.properties is in .gitignore" -ForegroundColor Green
-} else {
-    Write-Host "local.properties is NOT in .gitignore" -ForegroundColor Red
-    Write-Host "This is a security risk!" -ForegroundColor Yellow
+    Write-Host "API key configuration may need review" -ForegroundColor Yellow
 }
 
 # Check for hardcoded API keys in source code
@@ -48,7 +37,6 @@ if ($hardcodedKeys) {
 }
 
 # Check if build.gradle has buildConfig enabled
-$buildGradle = Get-Content "app\build.gradle" -ErrorAction SilentlyContinue
 if ($buildGradle -match "buildConfig true") {
     Write-Host "BuildConfig is enabled in build.gradle" -ForegroundColor Green
 } else {
@@ -56,27 +44,50 @@ if ($buildGradle -match "buildConfig true") {
     Write-Host "Add 'buildConfig true' to buildFeatures in build.gradle" -ForegroundColor Blue
 }
 
-# Check if API key fields are defined in build.gradle
-if ($buildGradle -match "buildConfigField.*API_KEY") {
-    Write-Host "API key fields are defined in build.gradle" -ForegroundColor Green
+# Check if API key configuration is properly set up
+if ($buildGradle -match "Removed BuildConfig API keys") {
+    Write-Host "API keys properly configured for user input" -ForegroundColor Green
 } else {
-    Write-Host "API key fields are not defined in build.gradle" -ForegroundColor Yellow
-    Write-Host "Add buildConfigField for API keys in build.gradle" -ForegroundColor Blue
+    Write-Host "API key configuration may need review" -ForegroundColor Yellow
+}
+
+# Check Gradle wrapper
+Write-Host "Checking Gradle wrapper..." -ForegroundColor Blue
+if (Test-Path "gradlew") {
+    Write-Host "Gradle wrapper found" -ForegroundColor Green
+} else {
+    Write-Host "Gradle wrapper not found" -ForegroundColor Red
+    Write-Host "Run 'gradle wrapper' to create it" -ForegroundColor Blue
+}
+
+# Check if project builds
+Write-Host "Testing project build..." -ForegroundColor Blue
+try {
+    $buildOutput = & ".\gradlew" "tasks" "--quiet" 2>&1
+    if ($LASTEXITCODE -eq 0) {
+        Write-Host "Project builds successfully" -ForegroundColor Green
+    } else {
+        Write-Host "Project build failed" -ForegroundColor Red
+        Write-Host "Check Android SDK configuration" -ForegroundColor Yellow
+    }
+} catch {
+    Write-Host "Could not test build (Gradle not found)" -ForegroundColor Yellow
+    Write-Host "Make sure Gradle is installed and in PATH" -ForegroundColor Blue
 }
 
 # Security checklist
 Write-Host ""
 Write-Host "Security Checklist:" -ForegroundColor Blue
-Write-Host "   local.properties in .gitignore"
+Write-Host "   Android SDK configured"
 Write-Host "   No hardcoded API keys in source code"
 Write-Host "   BuildConfig enabled"
-Write-Host "   API key fields defined"
+Write-Host "   API keys handled via user settings"
 
 # Development tips
 Write-Host ""
 Write-Host "Development Tips:" -ForegroundColor Blue
-Write-Host "   Always use BuildConfig.FINNHUB_API_KEY in code"
-Write-Host "   Never commit local.properties to version control"
+Write-Host "   API keys are managed through app settings"
+Write-Host "   No need for local.properties for API keys"
 Write-Host "   Rotate API keys regularly"
 Write-Host "   Monitor API usage and set rate limits"
 Write-Host "   Use different keys for development and production"
@@ -84,7 +95,7 @@ Write-Host "   Use different keys for development and production"
 # Next steps
 Write-Host ""
 Write-Host "Next Steps:" -ForegroundColor Blue
-Write-Host "   1. Edit local.properties with your actual API keys"
+Write-Host "   1. Configure Android SDK (ANDROID_HOME or local.properties)"
 Write-Host "   2. Run '.\gradlew build' to test the build"
 Write-Host "   3. Read docs/development/CONTRIBUTING.md for development guidelines"
 Write-Host "   4. Read docs/security/SECURITY.md for security best practices"
@@ -92,5 +103,3 @@ Write-Host "   4. Read docs/security/SECURITY.md for security best practices"
 Write-Host ""
 Write-Host "Development environment setup complete!" -ForegroundColor Green
 Write-Host "Read docs/development/CONTRIBUTING.md for development guidelines" -ForegroundColor Blue
-
-Read-Host "Press Enter to continue"

@@ -94,7 +94,7 @@ git clone https://github.com/kuoyaoming/Wealth-Manager.git
 
 - 於 App 內設定：設定 → 管理 API 金鑰 → 驗證並儲存
 - 金鑰以加密方式儲存在本機；請勿提交到版本控制
-- 不使用 BuildConfig 金鑰；避免在 `local.properties` 放置真實金鑰
+- 不需要 `local.properties` 或 BuildConfig 金鑰配置
 - 詳細步驟：[英文版](docs/api/API_SETUP.md) · [繁體中文](docs/api/API_SETUP_zh.md)
 
 ## 架構概覽

@@ -39,11 +39,11 @@ This project follows the [Code of Conduct](CODE_OF_CONDUCT.md). By participating
 
 2. **Set up Environment**
    ```bash
-   # Copy environment template
-   cp local.properties.template local.properties
+   # Configure Android SDK
+   export ANDROID_HOME=/path/to/android/sdk
    
-   # Edit local.properties with your configuration
-   # See docs/DEVELOPMENT.md for detailed setup
+   # Or create local.properties for SDK path
+   echo "sdk.dir=/path/to/android/sdk" > local.properties
    ```
 
 3. **Build and Test**
@@ -75,16 +75,16 @@ This project follows the [Code of Conduct](CODE_OF_CONDUCT.md). By participating
 
 ### **Environment Variables**
 
-Create `local.properties` with:
-```properties
-# Android SDK
-sdk.dir=/path/to/android/sdk
+Configure Android SDK:
+```bash
+# Option 1: Environment variable
+export ANDROID_HOME=/path/to/android/sdk
 
-# API Keys (for development)
-FINNHUB_API_KEY=your_finnhub_key
-TWSE_API_KEY=your_twse_key
-EXCHANGE_RATE_API_KEY=your_exchange_rate_key
+# Option 2: local.properties (SDK path only)
+echo "sdk.dir=/path/to/android/sdk" > local.properties
 ```
+
+API keys are managed through the app's settings interface - no configuration needed.
 
 ### **API Keys Setup**
 
