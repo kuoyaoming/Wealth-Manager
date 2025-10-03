@@ -183,10 +183,12 @@ dependencies {
     debugImplementation 'androidx.compose.ui:ui-test-manifest:1.7.6'
 }
 
-// JaCoCo configuration for test coverage
-jacoco {
-    toolVersion = "0.8.8"
-}
+// DISABLED BY USER REQUEST - JaCoCo configuration temporarily disabled
+// User requested to disable coverage checks until further notice
+// To re-enable: uncomment the following lines and remove this comment block
+// jacoco {
+//     toolVersion = "0.8.8"
+// }
 
 android {
     testOptions {
