@@ -6,6 +6,7 @@ import androidx.lifecycle.viewModelScope
 import com.wealthmanager.R
 import com.wealthmanager.auth.AuthStateManager
 import com.wealthmanager.backup.BackupPreferencesManager
+import com.wealthmanager.backup.EnhancedBackupManager
 import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.data.service.ApiTestService
 import com.wealthmanager.preferences.LocalePreferencesManager
@@ -48,6 +49,9 @@ data class SettingsUiState(
     // Biometric fallback dialog state
     val showBiometricFallbackDialog: Boolean = false,
     val pendingKeyAction: (() -> Unit)? = null,
+    // Enhanced backup state
+    val backupStatus: EnhancedBackupManager.BackupStatus? = null,
+    val backupRecommendations: List<String> = emptyList(),
 )
 
 /**
@@ -85,6 +89,7 @@ class SettingsViewModel
     constructor(
         private val authStateManager: AuthStateManager,
         private val backupPreferencesManager: BackupPreferencesManager,
+        private val enhancedBackupManager: EnhancedBackupManager,
         private val localePreferencesManager: LocalePreferencesManager,
         private val apiTestService: ApiTestService,
         private val keyRepository: KeyRepository,
@@ -124,7 +129,41 @@ class SettingsViewModel
             viewModelScope.launch {
                 backupPreferencesManager.setFinancialBackupEnabled(enabled)
                 _uiState.value = _uiState.value.copy(financialBackupEnabled = enabled)
+                // Refresh backup status after change
+                refreshBackupStatus()
             }
+        }
+        
+        /**
+         * Refreshes the enhanced backup status and recommendations.
+         */
+        fun refreshBackupStatus() {
+            viewModelScope.launch {
+                try {
+                    val backupStatus = enhancedBackupManager.getBackupStatus()
+                    val recommendations = enhancedBackupManager.getBackupRecommendations()
+                    _uiState.value = _uiState.value.copy(
+                        backupStatus = backupStatus,
+                        backupRecommendations = recommendations
+                    )
+                } catch (e: Exception) {
+                    // Handle error silently or log it
+                }
+            }
+        }
+        
+        /**
+         * Gets backup recommendations for the user.
+         */
+        fun getBackupRecommendations(): List<String> {
+            return _uiState.value.backupRecommendations
+        }
+        
+        /**
+         * Gets the current backup status.
+         */
+        fun getBackupStatus(): EnhancedBackupManager.BackupStatus? {
+            return _uiState.value.backupStatus
         }
 
         fun setLanguage(languageCode: String) {

@@ -227,19 +227,45 @@ fun SettingsScreen(
                 },
             )
 
-            BackupSettingsCard(
-                enabled = uiState.financialBackupEnabled,
-                onToggle = { enabled ->
-                    if (enabled && !uiState.financialBackupEnabled) {
-                        pendingFinancialBackupToggle = true
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                        showBackupWarningDialog = true
-                    } else if (!enabled && uiState.financialBackupEnabled) {
+            // Enhanced backup settings card
+            uiState.backupStatus?.let { backupStatus ->
+                EnhancedBackupSettingsCard(
+                    backupStatus = backupStatus,
+                    onLocalBackupToggle = { enabled ->
+                        if (enabled && !uiState.financialBackupEnabled) {
+                            pendingFinancialBackupToggle = true
+                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                            showBackupWarningDialog = true
+                        } else if (!enabled && uiState.financialBackupEnabled) {
+                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                            viewModel.setFinancialBackupEnabled(false)
+                        }
+                    },
+                    onShowGooglePasswordManagerInfo = {
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                        viewModel.setFinancialBackupEnabled(false)
-                    }
-                },
-            )
+                        // TODO: Show Google Password Manager info dialog
+                    },
+                    onShowBackupRecommendations = {
+                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                        // TODO: Show backup recommendations dialog
+                    },
+                )
+            } ?: run {
+                // Fallback to original backup settings card
+                BackupSettingsCard(
+                    enabled = uiState.financialBackupEnabled,
+                    onToggle = { enabled ->
+                        if (enabled && !uiState.financialBackupEnabled) {
+                            pendingFinancialBackupToggle = true
+                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                            showBackupWarningDialog = true
+                        } else if (!enabled && uiState.financialBackupEnabled) {
+                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                            viewModel.setFinancialBackupEnabled(false)
+                        }
+                    },
+                )
+            }
 
             // SecurityLevelSettingsCard has been removed since security is now handled automatically
             // SecurityLevelSettingsCard(

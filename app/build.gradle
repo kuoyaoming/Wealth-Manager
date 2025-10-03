@@ -176,6 +176,11 @@ dependencies {
 
     // Security Crypto for EncryptedSharedPreferences
     implementation 'androidx.security:security-crypto:1.1.0-alpha06'
+    
+    // Google Credential Manager for password manager integration
+    implementation 'androidx.credentials:credentials:1.2.0'
+    implementation 'androidx.credentials:credentials-play-services-auth:1.2.0'
+    implementation 'com.google.android.gms:play-services-auth:20.7.0'
 
     // Wear OS data layer
     implementation 'com.google.android.gms:play-services-wearable:18.2.0'
