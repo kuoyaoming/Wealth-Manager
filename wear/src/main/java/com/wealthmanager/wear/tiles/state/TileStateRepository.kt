@@ -60,32 +60,52 @@ class TileStateRepository(private val context: Context) {
 
     suspend fun updateStateFromDataItem(dataItem: DataItem) {
         withContext(Dispatchers.IO) {
-            val dataMap = DataMapItem.fromDataItem(dataItem).dataMap
-            val totalAssets = dataMap.getDouble(KEY_TOTAL_ASSETS, 0.0)
-            val lastUpdated = dataMap.getLong(KEY_LAST_UPDATED, 0L)
-            val hasError = dataMap.getBoolean(KEY_HAS_ERROR, false)
+            try {
+                val dataMap = DataMapItem.fromDataItem(dataItem).dataMap
+                val totalAssets = dataMap.getDouble(KEY_TOTAL_ASSETS, 0.0)
+                val lastUpdated = dataMap.getLong(KEY_LAST_UPDATED, 0L)
+                val hasError = dataMap.getBoolean(KEY_HAS_ERROR, false)
 
-            val formattedDate = if (lastUpdated > 0) {
-                formatDate(lastUpdated)
-            } else {
-                ""
-            }
+                // 驗證接收到的數據
+                if (!validateReceivedData(totalAssets, lastUpdated)) {
+                    preferences.edit {
+                        putBoolean(KEY_HAS_ERROR, true)
+                        putBoolean(KEY_IS_LOADING, false)
+                        putLong(KEY_CACHE_TIMESTAMP, System.currentTimeMillis())
+                    }
+                    return@withContext
+                }
 
-            // 只有當數據真正改變時才更新緩存
-            val currentTotal = preferences.getString(KEY_TOTAL_ASSETS, "--") ?: "--"
-            val currentLastUpdated = preferences.getString(KEY_LAST_UPDATED, "") ?: ""
-            val currentHasError = preferences.getBoolean(KEY_HAS_ERROR, false)
+                val formattedDate = if (lastUpdated > 0) {
+                    formatDate(lastUpdated)
+                } else {
+                    ""
+                }
 
-            if (currentTotal != totalAssets.toString() || 
-                currentLastUpdated != formattedDate || 
-                currentHasError != hasError) {
-                
+                // 只有當數據真正改變時才更新緩存
+                val currentTotal = preferences.getString(KEY_TOTAL_ASSETS, "--") ?: "--"
+                val currentLastUpdated = preferences.getString(KEY_LAST_UPDATED, "") ?: ""
+                val currentHasError = preferences.getBoolean(KEY_HAS_ERROR, false)
+
+                if (currentTotal != totalAssets.toString() || 
+                    currentLastUpdated != formattedDate || 
+                    currentHasError != hasError) {
+                    
+                    preferences.edit {
+                        putString(KEY_TOTAL_ASSETS, totalAssets.toString())
+                        putString(KEY_LAST_UPDATED, formattedDate)
+                        putBoolean(KEY_HAS_ERROR, hasError)
+                        putBoolean(KEY_TILE_ADDED, true)
+                        putBoolean(KEY_IS_LOADING, false) // 清除載入狀態
+                        putLong(KEY_CACHE_TIMESTAMP, System.currentTimeMillis())
+                        putLong(KEY_LAST_SUCCESSFUL_SYNC, System.currentTimeMillis())
+                    }
+                }
+            } catch (e: Exception) {
+                // 處理數據解析錯誤
                 preferences.edit {
-                    putString(KEY_TOTAL_ASSETS, totalAssets.toString())
-                    putString(KEY_LAST_UPDATED, formattedDate)
-                    putBoolean(KEY_HAS_ERROR, hasError)
-                    putBoolean(KEY_TILE_ADDED, true)
-                    putBoolean(KEY_IS_LOADING, false) // 清除載入狀態
+                    putBoolean(KEY_HAS_ERROR, true)
+                    putBoolean(KEY_IS_LOADING, false)
                     putLong(KEY_CACHE_TIMESTAMP, System.currentTimeMillis())
                 }
             }
@@ -94,6 +114,14 @@ class TileStateRepository(private val context: Context) {
 
     fun markTileRemoved() {
         preferences.edit { putBoolean(KEY_TILE_ADDED, false) }
+    }
+
+    fun markErrorState() {
+        preferences.edit {
+            putBoolean(KEY_HAS_ERROR, true)
+            putBoolean(KEY_IS_LOADING, false)
+            putLong(KEY_CACHE_TIMESTAMP, System.currentTimeMillis())
+        }
     }
 
     private fun formatCurrency(value: Double): String {
@@ -107,6 +135,16 @@ class TileStateRepository(private val context: Context) {
         return sdf.format(Date(timestamp))
     }
 
+    private fun validateReceivedData(totalAssets: Double, lastUpdated: Long): Boolean {
+        return when {
+            totalAssets.isNaN() || totalAssets.isInfinite() -> false
+            totalAssets < 0 -> false
+            lastUpdated <= 0 -> false
+            lastUpdated > System.currentTimeMillis() + 60000 -> false // More than 1 minute in future
+            else -> true
+        }
+    }
+
     companion object {
         const val PATH_TILE_DATA = "/wealth/tile"
         const val KEY_TOTAL_ASSETS = "total_assets"
@@ -118,6 +156,7 @@ class TileStateRepository(private val context: Context) {
         private const val KEY_TILE_ADDED = "tile_added"
         private const val KEY_IS_LOADING = "is_loading"
         private const val KEY_CACHE_TIMESTAMP = "cache_timestamp"
+        private const val KEY_LAST_SUCCESSFUL_SYNC = "last_successful_sync"
     }
 }
 

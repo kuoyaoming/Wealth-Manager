@@ -38,12 +38,17 @@ class WealthDataListenerService : WearableListenerService() {
     private fun handleDataItem(dataItem: DataItem) {
         if (dataItem.uri.path == TileStateRepository.PATH_TILE_DATA) {
             serviceScope.launch {
-                tileStateRepository.updateStateFromDataItem(dataItem)
-                // Notify tiles to update
-                val intent = Intent("androidx.wear.tiles.action.REQUEST_UPDATE").apply {
-                    component = ComponentName(applicationContext, WealthTileService::class.java)
+                try {
+                    tileStateRepository.updateStateFromDataItem(dataItem)
+                    // Notify tiles to update
+                    val intent = Intent("androidx.wear.tiles.action.REQUEST_UPDATE").apply {
+                        component = ComponentName(applicationContext, WealthTileService::class.java)
+                    }
+                    applicationContext.sendBroadcast(intent)
+                } catch (e: Exception) {
+                    // 處理數據處理錯誤，設置錯誤狀態
+                    tileStateRepository.markErrorState()
                 }
-                applicationContext.sendBroadcast(intent)
             }
         }
     }
