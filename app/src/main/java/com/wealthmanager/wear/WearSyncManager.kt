@@ -1,9 +1,6 @@
 package com.wealthmanager.wear
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
-import android.os.PowerManager
 import androidx.core.content.edit
 import com.google.android.gms.wearable.CapabilityClient
 import com.google.android.gms.wearable.PutDataMapRequest
@@ -22,13 +19,11 @@ import kotlin.math.abs
 import kotlin.math.max
 
 @Singleton
-class WearSyncManager
-    @Inject
-    constructor(
-        @ApplicationContext private val context: Context,
-        private val assetRepository: AssetRepository,
-        private val debugLogManager: DebugLogManager,
-    ) {
+class WearSyncManager @Inject constructor(
+    @ApplicationContext private val context: Context,
+    private val assetRepository: AssetRepository,
+    private val debugLogManager: DebugLogManager,
+) {
         private val dataClient by lazy { Wearable.getDataClient(context) }
         private val capabilityClient by lazy { Wearable.getCapabilityClient(context) }
         private val preferences = context.getSharedPreferences("wear_sync_state", Context.MODE_PRIVATE)
@@ -304,29 +299,11 @@ class WearSyncManager
             return preferences.getInt("sync_success_count", 0)
         }
 
-        private fun isNetworkAvailable(): Boolean {
-            return try {
-                val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-                val network = connectivityManager.activeNetwork ?: return false
-                val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
-            } catch (e: Exception) {
-                debugLogManager.logError("WEAR_SYNC: Network check failed", e)
-                false
-            }
-        }
-
-        private fun isBatteryOptimizationDisabled(): Boolean {
-            return try {
-                val powerManager = context.getSystemService(Context.POWER_SERVICE) as PowerManager
-                !powerManager.isIgnoringBatteryOptimizations(context.packageName)
-            } catch (e: Exception) {
-                debugLogManager.logError("WEAR_SYNC: Battery optimization check failed", e)
-                false
-            }
-        }
+        // TODO: Implement network availability check for future sync optimizations
+        // private fun isNetworkAvailable(): Boolean { ... }
+        
+        // TODO: Implement battery optimization check for future sync optimizations  
+        // private fun isBatteryOptimizationDisabled(): Boolean { ... }
 
         sealed class ManualSyncResult {
             object Success : ManualSyncResult()
@@ -336,16 +313,16 @@ class WearSyncManager
             data class Failure(val reason: String? = null) : ManualSyncResult()
         }
 
-        companion object {
-            const val PATH_TILE_DATA = "/wealth/tile"
-            const val KEY_TOTAL_ASSETS = "total_assets"
-            const val KEY_LAST_UPDATED = "last_updated"
-            const val KEY_HAS_ERROR = "has_error"
-            const val KEY_REQUEST_SYNC = "request_sync"
-            const val KEY_TIMESTAMP = "timestamp"
-            private const val CAPABILITY_WEAR_APP = "wealth_manager_wear_app"
+    companion object {
+        const val PATH_TILE_DATA = "/wealth/tile"
+        const val KEY_TOTAL_ASSETS = "total_assets"
+        const val KEY_LAST_UPDATED = "last_updated"
+        const val KEY_HAS_ERROR = "has_error"
+        const val KEY_REQUEST_SYNC = "request_sync"
+        const val KEY_TIMESTAMP = "timestamp"
+        private const val CAPABILITY_WEAR_APP = "wealth_manager_wear_app"
 
-            private const val VALUE_DELTA_THRESHOLD = 100.0 // Increased threshold to reduce sync frequency
-            private const val TIME_DELTA_THRESHOLD_MS = 10 * 60 * 1000L // 10 minutes, reduce sync frequency
-        }
+        private const val VALUE_DELTA_THRESHOLD = 100.0 // Increased threshold to reduce sync frequency
+        private const val TIME_DELTA_THRESHOLD_MS = 10 * 60 * 1000L // 10 minutes, reduce sync frequency
     }
+}
