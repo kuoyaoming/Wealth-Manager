@@ -91,16 +91,16 @@ fun WearApp(
 
         ScalingLazyColumn(
             modifier = Modifier
-                .padding(horizontal = 12.dp, vertical = 8.dp),
+                .padding(horizontal = 16.dp, vertical = 12.dp),
             horizontalAlignment = Alignment.CenterHorizontally,
-            verticalArrangement = Arrangement.spacedBy(12.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
             state = listState
         ) {
             item {
                 Icon(
                     painter = painterResource(R.drawable.ic_launcher_foreground),
                     contentDescription = null,
-                    modifier = Modifier.size(46.dp),
+                    modifier = Modifier.size(48.dp),
                     tint = MaterialTheme.colors.primary
                 )
             }
@@ -142,12 +142,20 @@ fun WearApp(
             item {
                 Button(
                     onClick = { if (!isSyncing) isSyncing = true },
-                    enabled = !isSyncing
+                    enabled = !isSyncing,
+                    modifier = Modifier.size(width = 120.dp, height = 40.dp)
                 ) {
                     if (isSyncing) {
-                        CircularProgressIndicator(modifier = Modifier.size(18.dp), strokeWidth = 2.dp)
+                        CircularProgressIndicator(
+                            modifier = Modifier.size(20.dp), 
+                            strokeWidth = 2.dp,
+                            color = MaterialTheme.colors.onPrimary
+                        )
                     } else {
-                        Text(text = stringResource(R.string.wear_home_sync_button))
+                        Text(
+                            text = stringResource(R.string.wear_home_sync_button),
+                            style = MaterialTheme.typography.button
+                        )
                     }
                 }
             }

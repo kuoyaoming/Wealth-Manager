@@ -24,7 +24,8 @@ class TileStateRepository(private val context: Context) {
         val formattedTotalAssets: String,
         val lastUpdated: String,
         val hasError: Boolean,
-        val tileAdded: Boolean
+        val tileAdded: Boolean,
+        val isLoading: Boolean = false
     )
 
     fun loadState(): TileState {
@@ -32,18 +33,23 @@ class TileStateRepository(private val context: Context) {
         val lastUpdated = preferences.getString(KEY_LAST_UPDATED, "") ?: ""
         val hasError = preferences.getBoolean(KEY_HAS_ERROR, false)
         val tileAdded = preferences.getBoolean(KEY_TILE_ADDED, false)
+        val isLoading = preferences.getBoolean(KEY_IS_LOADING, false)
 
         return TileState(
             totalAssets = total.toDoubleOrNull() ?: 0.0,
             formattedTotalAssets = if (total == "--") "--" else formatCurrency(total.toDouble()),
             lastUpdated = lastUpdated,
             hasError = hasError,
-            tileAdded = tileAdded
+            tileAdded = tileAdded,
+            isLoading = isLoading
         )
     }
 
     suspend fun requestSync(manual: Boolean = false) {
         withContext(Dispatchers.IO) {
+            // 設置載入狀態
+            preferences.edit { putBoolean(KEY_IS_LOADING, true) }
+            
             val dataMapRequest = PutDataMapRequest.create(PATH_TILE_DATA)
             dataMapRequest.dataMap.putBoolean(KEY_REQUEST_SYNC, true)
             dataMapRequest.dataMap.putBoolean(KEY_MANUAL_SYNC_REQUEST, manual)
@@ -70,6 +76,7 @@ class TileStateRepository(private val context: Context) {
                 putString(KEY_LAST_UPDATED, formattedDate)
                 putBoolean(KEY_HAS_ERROR, hasError)
                 putBoolean(KEY_TILE_ADDED, true)
+                putBoolean(KEY_IS_LOADING, false) // 清除載入狀態
             }
         }
     }
@@ -98,6 +105,7 @@ class TileStateRepository(private val context: Context) {
         const val KEY_MANUAL_SYNC_REQUEST = "manual_sync"
         const val KEY_TIMESTAMP = "timestamp"
         private const val KEY_TILE_ADDED = "tile_added"
+        private const val KEY_IS_LOADING = "is_loading"
     }
 }
 

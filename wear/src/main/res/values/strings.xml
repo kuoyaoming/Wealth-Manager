@@ -10,6 +10,8 @@
     <string name="tile_last_updated_format">%1$s %2$s</string>
     <string name="tile_tap_to_open">Tap to open</string>
     <string name="tile_error">Data error</string>
+    <string name="tile_loading">Loading...</string>
+    <string name="tile_retry">Retry</string>
 
     <string name="wear_home_title">Wealth Manager</string>
     <string name="wear_home_tile_instructions">Long press the watch face, add Tiles, and select Wealth Manager.</string>

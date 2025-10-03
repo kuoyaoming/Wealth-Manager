@@ -49,6 +49,16 @@ class WealthTileService : TileService() {
         return Futures.immediateFuture(
             ResourceBuilders.Resources.Builder()
                 .setVersion(RESOURCES_VERSION)
+                .addIdToImageMapping(
+                    "ic_launcher_foreground",
+                    ResourceBuilders.ImageResource.Builder()
+                        .setAndroidResourceByResId(
+                            ResourceBuilders.AndroidImageResourceByResId.Builder()
+                                .setResourceId(R.drawable.ic_launcher_foreground)
+                                .build()
+                        )
+                        .build()
+                )
                 .build()
         )
     }
@@ -66,29 +76,52 @@ class WealthTileService : TileService() {
     private fun createTileLayout(context: Context, state: TileStateRepository.TileState): LayoutElementBuilders.Layout {
         val title = context.getString(R.string.tile_title)
         val lastUpdatedLabel = context.getString(R.string.tile_last_updated)
-
         val totalAssets = state.formattedTotalAssets
         val lastUpdated = state.lastUpdated
 
-        val column = LayoutElementBuilders.Column.Builder()
-            .addContent(
+        // 使用 PrimaryLayout 符合 Wear OS 設計指南
+        val primaryLayoutBuilder = PrimaryLayout.Builder()
+
+        // 設置主要標籤（標題）
+        primaryLayoutBuilder.setPrimaryLabelContent(
+            LayoutElementBuilders.Text.Builder()
+                .setText(title)
+                .setFontStyle(
+                    LayoutElementBuilders.FontStyle.Builder()
+                        .setSize(DimensionBuilders.SpProp.Builder().setValue(14f).build())
+                        .build()
+                )
+                .build()
+        )
+
+        // 設置次要標籤（總資產或載入狀態）
+        if (state.isLoading) {
+            primaryLayoutBuilder.setSecondaryLabelContent(
                 LayoutElementBuilders.Text.Builder()
-                    .setText(title)
-                    .build()
-            )
-            .addContent(
-                LayoutElementBuilders.Text.Builder()
-                    .setText(totalAssets)
+                    .setText(context.getString(R.string.tile_loading))
                     .setFontStyle(
                         LayoutElementBuilders.FontStyle.Builder()
-                            .setSize(DimensionBuilders.SpProp.Builder().setValue(18f).build())
+                            .setSize(DimensionBuilders.SpProp.Builder().setValue(12f).build())
                             .build()
                     )
                     .build()
             )
+        } else {
+            primaryLayoutBuilder.setSecondaryLabelContent(
+                LayoutElementBuilders.Text.Builder()
+                    .setText(totalAssets)
+                    .setFontStyle(
+                        LayoutElementBuilders.FontStyle.Builder()
+                            .setSize(DimensionBuilders.SpProp.Builder().setValue(12f).build())
+                            .build()
+                    )
+                    .build()
+            )
+        }
 
+        // 如果有更新時間，設置內容區域
         if (lastUpdated.isNotEmpty()) {
-            column.addContent(
+            primaryLayoutBuilder.setContent(
                 LayoutElementBuilders.Text.Builder()
                     .setText(context.getString(R.string.tile_last_updated_format, lastUpdatedLabel, lastUpdated))
                     .setFontStyle(
@@ -100,25 +133,52 @@ class WealthTileService : TileService() {
             )
         }
 
-        val body = LayoutElementBuilders.Column.Builder()
-            .setHorizontalAlignment(LayoutElementBuilders.HORIZONTAL_ALIGN_CENTER)
-            .addContent(column.build())
-
+        // 如果有錯誤，顯示錯誤信息和重試按鈕
         if (state.hasError) {
-            body.addContent(
-                LayoutElementBuilders.Text.Builder()
-                    .setText(context.getString(R.string.tile_error))
-                    .setFontStyle(
-                        LayoutElementBuilders.FontStyle.Builder()
-                            .setSize(DimensionBuilders.SpProp.Builder().setValue(10f).build())
+            primaryLayoutBuilder.setContent(
+                LayoutElementBuilders.Column.Builder()
+                    .addContent(
+                        LayoutElementBuilders.Text.Builder()
+                            .setText(context.getString(R.string.tile_error))
+                            .setFontStyle(
+                                LayoutElementBuilders.FontStyle.Builder()
+                                    .setSize(DimensionBuilders.SpProp.Builder().setValue(10f).build())
+                                    .build()
+                            )
+                            .build()
+                    )
+                    .addContent(
+                        LayoutElementBuilders.Text.Builder()
+                            .setText(context.getString(R.string.tile_tap_to_open))
+                            .setFontStyle(
+                                LayoutElementBuilders.FontStyle.Builder()
+                                    .setSize(DimensionBuilders.SpProp.Builder().setValue(8f).build())
+                                    .build()
+                            )
                             .build()
                     )
                     .build()
             )
         }
 
+        // 添加點擊動作：打開主應用
+        primaryLayoutBuilder.setClickable(
+            ActionBuilders.Clickable.Builder()
+                .setOnClick(
+                    ActionBuilders.LaunchAction.Builder()
+                        .setAndroidActivity(
+                            ActionBuilders.AndroidActivity.Builder()
+                                .setClassName("com.wealthmanager.wear.ui.MainWearActivity")
+                                .setPackageName("com.wealthmanager.wear")
+                                .build()
+                        )
+                        .build()
+                )
+                .build()
+        )
+
         return LayoutElementBuilders.Layout.Builder()
-            .setRoot(body.build())
+            .setRoot(primaryLayoutBuilder.build())
             .build()
     }
 
