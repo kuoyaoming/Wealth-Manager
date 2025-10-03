@@ -2,6 +2,31 @@
 <resources>
     <string name="app_name">財富管理</string>
     
+    <!-- About Page - New Design -->
+    <string name="about_subtitle">現代化個人理財追蹤器</string>
+    <string name="about_version_info">版本資訊</string>
+    <string name="about_version_format">版本 %1$s (建置 %2$d)</string>
+    <string name="about_build_info">採用現代 Android 開發實踐建置</string>
+    <string name="about_key_features">主要功能</string>
+    <string name="about_technology_stack">技術棧</string>
+    <string name="about_tech_description">採用尖端 Android 技術建置，提供最佳效能和使用者體驗</string>
+    <string name="about_security_privacy">安全性與隱私</string>
+    <string name="about_local_storage">僅本機儲存</string>
+    <string name="about_local_storage_desc">所有財務資料僅存於您的裝置，絕不傳輸至伺服器</string>
+    <string name="about_biometric_auth">生物識別驗證</string>
+    <string name="about_biometric_auth_desc">使用指紋或臉部識別進行安全存取</string>
+    <string name="about_encryption">端對端加密</string>
+    <string name="about_encryption_desc">使用 Android Keystore 加密資料，提供最高安全性</string>
+    <string name="about_api_configuration">API 配置</string>
+    <string name="about_api_description">配置 API 金鑰以從可信賴的提供者獲取即時市場數據</string>
+    <string name="about_configure_apis">配置 API</string>
+    <string name="about_development">開發</string>
+    <string name="about_development_description">採用現代 Android 開發實踐的開源專案</string>
+    <string name="about_view_source">查看原始碼</string>
+    <string name="about_report_issue">回報問題</string>
+    <string name="action_close">關閉</string>
+    <string name="action_got_it">了解！</string>
+    
     <!-- Authentication -->
     <string name="biometric_auth_title">生物識別驗證</string>
     <string name="biometric_auth_subtitle">使用您的生物識別來存取資產</string>
@@ -166,7 +191,6 @@
     <!-- About Dialog -->
     <string name="about_title">關於財富管理</string>
     <string name="about_version">版本 1.4.5</string>
-    <string name="about_version_format">版本 %1$s（代碼 %2$d）</string>
     <string name="about_description">一個全面的個人理財應用程式，協助您追蹤資產、監控股票投資，並透過即時市場數據管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地儲存。</string>
     <string name="about_app_information_title">應用程式資訊</string>
     <string name="about_information_description">一個全面的個人理財管理應用程式，協助您追蹤資產、監控股票投資，並透過即時市場數據管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地資料儲存。</string>
@@ -593,7 +617,6 @@
     <string name="suggestions_title">修正建議：</string>
     <string name="action_retry_validation">重新驗證</string>
     <string name="action_view_guide">查看教學</string>
-    <string name="action_close">關閉</string>
 
     <!-- Enhanced Backup Settings -->
     <string name="backup_enhanced_title">進階備份設定</string>

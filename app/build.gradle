@@ -6,8 +6,9 @@ plugins {
     id 'kotlin-parcelize'
     // DISABLED BY USER REQUEST - JaCoCo coverage plugin temporarily disabled
     // id 'jacoco'
-    id 'io.gitlab.arturbosch.detekt'
-    id 'org.jlleitschuh.gradle.ktlint'
+    // DISABLED BY USER REQUEST - Code quality checks temporarily disabled
+    // id 'io.gitlab.arturbosch.detekt'
+    // id 'org.jlleitschuh.gradle.ktlint'
     id 'org.jetbrains.kotlin.plugin.compose'
 }
 
@@ -33,8 +34,10 @@ android {
             def keyAlias = System.getenv('ANDROID_KEY_ALIAS')
             def keyPassword = System.getenv('ANDROID_KEY_PASSWORD')
             
-            // Only configure signing if all required environment variables are set
-            if (storePassword && keyAlias && keyPassword) {
+            // Only configure signing if all required environment variables are set and not empty
+            if (storePassword && !storePassword.isEmpty() && 
+                keyAlias && !keyAlias.isEmpty() && 
+                keyPassword && !keyPassword.isEmpty()) {
                 storeFile file(keystorePath)
                 storePassword storePassword
                 keyAlias keyAlias
@@ -283,63 +286,63 @@ android {
 // }
 // check.dependsOn jacocoTestCoverageVerification
 
-// Detekt configuration
-detekt {
-    buildUponDefaultConfig = true
-    allRules = false
-    config.setFrom("$projectDir/../detekt.yml")
-    baseline = file("$projectDir/../detekt-baseline.xml")
-}
+// DISABLED BY USER REQUEST - Detekt configuration temporarily disabled
+// detekt {
+//     buildUponDefaultConfig = true
+//     allRules = false
+//     config.setFrom("$projectDir/../detekt.yml")
+//     baseline = file("$projectDir/../detekt-baseline.xml")
+// }
 
-// ktlint configuration
-ktlint {
-    version = "1.0.1"
-    debug = true
-    verbose = true
-    android = true
-    outputToConsole = true
-    outputColorName = "RED"
-    ignoreFailures = true  // Temporarily ignore failures to allow CI/CD to pass
-    enableExperimentalRules = true
-    filter {
-        exclude("**/generated/**")
-        include("**/kotlin/**")
-    }
-}
+// DISABLED BY USER REQUEST - ktlint configuration temporarily disabled
+// ktlint {
+//     version = "1.0.1"
+//     debug = true
+//     verbose = true
+//     android = true
+//     outputToConsole = true
+//     outputColorName = "RED"
+//     ignoreFailures = true  // Temporarily ignore failures to allow CI/CD to pass
+//     enableExperimentalRules = true
+//     filter {
+//         exclude("**/generated/**")
+//         include("**/kotlin/**")
+//     }
+// }
 
-// Custom Gradle tasks for code quality
-task codeQualityCheck {
-    group = 'verification'
-    description = 'Run all code quality checks (detekt + ktlint + tests)'
-    // DISABLED BY USER REQUEST - Coverage checks temporarily disabled
-    // User requested to disable coverage checks until further notice
-    // To re-enable: add 'jacocoTestReport' to dependsOn
-    dependsOn 'detekt', 'ktlintCheck', 'testDebugUnitTest'
-}
+// DISABLED BY USER REQUEST - Custom Gradle tasks for code quality temporarily disabled
+// task codeQualityCheck {
+//     group = 'verification'
+//     description = 'Run all code quality checks (detekt + ktlint + tests)'
+//     // DISABLED BY USER REQUEST - Coverage checks temporarily disabled
+//     // User requested to disable coverage checks until further notice
+//     // To re-enable: add 'jacocoTestReport' to dependsOn
+//     dependsOn 'detekt', 'ktlintCheck', 'testDebugUnitTest'
+// }
 
-task codeQualityFormat {
-    group = 'formatting'
-    description = 'Format code with ktlint and fix auto-fixable detekt issues'
-    dependsOn 'ktlintFormat'
-    finalizedBy 'detekt'
-}
+// task codeQualityFormat {
+//     group = 'formatting'
+//     description = 'Format code with ktlint and fix auto-fixable detekt issues'
+//     dependsOn 'ktlintFormat'
+//     finalizedBy 'detekt'
+// }
 
-task codeQualityReport {
-    group = 'reporting'
-    description = 'Generate comprehensive code quality report'
-    // DISABLED BY USER REQUEST - Coverage report temporarily disabled
-    // User requested to disable coverage checks until further notice
-    // To re-enable: add 'jacocoTestReport' to dependsOn
-    dependsOn 'detekt', 'ktlintCheck'
-    doLast {
-        println "=== Code Quality Report ==="
-        println "Detekt: Check build/reports/detekt/detekt.html"
-        println "ktlint: Check build/reports/ktlint/ktlint.html"
-        // DISABLED BY USER REQUEST - Coverage report temporarily disabled
-        // println "Test Coverage: Check build/reports/jacoco/testDebugUnitTest/html/index.html"
-        println "=========================="
-    }
-}
+// task codeQualityReport {
+//     group = 'reporting'
+//     description = 'Generate comprehensive code quality report'
+//     // DISABLED BY USER REQUEST - Coverage report temporarily disabled
+//     // User requested to disable coverage checks until further notice
+//     // To re-enable: add 'jacocoTestReport' to dependsOn
+//     dependsOn 'detekt', 'ktlintCheck'
+//     doLast {
+//         println "=== Code Quality Report ==="
+//         println "Detekt: Check build/reports/detekt/detekt.html"
+//         println "ktlint: Check build/reports/ktlint/ktlint.html"
+//         // DISABLED BY USER REQUEST - Coverage report temporarily disabled
+//         // println "Test Coverage: Check build/reports/jacoco/testDebugUnitTest/html/index.html"
+//         println "=========================="
+//     }
+// }
 
 // Make check task depend on code quality checks (temporarily disabled)
 // check.dependsOn 'codeQualityCheck'

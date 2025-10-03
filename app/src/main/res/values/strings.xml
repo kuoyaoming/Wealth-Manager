@@ -1,6 +1,31 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">Wealth Manager</string>
+    
+    <!-- About Page - New Design -->
+    <string name="about_subtitle">Modern Personal Finance Tracker</string>
+    <string name="about_version_info">Version Information</string>
+    <string name="about_version_format">Version %1$s (Build %2$d)</string>
+    <string name="about_build_info">Built with modern Android development practices</string>
+    <string name="about_key_features">Key Features</string>
+    <string name="about_technology_stack">Technology Stack</string>
+    <string name="about_tech_description">Built with cutting-edge Android technologies for optimal performance and user experience</string>
+    <string name="about_security_privacy">Security &amp; Privacy</string>
+    <string name="about_local_storage">Local-Only Storage</string>
+    <string name="about_local_storage_desc">All your financial data stays on your device, never transmitted to servers</string>
+    <string name="about_biometric_auth">Biometric Authentication</string>
+    <string name="about_biometric_auth_desc">Secure access using fingerprint or face recognition</string>
+    <string name="about_encryption">End-to-End Encryption</string>
+    <string name="about_encryption_desc">Data encrypted using Android Keystore for maximum security</string>
+    <string name="about_api_configuration">API Configuration</string>
+    <string name="about_api_description">Configure API keys for real-time market data from trusted providers</string>
+    <string name="about_configure_apis">Configure APIs</string>
+    <string name="about_development">Development</string>
+    <string name="about_development_description">Open source project built with modern Android development practices</string>
+    <string name="about_view_source">View Source</string>
+    <string name="about_report_issue">Report Issue</string>
+    <string name="action_close">Close</string>
+    <string name="action_got_it">Got it!</string>
 
     <!-- Authentication -->
     <string name="biometric_auth_title">Biometric Authentication</string>
@@ -208,7 +233,6 @@
     <!-- About Dialog -->
     <string name="about_title">About Wealth Manager</string>
     <string name="about_version">Version 1.4.5</string>
-    <string name="about_version_format">Version %1$s (Code %2$d)</string>
     <string name="about_description">A modern personal finance tracker built with Jetpack Compose. Features biometric authentication, real-time market data, multi-language support, and secure local storage with Material You design.</string>
     <string name="about_app_information_title">App Information</string>
     <string name="about_information_description">Wealth Manager is a comprehensive personal finance application that helps you track assets, monitor stock investments, and manage your financial portfolio with real-time market data. Built for Android 16 with 120Hz optimizations and haptic feedback.</string>
@@ -597,7 +621,6 @@
     <string name="suggestions_title">Suggestions:</string>
     <string name="action_retry_validation">Retry</string>
     <string name="action_view_guide">View Guide</string>
-    <string name="action_close">Close</string>
 
     <!-- Enhanced Backup Settings -->
     <string name="backup_enhanced_title">Enhanced Backup Settings</string>
