@@ -1,5 +1,6 @@
 package com.wealthmanager.ui.settings
 
+import android.content.Context
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wealthmanager.R
@@ -11,6 +12,7 @@ import com.wealthmanager.preferences.LocalePreferencesManager
 import com.wealthmanager.security.KeyRepository
 import com.wealthmanager.ui.security.SecureApiKeyManager
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -88,6 +90,7 @@ class SettingsViewModel
         private val keyRepository: KeyRepository,
         private val secureApiKeyManager: SecureApiKeyManager,
         val firstLaunchManager: FirstLaunchManager,
+        @ApplicationContext private val context: Context,
     ) : ViewModel() {
         private val _uiState =
             MutableStateFlow(
@@ -164,13 +167,13 @@ class SettingsViewModel
                         _uiState.value.copy(
                             apiTestResults = results,
                             isTestingApis = false,
-                            lastKeyActionMessage = "安全測試完成: ${secureResult.overallSecurity}",
+                            lastKeyActionMessage = context.getString(R.string.api_key_security_test_complete, secureResult.overallSecurity),
                         )
                 } catch (e: Exception) {
                     _uiState.value =
                         _uiState.value.copy(
                             isTestingApis = false,
-                            lastKeyActionMessage = "安全測試失敗: ${e.message}",
+                            lastKeyActionMessage = context.getString(R.string.api_key_security_test_failed, e.message ?: ""),
                         )
                 }
             }
@@ -262,7 +265,7 @@ class SettingsViewModel
                     if (!validationResult.isValid) {
                         _uiState.value =
                             _uiState.value.copy(
-                                lastKeyActionMessage = "金鑰驗證失敗: ${validationResult.issues.joinToString(", ")}",
+                                lastKeyActionMessage = context.getString(R.string.api_key_validation_failed, validationResult.issues.joinToString(", ")),
                             )
                         return@launch
                     }
@@ -274,7 +277,7 @@ class SettingsViewModel
                             else -> {
                                 _uiState.value =
                                     _uiState.value.copy(
-                                        lastKeyActionMessage = "不支援的金鑰類型: $keyType",
+                                        lastKeyActionMessage = context.getString(R.string.api_key_unsupported_type, keyType),
                                     )
                                 return@launch
                             }
@@ -290,19 +293,19 @@ class SettingsViewModel
                                     _uiState.value.copy(
                                         finnhubKeyPreview = if (keyType.lowercase() == "finnhub") keyRepository.preview(key) else _uiState.value.finnhubKeyPreview,
                                         exchangeKeyPreview = if (keyType.lowercase() == "exchange") keyRepository.preview(key) else _uiState.value.exchangeKeyPreview,
-                                        lastKeyActionMessage = "${keyType}金鑰已安全儲存 (強度: ${saveResult.strength})",
+                                        lastKeyActionMessage = context.getString(R.string.api_key_saved_securely, keyType, saveResult.strength),
                                     )
                             },
                             onError = { error ->
                                 _uiState.value =
                                     _uiState.value.copy(
-                                        lastKeyActionMessage = "金鑰儲存失敗: $error",
+                                        lastKeyActionMessage = context.getString(R.string.api_key_save_failed, error),
                                     )
                             },
                             onBiometricRequired = {
                                 _uiState.value =
                                     _uiState.value.copy(
-                                        lastKeyActionMessage = "需要生物識別驗證才能儲存金鑰",
+                                        lastKeyActionMessage = context.getString(R.string.api_key_biometric_required),
                                     )
                             },
                             onFallbackRequired = {
@@ -316,13 +319,13 @@ class SettingsViewModel
                     } else {
                         _uiState.value =
                             _uiState.value.copy(
-                                lastKeyActionMessage = "${keyType}金鑰無效: ${testResult.message}",
+                                lastKeyActionMessage = context.getString(R.string.api_key_invalid, keyType, testResult.message),
                             )
                     }
                 } catch (e: Exception) {
                     _uiState.value =
                         _uiState.value.copy(
-                            lastKeyActionMessage = "設定金鑰時發生錯誤: ${e.message}",
+                            lastKeyActionMessage = context.getString(R.string.api_key_setup_error, e.message ?: ""),
                         )
                 }
             }
@@ -345,20 +348,20 @@ class SettingsViewModel
                                 _uiState.value.copy(
                                     finnhubKeyPreview = if (keyType.lowercase() == "finnhub") keyRepository.preview(key) else _uiState.value.finnhubKeyPreview,
                                     exchangeKeyPreview = if (keyType.lowercase() == "exchange") keyRepository.preview(key) else _uiState.value.exchangeKeyPreview,
-                                    lastKeyActionMessage = "${keyType}金鑰已儲存 (備案安全級別)",
+                                    lastKeyActionMessage = context.getString(R.string.api_key_saved_fallback, keyType),
                                 )
                         },
                         onError = { error ->
                             _uiState.value =
                                 _uiState.value.copy(
-                                    lastKeyActionMessage = "金鑰儲存失敗: $error",
+                                    lastKeyActionMessage = context.getString(R.string.api_key_save_failed, error),
                                 )
                         },
                     )
                 } catch (e: Exception) {
                     _uiState.value =
                         _uiState.value.copy(
-                            lastKeyActionMessage = "設定金鑰時發生錯誤: ${e.message}",
+                            lastKeyActionMessage = context.getString(R.string.api_key_setup_error, e.message ?: ""),
                         )
                 }
             }
@@ -389,7 +392,7 @@ class SettingsViewModel
                 )
             _uiState.value =
                 _uiState.value.copy(
-                    lastKeyActionMessage = "請重新嘗試生物識別驗證",
+                    lastKeyActionMessage = context.getString(R.string.api_key_biometric_retry_required),
                 )
         }
 
@@ -398,7 +401,7 @@ class SettingsViewModel
                 _uiState.value.copy(
                     showBiometricFallbackDialog = false,
                     pendingKeyAction = null,
-                    lastKeyActionMessage = "操作已取消",
+                    lastKeyActionMessage = context.getString(R.string.api_key_operation_cancelled),
                 )
         }
 

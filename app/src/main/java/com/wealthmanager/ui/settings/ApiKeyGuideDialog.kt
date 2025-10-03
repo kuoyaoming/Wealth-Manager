@@ -228,7 +228,7 @@ fun ApiKeyGuideDialog(onDismiss: () -> Unit) {
                             modifier =
                                 Modifier
                                     .fillMaxWidth()
-                                    .height(80.dp)
+                                    .height(64.dp)
                                     .background(
                                         brush =
                                             androidx.compose.ui.graphics.Brush.verticalGradient(

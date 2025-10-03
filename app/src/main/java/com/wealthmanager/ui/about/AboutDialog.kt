@@ -10,6 +10,7 @@ import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Storage
+import androidx.compose.material.icons.filled.Key
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -25,6 +26,7 @@ import com.wealthmanager.R
 import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
+import com.wealthmanager.ui.settings.ApiKeyGuideDialog
 
 /**
  * About Dialog Component
@@ -42,6 +44,7 @@ fun AboutDialog(
 
     val canScrollDown = scrollState.value < scrollState.maxValue
     val canScrollUp = scrollState.value > 0
+    var showApiGuideDialog by remember { mutableStateOf(false) }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -109,6 +112,16 @@ fun AboutDialog(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
+                    // API Key Guide entry (opens detailed guide dialog)
+                    ApiKeyGuideEntrySection(
+                        onShowGuide = {
+                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                            showApiGuideDialog = true
+                        },
+                    )
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
                     // Security and Compliance
                     SecurityComplianceSection()
 
@@ -142,80 +155,86 @@ fun AboutDialog(
                         }
                     }
                 }
-            }
 
-            if (canScrollUp) {
-                Box(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .height(32.dp)
-                            .background(
-                                brush =
-                                    androidx.compose.ui.graphics.Brush.verticalGradient(
-                                        colors =
-                                            listOf(
-                                                MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
-                                                MaterialTheme.colorScheme.surface.copy(alpha = 0f),
-                                            ),
-                                    ),
-                            ),
-                )
-            }
-
-            if (canScrollDown) {
-                Column(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally, // This is correct for Column
-                ) {
+                // Scroll hint overlays inside Box to ensure correct positioning
+                if (canScrollUp) {
                     Box(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .height(80.dp)
+                                .height(32.dp)
                                 .background(
                                     brush =
                                         androidx.compose.ui.graphics.Brush.verticalGradient(
                                             colors =
                                                 listOf(
-                                                    MaterialTheme.colorScheme.surface.copy(alpha = 0f),
                                                     MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
+                                                    MaterialTheme.colorScheme.surface.copy(alpha = 0f),
                                                 ),
                                         ),
-                                ),
+                                )
+                                .align(Alignment.TopCenter),
                     )
+                }
 
-                    Surface(
+                if (canScrollDown) {
+                    Column(
                         modifier =
                             Modifier
-                                .padding(bottom = 16.dp),
-                        color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f),
-                        shape = MaterialTheme.shapes.small,
+                                .fillMaxWidth()
+                                .align(Alignment.BottomCenter),
+                        horizontalAlignment = Alignment.CenterHorizontally,
                     ) {
-                        Row(
-                            modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
-                            verticalAlignment = Alignment.CenterVertically,
-                            horizontalArrangement = Arrangement.Center,
+                        Box(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .height(64.dp)
+                                    .background(
+                                        brush =
+                                            androidx.compose.ui.graphics.Brush.verticalGradient(
+                                                colors =
+                                                    listOf(
+                                                        MaterialTheme.colorScheme.surface.copy(alpha = 0f),
+                                                        MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
+                                                    ),
+                                            ),
+                                    ),
+                        )
+
+                        Surface(
+                            modifier = Modifier.padding(bottom = 16.dp),
+                            color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f),
+                            shape = MaterialTheme.shapes.small,
                         ) {
-                            Icon(
-                                imageVector = Icons.Default.KeyboardArrowDown,
-                                contentDescription = stringResource(R.string.cd_scroll_down_more),
-                                tint = MaterialTheme.colorScheme.onPrimaryContainer,
-                                modifier = Modifier.size(20.dp),
-                            )
-                            Spacer(modifier = Modifier.width(4.dp))
-                            Text(
-                                text = stringResource(R.string.scroll_down_more),
-                                style = MaterialTheme.typography.bodySmall,
-                                color = MaterialTheme.colorScheme.onPrimaryContainer,
-                            )
+                            Row(
+                                modifier = Modifier.padding(horizontal = 12.dp, vertical = 6.dp),
+                                verticalAlignment = Alignment.CenterVertically,
+                                horizontalArrangement = Arrangement.Center,
+                            ) {
+                                Icon(
+                                    imageVector = Icons.Default.KeyboardArrowDown,
+                                    contentDescription = stringResource(R.string.cd_scroll_down_more),
+                                    tint = MaterialTheme.colorScheme.onPrimaryContainer,
+                                    modifier = Modifier.size(20.dp),
+                                )
+                                Spacer(modifier = Modifier.width(4.dp))
+                                Text(
+                                    text = stringResource(R.string.scroll_down_more),
+                                    style = MaterialTheme.typography.bodySmall,
+                                    color = MaterialTheme.colorScheme.onPrimaryContainer,
+                                )
+                            }
                         }
                     }
                 }
             }
         }
+    }
+
+    // API Key guide dialog (launched from About)
+    if (showApiGuideDialog) {
+        ApiKeyGuideDialog(onDismiss = { showApiGuideDialog = false })
     }
 }
 
@@ -400,6 +419,47 @@ private fun PrivacyPolicySection() {
                 fontWeight = FontWeight.Medium,
                 textAlign = TextAlign.Center,
             )
+        }
+    }
+}
+
+@Composable
+private fun ApiKeyGuideEntrySection(onShowGuide: () -> Unit) {
+    Card(
+        modifier = Modifier.fillMaxWidth(),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    ) {
+        Column(
+            modifier = Modifier.padding(16.dp),
+            verticalArrangement = Arrangement.spacedBy(8.dp),
+        ) {
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+            ) {
+                Icon(
+                    imageVector = Icons.Default.Key,
+                    contentDescription = null,
+                    tint = MaterialTheme.colorScheme.primary,
+                )
+                Text(
+                    text = stringResource(R.string.settings_apply_api_keys),
+                    style = MaterialTheme.typography.titleMedium,
+                    fontWeight = FontWeight.Bold,
+                )
+            }
+
+            Text(
+                text = stringResource(R.string.settings_apply_api_keys_desc),
+                style = MaterialTheme.typography.bodySmall,
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
+            )
+
+            Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.End) {
+                Button(onClick = onShowGuide) {
+                    Text(stringResource(R.string.dialog_apply_tutorial))
+                }
+            }
         }
     }
 }
