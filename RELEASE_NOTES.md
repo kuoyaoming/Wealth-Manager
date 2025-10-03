@@ -2,33 +2,43 @@
 
 This document provides detailed information about each release of Wealth Manager, including new features, improvements, and bug fixes.
 
-## 📱 Latest Release: v1.4.7
+## 📱 Latest Release: v1.6.0
 
-**Release Date**: February 1, 2025  
-**Version Code**: 147  
+**Release Date**: January 4, 2025  
+**Version Code**: 160  
 **Target SDK**: Android 16 (API 36)
 
 ### 🎯 What's New
 
-#### 🔧 **API Key Management Fixes**
-- Fixed API key encryption and storage issues
-- Improved API key validation and error handling
-- Enhanced security for API key rotation
+#### 🔐 **Google Password Manager Integration**
+- Enhanced credential management with Google Password Manager support
+- Improved API key security and storage mechanisms
+- Advanced biometric authentication integration
+- Better credential management service implementation
 
-#### 🛡️ **Security Enhancements**
-- Strengthened biometric authentication flow
-- Improved data encryption mechanisms
-- Enhanced secure storage implementation
+#### 🎨 **Enhanced UI Components**
+- New responsive dialog components for better user experience
+- Improved accessibility features and audit capabilities
+- Enhanced form validation with real-time feedback
+- Better asset form validation and input field components
 
-#### ⚡ **Performance Improvements**
-- Optimized app startup speed
-- Improved memory usage efficiency
-- Enhanced overall system stability
+#### 🔄 **Sync and Backup Improvements**
+- Advanced backup management with enhanced preferences
+- Improved sync result handling and error management
+- Better network utility functions for connectivity management
+- Enhanced Wear OS sync capabilities
 
-#### 🧹 **Code Quality**
-- Fixed detekt configuration issues
-- Resolved all static analysis warnings
-- Improved code maintainability
+#### 🛠️ **Developer Experience**
+- New onboarding flow components
+- Enhanced debug logging and haptic feedback
+- Improved security enhancement examples
+- Better error handling and diagnostics
+
+#### 📱 **UI/UX Enhancements**
+- Updated dashboard and settings screens with improved layouts
+- Enhanced asset management with better validation
+- Improved API key management with better user guidance
+- Better responsive design components
 
 ### 🔄 **Migration Guide**
 
@@ -332,7 +342,8 @@ This is the initial development version. Users should upgrade to v1.0.0 or later
 
 | Version | Release Date | Key Features | Status |
 |---------|-------------|--------------|---------|
-| 1.4.7   | 2025-10-02  | API fixes, security enhancements | ✅ Current |
+| 1.6.0   | 2025-01-04  | Google Password Manager integration, enhanced UI | ✅ Current |
+| 1.4.7   | 2025-10-02  | API fixes, security enhancements | ✅ Supported |
 | 1.4.6   | 2025-10-01  | Release build fixes, ProGuard rules | ✅ Supported |
 | 1.4.5   | 2025-10-01  | Android 2025 compliance, Splash Screen | ✅ Supported |
 | 1.4.0   | 2025-09-30  | CI/CD automation, responsive design | ✅ Supported |

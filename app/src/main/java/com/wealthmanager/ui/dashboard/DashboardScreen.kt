@@ -44,6 +44,9 @@ import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 import com.wealthmanager.ui.charts.TreemapChartComponent
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
+import com.wealthmanager.ui.sync.SyncFeedbackHandler
+import com.wealthmanager.ui.sync.SyncStatusIndicator
+import com.wealthmanager.ui.sync.SyncType
 import com.wealthmanager.utils.PerformanceTracker
 
 /**
@@ -103,6 +106,24 @@ fun DashboardScreen(
                 viewModel.clearManualSyncStatus()
             }
         }
+
+        // 統一的同步回饋處理
+        SyncFeedbackHandler(
+            syncFeedbackManager = viewModel.syncFeedbackManager,
+            snackbarHostState = snackbarHostState,
+            onRetry = { syncType ->
+                when (syncType) {
+                    SyncType.MANUAL_REFRESH -> viewModel.refreshData()
+                    SyncType.WEAR_SYNC -> viewModel.manualSyncToWear()
+                    SyncType.MARKET_DATA -> viewModel.refreshData()
+                    else -> { /* no-op */ }
+                }
+            },
+            onUndo = { syncType, undoData ->
+                // 復原功能（未來實現）
+                debugLogManager.log("SYNC_FEEDBACK", "Undo requested for $syncType")
+            },
+        )
 
         Scaffold(
             modifier = Modifier.fillMaxSize(),
@@ -166,6 +187,13 @@ fun DashboardScreen(
                 verticalArrangement = Arrangement.spacedBy(responsiveLayout.paddingMedium),
                 modifier = Modifier.padding(paddingValues),
             ) {
+                // 同步狀態指示器
+                item {
+                    SyncStatusIndicator(
+                        syncFeedbackManager = viewModel.syncFeedbackManager,
+                        modifier = Modifier.fillMaxWidth(),
+                    )
+                }
                 // Total Assets Card
                 item {
                     TotalAssetsCardOptimized(

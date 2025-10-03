@@ -107,7 +107,8 @@ class ApiErrorHandler
                 ApiErrorType.RateLimitError ->
                     ErrorRecoveryStrategy(
                         shouldRetry = true,
-                        retryDelayMs = 60000L, // 1 minute
+                        // 1 minute
+                        retryDelayMs = 60000L,
                         maxRetries = 2,
                         fallbackAction = "Use cached data and delay next update",
                     )

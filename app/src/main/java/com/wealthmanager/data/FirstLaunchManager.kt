@@ -21,6 +21,7 @@ class FirstLaunchManager
             private const val KEY_FIRST_LAUNCH = "first_launch"
             private const val KEY_APP_VERSION = "app_version"
             private const val KEY_ABOUT_DIALOG_SHOWN = "about_dialog_shown"
+            private const val KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN = "google_password_manager_onboarding_shown"
         }
 
         private val sharedPreferences: SharedPreferences =
@@ -49,6 +50,20 @@ class FirstLaunchManager
 
         fun hasAboutDialogBeenShown(): Boolean {
             return sharedPreferences.getBoolean(KEY_ABOUT_DIALOG_SHOWN, false)
+        }
+
+        fun shouldShowGooglePasswordManagerOnboarding(): Boolean {
+            return isFirstLaunch() && !hasGooglePasswordManagerOnboardingBeenShown()
+        }
+
+        fun hasGooglePasswordManagerOnboardingBeenShown(): Boolean {
+            return sharedPreferences.getBoolean(KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN, false)
+        }
+
+        fun markGooglePasswordManagerOnboardingShown() {
+            sharedPreferences.edit()
+                .putBoolean(KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN, true)
+                .apply()
         }
 
         private fun getCurrentAppVersion(): String {

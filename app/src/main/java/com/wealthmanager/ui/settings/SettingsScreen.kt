@@ -1,6 +1,7 @@
 package com.wealthmanager.ui.settings
 
 import android.app.Activity
+import android.provider.Settings
 import android.view.inputmethod.InputMethodManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -37,9 +38,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.SnackbarDuration
+import androidx.compose.material3.SnackbarHost
+import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
@@ -50,14 +53,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.PasswordVisualTransformation
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.wealthmanager.R
@@ -67,6 +72,7 @@ import com.wealthmanager.ui.about.AboutDialog
 import com.wealthmanager.ui.permissions.NotificationPermissionSection
 import com.wealthmanager.ui.security.BiometricFallbackDialog
 import com.wealthmanager.util.LanguageManager
+import kotlinx.coroutines.launch
 
 /**
  * Settings screen for configuring app preferences and security options.
@@ -89,8 +95,11 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val (hapticManager, view) = rememberHapticFeedbackWithView()
+    val composeScope = rememberCoroutineScope()
     val uiState by viewModel.uiState.collectAsState()
     var showApiKeyGuide by remember { mutableStateOf(false) }
+    var showGpmInfo by rememberSaveable { mutableStateOf(false) }
+    var pendingGpmKey by rememberSaveable { mutableStateOf<Pair<String, String>?>(null) }
     var hapticEnabled by remember { mutableStateOf(hapticManager.getSettings().hapticEnabled) }
     var soundEnabled by remember { mutableStateOf(hapticManager.getSettings().soundEnabled) }
     var hapticIntensity by remember { mutableStateOf(hapticManager.getSettings().intensity) }
@@ -98,6 +107,7 @@ fun SettingsScreen(
     var showBackupWarningDialog by remember { mutableStateOf(false) }
     var pendingFinancialBackupToggle by remember { mutableStateOf(false) }
     // var showSecurityLevelDialog by remember { mutableStateOf(false) }  // No longer used
+    val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(hapticEnabled, soundEnabled, hapticIntensity) {
         hapticManager.updateSettings(
@@ -109,7 +119,13 @@ fun SettingsScreen(
         )
     }
 
+    // Initialize backup status when screen loads
+    LaunchedEffect(Unit) {
+        viewModel.refreshBackupStatus()
+    }
+
     val context = LocalContext.current
+    val focusRequester = remember { FocusRequester() }
     var currentLanguage by remember { mutableStateOf(uiState.currentLanguageCode) }
     LaunchedEffect(uiState.currentLanguageCode) {
         if (uiState.currentLanguageCode.isNotEmpty() && uiState.currentLanguageCode != currentLanguage) {
@@ -121,6 +137,7 @@ fun SettingsScreen(
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         contentWindowInsets = WindowInsets(0, 0, 0, 0),
+        snackbarHost = { SnackbarHost(hostState = snackbarHostState) },
         topBar = {
             TopAppBar(
                 modifier = Modifier.statusBarsPadding(),
@@ -186,27 +203,146 @@ fun SettingsScreen(
                 },
             )
 
-            ApiKeyManagementCard(
-                finnhubKeyPreview = uiState.finnhubKeyPreview,
-                exchangeKeyPreview = uiState.exchangeKeyPreview,
-                lastActionMessage = uiState.lastKeyActionMessage,
-                onValidateAndSaveFinnhub = { key ->
-                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                    viewModel.setApiKeySecurely(key, "finnhub", context as? androidx.fragment.app.FragmentActivity)
-                },
-                onValidateAndSaveExchange = { key ->
-                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                    viewModel.setApiKeySecurely(key, "exchange", context as? androidx.fragment.app.FragmentActivity)
-                },
-                onClearFinnhub = {
-                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                    viewModel.clearFinnhubKey()
-                },
-                onClearExchange = {
-                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                    viewModel.clearExchangeKey()
-                },
-            )
+            // 檢查是否沒有任何 API Key
+            val hasNoApiKeys = uiState.finnhubKeyPreview.isBlank() && uiState.exchangeKeyPreview.isBlank()
+            var showApiInput by rememberSaveable { mutableStateOf(!hasNoApiKeys) }
+            LaunchedEffect(hasNoApiKeys) { if (!hasNoApiKeys) showApiInput = true }
+            // 當顯示輸入區時，於組合提交後再請求焦點，避免未附加 FocusRequester 時呼叫
+            LaunchedEffect(showApiInput) {
+                if (showApiInput && hasNoApiKeys) {
+                    focusRequester.requestFocus()
+                }
+            }
+
+            // API Key 成功儲存後的非阻斷提示，可一鍵觸發 GPM 儲存
+            // 只在首次保存或Key有變更時才提示
+            LaunchedEffect(uiState.shouldPromptGpmSave, uiState.lastKeyActionMessage) {
+                if (uiState.shouldPromptGpmSave && uiState.lastKeyActionMessage.isNotEmpty() && uiState.lastKeyActionMessage.contains("saved", ignoreCase = true)) {
+                    val result =
+                        snackbarHostState.showSnackbar(
+                            message = context.getString(R.string.snackbar_prompt_gpm_save),
+                            actionLabel = context.getString(R.string.save),
+                            duration = SnackbarDuration.Short,
+                        )
+                    if (result == androidx.compose.material3.SnackbarResult.ActionPerformed) {
+                        val pair = pendingGpmKey
+                        if (pair != null) {
+                            val (type, k) = pair
+                            val ok = viewModel.saveApiKeyToGpm(type, k)
+                            snackbarHostState.showSnackbar(
+                                message =
+                                    if (ok) {
+                                        context.getString(
+                                            R.string.settings_view,
+                                        )
+                                    } else {
+                                        context.getString(R.string.api_key_save_failed, "GPM")
+                                    },
+                                duration = SnackbarDuration.Short,
+                            )
+                        } else {
+                            showGpmInfo = true
+                        }
+                    }
+                    // Clear both the action message and GPM prompt flag
+                    viewModel.clearLastActionMessage()
+                    viewModel.clearGpmSavePrompt()
+                }
+            }
+
+            // 若沒有任何金鑰，顯示引導卡片
+            if (hasNoApiKeys && !showApiInput) {
+                ApiKeyEmptyStateCard(
+                    onGetFinnhubKey = {
+                        val intent =
+                            android.content.Intent(
+                                android.content.Intent.ACTION_VIEW,
+                                android.net.Uri.parse("https://finnhub.io/register"),
+                            )
+                        context.startActivity(intent)
+                    },
+                    onGetExchangeKey = {
+                        val intent =
+                            android.content.Intent(
+                                android.content.Intent.ACTION_VIEW,
+                                android.net.Uri.parse("https://exchangerate-api.com/"),
+                            )
+                        context.startActivity(intent)
+                    },
+                    onViewGuide = { showApiKeyGuide = true },
+                    onStartSetup = {
+                        showApiInput = true
+                    },
+                )
+            }
+
+            // 顯示 API Key 管理輸入區（條件）
+            if (showApiInput) {
+                ApiKeyManagementCard(
+                    finnhubKeyPreview = uiState.finnhubKeyPreview,
+                    exchangeKeyPreview = uiState.exchangeKeyPreview,
+                    lastActionMessage = uiState.lastKeyActionMessage,
+                    onValidateAndSaveFinnhub = { key ->
+                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                        viewModel.setApiKeySecurely(key, "finnhub", context as? androidx.fragment.app.FragmentActivity)
+                        pendingGpmKey = "finnhub" to key
+                    },
+                    onValidateAndSaveExchange = { key ->
+                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                        viewModel.setApiKeySecurely(key, "exchange", context as? androidx.fragment.app.FragmentActivity)
+                        pendingGpmKey = "exchange" to key
+                    },
+                    onClearFinnhub = {
+                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                        viewModel.clearFinnhubKey()
+                    },
+                    onClearExchange = {
+                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                        viewModel.clearExchangeKey()
+                    },
+                    onRequestFinnhubAutofill = { onFilled ->
+                        composeScope.launch {
+                            val v = viewModel.retrieveApiKeyFromGpm("finnhub")
+                            onFilled(v)
+                        }
+                    },
+                    onRequestExchangeAutofill = { onFilled ->
+                        composeScope.launch {
+                            val v = viewModel.retrieveApiKeyFromGpm("exchange")
+                            onFilled(v)
+                        }
+                    },
+                    firstFieldFocusRequester = if (hasNoApiKeys) focusRequester else null,
+                )
+            }
+
+            // 改進的錯誤提示與修正建議
+            if (uiState.lastKeyErrorMessage.isNotEmpty()) {
+                val keyType =
+                    if (uiState.lastKeyErrorMessage.contains(
+                            "finnhub",
+                            ignoreCase = true,
+                        )
+                    ) {
+                        "Finnhub"
+                    } else {
+                        "Exchange Rate"
+                    }
+                ApiKeyValidationFeedback(
+                    errorMessage = uiState.lastKeyErrorMessage,
+                    keyType = keyType,
+                    onRetry = {
+                        // Re-validate the last failed API key. Implementation will be added in a follow-up.
+                    },
+                    onViewGuide = {
+                        // 開啟 API Key 教學
+                        showApiKeyGuide = true
+                    },
+                    onClearError = {
+                        viewModel.clearLastActionMessage()
+                    },
+                )
+            }
 
             ApiKeyCheckCard(
                 apiTestResults = uiState.apiTestResults,
@@ -243,11 +379,12 @@ fun SettingsScreen(
                     },
                     onShowGooglePasswordManagerInfo = {
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                        // TODO: Show Google Password Manager info dialog
+                        // Show GPM info dialog without checking status to avoid triggering credential dialogs
+                        showGpmInfo = true
                     },
                     onShowBackupRecommendations = {
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                        // TODO: Show backup recommendations dialog
+                        // Open backup recommendations (to be implemented in a follow-up dialog)
                     },
                 )
             } ?: run {
@@ -312,6 +449,24 @@ fun SettingsScreen(
                     viewModel.setFinancialBackupEnabled(false)
                 }) {
                     Text(stringResource(R.string.cancel))
+                }
+            },
+        )
+    }
+
+    // Google Password Manager 簡要說明對話框
+    if (showGpmInfo) {
+        GooglePasswordManagerInfoDialog(
+            onDismiss = { showGpmInfo = false },
+            isAvailable = true, // Assume GPM is available to avoid triggering credential dialogs
+            isSignedIn = true, // Assume user is signed in to avoid triggering credential dialogs
+            onEnableAutofill = {
+                val intent = android.content.Intent(Settings.ACTION_SETTINGS)
+                try {
+                    context.startActivity(intent)
+                } catch (e: Exception) {
+                    // Fallback to general settings if specific intent is not available
+                    context.startActivity(android.content.Intent(Settings.ACTION_SETTINGS))
                 }
             },
         )
@@ -730,6 +885,9 @@ private fun ApiKeyManagementCard(
     onValidateAndSaveExchange: (String) -> Unit,
     onClearFinnhub: () -> Unit,
     onClearExchange: () -> Unit,
+    onRequestFinnhubAutofill: (onFilled: (String?) -> Unit) -> Unit,
+    onRequestExchangeAutofill: (onFilled: (String?) -> Unit) -> Unit,
+    firstFieldFocusRequester: androidx.compose.ui.focus.FocusRequester? = null,
 ) {
     var finnhubInput by remember { mutableStateOf("") }
     var exchangeInput by remember { mutableStateOf("") }
@@ -765,10 +923,6 @@ private fun ApiKeyManagementCard(
             }
 
             // Finnhub
-            Text(
-                text = stringResource(R.string.settings_api_finnhub_label),
-                style = MaterialTheme.typography.bodyMedium,
-            )
             if (finnhubKeyPreview.isNotBlank()) {
                 Text(
                     text = stringResource(R.string.settings_api_saved_preview, finnhubKeyPreview),
@@ -776,12 +930,20 @@ private fun ApiKeyManagementCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            OutlinedTextField(
+            ApiKeyInputField(
                 value = finnhubInput,
                 onValueChange = { finnhubInput = it },
-                modifier = Modifier.fillMaxWidth(),
-                visualTransformation = PasswordVisualTransformation(),
-                placeholder = { Text(stringResource(R.string.settings_api_input_placeholder)) },
+                label = stringResource(R.string.settings_api_finnhub_label),
+                autofillHint = "Finnhub API Key",
+                enableSystemAutofill = false,
+                onAutofillClick = {
+                    onRequestFinnhubAutofill { v -> if (v != null) finnhubInput = v }
+                },
+                onImeAction = {
+                    hideKeyboard()
+                    onValidateAndSaveFinnhub(finnhubInput)
+                },
+                focusRequester = firstFieldFocusRequester,
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Button(onClick = {
@@ -800,10 +962,6 @@ private fun ApiKeyManagementCard(
             }
 
             // Exchange Rate
-            Text(
-                text = stringResource(R.string.settings_api_exchange_label),
-                style = MaterialTheme.typography.bodyMedium,
-            )
             if (exchangeKeyPreview.isNotBlank()) {
                 Text(
                     text = stringResource(R.string.settings_api_saved_preview, exchangeKeyPreview),
@@ -811,12 +969,19 @@ private fun ApiKeyManagementCard(
                     color = MaterialTheme.colorScheme.onSurfaceVariant,
                 )
             }
-            OutlinedTextField(
+            ApiKeyInputField(
                 value = exchangeInput,
                 onValueChange = { exchangeInput = it },
-                modifier = Modifier.fillMaxWidth(),
-                visualTransformation = PasswordVisualTransformation(),
-                placeholder = { Text(stringResource(R.string.settings_api_input_placeholder)) },
+                label = stringResource(R.string.settings_api_exchange_label),
+                autofillHint = "Exchange Rate API Key",
+                enableSystemAutofill = false,
+                onAutofillClick = {
+                    onRequestExchangeAutofill { v -> if (v != null) exchangeInput = v }
+                },
+                onImeAction = {
+                    hideKeyboard()
+                    onValidateAndSaveExchange(exchangeInput)
+                },
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
                 Button(onClick = {

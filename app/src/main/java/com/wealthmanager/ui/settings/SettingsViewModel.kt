@@ -10,6 +10,8 @@ import com.wealthmanager.backup.EnhancedBackupManager
 import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.data.service.ApiTestService
 import com.wealthmanager.preferences.LocalePreferencesManager
+import com.wealthmanager.security.CredentialManagerService
+import com.wealthmanager.security.GpmStatus
 import com.wealthmanager.security.KeyRepository
 import com.wealthmanager.ui.security.SecureApiKeyManager
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -46,12 +48,19 @@ data class SettingsUiState(
     val finnhubKeyPreview: String = "",
     val exchangeKeyPreview: String = "",
     val lastKeyActionMessage: String = "",
+    val lastKeyErrorMessage: String = "", // 專門用於錯誤訊息
     // Biometric fallback dialog state
     val showBiometricFallbackDialog: Boolean = false,
     val pendingKeyAction: (() -> Unit)? = null,
     // Enhanced backup state
     val backupStatus: EnhancedBackupManager.BackupStatus? = null,
     val backupRecommendations: List<String> = emptyList(),
+    // Google Password Manager status
+    val gpmStatus: GpmStatus = GpmStatus.Unavailable,
+    // Track previous API keys to detect changes
+    val previousFinnhubKey: String = "",
+    val previousExchangeKey: String = "",
+    val shouldPromptGpmSave: Boolean = false,
 )
 
 /**
@@ -94,6 +103,7 @@ class SettingsViewModel
         private val apiTestService: ApiTestService,
         private val keyRepository: KeyRepository,
         private val secureApiKeyManager: SecureApiKeyManager,
+        private val credentialManagerService: CredentialManagerService,
         val firstLaunchManager: FirstLaunchManager,
         @ApplicationContext private val context: Context,
     ) : ViewModel() {
@@ -113,9 +123,30 @@ class SettingsViewModel
                         ),
                     finnhubKeyPreview = keyRepository.preview(keyRepository.getUserFinnhubKey()),
                     exchangeKeyPreview = keyRepository.preview(keyRepository.getUserExchangeKey()),
+                    previousFinnhubKey = keyRepository.getUserFinnhubKey() ?: "",
+                    previousExchangeKey = keyRepository.getUserExchangeKey() ?: "",
                 ),
             )
         val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
+
+        init {
+            // Initialize with default unavailable status to avoid triggering credential dialogs
+            // GPM status will be checked only when user explicitly requests it
+        }
+
+        /**
+         * Checks and updates the Google Password Manager status.
+         * This method should only be called when user explicitly requests GPM info.
+         */
+        suspend fun checkGooglePasswordManagerStatus() {
+            try {
+                val gpmStatus = credentialManagerService.getGooglePasswordManagerStatus()
+                _uiState.value = _uiState.value.copy(gpmStatus = gpmStatus)
+            } catch (e: Exception) {
+                // If check fails, assume unavailable
+                _uiState.value = _uiState.value.copy(gpmStatus = GpmStatus.Unavailable)
+            }
+        }
 
         fun setBiometricEnabled(enabled: Boolean) {
             viewModelScope.launch {
@@ -133,7 +164,7 @@ class SettingsViewModel
                 refreshBackupStatus()
             }
         }
-        
+
         /**
          * Refreshes the enhanced backup status and recommendations.
          */
@@ -142,23 +173,24 @@ class SettingsViewModel
                 try {
                     val backupStatus = enhancedBackupManager.getBackupStatus()
                     val recommendations = enhancedBackupManager.getBackupRecommendations()
-                    _uiState.value = _uiState.value.copy(
-                        backupStatus = backupStatus,
-                        backupRecommendations = recommendations
-                    )
+                    _uiState.value =
+                        _uiState.value.copy(
+                            backupStatus = backupStatus,
+                            backupRecommendations = recommendations,
+                        )
                 } catch (e: Exception) {
                     // Handle error silently or log it
                 }
             }
         }
-        
+
         /**
          * Gets backup recommendations for the user.
          */
         fun getBackupRecommendations(): List<String> {
             return _uiState.value.backupRecommendations
         }
-        
+
         /**
          * Gets the current backup status.
          */
@@ -328,17 +360,42 @@ class SettingsViewModel
                             keyType = keyType,
                             activity = activity,
                             onSuccess = { saveResult ->
+                                // Check if this is a new key or if the key has changed
+                                val isNewKey =
+                                    when (keyType.lowercase()) {
+                                        "finnhub" -> _uiState.value.previousFinnhubKey.isEmpty()
+                                        "exchange" -> _uiState.value.previousExchangeKey.isEmpty()
+                                        else -> true
+                                    }
+
+                                val isKeyChanged =
+                                    when (keyType.lowercase()) {
+                                        "finnhub" -> _uiState.value.previousFinnhubKey != key
+                                        "exchange" -> _uiState.value.previousExchangeKey != key
+                                        else -> true
+                                    }
+
+                                val shouldPromptGpm = isNewKey || isKeyChanged
+
                                 _uiState.value =
                                     _uiState.value.copy(
                                         finnhubKeyPreview = if (keyType.lowercase() == "finnhub") keyRepository.preview(key) else _uiState.value.finnhubKeyPreview,
                                         exchangeKeyPreview = if (keyType.lowercase() == "exchange") keyRepository.preview(key) else _uiState.value.exchangeKeyPreview,
                                         lastKeyActionMessage = context.getString(R.string.api_key_saved_securely, keyType, saveResult.strength),
+                                        // Clear previous error message
+                                        lastKeyErrorMessage = "",
+                                        // Update previous keys and GPM prompt flag
+                                        previousFinnhubKey = if (keyType.lowercase() == "finnhub") key else _uiState.value.previousFinnhubKey,
+                                        previousExchangeKey = if (keyType.lowercase() == "exchange") key else _uiState.value.previousExchangeKey,
+                                        shouldPromptGpmSave = shouldPromptGpm,
                                     )
                             },
                             onError = { error ->
                                 _uiState.value =
                                     _uiState.value.copy(
-                                        lastKeyActionMessage = context.getString(R.string.api_key_save_failed, error),
+                                        lastKeyErrorMessage = context.getString(R.string.api_key_save_failed, error),
+                                        // Clear success message
+                                        lastKeyActionMessage = "",
                                     )
                             },
                             onBiometricRequired = {
@@ -358,13 +415,17 @@ class SettingsViewModel
                     } else {
                         _uiState.value =
                             _uiState.value.copy(
-                                lastKeyActionMessage = context.getString(R.string.api_key_invalid, keyType, testResult.message),
+                                lastKeyErrorMessage = context.getString(R.string.api_key_invalid, keyType, testResult.message),
+                                // Clear success message
+                                lastKeyActionMessage = "",
                             )
                     }
                 } catch (e: Exception) {
                     _uiState.value =
                         _uiState.value.copy(
-                            lastKeyActionMessage = context.getString(R.string.api_key_setup_error, e.message ?: ""),
+                            lastKeyErrorMessage = context.getString(R.string.api_key_setup_error, e.message ?: ""),
+                            // Clear success message
+                            lastKeyActionMessage = "",
                         )
                 }
             }
@@ -445,18 +506,64 @@ class SettingsViewModel
         }
 
         /**
+         * Clears the last action message.
+         */
+        fun clearLastActionMessage() {
+            _uiState.value =
+                _uiState.value.copy(
+                    lastKeyActionMessage = "",
+                    lastKeyErrorMessage = "",
+                )
+        }
+
+        /**
+         * Clears the GPM save prompt flag.
+         */
+        fun clearGpmSavePrompt() {
+            _uiState.value =
+                _uiState.value.copy(
+                    shouldPromptGpmSave = false,
+                )
+        }
+
+        /**
          * Sets security level.
          */
         // Note: Security level management is now handled internally by SecureApiKeyManager
         // This method is kept for potential future use but is currently unused
-    /*
-    fun setSecurityLevel(level: com.wealthmanager.security.SecurityLevelManager.SecurityLevel) {
-        viewModelScope.launch {
-            // secureApiKeyManager.securityLevelManager.setSecurityLevel(level)
-            _uiState.value = _uiState.value.copy(
-                lastKeyActionMessage = "安全級別已設定為: $level"
-            )
+        fun setSecurityLevel(level: com.wealthmanager.security.SecurityLevelManager.SecurityLevel) {
+            viewModelScope.launch {
+                // secureApiKeyManager.securityLevelManager.setSecurityLevel(level)
+                _uiState.value =
+                    _uiState.value.copy(
+                        lastKeyActionMessage = context.getString(R.string.settings_security_level_set, level.toString()),
+                    )
+            }
         }
-    }
-     */
+
+        /**
+         * Save API key to Google Password Manager (non-blocking prompt).
+         */
+        suspend fun saveApiKeyToGpm(
+            keyType: String,
+            key: String,
+        ): Boolean {
+            return try {
+                val result = credentialManagerService.saveApiKeyToGooglePasswordManager(keyType, key)
+                result.isSuccess
+            } catch (_: Exception) {
+                false
+            }
+        }
+
+        /**
+         * Retrieve API key from Google Password Manager for a given type.
+         */
+        suspend fun retrieveApiKeyFromGpm(keyType: String): String? {
+            return try {
+                credentialManagerService.getApiKeyFromGooglePasswordManager(keyType).getOrNull()
+            } catch (_: Exception) {
+                null
+            }
+        }
     }

@@ -20,6 +20,7 @@ import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.data.service.PerformanceMonitor120Hz
 import com.wealthmanager.ui.about.AboutDialog
 import com.wealthmanager.ui.navigation.WealthManagerNavigation
+import com.wealthmanager.ui.onboarding.OnboardingFlow
 import com.wealthmanager.ui.responsive.LocalWindowWidthSizeClass
 import com.wealthmanager.ui.theme.WealthManagerTheme
 import com.wealthmanager.utils.StandardLogger
@@ -76,9 +77,13 @@ class MainActivity : FragmentActivity() {
 
         setContent {
             var showAboutDialog by remember { mutableStateOf(false) }
+            var showOnboarding by remember { mutableStateOf(false) }
+            var navigateToSettings by remember { mutableStateOf(false) }
 
             LaunchedEffect(Unit) {
-                if (firstLaunchManager.shouldShowAboutDialog() && !firstLaunchManager.hasAboutDialogBeenShown()) {
+                if (firstLaunchManager.shouldShowGooglePasswordManagerOnboarding()) {
+                    showOnboarding = true
+                } else if (firstLaunchManager.shouldShowAboutDialog() && !firstLaunchManager.hasAboutDialogBeenShown()) {
                     showAboutDialog = true
                 }
             }
@@ -94,6 +99,19 @@ class MainActivity : FragmentActivity() {
                     ) {
                         WealthManagerNavigation(
                             modifier = Modifier.fillMaxSize(),
+                        )
+                    }
+
+                    if (showOnboarding) {
+                        OnboardingFlow(
+                            firstLaunchManager = firstLaunchManager,
+                            onComplete = {
+                                showOnboarding = false
+                            },
+                            onNavigateToSettings = {
+                                showOnboarding = false
+                                navigateToSettings = true
+                            },
                         )
                     }
 
@@ -229,6 +247,8 @@ class MainActivity : FragmentActivity() {
         StandardLogger.debug("MainActivity", "onTrimMemory called with level: $level")
 
         when (level) {
+            // Note: These constants are deprecated but still functional
+            // TODO: Consider using newer memory management APIs in future updates
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_CRITICAL,
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_LOW,
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE,
@@ -242,6 +262,7 @@ class MainActivity : FragmentActivity() {
             ComponentCallbacks2.TRIM_MEMORY_BACKGROUND -> {
                 StandardLogger.debug("MainActivity", "App moved to background - release resources")
             }
+            // Note: These constants are deprecated but still functional
             ComponentCallbacks2.TRIM_MEMORY_MODERATE -> {
                 StandardLogger.debug("MainActivity", "Moderate memory pressure")
             }

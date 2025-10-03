@@ -66,16 +66,18 @@ class HapticFeedbackManager
          */
         fun initializeSound(context: Context) {
             if (soundPool == null) {
-                val audioAttributes = AudioAttributes.Builder()
-                    .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                    .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                    .build()
-                
-                soundPool = SoundPool.Builder()
-                    .setMaxStreams(1)
-                    .setAudioAttributes(audioAttributes)
-                    .build()
-                
+                val audioAttributes =
+                    AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
+                        .build()
+
+                soundPool =
+                    SoundPool.Builder()
+                        .setMaxStreams(1)
+                        .setAudioAttributes(audioAttributes)
+                        .build()
+
                 audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             }
         }
@@ -116,25 +118,29 @@ class HapticFeedbackManager
         /**
          * Trigger sound feedback
          */
-        fun triggerSound(context: Context, intensity: HapticIntensity = HapticIntensity.MEDIUM) {
+        fun triggerSound(
+            context: Context,
+            intensity: HapticIntensity = HapticIntensity.MEDIUM,
+        ) {
             if (!settings.soundEnabled) return
-            
+
             initializeSound(context)
-            
+
             // Check if device is in silent mode
             val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as AudioManager
             val ringerMode = audioManager.ringerMode
-            
+
             // Only play sound if not in silent mode
             if (ringerMode != AudioManager.RINGER_MODE_SILENT) {
                 // Use system sound effects based on intensity
-                val soundType = when (intensity) {
-                    HapticIntensity.LIGHT -> AudioManager.FX_KEY_CLICK
-                    HapticIntensity.MEDIUM -> AudioManager.FX_KEYPRESS_STANDARD
-                    HapticIntensity.STRONG -> AudioManager.FX_KEYPRESS_DELETE
-                    HapticIntensity.CONFIRM -> AudioManager.FX_KEYPRESS_RETURN
-                }
-                
+                val soundType =
+                    when (intensity) {
+                        HapticIntensity.LIGHT -> AudioManager.FX_KEY_CLICK
+                        HapticIntensity.MEDIUM -> AudioManager.FX_KEYPRESS_STANDARD
+                        HapticIntensity.STRONG -> AudioManager.FX_KEYPRESS_DELETE
+                        HapticIntensity.CONFIRM -> AudioManager.FX_KEYPRESS_RETURN
+                    }
+
                 audioManager.playSoundEffect(soundType)
             }
         }

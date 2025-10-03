@@ -146,6 +146,45 @@
     <string name="validation_enter_valid_shares">Please enter a valid number of shares.</string>
     <string name="validation_search_minimum_chars">Please enter at least 1 character to search.</string>
     <string name="validation_no_matching_stock">No matching stock found. Please verify the symbol.</string>
+    
+    <!-- Asset Form Validation -->
+    <string name="validation_amount_required">請輸入金額</string>
+    <string name="validation_amount_example_twd">例如：1000</string>
+    <string name="validation_amount_example_usd">例如：1000.50</string>
+    <string name="validation_amount_invalid_number">請輸入有效的數字</string>
+    <string name="validation_amount_only_numbers">只允許數字和小數點</string>
+    <string name="validation_amount_must_positive">金額必須大於0</string>
+    <string name="validation_amount_enter_positive">請輸入正數金額</string>
+    <string name="validation_amount_too_large">金額似乎過大，請確認是否正確</string>
+    <string name="validation_amount_ignore_if_correct">如果正確，請忽略此提示</string>
+    <string name="validation_amount_decimal_places">金額通常只需要2位小數</string>
+    <string name="validation_amount_auto_adjusted">已自動調整為2位小數</string>
+    
+    <string name="validation_symbol_required">請輸入股票代碼</string>
+    <string name="validation_symbol_example">例如：AAPL, TSLA, 2330</string>
+    <string name="validation_symbol_invalid_format">股票代碼格式不正確</string>
+    <string name="validation_symbol_only_alphanumeric">只允許字母、數字和點號，最多10個字符</string>
+    <string name="validation_symbol_taiwan_stock">台灣股票，將以台幣計算</string>
+    <string name="validation_symbol_us_stock">美股代碼，將以美元計算</string>
+    <string name="validation_symbol_confirm_correct">請確認股票代碼是否正確</string>
+    <string name="validation_symbol_search_confirm">建議搜尋確認股票代碼</string>
+    
+    <string name="validation_shares_required">請輸入股數</string>
+    <string name="validation_shares_example">例如：10, 100.5</string>
+    <string name="validation_shares_invalid_number">請輸入有效的股數</string>
+    <string name="validation_shares_only_numbers">只允許數字和小數點</string>
+    <string name="validation_shares_must_positive">股數必須大於0</string>
+    <string name="validation_shares_enter_positive">請輸入正數股數</string>
+    <string name="validation_shares_too_large">股數似乎過大，請確認是否正確</string>
+    <string name="validation_shares_ignore_if_correct">如果正確，請忽略此提示</string>
+    <string name="validation_shares_decimal_places">股數通常只需要4位小數</string>
+    <string name="validation_shares_auto_adjusted">已自動調整為4位小數</string>
+    
+    <!-- Additional validation strings -->
+    <string name="validation_suggestion_prefix">💡 %s</string>
+    <string name="asset_form_amount_label">金額</string>
+    <string name="asset_form_symbol_label">股票代碼</string>
+    <string name="asset_form_shares_label">股數</string>
 
     <!-- Search Error Messages -->
     <string name="search_error_api_limit">API request limit reached. Please try again tomorrow.</string>
@@ -232,9 +271,69 @@
     <string name="wear_sync_missing_app">Wear app not installed</string>
     <string name="wear_sync_failed">Wear sync failed</string>
     <string name="sync_wear">Sync to Wear</string>
+    
+    <!-- 同步回饋相關字符串 -->
+    <string name="sync_market_data">Syncing market data</string>
+    <string name="sync_backup_success">Backup completed successfully</string>
+    <string name="sync_backup_failed">Backup failed</string>
+    <string name="sync_manual_refresh">Refreshing data</string>
+    <string name="sync_retry">Retry</string>
+    <string name="sync_undo">Undo</string>
+    <string name="sync_issues_detected">Sync issues detected</string>
+    <string name="sync_in_progress">Syncing...</string>
+    
+    <!-- 無障礙性相關字符串 -->
+    <string name="accessibility_audit_title">Accessibility Check</string>
+    <string name="accessibility_content_description">Content Description</string>
+    <string name="accessibility_semantic_role">Semantic Role</string>
+    <string name="accessibility_color_contrast">Color Contrast</string>
+    <string name="accessibility_touch_target">Touch Target</string>
+    <string name="accessibility_keyboard_navigation">Keyboard Navigation</string>
+    <string name="accessibility_passed">Passed</string>
+    <string name="accessibility_failed">Failed</string>
+    <string name="accessibility_issues_found">Issues Found:</string>
+    <string name="accessibility_missing_content_description">Missing content description</string>
+    <string name="accessibility_insufficient_contrast">Insufficient color contrast</string>
+    <string name="accessibility_small_touch_target">Touch target too small</string>
+    <string name="accessibility_missing_semantic_role">Missing semantic role</string>
+    <string name="accessibility_keyboard_issue">Keyboard navigation issue</string>
+    
     <string name="button_skip_authentication">Skip Authentication</string>
     <string name="button_continue_without_biometric">Continue Without Biometric</string>
     <string name="currency_twd_amount">NT$ %1$s</string>
+
+    
+    
+    <!-- Settings Messages -->
+    <string name="settings_security_level_set">Security level set to: %1$s</string>
+    
+    <!-- API Key Validation Suggestions -->
+    <string name="api_validation_check_format">Check if API key format is correct</string>
+    <string name="api_validation_check_length">Confirm key length meets requirements (16-128 characters)</string>
+    <string name="api_validation_avoid_weak_patterns">Avoid using common weak password patterns</string>
+    <string name="api_validation_finnhub_check_status">Go to Finnhub website to check key status</string>
+    <string name="api_validation_finnhub_check_enabled">Confirm key is enabled and not expired</string>
+    <string name="api_validation_finnhub_check_limits">Check if there are API usage limits</string>
+    <string name="api_validation_exchange_check_status">Go to ExchangeRate-API to check key status</string>
+    <string name="api_validation_exchange_check_valid">Confirm key is within valid period</string>
+    <string name="api_validation_exchange_check_limits">Check if there are request limits</string>
+    <string name="api_validation_check_network">Check if network connection is normal</string>
+    <string name="api_validation_try_other_network">Try switching to other network environment</string>
+    <string name="api_validation_try_later">Try again later</string>
+    <string name="api_validation_wait_minutes">Wait a few minutes and try again</string>
+    <string name="api_validation_check_quota">Check API usage quota</string>
+    <string name="api_validation_consider_upgrade">Consider upgrading API plan</string>
+    <string name="api_validation_recopy_key">Re-copy API key</string>
+    <string name="api_validation_check_spaces">Check if key contains extra spaces</string>
+    <string name="api_validation_confirm_enabled">Confirm key is properly enabled</string>
+    <string name="api_validation_check_copied">Check if API key is correctly copied</string>
+    <string name="api_validation_confirm_network">Confirm network connection is normal</string>
+    <string name="api_validation_check_provider_status">Check API provider status page</string>
+    
+    <!-- Security Enhancement Messages -->
+    <string name="security_biometric_required">Biometric authentication required</string>
+    <string name="security_finnhub_key_failed">Finnhub key setup failed: %1$s</string>
+    <string name="security_exchange_key_failed">Exchange Rate key setup failed: %1$s</string>
 
     <!-- Missing API Keys Dialog -->
     <string name="missing_api_keys_title">API keys required</string>
@@ -328,6 +427,8 @@
     <string name="api_key_biometric_retry_required">Please retry biometric authentication</string>
     <string name="api_key_operation_cancelled">Operation cancelled</string>
     <string name="api_key_security_level_set">Security level set to: %1$s</string>
+    <string name="snackbar_prompt_gpm_save">API key saved. Save to Google Password Manager?</string>
+    <string name="snackbar_action_learn_more">Learn more</string>
     
     <!-- Feature Permission Messages -->
     <string name="feature_permission_full_access">Full functionality available</string>
@@ -361,4 +462,178 @@
     <string name="api_guide_exchange_description">For getting real-time exchange rate data</string>
     <string name="api_guide_exchange_features">Real-time exchange rate queries\nMulti-currency support\nHistorical exchange rate data\nExchange rate trend analysis</string>
     <string name="api_guide_steps">1. Click the "Go to application" button above\n2. Register or login on the official website\n3. Find the API key management page\n4. Copy the generated API key\n5. Return to this app and paste the key</string>
+    <string name="api_guide_finnhub_title">Finnhub API</string>
+    <string name="api_guide_exchange_title">Exchange Rate API</string>
+    <string name="api_guide_finnhub_free_limit">60 calls/minute</string>
+    <string name="api_guide_exchange_free_limit">1,500 requests/month</string>
+
+    <!-- API Test Service messages -->
+    <string name="api_test_not_configured">API Key not configured</string>
+    <string name="api_test_working_success">API Working - Test successful</string>
+    <string name="api_test_error_invalid_response">API Error - Invalid response</string>
+    <string name="api_test_error_message">API Error - %1$s</string>
+    <string name="api_name_finnhub">Finnhub</string>
+    <string name="api_name_exchange_rate">Exchange Rate</string>
+    <string name="api_key_autofill_status">Auto-filled %1$s</string>
+    <string name="api_key_use_saved_key">Use saved key</string>
+    <string name="api_key_hide_password">Hide password</string>
+    <string name="api_key_show_password">Show password</string>
+    <string name="api_key_autofill_hint">Tip: If you have previously saved API keys, clicking this field will auto-fill them</string>
+    
+    <!-- API Guide Dialog Responsive -->
+    <string name="api_guide_complete">Complete</string>
+    <string name="api_guide_visit_website">Visit Website</string>
+    <string name="api_guide_scroll_up">Scroll up</string>
+    <string name="api_guide_scroll_down">Scroll down to see more content</string>
+    <string name="api_guide_open_in_new_window">Open in new window</string>
+    <string name="api_guide_finnhub_global_title">Finnhub API (Global Stock Data)</string>
+    <string name="api_guide_finnhub_global_desc">Provides global stock prices, company information and other data</string>
+    <string name="api_guide_exchange_rate_title">ExchangeRate-API (Exchange Rate Data)</string>
+    <string name="api_guide_exchange_rate_desc">Provides USD/TWD and other exchange rate information</string>
+    
+    <!-- Sync Messages -->
+    <string name="sync_cancelled">Sync cancelled</string>
+    <string name="sync_market_data_success">Market data updated successfully</string>
+    <string name="sync_market_data_cached">Using cached data (no internet connection)</string>
+    <string name="sync_market_data_no_connection">No internet connection and no cached data available</string>
+    <string name="sync_market_data_network_failed">Network connection failed. Please check your internet connection.</string>
+    <string name="sync_market_data_failed">Failed to sync market data: %1$s</string>
+    <string name="sync_manual_refresh_success">Data refreshed successfully</string>
+    <string name="sync_manual_refresh_failed">Failed to refresh data: %1$s</string>
+    <string name="sync_wear_success">Wear sync completed</string>
+    <string name="sync_wear_not_installed">Wear app not installed</string>
+    <string name="sync_wear_failed">Wear sync failed: %1$s</string>
+    <string name="sync_error">Sync error</string>
+    
+    <!-- Accessibility Audit -->
+    <string name="accessibility_audit_content_description">Content Description</string>
+    <string name="accessibility_audit_semantic_role">Semantic Role</string>
+    <string name="accessibility_audit_color_contrast">Color Contrast</string>
+    <string name="accessibility_audit_touch_target">Touch Target</string>
+    <string name="accessibility_audit_keyboard_navigation">Keyboard Navigation</string>
+    <string name="accessibility_audit_issues_found">Issues found:</string>
+    <string name="accessibility_audit_issue_missing_content">Some icons are missing content descriptions</string>
+    <string name="accessibility_audit_issue_contrast">Insufficient contrast between text and background</string>
+    <string name="accessibility_audit_issue_keyboard">Incomplete keyboard navigation support</string>
+    <string name="accessibility_audit_back">Back to Settings</string>
+    <string name="accessibility_audit_talkback_label">TalkBack</string>
+    <string name="accessibility_audit_talkback_desc">Screen reader support</string>
+    <string name="accessibility_audit_large_font_label">Large Font</string>
+    <string name="accessibility_audit_large_font_desc">Font scale: %1$sx</string>
+    <string name="accessibility_audit_high_contrast_label">High Contrast</string>
+    <string name="accessibility_audit_high_contrast_desc">High contrast mode</string>
+
+    <!-- Onboarding & API Keys (UI strings) -->
+    <string name="onboarding_welcome_title">Welcome to %1$s</string>
+    <string name="onboarding_welcome_subtitle">Your personal wealth management assistant</string>
+    <string name="feature_assets_tracking_title">Asset Tracking</string>
+    <string name="feature_assets_tracking_desc">Monitor your portfolio performance in real-time</string>
+    <string name="feature_secure_backup_title">Secure Backup</string>
+    <string name="feature_secure_backup_desc">API keys stored securely with cross-device sync</string>
+    <string name="feature_wear_title">Wearable</string>
+    <string name="feature_wear_desc">Check your assets on your wrist anytime</string>
+    <string name="feature_insights_title">Smart Insights</string>
+    <string name="feature_insights_desc">Gain deep insights into your investment trends</string>
+    <string name="onboarding_get_started_title">Get started in 3 steps:</string>
+    <string name="onboarding_step_get_api_key">1. Get API keys (we will guide you)</string>
+    <string name="onboarding_step_setup_gpm_recommend">2. Set up Google Password Manager (optional but recommended)</string>
+    <string name="onboarding_step_start_tracking">3. Start tracking your assets</string>
+    <string name="action_skip_tour">Skip Tour</string>
+    <string name="action_start_setup">Start Setup</string>
+
+    <string name="settings_api_key_not_set_title">API key not set</string>
+    <string name="settings_api_key_not_set_desc">To fetch real-time financial data, set at least one API key</string>
+    <string name="settings_api_key_providers_title">Recommended API providers</string>
+    <string name="provider_finnhub_name">Finnhub</string>
+    <string name="provider_finnhub_free_tier_desc">Free plan: 60 req/min</string>
+    <string name="provider_exchange_name">ExchangeRate-API</string>
+    <string name="provider_exchange_free_tier_desc">Free plan: 1000 req/month</string>
+    <string name="action_get_api_key">Get Key</string>
+    <string name="quick_start_title">Quick Start Guide</string>
+    <string name="quick_start_step_1">1. Tap "Get Key" above</string>
+    <string name="quick_start_step_2">2. Sign up for a free account on the official site</string>
+    <string name="quick_start_step_3">3. Copy your API key</string>
+    <string name="quick_start_step_4">4. Return and paste the key into the app</string>
+    <string name="action_view_detailed_guide">View Detailed Guide</string>
+    <string name="settings_api_key_tip_after_setup">After setting API keys, you can start tracking assets and getting real-time data!</string>
+
+    <string name="onboarding_api_key_setup_title">API Key Setup</string>
+    <string name="onboarding_api_key_setup_desc">To fetch real-time financial data, you need to set up API keys</string>
+    <string name="onboarding_api_key_why_title">Why API keys?</string>
+    <string name="onboarding_api_key_why_desc">API keys allow us to securely fetch real-time stock prices and exchange rates from data providers, ensuring that the data you see is up-to-date and accurate.</string>
+    <string name="onboarding_api_key_steps_title">How to get API keys:</string>
+    <string name="onboarding_api_key_step_title_1">Choose a data provider</string>
+    <string name="onboarding_api_key_step_desc_1">We support Finnhub, Alpha Vantage, etc.</string>
+    <string name="onboarding_api_key_step_title_2">Register an account</string>
+    <string name="onboarding_api_key_step_desc_2">Sign up on the official website</string>
+    <string name="onboarding_api_key_step_title_3">Get the key</string>
+    <string name="onboarding_api_key_step_desc_3">Copy your API key</string>
+    <string name="onboarding_api_key_step_title_4">Paste to app</string>
+    <string name="onboarding_api_key_step_desc_4">Paste the key back into the app</string>
+    <string name="onboarding_api_key_security_tip">Your API keys are stored securely on-device, and can optionally be synced to Google Password Manager</string>
+    <string name="action_go_to_set_api_key">Go set API key</string>
+    <string name="action_setup_later">Set up later</string>
+    <string name="action_continue_tour">Continue</string>
+
+    <string name="gpm_title">Google Password Manager</string>
+    <string name="gpm_intro_title">Make your API keys safer and more convenient!</string>
+    <string name="gpm_feature_autosave_title">🔐 Auto-save API keys</string>
+    <string name="gpm_feature_autosave_desc">When you enter API keys, Google Password Manager will prompt to save automatically.</string>
+    <string name="gpm_feature_autofill_title">⚡ One-tap autofill</string>
+    <string name="gpm_feature_autofill_desc">Next time, simply tap the input field to autofill saved API keys.</string>
+    <string name="gpm_feature_sync_title">🔄 Cross-device sync</string>
+    <string name="gpm_feature_sync_desc">Your API keys are securely synced across devices signed in with the same Google account.</string>
+    <string name="gpm_how_to_title">How to use:</string>
+    <string name="gpm_step_1">1. Enter your API key in Settings</string>
+    <string name="gpm_step_2">2. The system will prompt to save to Google Password Manager</string>
+    <string name="gpm_step_3">3. Choose "Save" to store the key securely</string>
+    <string name="gpm_step_4">4. Next time, tap the input to autofill</string>
+    <string name="action_maybe_later">Maybe later</string>
+    <string name="action_enable_autofill">Enable Autofill</string>
+    <string name="gpm_info_title">Google Password Manager</string>
+    <string name="gpm_info_body">Saving your API keys to Google Password Manager allows secure storage and cross-device sync. You can enable autofill for quick input next time.</string>
+
+    <string name="api_key_validation_failed_title">%1$s API key validation failed</string>
+    <string name="suggestions_title">Suggestions:</string>
+    <string name="action_retry_validation">Retry</string>
+    <string name="action_view_guide">View Guide</string>
+    <string name="action_close">Close</string>
+
+    <!-- Enhanced Backup Settings -->
+    <string name="backup_enhanced_title">Enhanced Backup Settings</string>
+    <string name="backup_enhanced_desc">Choose your backup strategy for API keys and financial data.</string>
+    <string name="backup_current_strategy_label">Current Strategy:</string>
+    <string name="backup_android_auto_backup_label">Android Auto Backup</string>
+    <string name="backup_gpm_label">Google Password Manager</string>
+    <string name="backup_availability_available">Available</string>
+    <string name="backup_availability_not_available">Not Available</string>
+    <string name="backup_stored_in_gpm">Stored in Google Password Manager: %1$s</string>
+    <string name="backup_gpm_info_button">Google Password Manager Info</string>
+    <string name="backup_recommendations_button">Recommendations</string>
+    <string name="backup_recommendations_title">Backup Recommendations</string>
+    <string name="backup_recommendations_intro">Based on your current setup, here are our recommendations:</string>
+    <string name="backup_rec_enable_local_backup">• Enable Android Auto Backup for automatic local backup of your financial data</string>
+    <string name="backup_rec_sign_in_gpm">• Sign in to your Google account to use Google Password Manager for API key backup</string>
+    <string name="backup_rec_gpm_unavailable">• Google Password Manager is not available. Consider using Android Auto Backup instead</string>
+    <string name="backup_rec_backup_regularly">• Regularly backup your API keys to prevent data loss</string>
+    <string name="backup_rec_keep_device_updated">• Keep your device updated for the latest security features</string>
+    <string name="backup_strategy_no_backup">No Backup</string>
+    <string name="backup_strategy_local_only">Local Only</string>
+    <string name="backup_strategy_google_only">Google Only</string>
+    <string name="backup_strategy_dual_backup">Dual Backup</string>
+    <string name="backup_last_backup_times">Last Backup Times</string>
+    <string name="backup_local_backup_time">Local:</string>
+    <string name="backup_gpm_backup_time">GPM:</string>
+    <string name="backup_time_just_now">Just now</string>
+    <string name="backup_time_minutes_ago">%1$d minutes ago</string>
+    <string name="backup_time_hours_ago">%1$d hours ago</string>
+    <string name="backup_time_days_ago">%1$d days ago</string>
+    <string name="gpm_info_available_signed_in">Google Password Manager is available and you are signed in. Your API keys can be securely stored and synced across your devices.</string>
+    <string name="gpm_info_available_not_signed_in">Google Password Manager is available but you need to sign in to your Google account to use this feature.</string>
+    <string name="gpm_info_unavailable">Google Password Manager is not available on this device. You can still use Android Auto Backup for local backup.</string>
+    <string name="gpm_sign_in_instruction">To sign in, go to your device Settings &gt; Google &gt; Sign in to your Google account.</string>
+    <string name="ok">OK</string>
+
+    <!-- Debug -->
+    <string name="debug_clipboard_label">Debug Logs</string>
 </resources>

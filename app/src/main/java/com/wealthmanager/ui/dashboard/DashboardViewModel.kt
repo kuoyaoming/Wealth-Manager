@@ -10,6 +10,9 @@ import com.wealthmanager.data.service.ApiStatusManager
 import com.wealthmanager.data.service.MarketDataService
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.security.KeyRepository
+import com.wealthmanager.ui.sync.SyncFeedbackManager
+import com.wealthmanager.ui.sync.SyncType
+import com.wealthmanager.util.NetworkUtils
 import com.wealthmanager.wear.WearSyncManager
 import com.wealthmanager.wear.WearSyncManager.ManualSyncResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -48,6 +51,8 @@ class DashboardViewModel
         private val apiStatusManager: ApiStatusManager,
         private val wearSyncManager: WearSyncManager,
         private val keyRepository: KeyRepository,
+        val syncFeedbackManager: SyncFeedbackManager,
+        private val networkUtils: NetworkUtils,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(DashboardUiState())
         val uiState: StateFlow<DashboardUiState> = _uiState.asStateFlow()
@@ -148,6 +153,12 @@ class DashboardViewModel
             _uiState.value = _uiState.value.copy(isLoading = true)
             apiStatusManager.setRetrying(true)
 
+            // 開始同步操作
+            syncFeedbackManager.startSync(
+                type = SyncType.MANUAL_REFRESH,
+                description = "Refreshing data"
+            )
+
             viewModelScope.launch {
                 try {
                     // Check if we have any assets that need updating
@@ -156,11 +167,71 @@ class DashboardViewModel
 
                     debugLogManager.log("DASHBOARD", "Asset check - Stock assets: ${stockAssets.size}")
 
+                    var itemsUpdated = 0
+
                     // Smart update: only update market data when needed
                     if (hasStockAssets) {
                         debugLogManager.log("DASHBOARD", "Updating exchange rates and stock prices")
-                        marketDataService.updateExchangeRates()
-                        marketDataService.updateStockPrices()
+                        
+                        // 開始市場數據同步
+                        syncFeedbackManager.startSync(
+                            type = SyncType.MARKET_DATA,
+                            description = "Syncing market data"
+                        )
+                        
+                        val hasNetwork = networkUtils.hasNetworkConnection()
+                        debugLogManager.log("DASHBOARD", "Network available: $hasNetwork")
+                        
+                        try {
+                            marketDataService.updateExchangeRates()
+                            marketDataService.updateStockPrices()
+                            
+                            // 計算更新的項目數量（這裡簡化為股票數量）
+                            itemsUpdated = stockAssets.size
+                            
+                            if (hasNetwork) {
+                                syncFeedbackManager.syncSuccess(
+                                    type = SyncType.MARKET_DATA,
+                                    message = "Market data updated successfully",
+                                    itemsUpdated = itemsUpdated
+                                )
+                            } else {
+                                // 沒有網路但使用了緩存數據
+                                syncFeedbackManager.syncSuccess(
+                                    type = SyncType.MARKET_DATA,
+                                    message = "Using cached data (no internet connection)",
+                                    itemsUpdated = itemsUpdated
+                                )
+                            }
+                        } catch (e: Exception) {
+                            // 檢查是否為網路錯誤
+                            val isNetworkError = e.message?.contains("network", ignoreCase = true) == true ||
+                                e.message?.contains("connection", ignoreCase = true) == true ||
+                                e.message?.contains("timeout", ignoreCase = true) == true
+                            
+                            if (isNetworkError && !hasNetwork) {
+                                // 沒有網路且無法使用緩存
+                                syncFeedbackManager.syncFailure(
+                                    type = SyncType.MARKET_DATA,
+                                    message = "No internet connection and no cached data available",
+                                    canRetry = true
+                                )
+                            } else if (isNetworkError) {
+                                // 有網路但連接失敗
+                                syncFeedbackManager.syncFailure(
+                                    type = SyncType.MARKET_DATA,
+                                    message = "Network connection failed. Please check your internet connection.",
+                                    canRetry = true
+                                )
+                            } else {
+                                // 其他錯誤
+                                syncFeedbackManager.syncFailure(
+                                    type = SyncType.MARKET_DATA,
+                                    message = "Failed to sync market data: ${e.message}",
+                                    canRetry = true
+                                )
+                            }
+                        }
                     } else {
                         debugLogManager.log("DASHBOARD", "No stock assets found, skipping market data update")
                     }
@@ -168,6 +239,13 @@ class DashboardViewModel
                     debugLogManager.log("DASHBOARD", "Market data update completed")
                     apiStatusManager.setApiSuccess()
                     _uiState.value = _uiState.value.copy(isLoading = false)
+                    
+                    // 手動刷新成功
+                    syncFeedbackManager.syncSuccess(
+                        type = SyncType.MANUAL_REFRESH,
+                        message = "Data refreshed successfully",
+                        itemsUpdated = itemsUpdated
+                    )
                 } catch (e: Exception) {
                     debugLogManager.logError("Failed to refresh data: ${e.message}", e)
                     apiStatusManager.setApiError(
@@ -176,6 +254,13 @@ class DashboardViewModel
                         isRetrying = false,
                     )
                     _uiState.value = _uiState.value.copy(isLoading = false)
+
+                    // 同步失敗
+                    syncFeedbackManager.syncFailure(
+                        type = SyncType.MANUAL_REFRESH,
+                        message = "Failed to refresh data: ${e.message}",
+                        canRetry = true
+                    )
 
                     viewModelScope.launch {
                         wearSyncManager.syncTotalsFromDashboard(
@@ -200,6 +285,13 @@ class DashboardViewModel
 
         fun manualSyncToWear() {
             val currentState = _uiState.value
+            
+            // 開始Wear同步
+            syncFeedbackManager.startSync(
+                type = SyncType.WEAR_SYNC,
+                description = "Syncing to Wear"
+            )
+            
             viewModelScope.launch {
                 _manualSyncStatus.value = ManualSyncStatus.InProgress
                 when (
@@ -210,9 +302,29 @@ class DashboardViewModel
                             hasError = false,
                         )
                 ) {
-                    ManualSyncResult.Success -> _manualSyncStatus.value = ManualSyncStatus.Success
-                    ManualSyncResult.WearAppNotInstalled -> _manualSyncStatus.value = ManualSyncStatus.WearAppMissing
-                    is ManualSyncResult.Failure -> _manualSyncStatus.value = ManualSyncStatus.Failure(result.reason)
+                    ManualSyncResult.Success -> {
+                        _manualSyncStatus.value = ManualSyncStatus.Success
+                        syncFeedbackManager.syncSuccess(
+                            type = SyncType.WEAR_SYNC,
+                            message = "Wear sync completed"
+                        )
+                    }
+                    ManualSyncResult.WearAppNotInstalled -> {
+                        _manualSyncStatus.value = ManualSyncStatus.WearAppMissing
+                        syncFeedbackManager.syncFailure(
+                            type = SyncType.WEAR_SYNC,
+                            message = "Wear app not installed",
+                            canRetry = false
+                        )
+                    }
+                    is ManualSyncResult.Failure -> {
+                        _manualSyncStatus.value = ManualSyncStatus.Failure(result.reason)
+                        syncFeedbackManager.syncFailure(
+                            type = SyncType.WEAR_SYNC,
+                            message = "Wear sync failed: ${result.reason}",
+                            canRetry = true
+                        )
+                    }
                 }
             }
         }

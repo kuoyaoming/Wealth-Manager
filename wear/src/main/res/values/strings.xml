@@ -10,7 +10,7 @@
     <string name="tile_last_updated_format">%1$s %2$s</string>
     <string name="tile_tap_to_open">Tap to open</string>
     <string name="tile_error">Data error</string>
-    <string name="tile_loading">Loading...</string>
+    <string name="tile_loading">Loading…</string>
     <string name="tile_retry">Retry</string>
 
     <string name="wear_home_title">Wealth Manager</string>
@@ -18,7 +18,7 @@
     <string name="wear_home_sync_button">Sync now</string>
     <string name="wear_home_sync_success">Sync successful</string>
     <string name="wear_home_sync_failure">Sync failed, please try again later</string>
-    <string name="wear_home_sync_progress">Syncing...</string>
+    <string name="wear_home_sync_progress">Syncing…</string>
     <string name="wear_home_tile_hint">If you do not see the Total Assets Tile, add it and then sync.</string>
     <string name="wear_home_tile_added">Tile enabled. Total assets will update automatically in the background.</string>
 </resources>

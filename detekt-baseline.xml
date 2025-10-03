@@ -1,6 +1,1001 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<baseline version="1.23.4">
-  <!-- This file contains all the current violations in the codebase -->
-  <!-- It will be updated as we fix issues -->
-  <!-- New violations will be reported, existing ones will be ignored -->
-</baseline>
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ClassOrdering:AndroidKeystoreManager.kt$AndroidKeystoreManager$Companion</ID>
+    <ID>ClassOrdering:ApiProviderService.kt$ApiProviderService$Companion</ID>
+    <ID>ClassOrdering:ApiRetryManager.kt$ApiRetryManager$Companion</ID>
+    <ID>ClassOrdering:ApiUsageManager.kt$ApiUsageManager$Companion</ID>
+    <ID>ClassOrdering:BackupPreferencesManager.kt$BackupPreferencesManager$Companion</ID>
+    <ID>ClassOrdering:BiometricProtectionManager.kt$BiometricProtectionManager$Companion</ID>
+    <ID>ClassOrdering:CacheManager.kt$CacheManager$Companion</ID>
+    <ID>ClassOrdering:CredentialManagerService.kt$CredentialManagerService$Companion</ID>
+    <ID>ClassOrdering:DeveloperKeyManager.kt$DeveloperKeyManager$Companion</ID>
+    <ID>ClassOrdering:FirstLaunchManager.kt$FirstLaunchManager$Companion</ID>
+    <ID>ClassOrdering:KeyValidator.kt$KeyValidator$Companion</ID>
+    <ID>ClassOrdering:NumberFormatter.kt$NumberFormatter$Companion</ID>
+    <ID>ClassOrdering:PerformanceMonitor.kt$PerformanceMonitor$Companion</ID>
+    <ID>ClassOrdering:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$Companion</ID>
+    <ID>ClassOrdering:RequestDeduplicationManager.kt$RequestDeduplicationManager$Companion</ID>
+    <ID>ClassOrdering:SecurityLevelManager.kt$SecurityLevelManager$Companion</ID>
+    <ID>ClassOrdering:SmartCacheStrategy.kt$SmartCacheStrategy$Companion</ID>
+    <ID>ClassOrdering:TwseCacheManager.kt$TwseCacheManager$Companion</ID>
+    <ID>CognitiveComplexMethod:AddAssetDialog.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AddAssetDialog( onDismiss: () -&gt; Unit, cashCurrency: String, cashAmount: String, cashButtonLabelRes: Int, onCurrencyChange: (String) -&gt; Unit, onCashAmountChange: (String) -&gt; Unit, onAddCash: (String, Double) -&gt; Unit, onAddStock: (String, Double) -&gt; Unit, onSearchStocks: (String, String) -&gt; Unit = { _, _ -&gt; }, onSearchQueryChange: (String) -&gt; Unit = {}, searchResults: List&lt;StockSearchItem&gt; = emptyList(), isSearching: Boolean = false, )</ID>
+    <ID>CognitiveComplexMethod:ApiKeyInputField.kt$@Composable fun ApiKeyInputField( value: String, onValueChange: (String) -&gt; Unit, label: String, placeholder: String = stringResource(R.string.settings_api_input_placeholder), isPassword: Boolean = true, showAutofillStatus: Boolean = true, autofillHint: String? = null, onImeAction: (() -&gt; Unit)? = null, textFieldModifier: Modifier = Modifier.fillMaxWidth(), focusRequester: FocusRequester? = null, modifier: Modifier = Modifier, )</ID>
+    <ID>CognitiveComplexMethod:ApiProviderService.kt$ApiProviderService$suspend fun searchStocks( query: String, market: String, ): Flow&lt;SearchResult&gt;</ID>
+    <ID>CognitiveComplexMethod:AssetsViewModel.kt$AssetsViewModel$fun searchStocks(query: String)</ID>
+    <ID>CognitiveComplexMethod:CacheManager.kt$CacheManager$suspend fun getExchangeRate(currencyPair: String): Flow&lt;ExchangeRateResult&gt;</ID>
+    <ID>CognitiveComplexMethod:CacheManager.kt$CacheManager$suspend fun getStockPrice(symbol: String): Flow&lt;StockPriceResult&gt;</ID>
+    <ID>CognitiveComplexMethod:DashboardScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun DashboardScreen( onNavigateToAssets: () -&gt; Unit, onNavigateToSettings: () -&gt; Unit, navController: NavHostController, viewModel: DashboardViewModel = hiltViewModel(), )</ID>
+    <ID>CognitiveComplexMethod:EditAssetDialog.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun EditCashAssetDialog( asset: CashAsset, onDismiss: () -&gt; Unit, onSave: (CashAsset) -&gt; Unit, )</ID>
+    <ID>CognitiveComplexMethod:EnhancedBackupSettingsCard.kt$@Composable fun EnhancedBackupSettingsCard( backupStatus: EnhancedBackupManager.BackupStatus, onLocalBackupToggle: (Boolean) -&gt; Unit, onShowGooglePasswordManagerInfo: () -&gt; Unit, onShowBackupRecommendations: () -&gt; Unit, )</ID>
+    <ID>CognitiveComplexMethod:ErrorRecoveryService.kt$ErrorRecoveryService$suspend fun handleNetworkError( operation: suspend () -&gt; Unit, maxRetries: Int = 3, ): Flow&lt;Result&lt;Unit&gt;&gt;</ID>
+    <ID>CognitiveComplexMethod:MarketDataService.kt$MarketDataService$suspend fun updateStockPrices()</ID>
+    <ID>CognitiveComplexMethod:SecurityLevelDialog.kt$@Composable private fun SecurityLevelOption( level: SecurityLevelManager.SecurityLevel, title: String, description: String, icon: androidx.compose.ui.graphics.vector.ImageVector, isSelected: Boolean, onSelected: () -&gt; Unit, )</ID>
+    <ID>CognitiveComplexMethod:SettingsScreen.kt$@Composable private fun ApiKeyCheckCard( apiTestResults: List&lt;com.wealthmanager.data.service.ApiTestService.ApiTestResult&gt;, isTestingApis: Boolean, onTestApis: () -&gt; Unit, )</ID>
+    <ID>CognitiveComplexMethod:SettingsScreen.kt$@Composable private fun SecurityStatusCard( securityStatus: com.wealthmanager.ui.security.SecurityStatus, onRefresh: () -&gt; Unit, )</ID>
+    <ID>CognitiveComplexMethod:SettingsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SettingsScreen( onNavigateBack: () -&gt; Unit, viewModel: SettingsViewModel = hiltViewModel(), )</ID>
+    <ID>CognitiveComplexMethod:SettingsViewModel.kt$SettingsViewModel$fun setApiKeySecurely( key: String, keyType: String, activity: androidx.fragment.app.FragmentActivity? = null, )</ID>
+    <ID>ConstructorParameterNaming:ExchangeRateApi.kt$ExchangeRateResponse$@SerializedName("base_code") val base_code: String</ID>
+    <ID>ConstructorParameterNaming:ExchangeRateApi.kt$ExchangeRateResponse$@SerializedName("conversion_rates") val conversion_rates: Map&lt;String, Double&gt;</ID>
+    <ID>ConstructorParameterNaming:ExchangeRateApi.kt$ExchangeRateResponse$@SerializedName("terms_of_use") val terms_of_use: String</ID>
+    <ID>ConstructorParameterNaming:ExchangeRateApi.kt$ExchangeRateResponse$@SerializedName("time_last_update_unix") val time_last_update_unix: Long</ID>
+    <ID>ConstructorParameterNaming:ExchangeRateApi.kt$ExchangeRateResponse$@SerializedName("time_last_update_utc") val time_last_update_utc: String</ID>
+    <ID>ConstructorParameterNaming:ExchangeRateApi.kt$ExchangeRateResponse$@SerializedName("time_next_update_unix") val time_next_update_unix: Long</ID>
+    <ID>ConstructorParameterNaming:ExchangeRateApi.kt$ExchangeRateResponse$@SerializedName("time_next_update_utc") val time_next_update_utc: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("Change") val Change: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("ClosingPrice") val ClosingPrice: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("Code") val Code: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("Date") val Date: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("HighestPrice") val HighestPrice: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("LowestPrice") val LowestPrice: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("Name") val Name: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("OpeningPrice") val OpeningPrice: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("TradeValue") val TradeValue: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("TradeVolume") val TradeVolume: String</ID>
+    <ID>ConstructorParameterNaming:TwseModels.kt$TwseStockItem$@SerializedName("Transaction") val Transaction: String</ID>
+    <ID>CyclomaticComplexMethod:AddAssetDialog.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AddAssetDialog( onDismiss: () -&gt; Unit, cashCurrency: String, cashAmount: String, cashButtonLabelRes: Int, onCurrencyChange: (String) -&gt; Unit, onCashAmountChange: (String) -&gt; Unit, onAddCash: (String, Double) -&gt; Unit, onAddStock: (String, Double) -&gt; Unit, onSearchStocks: (String, String) -&gt; Unit = { _, _ -&gt; }, onSearchQueryChange: (String) -&gt; Unit = {}, searchResults: List&lt;StockSearchItem&gt; = emptyList(), isSearching: Boolean = false, )</ID>
+    <ID>CyclomaticComplexMethod:AssetsViewModel.kt$AssetsViewModel$fun searchStocks(query: String)</ID>
+    <ID>CyclomaticComplexMethod:MarketDataService.kt$MarketDataService$private fun analyzeApiErrorMessage(errorMessage: String): SearchErrorType</ID>
+    <ID>CyclomaticComplexMethod:SearchResultHandler.kt$SearchResultHandler$@Composable fun getSearchResultMessage(searchResult: SearchResult): String</ID>
+    <ID>CyclomaticComplexMethod:SecurityLevelManager.kt$SecurityLevelManager$fun checkFeaturePermission(feature: SecurityFeature): FeaturePermission</ID>
+    <ID>CyclomaticComplexMethod:SettingsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SettingsScreen( onNavigateBack: () -&gt; Unit, viewModel: SettingsViewModel = hiltViewModel(), )</ID>
+    <ID>DataClassShouldBeImmutable:SmartCacheStrategy.kt$SmartCacheStrategy.DataAccessStats$var accessCount: Int = 0</ID>
+    <ID>DataClassShouldBeImmutable:SmartCacheStrategy.kt$SmartCacheStrategy.DataAccessStats$var averageInterval: Long = 0L</ID>
+    <ID>DataClassShouldBeImmutable:SmartCacheStrategy.kt$SmartCacheStrategy.DataAccessStats$var cacheStrategy: CacheStrategy = CacheStrategy.NORMAL</ID>
+    <ID>DataClassShouldBeImmutable:SmartCacheStrategy.kt$SmartCacheStrategy.DataAccessStats$var lastAccessTime: Long = 0L</ID>
+    <ID>EmptyCatchBlock:ApiKeyGuideDialog.kt${ }</ID>
+    <ID>EmptyClassBlock:ApiProviderService.kt$ApiProviderService.Companion${}</ID>
+    <ID>EmptyFinallyBlock:SecureApiKeyManager.kt$SecureApiKeyManager${ }</ID>
+    <ID>ExplicitGarbageCollectionCall:MainActivity.kt$MainActivity$gc()</ID>
+    <ID>ExplicitGarbageCollectionCall:PerformanceMonitor.kt$PerformanceMonitor$gc()</ID>
+    <ID>ExpressionBodySyntax:ApiTestService.kt$ApiTestService$return secureApiKeyManager.validateKeyStrength(key, keyType)</ID>
+    <ID>ExpressionBodySyntax:ApiUsageManager.kt$ApiUsageManager$return if (isPremiumTier) PREMIUM_MIN_REQUEST_INTERVAL_MS else MIN_REQUEST_INTERVAL_MS</ID>
+    <ID>ExpressionBodySyntax:ApiUsageManager.kt$ApiUsageManager$return if (isPremiumTier) PREMIUM_TIER_REQUESTS_PER_DAY else FREE_TIER_REQUESTS_PER_DAY</ID>
+    <ID>ExpressionBodySyntax:ApiUsageManager.kt$ApiUsageManager$return if (isPremiumTier) PREMIUM_TIER_REQUESTS_PER_MINUTE else FREE_TIER_REQUESTS_PER_MINUTE</ID>
+    <ID>ExpressionBodySyntax:ApiUsageManager.kt$ApiUsageManager$return maxOf(0, getDailyLimit() - requestsToday.get())</ID>
+    <ID>ExpressionBodySyntax:ApiUsageManager.kt$ApiUsageManager$return maxOf(0, getMinuteLimit() - requestsThisMinute.get())</ID>
+    <ID>ExpressionBodySyntax:AuthStateManager.kt$AuthStateManager$return prefs.getBoolean(BIOMETRIC_ENABLED_KEY, true)</ID>
+    <ID>ExpressionBodySyntax:AuthStateManager.kt$AuthStateManager$return prefs.getLong(AUTH_TIMESTAMP_KEY, 0L)</ID>
+    <ID>ExpressionBodySyntax:BackupPreferencesManager.kt$BackupPreferencesManager$return prefs.getBoolean(KEY_FINANCIAL_BACKUP_ENABLED, false)</ID>
+    <ID>ExpressionBodySyntax:BiometricFallbackDialog.kt$return remember { BiometricFallbackState() }</ID>
+    <ID>ExpressionBodySyntax:CacheManager.kt$CacheManager$return System.currentTimeMillis() - lastUpdated &gt; expiryMs</ID>
+    <ID>ExpressionBodySyntax:CacheManager.kt$CacheManager.CacheEntry$return System.currentTimeMillis() - timestamp &gt; STALE_DATA_THRESHOLD_MS</ID>
+    <ID>ExpressionBodySyntax:CacheManager.kt$CacheManager.CacheEntry$return System.currentTimeMillis() - timestamp &gt; expiryMs</ID>
+    <ID>ExpressionBodySyntax:CredentialManagerService.kt$CredentialManagerService$return "${APP_IDENTIFIER}_${keyType}_${System.currentTimeMillis()}"</ID>
+    <ID>ExpressionBodySyntax:DatabaseModule.kt$DatabaseModule$return BiometricAuthManager()</ID>
+    <ID>ExpressionBodySyntax:DatabaseModule.kt$DatabaseModule$return WealthManagerDatabase.getDatabase(context)</ID>
+    <ID>ExpressionBodySyntax:DatabaseModule.kt$DatabaseModule$return database.cashAssetDao()</ID>
+    <ID>ExpressionBodySyntax:DatabaseModule.kt$DatabaseModule$return database.exchangeRateDao()</ID>
+    <ID>ExpressionBodySyntax:DatabaseModule.kt$DatabaseModule$return database.stockAssetDao()</ID>
+    <ID>ExpressionBodySyntax:DebugLogManager.kt$DebugLogManager$return BuildConfig.DEBUG</ID>
+    <ID>ExpressionBodySyntax:DebugLogManager.kt$DebugLogManager$return logs.joinToString("\n")</ID>
+    <ID>ExpressionBodySyntax:EnhancedBackupManager.kt$EnhancedBackupManager$return backupPreferencesManager.isFinancialBackupEnabled()</ID>
+    <ID>ExpressionBodySyntax:EnhancedBackupManager.kt$EnhancedBackupManager$return credentialManagerService.isGooglePasswordManagerAvailable()</ID>
+    <ID>ExpressionBodySyntax:EnhancedKeyRepository.kt$EnhancedKeyRepository$return !getLocalExchangeKey().isNullOrBlank()</ID>
+    <ID>ExpressionBodySyntax:EnhancedKeyRepository.kt$EnhancedKeyRepository$return !getLocalFinnhubKey().isNullOrBlank()</ID>
+    <ID>ExpressionBodySyntax:EnhancedKeyRepository.kt$EnhancedKeyRepository$return androidKeystoreManager.isAuthenticationRequired()</ID>
+    <ID>ExpressionBodySyntax:EnhancedKeyRepository.kt$EnhancedKeyRepository$return androidKeystoreManager.isKeystoreAvailable()</ID>
+    <ID>ExpressionBodySyntax:EnhancedKeyRepository.kt$EnhancedKeyRepository$return keyValidator.generateKeyStrengthSuggestions(validationResult)</ID>
+    <ID>ExpressionBodySyntax:EnhancedKeyRepository.kt$EnhancedKeyRepository$return keyValidator.validateApiKey(key.trim(), keyType)</ID>
+    <ID>ExpressionBodySyntax:FirstLaunchManager.kt$FirstLaunchManager$return isFirstLaunch()</ID>
+    <ID>ExpressionBodySyntax:FirstLaunchManager.kt$FirstLaunchManager$return isFirstLaunch() &amp;&amp; !hasGooglePasswordManagerOnboardingBeenShown()</ID>
+    <ID>ExpressionBodySyntax:FirstLaunchManager.kt$FirstLaunchManager$return sharedPreferences.getBoolean(KEY_ABOUT_DIALOG_SHOWN, false)</ID>
+    <ID>ExpressionBodySyntax:FirstLaunchManager.kt$FirstLaunchManager$return sharedPreferences.getBoolean(KEY_FIRST_LAUNCH, true)</ID>
+    <ID>ExpressionBodySyntax:FirstLaunchManager.kt$FirstLaunchManager$return sharedPreferences.getBoolean(KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN, false)</ID>
+    <ID>ExpressionBodySyntax:HapticFeedbackManager.kt$HapticFeedbackModule$return HapticFeedbackManager()</ID>
+    <ID>ExpressionBodySyntax:HapticFeedbackManager.kt$return remember { HapticFeedbackManager() }</ID>
+    <ID>ExpressionBodySyntax:HighRefreshRateComponents.kt$return rememberLazyListState()</ID>
+    <ID>ExpressionBodySyntax:KeyRepository.kt$KeyRepository$return androidKeystoreManager.isAuthenticationRequired()</ID>
+    <ID>ExpressionBodySyntax:KeyRepository.kt$KeyRepository$return androidKeystoreManager.isKeystoreAvailable()</ID>
+    <ID>ExpressionBodySyntax:KeyRepository.kt$KeyRepository$return keyValidator.generateKeyStrengthSuggestions(validationResult)</ID>
+    <ID>ExpressionBodySyntax:KeyRepository.kt$KeyRepository$return keyValidator.validateApiKey(key.trim(), keyType)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return AndroidKeystoreManager(context, debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return ApiDiagnostic(context, debugLogManager, keyRepository)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return ApiErrorHandler(debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return ApiRetryManager(debugLogManager, apiErrorHandler)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return ApiStatusManager(debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return BiometricProtectionManager(context, debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return CacheManager(assetRepository, debugLogManager, smartCacheStrategy)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return DataValidator(debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return KeyValidator(debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return NumberFormatter()</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return PerformanceMonitor120Hz(debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return RequestDeduplicationManager(debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return SmartCacheStrategy(debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return TwseCacheManager(debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return TwseDataParser(debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return com.wealthmanager.security.DeveloperKeyManager(context, debugLogManager)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return context</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return exchangeRateRetrofit.create(ExchangeRateApi::class.java)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return finnhubRetrofit.create(FinnhubApi::class.java)</ID>
+    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return twseRetrofit.create(TwseApi::class.java)</ID>
+    <ID>ExpressionBodySyntax:OnboardingManager.kt$OnboardingManager$return firstLaunchManager.shouldShowGooglePasswordManagerOnboarding()</ID>
+    <ID>ExpressionBodySyntax:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$return currentRefreshRate &gt;= 120f</ID>
+    <ID>ExpressionBodySyntax:RequestDeduplicationManager.kt$RequestDeduplicationManager$return "${requestType}_${requestKey}_${System.currentTimeMillis()}"</ID>
+    <ID>ExpressionBodySyntax:SecurityLevelManager.kt$SecurityLevelManager$return prefs.getBoolean(KEY_FALLBACK_MODE, false)</ID>
+    <ID>ExpressionBodySyntax:SettingsViewModel.kt$SettingsViewModel$return _uiState.value.backupRecommendations</ID>
+    <ID>ExpressionBodySyntax:SettingsViewModel.kt$SettingsViewModel$return _uiState.value.backupStatus</ID>
+    <ID>ExpressionBodySyntax:TwseCacheManager.kt$TwseCacheManager$return System.currentTimeMillis() - cacheTimestamp</ID>
+    <ID>ExpressionBodySyntax:TwseDataParser.kt$TwseDataParser$return data.isNotEmpty()</ID>
+    <ID>ExpressionBodySyntax:TwseDataParser.kt$TwseDataParser$return symbol.removeSuffix(".TW").removeSuffix(":TW")</ID>
+    <ID>ExpressionBodySyntax:TwseDataParserTest.kt$return Mockito.mock(DebugLogManager::class.java)</ID>
+    <ID>ExpressionBodySyntax:WearSyncManager.kt$WearSyncManager$return preferences.getInt("sync_success_count", 0)</ID>
+    <ID>ForbiddenComment:DashboardScreen.kt$// TODO: Navigate to asset details or show details dialog</ID>
+    <ID>ForbiddenComment:SettingsScreen.kt$// TODO: Show Google Password Manager info dialog</ID>
+    <ID>ForbiddenComment:SettingsScreen.kt$// TODO: Show backup recommendations dialog</ID>
+    <ID>ForbiddenComment:SettingsScreen.kt$// TODO: 實現重新驗證邏輯</ID>
+    <ID>ForbiddenComment:TreemapChartComponent.kt$// TODO: Implement proper text drawing with Compose Canvas</ID>
+    <ID>ForbiddenComment:WearSyncManager.kt$WearSyncManager$// TODO: Implement battery optimization check for future sync optimizations</ID>
+    <ID>ForbiddenComment:WearSyncManager.kt$WearSyncManager$// TODO: Implement network availability check for future sync optimizations</ID>
+    <ID>FunctionMaxLength:CredentialManagerService.kt$CredentialManagerService$suspend fun getApiKeyFromGooglePasswordManager(keyType: String): Result&lt;String?&gt;</ID>
+    <ID>FunctionMaxLength:CredentialManagerService.kt$CredentialManagerService$suspend fun isGooglePasswordManagerAvailable(): Boolean</ID>
+    <ID>FunctionMaxLength:CredentialManagerService.kt$CredentialManagerService$suspend fun saveApiKeyToGooglePasswordManager( keyType: String, apiKey: String, username: String = USERNAME_PREFIX, ): Result&lt;Unit&gt;</ID>
+    <ID>FunctionMaxLength:EnhancedBackupManager.kt$EnhancedBackupManager$suspend fun isGooglePasswordManagerAvailable(): Boolean</ID>
+    <ID>FunctionMaxLength:EnhancedBackupSettingsCard.kt$@Composable private fun GooglePasswordManagerInfoDialog( onDismiss: () -&gt; Unit, isAvailable: Boolean, isSignedIn: Boolean, )</ID>
+    <ID>FunctionMaxLength:FirstLaunchManager.kt$FirstLaunchManager$fun hasGooglePasswordManagerOnboardingBeenShown(): Boolean</ID>
+    <ID>FunctionMaxLength:FirstLaunchManager.kt$FirstLaunchManager$fun markGooglePasswordManagerOnboardingShown()</ID>
+    <ID>FunctionMaxLength:FirstLaunchManager.kt$FirstLaunchManager$fun shouldShowGooglePasswordManagerOnboarding(): Boolean</ID>
+    <ID>FunctionMaxLength:GooglePasswordManagerOnboardingDialog.kt$@Composable fun GooglePasswordManagerOnboardingDialog( onDismiss: () -&gt; Unit, onEnableAutoFill: () -&gt; Unit, )</ID>
+    <ID>FunctionMaxLength:HighRefreshRateComponents.kt$@Composable fun &lt;T&gt; rememberHighRefreshRateAnimatedVisibility( targetState: T, content: @Composable (T) -&gt; Unit, ): T</ID>
+    <ID>FunctionMaxLength:HighRefreshRateComponents.kt$@Composable fun &lt;T&gt; rememberHighRefreshRatePageTransition( targetPage: T, content: @Composable (T) -&gt; Unit, )</ID>
+    <ID>FunctionMaxLength:HighRefreshRateComponents.kt$@Composable fun HighRefreshRateProgressIndicator( isVisible: Boolean, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionMaxLength:HighRefreshRateComponents.kt$@Composable fun rememberHighRefreshRateScrollState(): LazyListState</ID>
+    <ID>FunctionMaxLength:NetworkModule.kt$NetworkModule$@Provides @Singleton fun provideBiometricProtectionManager( @ApplicationContext context: Context, debugLogManager: com.wealthmanager.debug.DebugLogManager, ): BiometricProtectionManager</ID>
+    <ID>FunctionMaxLength:NetworkModule.kt$NetworkModule$@Provides @Singleton fun provideRequestDeduplicationManager( debugLogManager: com.wealthmanager.debug.DebugLogManager, ): RequestDeduplicationManager</ID>
+    <ID>FunctionMaxLength:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$fun getRecommendedAnimationDuration(): Int</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test getSearchResults with error results`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test getSearchResults with success results`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isApiLimitError with API limit error type`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isApiLimitError with API limit reached`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isErrorState with empty success results`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isErrorState with non-empty success results`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isStockNotFoundError with empty success results`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isStockNotFoundError with stock not found reason`()</ID>
+    <ID>FunctionMaxLength:TwseDataParserTest.kt$TwseDataParserTest$@Test fun cleanTaiwanStockSymbol_removesSuffixes()</ID>
+    <ID>FunctionMaxLength:TwseDataParserTest.kt$TwseDataParserTest$@Test fun findStockFromAllData_returnsConvertedData_whenPresent()</ID>
+    <ID>FunctionMaxLength:TwseDataParserTest.kt$TwseDataParserTest$@Test fun findStockFromAllData_returnsNull_whenMissing()</ID>
+    <ID>FunctionMaxLength:TwseDataParserTest.kt$TwseDataParserTest$@Test fun validateTwseResponse_checksNonEmpty()</ID>
+    <ID>FunctionNaming:AboutDialog.kt$@Composable fun AboutDialog( onDismiss: () -&gt; Unit, firstLaunchManager: FirstLaunchManager? = null, )</ID>
+    <ID>FunctionNaming:AboutDialog.kt$@Composable private fun ApiKeyGuideEntrySection(onShowGuide: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:AboutDialog.kt$@Composable private fun AppVersionSection()</ID>
+    <ID>FunctionNaming:AboutDialog.kt$@Composable private fun DataUsageSection()</ID>
+    <ID>FunctionNaming:AboutDialog.kt$@Composable private fun PrivacyPolicySection()</ID>
+    <ID>FunctionNaming:AboutDialog.kt$@Composable private fun SecurityComplianceSection()</ID>
+    <ID>FunctionNaming:AboutDialog.kt$@Composable private fun ThirdPartyApiSection()</ID>
+    <ID>FunctionNaming:AddAssetDialog.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AddAssetDialog( onDismiss: () -&gt; Unit, cashCurrency: String, cashAmount: String, cashButtonLabelRes: Int, onCurrencyChange: (String) -&gt; Unit, onCashAmountChange: (String) -&gt; Unit, onAddCash: (String, Double) -&gt; Unit, onAddStock: (String, Double) -&gt; Unit, onSearchStocks: (String, String) -&gt; Unit = { _, _ -&gt; }, onSearchQueryChange: (String) -&gt; Unit = {}, searchResults: List&lt;StockSearchItem&gt; = emptyList(), isSearching: Boolean = false, )</ID>
+    <ID>FunctionNaming:ApiErrorBanner.kt$@Composable fun ApiErrorBanner( errorMessage: String, isRetrying: Boolean, isDataStale: Boolean, onRetry: () -&gt; Unit, onDismiss: () -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:ApiKeyEmptyStateCard.kt$@Composable fun ApiKeyEmptyStateCard( onGetFinnhubKey: () -&gt; Unit, onGetExchangeKey: () -&gt; Unit, onViewGuide: () -&gt; Unit, onStartSetup: () -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:ApiKeyGuideDialog.kt$@Composable fun ApiKeyGuideDialog(onDismiss: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:ApiKeyGuideDialog.kt$@Composable private fun ApiKeyGuideCard( title: String, description: String, features: List&lt;String&gt;, freeLimit: String, onApplyClick: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ApiKeyGuideOnboardingDialog.kt$@Composable fun ApiKeyGuideOnboardingDialog( onNext: () -&gt; Unit, onGoToSettings: () -&gt; Unit, onSkip: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ApiKeyInputField.kt$@Composable fun ApiKeyInputField( value: String, onValueChange: (String) -&gt; Unit, label: String, placeholder: String = stringResource(R.string.settings_api_input_placeholder), isPassword: Boolean = true, showAutofillStatus: Boolean = true, autofillHint: String? = null, onImeAction: (() -&gt; Unit)? = null, textFieldModifier: Modifier = Modifier.fillMaxWidth(), focusRequester: FocusRequester? = null, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:ApiKeyValidationFeedback.kt$@Composable fun ApiKeyValidationFeedback( errorMessage: String?, keyType: String, onRetry: () -&gt; Unit, onViewGuide: () -&gt; Unit, onClearError: () -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:AssetsComponents.kt$@Composable fun CashAssetItem( asset: CashAsset, onEdit: () -&gt; Unit, onDelete: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:AssetsComponents.kt$@Composable fun StockAssetItem( asset: StockAsset, onEdit: () -&gt; Unit, onDelete: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:AssetsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AssetsScreen( onNavigateBack: () -&gt; Unit, viewModel: AssetsViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:BiometricAuthScreen.kt$@Composable fun BiometricAuthScreen( onAuthSuccess: () -&gt; Unit, onSkipAuth: () -&gt; Unit = {}, viewModel: BiometricAuthViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:BiometricFallbackDialog.kt$@Composable fun BiometricFallbackDialog( onDismiss: () -&gt; Unit, onUseFallback: () -&gt; Unit, onRetryBiometric: () -&gt; Unit, title: String = stringResource(R.string.biometric_auth_title), message: String = stringResource(R.string.biometric_auth_subtitle), )</ID>
+    <ID>FunctionNaming:CashAssetItem.kt$@Composable fun CashAssetItem( asset: CashAsset, onEdit: (CashAsset) -&gt; Unit, onDelete: (CashAsset) -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:DashboardComponentsOptimized.kt$@Composable fun CashAssetsCardOptimized( cashValue: Double, totalAssets: Double, isLoading: Boolean, )</ID>
+    <ID>FunctionNaming:DashboardComponentsOptimized.kt$@Composable fun FinancialValueDisplay( value: Double, isPositive: Boolean? = null, isLoading: Boolean = false, )</ID>
+    <ID>FunctionNaming:DashboardComponentsOptimized.kt$@Composable fun PieChartCardOptimized( assets: List&lt;AssetItem&gt;, isLoading: Boolean, )</ID>
+    <ID>FunctionNaming:DashboardComponentsOptimized.kt$@Composable fun StatusIndicator( status: String, isSuccess: Boolean = false, isError: Boolean = false, isWarning: Boolean = false, )</ID>
+    <ID>FunctionNaming:DashboardComponentsOptimized.kt$@Composable fun StockAssetsCardOptimized( stockValue: Double, totalAssets: Double, isLoading: Boolean, )</ID>
+    <ID>FunctionNaming:DashboardComponentsOptimized.kt$@Composable fun TotalAssetsCardOptimized( totalValue: Double, isLoading: Boolean, )</ID>
+    <ID>FunctionNaming:DashboardScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun DashboardScreen( onNavigateToAssets: () -&gt; Unit, onNavigateToSettings: () -&gt; Unit, navController: NavHostController, viewModel: DashboardViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:EditAssetDialog.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun EditCashAssetDialog( asset: CashAsset, onDismiss: () -&gt; Unit, onSave: (CashAsset) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:EditAssetDialog.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun EditStockAssetDialog( asset: StockAsset, onDismiss: () -&gt; Unit, onSave: (StockAsset) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:EnhancedBackupSettingsCard.kt$@Composable fun EnhancedBackupSettingsCard( backupStatus: EnhancedBackupManager.BackupStatus, onLocalBackupToggle: (Boolean) -&gt; Unit, onShowGooglePasswordManagerInfo: () -&gt; Unit, onShowBackupRecommendations: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:EnhancedBackupSettingsCard.kt$@Composable private fun BackupRecommendationsDialog( onDismiss: () -&gt; Unit, backupStatus: EnhancedBackupManager.BackupStatus, )</ID>
+    <ID>FunctionNaming:EnhancedBackupSettingsCard.kt$@Composable private fun GooglePasswordManagerInfoDialog( onDismiss: () -&gt; Unit, isAvailable: Boolean, isSignedIn: Boolean, )</ID>
+    <ID>FunctionNaming:GooglePasswordManagerOnboardingDialog.kt$@Composable fun GooglePasswordManagerOnboardingDialog( onDismiss: () -&gt; Unit, onEnableAutoFill: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:HighRefreshRateComponents.kt$@Composable fun HighRefreshRateButton( onClick: () -&gt; Unit, modifier: Modifier = Modifier, enabled: Boolean = true, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:HighRefreshRateComponents.kt$@Composable fun HighRefreshRateCard( onClick: () -&gt; Unit, modifier: Modifier = Modifier, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:HighRefreshRateComponents.kt$@Composable fun HighRefreshRateListItem( onClick: () -&gt; Unit, modifier: Modifier = Modifier, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:HighRefreshRateComponents.kt$@Composable fun HighRefreshRateProgressIndicator( isVisible: Boolean, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:NotificationPermissionManager.kt$@Composable fun NotificationPermissionSection( modifier: Modifier = Modifier, onPermissionGranted: () -&gt; Unit = {}, onPermissionDenied: () -&gt; Unit = {}, )</ID>
+    <ID>FunctionNaming:NotificationPermissionManager.kt$@Composable fun NotificationPermissionStatus(modifier: Modifier = Modifier)</ID>
+    <ID>FunctionNaming:OnboardingFlow.kt$@Composable fun OnboardingFlow( firstLaunchManager: FirstLaunchManager, onComplete: () -&gt; Unit, onNavigateToSettings: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:PerformanceMonitor.kt$@Composable fun PerformanceTracker( componentName: String, trackMemory: Boolean = false, trackRecomposition: Boolean = false, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:PieChartComponentFixed.kt$@Composable fun PieChartComponentFixed( assets: List&lt;AssetItem&gt;, isLoading: Boolean, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:PieChartComponentFixed.kt$@Composable private fun LegendItemFixed(asset: AssetItem)</ID>
+    <ID>FunctionNaming:ResponsiveLayout.kt$@Composable fun ResponsiveCard( modifier: Modifier = Modifier, content: @Composable ColumnScope.() -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ResponsiveLayout.kt$@Composable fun ResponsiveGrid( modifier: Modifier = Modifier, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ResponsiveLayout.kt$@Composable fun ResponsiveSpacer(size: ResponsiveSpacerSize = ResponsiveSpacerSize.Medium)</ID>
+    <ID>FunctionNaming:SecurityLevelDialog.kt$@Composable fun SecurityLevelDialog( onDismiss: () -&gt; Unit, onSecurityLevelSelected: (SecurityLevelManager.SecurityLevel) -&gt; Unit, currentLevel: SecurityLevelManager.SecurityLevel = SecurityLevelManager.SecurityLevel.HIGH, )</ID>
+    <ID>FunctionNaming:SecurityLevelDialog.kt$@Composable private fun SecurityLevelOption( level: SecurityLevelManager.SecurityLevel, title: String, description: String, icon: androidx.compose.ui.graphics.vector.ImageVector, isSelected: Boolean, onSelected: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun AboutSettingsCard(onShowAbout: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun ApiKeyApplicationCard(onShowGuide: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun ApiKeyCheckCard( apiTestResults: List&lt;com.wealthmanager.data.service.ApiTestService.ApiTestResult&gt;, isTestingApis: Boolean, onTestApis: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun ApiKeyManagementCard( finnhubKeyPreview: String, exchangeKeyPreview: String, lastActionMessage: String, onValidateAndSaveFinnhub: (String) -&gt; Unit, onValidateAndSaveExchange: (String) -&gt; Unit, onClearFinnhub: () -&gt; Unit, onClearExchange: () -&gt; Unit, firstFieldFocusRequester: androidx.compose.ui.focus.FocusRequester? = null, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun BackupSettingsCard( enabled: Boolean, onToggle: (Boolean) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun BiometricSettingsCard( enabled: Boolean, onToggle: (Boolean) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun DeveloperKeyCard(onUseDeveloperKeys: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun HapticFeedbackSettingsCard( hapticEnabled: Boolean, onHapticEnabledChange: (Boolean) -&gt; Unit, soundEnabled: Boolean, onSoundEnabledChange: (Boolean) -&gt; Unit, hapticManager: HapticFeedbackManager, view: android.view.View, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun LanguageSettingsCard( currentLanguageCode: String, languageOptions: List&lt;LanguageOption&gt;, onLanguageSelected: (String) -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun SecurityLevelSettingsCard(onShowSecurityLevelDialog: () -&gt; Unit)</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@Composable private fun SecurityStatusCard( securityStatus: com.wealthmanager.ui.security.SecurityStatus, onRefresh: () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:SettingsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SettingsScreen( onNavigateBack: () -&gt; Unit, viewModel: SettingsViewModel = hiltViewModel(), )</ID>
+    <ID>FunctionNaming:StockAssetItem.kt$@Composable fun StockAssetItem( asset: StockAsset, onEdit: (StockAsset) -&gt; Unit, onDelete: (StockAsset) -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:Theme.kt$@Composable fun WealthManagerTheme( darkTheme: Boolean = isSystemInDarkTheme(), // Dynamic color is available on Android 12+ dynamicColor: Boolean = true, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:ThemeOptimized.kt$@Composable fun WealthManagerThemeOptimized( darkTheme: Boolean = isSystemInDarkTheme(), // Dynamic color is available on Android 12+ dynamicColor: Boolean = true, content: @Composable () -&gt; Unit, )</ID>
+    <ID>FunctionNaming:TreemapChartComponent.kt$@Composable fun TreemapChartComponent( assets: List&lt;AssetItem&gt;, isLoading: Boolean, onAssetClick: (AssetItem) -&gt; Unit = {}, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:TreemapChartComponent.kt$@Composable private fun TreemapCompose( assets: List&lt;AssetItem&gt;, onAssetClick: (AssetItem) -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>FunctionNaming:TreemapChartComponent.kt$@Composable private fun TreemapLegendItem(asset: AssetItem)</ID>
+    <ID>FunctionNaming:WealthManagerNavigation.kt$@Composable fun WealthManagerNavigation( modifier: Modifier = Modifier, navController: NavHostController = rememberNavController(), )</ID>
+    <ID>FunctionNaming:WelcomeOnboardingDialog.kt$@Composable fun WelcomeOnboardingDialog( onNext: () -&gt; Unit, onSkip: () -&gt; Unit, )</ID>
+    <ID>ImplicitDefaultLocale:DashboardComponentsOptimized.kt$String.format("%.1f", percentage)</ID>
+    <ID>ImplicitDefaultLocale:PerformanceMonitor.kt$PerformanceMonitor$String.format("%.1f", memoryUsage)</ID>
+    <ID>ImplicitDefaultLocale:TwseDataParser.kt$TwseDataParser$String.format("%.2f", percent)</ID>
+    <ID>ImplicitDefaultLocale:TwseDataParserTest.kt$TwseDataParserTest$String.format("%.2f", 2.0 / 598.0 * 100.0)</ID>
+    <ID>InstanceOfCheckForException:ApiRetryManager.kt$ApiRetryManager$e is HttpException</ID>
+    <ID>LambdaParameterNaming:AddAssetDialog.kt$_</ID>
+    <ID>LambdaParameterNaming:AssetsScreen.kt$_</ID>
+    <ID>LambdaParameterNaming:CacheManager.kt$CacheManager$_</ID>
+    <ID>LambdaParameterNaming:HighRefreshRateComponents.kt$_</ID>
+    <ID>LambdaParameterNaming:RequestDeduplicationManager.kt$RequestDeduplicationManager$_</ID>
+    <ID>LambdaParameterNaming:SmartCacheStrategy.kt$SmartCacheStrategy$_</ID>
+    <ID>LateinitUsage:MainActivity.kt$MainActivity$@Inject lateinit var firstLaunchManager: FirstLaunchManager</ID>
+    <ID>LateinitUsage:MainActivity.kt$MainActivity$@Inject lateinit var performanceMonitor: PerformanceMonitor120Hz</ID>
+    <ID>LateinitUsage:MobileWearSyncService.kt$MobileWearSyncService$@Inject lateinit var wearSyncManager: WearSyncManager</ID>
+    <ID>LateinitUsage:WealthManagerApplication.kt$WealthManagerApplication$@Inject lateinit var authStateManager: AuthStateManager</ID>
+    <ID>LateinitUsage:WealthManagerApplication.kt$WealthManagerApplication$@Inject lateinit var localePreferencesManager: LocalePreferencesManager</ID>
+    <ID>LongMethod:AboutDialog.kt$@Composable fun AboutDialog( onDismiss: () -&gt; Unit, firstLaunchManager: FirstLaunchManager? = null, )</ID>
+    <ID>LongMethod:AddAssetDialog.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AddAssetDialog( onDismiss: () -&gt; Unit, cashCurrency: String, cashAmount: String, cashButtonLabelRes: Int, onCurrencyChange: (String) -&gt; Unit, onCashAmountChange: (String) -&gt; Unit, onAddCash: (String, Double) -&gt; Unit, onAddStock: (String, Double) -&gt; Unit, onSearchStocks: (String, String) -&gt; Unit = { _, _ -&gt; }, onSearchQueryChange: (String) -&gt; Unit = {}, searchResults: List&lt;StockSearchItem&gt; = emptyList(), isSearching: Boolean = false, )</ID>
+    <ID>LongMethod:ApiErrorBanner.kt$@Composable fun ApiErrorBanner( errorMessage: String, isRetrying: Boolean, isDataStale: Boolean, onRetry: () -&gt; Unit, onDismiss: () -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:ApiKeyEmptyStateCard.kt$@Composable fun ApiKeyEmptyStateCard( onGetFinnhubKey: () -&gt; Unit, onGetExchangeKey: () -&gt; Unit, onViewGuide: () -&gt; Unit, onStartSetup: () -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:ApiKeyGuideDialog.kt$@Composable fun ApiKeyGuideDialog(onDismiss: () -&gt; Unit)</ID>
+    <ID>LongMethod:ApiKeyGuideDialog.kt$@Composable private fun ApiKeyGuideCard( title: String, description: String, features: List&lt;String&gt;, freeLimit: String, onApplyClick: () -&gt; Unit, )</ID>
+    <ID>LongMethod:ApiKeyGuideOnboardingDialog.kt$@Composable fun ApiKeyGuideOnboardingDialog( onNext: () -&gt; Unit, onGoToSettings: () -&gt; Unit, onSkip: () -&gt; Unit, )</ID>
+    <ID>LongMethod:ApiKeyInputField.kt$@Composable fun ApiKeyInputField( value: String, onValueChange: (String) -&gt; Unit, label: String, placeholder: String = stringResource(R.string.settings_api_input_placeholder), isPassword: Boolean = true, showAutofillStatus: Boolean = true, autofillHint: String? = null, onImeAction: (() -&gt; Unit)? = null, textFieldModifier: Modifier = Modifier.fillMaxWidth(), focusRequester: FocusRequester? = null, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:ApiKeyValidationFeedback.kt$@Composable fun ApiKeyValidationFeedback( errorMessage: String?, keyType: String, onRetry: () -&gt; Unit, onViewGuide: () -&gt; Unit, onClearError: () -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:ApiProviderService.kt$ApiProviderService$suspend fun searchStocks( query: String, market: String, ): Flow&lt;SearchResult&gt;</ID>
+    <ID>LongMethod:AssetsComponents.kt$@Composable fun CashAssetItem( asset: CashAsset, onEdit: () -&gt; Unit, onDelete: () -&gt; Unit, )</ID>
+    <ID>LongMethod:AssetsComponents.kt$@Composable fun StockAssetItem( asset: StockAsset, onEdit: () -&gt; Unit, onDelete: () -&gt; Unit, )</ID>
+    <ID>LongMethod:AssetsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun AssetsScreen( onNavigateBack: () -&gt; Unit, viewModel: AssetsViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:AssetsViewModel.kt$AssetsViewModel$fun searchStocks(query: String)</ID>
+    <ID>LongMethod:BiometricAuthScreen.kt$@Composable fun BiometricAuthScreen( onAuthSuccess: () -&gt; Unit, onSkipAuth: () -&gt; Unit = {}, viewModel: BiometricAuthViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:BiometricFallbackDialog.kt$@Composable fun BiometricFallbackDialog( onDismiss: () -&gt; Unit, onUseFallback: () -&gt; Unit, onRetryBiometric: () -&gt; Unit, title: String = stringResource(R.string.biometric_auth_title), message: String = stringResource(R.string.biometric_auth_subtitle), )</ID>
+    <ID>LongMethod:CashAssetItem.kt$@Composable fun CashAssetItem( asset: CashAsset, onEdit: (CashAsset) -&gt; Unit, onDelete: (CashAsset) -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:DashboardScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun DashboardScreen( onNavigateToAssets: () -&gt; Unit, onNavigateToSettings: () -&gt; Unit, navController: NavHostController, viewModel: DashboardViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:EditAssetDialog.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun EditCashAssetDialog( asset: CashAsset, onDismiss: () -&gt; Unit, onSave: (CashAsset) -&gt; Unit, )</ID>
+    <ID>LongMethod:EditAssetDialog.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun EditStockAssetDialog( asset: StockAsset, onDismiss: () -&gt; Unit, onSave: (StockAsset) -&gt; Unit, )</ID>
+    <ID>LongMethod:EnhancedBackupSettingsCard.kt$@Composable fun EnhancedBackupSettingsCard( backupStatus: EnhancedBackupManager.BackupStatus, onLocalBackupToggle: (Boolean) -&gt; Unit, onShowGooglePasswordManagerInfo: () -&gt; Unit, onShowBackupRecommendations: () -&gt; Unit, )</ID>
+    <ID>LongMethod:EnhancedBackupSettingsCard.kt$@Composable private fun BackupRecommendationsDialog( onDismiss: () -&gt; Unit, backupStatus: EnhancedBackupManager.BackupStatus, )</ID>
+    <ID>LongMethod:GooglePasswordManagerOnboardingDialog.kt$@Composable fun GooglePasswordManagerOnboardingDialog( onDismiss: () -&gt; Unit, onEnableAutoFill: () -&gt; Unit, )</ID>
+    <ID>LongMethod:MarketDataService.kt$MarketDataService$suspend fun updateExchangeRates()</ID>
+    <ID>LongMethod:MarketDataService.kt$MarketDataService$suspend fun updateStockPrices()</ID>
+    <ID>LongMethod:NotificationPermissionManager.kt$@Composable fun NotificationPermissionSection( modifier: Modifier = Modifier, onPermissionGranted: () -&gt; Unit = {}, onPermissionDenied: () -&gt; Unit = {}, )</ID>
+    <ID>LongMethod:PieChartComponentFixed.kt$@Composable fun PieChartComponentFixed( assets: List&lt;AssetItem&gt;, isLoading: Boolean, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:SecurityLevelDialog.kt$@Composable fun SecurityLevelDialog( onDismiss: () -&gt; Unit, onSecurityLevelSelected: (SecurityLevelManager.SecurityLevel) -&gt; Unit, currentLevel: SecurityLevelManager.SecurityLevel = SecurityLevelManager.SecurityLevel.HIGH, )</ID>
+    <ID>LongMethod:SecurityLevelDialog.kt$@Composable private fun SecurityLevelOption( level: SecurityLevelManager.SecurityLevel, title: String, description: String, icon: androidx.compose.ui.graphics.vector.ImageVector, isSelected: Boolean, onSelected: () -&gt; Unit, )</ID>
+    <ID>LongMethod:SettingsScreen.kt$@Composable private fun ApiKeyCheckCard( apiTestResults: List&lt;com.wealthmanager.data.service.ApiTestService.ApiTestResult&gt;, isTestingApis: Boolean, onTestApis: () -&gt; Unit, )</ID>
+    <ID>LongMethod:SettingsScreen.kt$@Composable private fun ApiKeyManagementCard( finnhubKeyPreview: String, exchangeKeyPreview: String, lastActionMessage: String, onValidateAndSaveFinnhub: (String) -&gt; Unit, onValidateAndSaveExchange: (String) -&gt; Unit, onClearFinnhub: () -&gt; Unit, onClearExchange: () -&gt; Unit, firstFieldFocusRequester: androidx.compose.ui.focus.FocusRequester? = null, )</ID>
+    <ID>LongMethod:SettingsScreen.kt$@Composable private fun HapticFeedbackSettingsCard( hapticEnabled: Boolean, onHapticEnabledChange: (Boolean) -&gt; Unit, soundEnabled: Boolean, onSoundEnabledChange: (Boolean) -&gt; Unit, hapticManager: HapticFeedbackManager, view: android.view.View, )</ID>
+    <ID>LongMethod:SettingsScreen.kt$@Composable private fun SecurityStatusCard( securityStatus: com.wealthmanager.ui.security.SecurityStatus, onRefresh: () -&gt; Unit, )</ID>
+    <ID>LongMethod:SettingsScreen.kt$@OptIn(ExperimentalMaterial3Api::class) @Composable fun SettingsScreen( onNavigateBack: () -&gt; Unit, viewModel: SettingsViewModel = hiltViewModel(), )</ID>
+    <ID>LongMethod:SettingsViewModel.kt$SettingsViewModel$fun setApiKeySecurely( key: String, keyType: String, activity: androidx.fragment.app.FragmentActivity? = null, )</ID>
+    <ID>LongMethod:StockAssetItem.kt$@Composable fun StockAssetItem( asset: StockAsset, onEdit: (StockAsset) -&gt; Unit, onDelete: (StockAsset) -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:TreemapChartComponent.kt$@Composable fun TreemapChartComponent( assets: List&lt;AssetItem&gt;, isLoading: Boolean, onAssetClick: (AssetItem) -&gt; Unit = {}, modifier: Modifier = Modifier, )</ID>
+    <ID>LongMethod:WealthManagerNavigation.kt$@Composable fun WealthManagerNavigation( modifier: Modifier = Modifier, navController: NavHostController = rememberNavController(), )</ID>
+    <ID>LongMethod:WelcomeOnboardingDialog.kt$@Composable fun WelcomeOnboardingDialog( onNext: () -&gt; Unit, onSkip: () -&gt; Unit, )</ID>
+    <ID>LongParameterList:AddAssetDialog.kt$( onDismiss: () -&gt; Unit, cashCurrency: String, cashAmount: String, cashButtonLabelRes: Int, onCurrencyChange: (String) -&gt; Unit, onCashAmountChange: (String) -&gt; Unit, onAddCash: (String, Double) -&gt; Unit, onAddStock: (String, Double) -&gt; Unit, onSearchStocks: (String, String) -&gt; Unit = { _, _ -&gt; }, onSearchQueryChange: (String) -&gt; Unit = {}, searchResults: List&lt;StockSearchItem&gt; = emptyList(), isSearching: Boolean = false, )</ID>
+    <ID>LongParameterList:ApiErrorBanner.kt$( errorMessage: String, isRetrying: Boolean, isDataStale: Boolean, onRetry: () -&gt; Unit, onDismiss: () -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>LongParameterList:ApiKeyInputField.kt$( value: String, onValueChange: (String) -&gt; Unit, label: String, placeholder: String = stringResource(R.string.settings_api_input_placeholder), isPassword: Boolean = true, showAutofillStatus: Boolean = true, autofillHint: String? = null, onImeAction: (() -&gt; Unit)? = null, textFieldModifier: Modifier = Modifier.fillMaxWidth(), focusRequester: FocusRequester? = null, modifier: Modifier = Modifier, )</ID>
+    <ID>LongParameterList:ApiKeyValidationFeedback.kt$( errorMessage: String?, keyType: String, onRetry: () -&gt; Unit, onViewGuide: () -&gt; Unit, onClearError: () -&gt; Unit, modifier: Modifier = Modifier, )</ID>
+    <ID>LongParameterList:ApiProviderService.kt$ApiProviderService$( private val finnhubApi: FinnhubApi, private val twseApi: TwseApi, private val exchangeRateApi: ExchangeRateApi, private val twseDataParser: TwseDataParser, private val twseCacheManager: TwseCacheManager, private val debugLogManager: DebugLogManager, private val apiDiagnostic: ApiDiagnostic, private val keyRepository: KeyRepository, )</ID>
+    <ID>LongParameterList:MarketDataService.kt$MarketDataService$( private val apiProviderService: ApiProviderService, private val assetRepository: AssetRepository, private val debugLogManager: DebugLogManager, private val cacheManager: CacheManager, private val apiErrorHandler: ApiErrorHandler, private val dataValidator: DataValidator, private val requestDeduplicationManager: RequestDeduplicationManager, private val apiRetryManager: ApiRetryManager, private val numberFormatter: NumberFormatter, )</ID>
+    <ID>LongParameterList:MoneyFormatter.kt$( amount: Double, currencyCode: String, style: MoneyFormatter.Style = MoneyFormatter.Style.CurrencySymbol, moneyContext: MoneyFormatter.MoneyContext? = null, minFractionDigits: Int? = null, maxFractionDigits: Int? = null, )</ID>
+    <ID>LongParameterList:MoneyFormatter.kt$MoneyFormatter$( amount: BigDecimal, currencyCode: String, locale: Locale, style: Style = Style.CurrencySymbol, context: MoneyContext? = null, minFractionDigits: Int? = null, maxFractionDigits: Int? = null, roundingMode: RoundingMode = RoundingMode.HALF_UP, trimTrailingZeros: Boolean = true, )</ID>
+    <ID>LongParameterList:NetworkModule.kt$NetworkModule$( apiProviderService: ApiProviderService, assetRepository: AssetRepository, debugLogManager: com.wealthmanager.debug.DebugLogManager, cacheManager: CacheManager, apiErrorHandler: ApiErrorHandler, dataValidator: DataValidator, requestDeduplicationManager: RequestDeduplicationManager, apiRetryManager: ApiRetryManager, numberFormatter: NumberFormatter, )</ID>
+    <ID>LongParameterList:NetworkModule.kt$NetworkModule$( finnhubApi: FinnhubApi, twseApi: TwseApi, exchangeRateApi: ExchangeRateApi, twseDataParser: TwseDataParser, twseCacheManager: TwseCacheManager, debugLogManager: com.wealthmanager.debug.DebugLogManager, apiDiagnostic: ApiDiagnostic, keyRepository: KeyRepository, )</ID>
+    <ID>LongParameterList:SecureApiKeyManager.kt$SecureApiKeyManager$( key: String, keyType: String, activity: FragmentActivity? = null, onSuccess: (KeyValidationResult) -&gt; Unit, onError: (String) -&gt; Unit, onBiometricRequired: () -&gt; Unit, onFallbackRequired: () -&gt; Unit = {}, )</ID>
+    <ID>LongParameterList:SecureApiKeyManager.kt$SecureApiKeyManager$( keyType: String, activity: FragmentActivity? = null, onSuccess: (String?) -&gt; Unit, onError: (String) -&gt; Unit, onBiometricRequired: () -&gt; Unit, onFallbackRequired: () -&gt; Unit = {}, )</ID>
+    <ID>LongParameterList:SecurityLevelDialog.kt$( level: SecurityLevelManager.SecurityLevel, title: String, description: String, icon: androidx.compose.ui.graphics.vector.ImageVector, isSelected: Boolean, onSelected: () -&gt; Unit, )</ID>
+    <ID>LongParameterList:SettingsScreen.kt$( finnhubKeyPreview: String, exchangeKeyPreview: String, lastActionMessage: String, onValidateAndSaveFinnhub: (String) -&gt; Unit, onValidateAndSaveExchange: (String) -&gt; Unit, onClearFinnhub: () -&gt; Unit, onClearExchange: () -&gt; Unit, firstFieldFocusRequester: androidx.compose.ui.focus.FocusRequester? = null, )</ID>
+    <ID>LongParameterList:SettingsScreen.kt$( hapticEnabled: Boolean, onHapticEnabledChange: (Boolean) -&gt; Unit, soundEnabled: Boolean, onSoundEnabledChange: (Boolean) -&gt; Unit, hapticManager: HapticFeedbackManager, view: android.view.View, )</ID>
+    <ID>LongParameterList:SettingsViewModel.kt$SettingsViewModel$( private val authStateManager: AuthStateManager, private val backupPreferencesManager: BackupPreferencesManager, private val enhancedBackupManager: EnhancedBackupManager, private val localePreferencesManager: LocalePreferencesManager, private val apiTestService: ApiTestService, private val keyRepository: KeyRepository, private val secureApiKeyManager: SecureApiKeyManager, private val credentialManagerService: CredentialManagerService, val firstLaunchManager: FirstLaunchManager, @ApplicationContext private val context: Context, )</ID>
+    <ID>LongParameterList:TreemapLayout.kt$TreemapLayout$( items: List&lt;NormalizedItem&gt;, x: Float, y: Float, width: Float, height: Float, result: MutableList&lt;TreemapRect&gt;, spacing: Float = 0f, )</ID>
+    <ID>LongParameterList:TwseDataParserTest.kt$TwseDataParserTest$( code: String, name: String = "$code Name", tradeVolume: String = "1000", tradeValue: String = "1000000", open: String = "590.00", high: String = "610.00", low: String = "580.00", close: String = "600.00", change: String = "1.00", tx: String = "100", )</ID>
+    <ID>LoopWithTooManyJumpStatements:MobileWearSyncService.kt$MobileWearSyncService$for</ID>
+    <ID>MagicNumber:AboutDialog.kt$0.92f</ID>
+    <ID>MagicNumber:AboutDialog.kt$10</ID>
+    <ID>MagicNumber:AboutDialog.kt$12</ID>
+    <ID>MagicNumber:AboutDialog.kt$16</ID>
+    <ID>MagicNumber:AboutDialog.kt$20</ID>
+    <ID>MagicNumber:AboutDialog.kt$32</ID>
+    <ID>MagicNumber:AboutDialog.kt$4</ID>
+    <ID>MagicNumber:AboutDialog.kt$8</ID>
+    <ID>MagicNumber:AboutDialog.kt$80</ID>
+    <ID>MagicNumber:AddAssetDialog.kt$12</ID>
+    <ID>MagicNumber:AddAssetDialog.kt$16</ID>
+    <ID>MagicNumber:AddAssetDialog.kt$20</ID>
+    <ID>MagicNumber:AddAssetDialog.kt$4</ID>
+    <ID>MagicNumber:AddAssetDialog.kt$5</ID>
+    <ID>MagicNumber:AddAssetDialog.kt$8</ID>
+    <ID>MagicNumber:ApiDiagnostic.kt$ApiDiagnostic$10000</ID>
+    <ID>MagicNumber:ApiDiagnostic.kt$ApiDiagnostic$8</ID>
+    <ID>MagicNumber:ApiErrorBanner.kt$12</ID>
+    <ID>MagicNumber:ApiErrorBanner.kt$16</ID>
+    <ID>MagicNumber:ApiErrorBanner.kt$18</ID>
+    <ID>MagicNumber:ApiErrorBanner.kt$20</ID>
+    <ID>MagicNumber:ApiErrorBanner.kt$24</ID>
+    <ID>MagicNumber:ApiErrorBanner.kt$4</ID>
+    <ID>MagicNumber:ApiErrorHandler.kt$ApiErrorHandler$400</ID>
+    <ID>MagicNumber:ApiErrorHandler.kt$ApiErrorHandler$401</ID>
+    <ID>MagicNumber:ApiErrorHandler.kt$ApiErrorHandler$403</ID>
+    <ID>MagicNumber:ApiErrorHandler.kt$ApiErrorHandler$429</ID>
+    <ID>MagicNumber:ApiErrorHandler.kt$ApiErrorHandler$500</ID>
+    <ID>MagicNumber:ApiErrorHandler.kt$ApiErrorHandler$599</ID>
+    <ID>MagicNumber:ApiKeyEmptyStateCard.kt$12</ID>
+    <ID>MagicNumber:ApiKeyEmptyStateCard.kt$16</ID>
+    <ID>MagicNumber:ApiKeyEmptyStateCard.kt$18</ID>
+    <ID>MagicNumber:ApiKeyEmptyStateCard.kt$20</ID>
+    <ID>MagicNumber:ApiKeyEmptyStateCard.kt$48</ID>
+    <ID>MagicNumber:ApiKeyEmptyStateCard.kt$6</ID>
+    <ID>MagicNumber:ApiKeyEmptyStateCard.kt$8</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$0.01f</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$0.92f</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$10</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$12</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$16</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$18</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$20</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$24</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$32</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$4</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$8</ID>
+    <ID>MagicNumber:ApiKeyGuideDialog.kt$80</ID>
+    <ID>MagicNumber:ApiKeyGuideOnboardingDialog.kt$0.85f</ID>
+    <ID>MagicNumber:ApiKeyGuideOnboardingDialog.kt$0.92f</ID>
+    <ID>MagicNumber:ApiKeyGuideOnboardingDialog.kt$12</ID>
+    <ID>MagicNumber:ApiKeyGuideOnboardingDialog.kt$16</ID>
+    <ID>MagicNumber:ApiKeyGuideOnboardingDialog.kt$18</ID>
+    <ID>MagicNumber:ApiKeyGuideOnboardingDialog.kt$20</ID>
+    <ID>MagicNumber:ApiKeyGuideOnboardingDialog.kt$24</ID>
+    <ID>MagicNumber:ApiKeyGuideOnboardingDialog.kt$32</ID>
+    <ID>MagicNumber:ApiKeyGuideOnboardingDialog.kt$8</ID>
+    <ID>MagicNumber:ApiKeyInputField.kt$12</ID>
+    <ID>MagicNumber:ApiKeyInputField.kt$16</ID>
+    <ID>MagicNumber:ApiKeyInputField.kt$8</ID>
+    <ID>MagicNumber:ApiKeyValidationFeedback.kt$12</ID>
+    <ID>MagicNumber:ApiKeyValidationFeedback.kt$16</ID>
+    <ID>MagicNumber:ApiKeyValidationFeedback.kt$20</ID>
+    <ID>MagicNumber:ApiKeyValidationFeedback.kt$4</ID>
+    <ID>MagicNumber:ApiKeyValidationFeedback.kt$8</ID>
+    <ID>MagicNumber:ApiProviderService.kt$ApiProviderService$8</ID>
+    <ID>MagicNumber:ApiTestService.kt$ApiTestService$10000</ID>
+    <ID>MagicNumber:ApiUsageManager.kt$ApiUsageManager$60000L</ID>
+    <ID>MagicNumber:ApiUsageManager.kt$ApiUsageManager$86400000L</ID>
+    <ID>MagicNumber:ApiUsageManager.kt$ApiUsageStats$100f</ID>
+    <ID>MagicNumber:ApiUsageManager.kt$ApiUsageStats$80f</ID>
+    <ID>MagicNumber:AppHealthMonitor.kt$AppHealthMonitor$0.5</ID>
+    <ID>MagicNumber:AppHealthMonitor.kt$AppHealthMonitor$1000.0</ID>
+    <ID>MagicNumber:AppHealthMonitor.kt$AppHealthMonitor$10000</ID>
+    <ID>MagicNumber:AppHealthMonitor.kt$AppHealthMonitor$100L</ID>
+    <ID>MagicNumber:AppHealthMonitor.kt$AppHealthMonitor$300000L</ID>
+    <ID>MagicNumber:AppHealthMonitor.kt$AppHealthMonitor$30000L</ID>
+    <ID>MagicNumber:AssetsComponents.kt$16</ID>
+    <ID>MagicNumber:AssetsScreen.kt$16</ID>
+    <ID>MagicNumber:AssetsScreen.kt$8</ID>
+    <ID>MagicNumber:AssetsViewModel.kt$AssetsViewModel$30.0</ID>
+    <ID>MagicNumber:AssetsViewModel.kt$AssetsViewModel$450</ID>
+    <ID>MagicNumber:AuthStateManager.kt$AuthStateManager$1000L</ID>
+    <ID>MagicNumber:AuthStateManager.kt$AuthStateManager$24</ID>
+    <ID>MagicNumber:AuthStateManager.kt$AuthStateManager$60</ID>
+    <ID>MagicNumber:BiometricAuthScreen.kt$16</ID>
+    <ID>MagicNumber:BiometricAuthScreen.kt$24</ID>
+    <ID>MagicNumber:BiometricAuthScreen.kt$64</ID>
+    <ID>MagicNumber:BiometricAuthScreen.kt$8</ID>
+    <ID>MagicNumber:BiometricFallbackDialog.kt$12</ID>
+    <ID>MagicNumber:BiometricFallbackDialog.kt$16</ID>
+    <ID>MagicNumber:BiometricFallbackDialog.kt$20</ID>
+    <ID>MagicNumber:BiometricFallbackDialog.kt$24</ID>
+    <ID>MagicNumber:BiometricFallbackDialog.kt$48</ID>
+    <ID>MagicNumber:BiometricFallbackDialog.kt$8</ID>
+    <ID>MagicNumber:CashAssetItem.kt$16</ID>
+    <ID>MagicNumber:Color.kt$0xFF625b71</ID>
+    <ID>MagicNumber:Color.kt$0xFF6650a4</ID>
+    <ID>MagicNumber:Color.kt$0xFF7D5260</ID>
+    <ID>MagicNumber:Color.kt$0xFFCCC2DC</ID>
+    <ID>MagicNumber:Color.kt$0xFFD0BCFF</ID>
+    <ID>MagicNumber:Color.kt$0xFFEFB8C8</ID>
+    <ID>MagicNumber:DashboardComponentsOptimized.kt$100</ID>
+    <ID>MagicNumber:DashboardComponentsOptimized.kt$16</ID>
+    <ID>MagicNumber:DashboardComponentsOptimized.kt$32</ID>
+    <ID>MagicNumber:DashboardComponentsOptimized.kt$40</ID>
+    <ID>MagicNumber:DashboardComponentsOptimized.kt$8</ID>
+    <ID>MagicNumber:DashboardScreen.kt$20</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$0.01</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$10</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$100</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$1000</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$10000</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$100000</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$1000000</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$1000L</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$15</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$20</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$30</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$40</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$5</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$60</ID>
+    <ID>MagicNumber:DataValidator.kt$DataValidator$60000</ID>
+    <ID>MagicNumber:DebugLogManager.kt$DebugLogManager$1000</ID>
+    <ID>MagicNumber:EditAssetDialog.kt$16</ID>
+    <ID>MagicNumber:EditAssetDialog.kt$8</ID>
+    <ID>MagicNumber:EnhancedBackupSettingsCard.kt$12</ID>
+    <ID>MagicNumber:EnhancedBackupSettingsCard.kt$16</ID>
+    <ID>MagicNumber:EnhancedBackupSettingsCard.kt$20</ID>
+    <ID>MagicNumber:EnhancedBackupSettingsCard.kt$8</ID>
+    <ID>MagicNumber:ErrorRecoveryService.kt$ErrorRecoveryService$2000L</ID>
+    <ID>MagicNumber:GooglePasswordManagerOnboardingDialog.kt$0.85f</ID>
+    <ID>MagicNumber:GooglePasswordManagerOnboardingDialog.kt$0.92f</ID>
+    <ID>MagicNumber:GooglePasswordManagerOnboardingDialog.kt$12</ID>
+    <ID>MagicNumber:GooglePasswordManagerOnboardingDialog.kt$16</ID>
+    <ID>MagicNumber:GooglePasswordManagerOnboardingDialog.kt$24</ID>
+    <ID>MagicNumber:GooglePasswordManagerOnboardingDialog.kt$32</ID>
+    <ID>MagicNumber:GooglePasswordManagerOnboardingDialog.kt$8</ID>
+    <ID>MagicNumber:HapticFeedbackManager.kt$HapticFeedbackManager$100</ID>
+    <ID>MagicNumber:HapticFeedbackManager.kt$HapticFeedbackManager$100L</ID>
+    <ID>MagicNumber:HapticFeedbackManager.kt$HapticFeedbackManager$200L</ID>
+    <ID>MagicNumber:HapticFeedbackManager.kt$HapticFeedbackManager$255</ID>
+    <ID>MagicNumber:HapticFeedbackManager.kt$HapticFeedbackManager$50</ID>
+    <ID>MagicNumber:HighRefreshRateComponents.kt$0.01f</ID>
+    <ID>MagicNumber:HighRefreshRateComponents.kt$100</ID>
+    <ID>MagicNumber:HighRefreshRateComponents.kt$50</ID>
+    <ID>MagicNumber:HighRefreshRateComponents.kt$HighRefreshRateAnimations$0.2f</ID>
+    <ID>MagicNumber:HighRefreshRateComponents.kt$HighRefreshRateAnimations$0.4f</ID>
+    <ID>MagicNumber:HighRefreshRateComponents.kt$HighRefreshRateAnimations$0.6f</ID>
+    <ID>MagicNumber:KeyValidator.kt$KeyValidator$3.0</ID>
+    <ID>MagicNumber:KeyValidator.kt$KeyValidator$4.5</ID>
+    <ID>MagicNumber:MainActivity.kt$MainActivity$10f</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$1000</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$15</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$16</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$24</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$30.0</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$401</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$403</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$429</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$500</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$599</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$60</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$8</ID>
+    <ID>MagicNumber:MarketDataService.kt$MarketDataService$9</ID>
+    <ID>MagicNumber:NetworkModule.kt$NetworkModule$30</ID>
+    <ID>MagicNumber:NotificationPermissionManager.kt$12</ID>
+    <ID>MagicNumber:NotificationPermissionManager.kt$16</ID>
+    <ID>MagicNumber:NotificationPermissionManager.kt$8</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$100</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$1000L</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$1024</ID>
+    <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$5000L</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$1.5</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$1000</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$120f</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$150</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$300</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$60f</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$0.05f</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$0.1f</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$0.2f</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$100f</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$10L</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$40f</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$5L</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$60f</ID>
+    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$80f</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$0xFF00BCD4</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$0xFF2196F3</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$0xFF4CAF50</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$0xFF795548</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$0xFF9C27B0</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$0xFFF44336</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$0xFFFF9800</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$0xFFFFEB3B</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$100</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$12</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$150</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$16</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$1_000</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$1_000_000</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$200</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$20f</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$360f</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$8</ID>
+    <ID>MagicNumber:PieChartComponentFixed.kt$90f</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$0.8f</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$0.9f</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$12</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$14</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$16</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$18</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$20</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$200</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$24</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$28</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$300</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$32</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$4</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$400</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$500</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$600</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$8</ID>
+    <ID>MagicNumber:ResponsiveLayout.kt$ResponsiveLayout$840</ID>
+    <ID>MagicNumber:SecurityLevelDialog.kt$12</ID>
+    <ID>MagicNumber:SecurityLevelDialog.kt$16</ID>
+    <ID>MagicNumber:SecurityLevelDialog.kt$24</ID>
+    <ID>MagicNumber:SecurityLevelDialog.kt$4</ID>
+    <ID>MagicNumber:SecurityLevelDialog.kt$48</ID>
+    <ID>MagicNumber:SecurityLevelDialog.kt$8</ID>
+    <ID>MagicNumber:SettingsScreen.kt$0xFFFF9800</ID>
+    <ID>MagicNumber:SettingsScreen.kt$12</ID>
+    <ID>MagicNumber:SettingsScreen.kt$16</ID>
+    <ID>MagicNumber:SettingsScreen.kt$18</ID>
+    <ID>MagicNumber:SettingsScreen.kt$4</ID>
+    <ID>MagicNumber:SettingsScreen.kt$8</ID>
+    <ID>MagicNumber:SmartCacheStrategy.kt$SmartCacheStrategy$1000L</ID>
+    <ID>MagicNumber:SmartCacheStrategy.kt$SmartCacheStrategy$24</ID>
+    <ID>MagicNumber:SmartCacheStrategy.kt$SmartCacheStrategy$60</ID>
+    <ID>MagicNumber:SmartCacheStrategy.kt$SmartCacheStrategy$60_000L</ID>
+    <ID>MagicNumber:SmartCacheStrategy.kt$SmartCacheStrategy.DataAccessStats$30_000L</ID>
+    <ID>MagicNumber:SmartCacheStrategy.kt$SmartCacheStrategy.DataAccessStats$60_000L</ID>
+    <ID>MagicNumber:StockAssetItem.kt$16</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFF000000</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFF121212</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFF1A1A1A</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFF1C1B1F</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFF1E1E1E</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFF2A2A2A</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFF313033</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFF49454F</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFF4A4A4A</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFF79747E</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFFB3B3B3</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFFBA1A1A</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFFCF6679</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFFE1E1E1</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFFE7E0EC</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFFF4EFF4</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFFFFFBFE</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$0xFFFFFFFF</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$FinancialColors$0xFF2196F3</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$FinancialColors$0xFF4CAF50</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$FinancialColors$0xFF9E9E9E</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$FinancialColors$0xFFBA1A1A</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$FinancialColors$0xFFF44336</ID>
+    <ID>MagicNumber:ThemeOptimized.kt$FinancialColors$0xFFFF9800</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$0xFF00BCD4</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$0xFF2196F3</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$0xFF4CAF50</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$0xFF795548</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$0xFF9C27B0</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$0xFFF44336</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$0xFFFF9800</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$0xFFFFEB3B</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$100</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$12</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$16</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$200</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$300</ID>
+    <ID>MagicNumber:TreemapChartComponent.kt$8</ID>
+    <ID>MagicNumber:TreemapLayout.kt$TreemapLayout$1.5f</ID>
+    <ID>MagicNumber:TreemapLayout.kt$TreemapLayout$100</ID>
+    <ID>MagicNumber:TreemapLayout.kt$TreemapLayout$3</ID>
+    <ID>MagicNumber:TreemapLayout.kt$TreemapLayout$4</ID>
+    <ID>MagicNumber:TreemapLayout.kt$TreemapLayout$8</ID>
+    <ID>MagicNumber:TwseDataParser.kt$TwseDataParser$100</ID>
+    <ID>MagicNumber:WearSyncManager.kt$WearSyncManager$1000L</ID>
+    <ID>MagicNumber:WearSyncManager.kt$WearSyncManager$3</ID>
+    <ID>MagicNumber:WearSyncManager.kt$WearSyncManager$30</ID>
+    <ID>MagicNumber:WearSyncManager.kt$WearSyncManager$60000</ID>
+    <ID>MagicNumber:WelcomeOnboardingDialog.kt$0.85f</ID>
+    <ID>MagicNumber:WelcomeOnboardingDialog.kt$0.92f</ID>
+    <ID>MagicNumber:WelcomeOnboardingDialog.kt$12</ID>
+    <ID>MagicNumber:WelcomeOnboardingDialog.kt$16</ID>
+    <ID>MagicNumber:WelcomeOnboardingDialog.kt$24</ID>
+    <ID>MagicNumber:WelcomeOnboardingDialog.kt$32</ID>
+    <ID>MatchingDeclarationName:HighRefreshRateComponents.kt$HighRefreshRateAnimations</ID>
+    <ID>MaxLineLength:ApiKeyInputField.kt$imageVector = if (isPasswordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility</ID>
+    <ID>MaxLineLength:ApiProviderService.kt$ApiProviderService$"API diagnostic failed: Network=${diagnostic.networkStatus.isConnected}, API Key=${diagnostic.apiKeyStatus.finnhubKeyValid}, Finnhub=${diagnostic.finnhubStatus.isReachable}"</ID>
+    <ID>MaxLineLength:ApiProviderTest.kt$ApiProviderTest$"Exchange rate test passed: ${rateData.fromCurrency}/${rateData.toCurrency} = ${rateData.rate} (Provider: ${rateData.provider})"</ID>
+    <ID>MaxLineLength:ApiProviderTest.kt$ApiProviderTest$"Stock quote test passed: ${quoteData.symbol} = ${quoteData.price} (Provider: ${quoteData.provider})"</ID>
+    <ID>MaxLineLength:ApiRetryManager.kt$ApiRetryManager$"$operationName - Final failure after $attempt attempts. Strategy: ${strategy.fallbackAction}"</ID>
+    <ID>MaxLineLength:ApiUsageManager.kt$ApiUsageManager$"API request recorded. This minute: ${requestsThisMinute.get()}/${getMinuteLimit()}, Today: ${requestsToday.get()}/${getDailyLimit()}"</ID>
+    <ID>MaxLineLength:ApiUsageManager.kt$ApiUsageManager.Companion$private const</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$NoResultsReason.API_LIMIT_REACHED -&gt; "API request limit reached, please try again tomorrow"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$NoResultsReason.INVALID_QUERY -&gt; "Please enter at least 1 character to search"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$NoResultsReason.INVALID_QUERY -&gt; "Please enter at least 2 characters to search"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$NoResultsReason.NETWORK_ERROR -&gt; "Network connection issue, please check network settings"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$NoResultsReason.SERVER_ERROR -&gt; "Server temporarily unavailable, please try again later"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$NoResultsReason.STOCK_NOT_FOUND -&gt; "Stock code not found, please check if correct"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$SearchErrorType.API_LIMIT -&gt; "API request limit reached, please try again tomorrow"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$SearchErrorType.AUTHENTICATION_ERROR -&gt; "API authentication failed, please check API key settings"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$SearchErrorType.INVALID_API_KEY -&gt; "Invalid API key, please contact technical support"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$SearchErrorType.NETWORK_ERROR -&gt; "Network connection issue, please check network settings"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$SearchErrorType.RATE_LIMIT_ERROR -&gt; "Request rate limit exceeded, please try again later"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$SearchErrorType.SERVER_ERROR -&gt; "Server temporarily unavailable, please try again later"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$SearchErrorType.UNKNOWN_ERROR -&gt; "Unknown error occurred, please restart the application"</ID>
+    <ID>MaxLineLength:AssetsViewModel.kt$AssetsViewModel$searchError = if (searchResult.results.isEmpty()) "Stock code not found, please check if correct" else ""</ID>
+    <ID>MaxLineLength:DashboardViewModel.kt$DashboardViewModel$assets = cashAssets.map { it.toAssetItem(totalAssets) } + stockAssets.map { it.toAssetItem(totalAssets) }</ID>
+    <ID>MaxLineLength:DataValidator.kt$DataValidator$"$dataType validation stats: valid=$validCount, invalid=$invalidCount, validity rate=${validPercent.toInt()}%"</ID>
+    <ID>MaxLineLength:EditAssetDialog.kt$if (text == "TWD") R.string.assets_currency_twd else R.string.assets_currency_usd</ID>
+    <ID>MaxLineLength:EnhancedBackupManager.kt$EnhancedBackupManager$if</ID>
+    <ID>MaxLineLength:MainActivity.kt$MainActivity$}</ID>
+    <ID>MaxLineLength:SecurityLevelManager.kt$SecurityLevelManager$SecurityLevel.MEDIUM -&gt; feature == SecurityFeature.API_KEY_MANAGEMENT || feature == SecurityFeature.BACKUP_RESTORE</ID>
+    <ID>MaxLineLength:SettingsViewModel.kt$SettingsViewModel$exchangeKeyPreview = if (keyType.lowercase() == "exchange") keyRepository.preview(key) else _uiState.value.exchangeKeyPreview</ID>
+    <ID>MaxLineLength:SettingsViewModel.kt$SettingsViewModel$finnhubKeyPreview = if (keyType.lowercase() == "finnhub") keyRepository.preview(key) else _uiState.value.finnhubKeyPreview</ID>
+    <ID>MaxLineLength:SettingsViewModel.kt$SettingsViewModel$lastKeyActionMessage = "Exchange Rate key saved with ${validationResult.strength} strength"</ID>
+    <ID>MaxLineLength:SettingsViewModel.kt$SettingsViewModel$lastKeyActionMessage = "Key validation failed: ${validationResult.issues.joinToString(", ")}"</ID>
+    <ID>MaxLineLength:SettingsViewModel.kt$SettingsViewModel$lastKeyActionMessage = context.getString(R.string.api_key_saved_securely, keyType, saveResult.strength)</ID>
+    <ID>MaxLineLength:SettingsViewModel.kt$SettingsViewModel$lastKeyActionMessage = context.getString(R.string.api_key_security_test_complete, secureResult.overallSecurity)</ID>
+    <ID>MaxLineLength:SettingsViewModel.kt$SettingsViewModel$lastKeyActionMessage = context.getString(R.string.api_key_security_test_failed, e.message ?: "")</ID>
+    <ID>MaxLineLength:SettingsViewModel.kt$SettingsViewModel$lastKeyActionMessage = context.getString(R.string.api_key_unsupported_type, keyType)</ID>
+    <ID>MaxLineLength:SettingsViewModel.kt$SettingsViewModel$lastKeyActionMessage = context.getString(R.string.api_key_validation_failed, validationResult.issues.joinToString(", "))</ID>
+    <ID>MaxLineLength:SettingsViewModel.kt$SettingsViewModel$lastKeyErrorMessage = context.getString(R.string.api_key_invalid, keyType, testResult.message)</ID>
+    <ID>NestedBlockDepth:EnhancedKeyRepository.kt$EnhancedKeyRepository$suspend fun setSmartExchangeKey( value: String, syncToGoogle: Boolean = false, ): KeyValidationResult</ID>
+    <ID>NestedBlockDepth:EnhancedKeyRepository.kt$EnhancedKeyRepository$suspend fun setSmartFinnhubKey( value: String, syncToGoogle: Boolean = false, ): KeyValidationResult</ID>
+    <ID>NestedBlockDepth:MainActivity.kt$MainActivity$override fun onTouchEvent(event: MotionEvent): Boolean</ID>
+    <ID>NestedBlockDepth:MarketDataService.kt$MarketDataService$suspend fun updateStockPrices()</ID>
+    <ID>PrintStackTrace:UrlLauncher.kt$UrlLauncher$e</ID>
+    <ID>ReturnCount:ApiProviderService.kt$ApiProviderService$suspend fun getExchangeRate( fromCurrency: String = "USD", toCurrency: String = "TWD", ): Result&lt;ExchangeRateData&gt;</ID>
+    <ID>ReturnCount:ApiProviderService.kt$ApiProviderService$suspend fun getStockQuote(symbol: String): Result&lt;StockQuoteData&gt;</ID>
+    <ID>ReturnCount:ApiUsageManager.kt$ApiUsageManager$suspend fun canMakeRequest(): Boolean</ID>
+    <ID>ReturnCount:EnhancedKeyRepository.kt$EnhancedKeyRepository$suspend fun getSmartExchangeKey(): String?</ID>
+    <ID>ReturnCount:EnhancedKeyRepository.kt$EnhancedKeyRepository$suspend fun getSmartFinnhubKey(): String?</ID>
+    <ID>ReturnCount:LanguageManager.kt$LanguageManager$fun getCurrentLocale(context: Context): Locale</ID>
+    <ID>ReturnCount:MainActivity.kt$MainActivity$override fun onTouchEvent(event: MotionEvent): Boolean</ID>
+    <ID>ReturnCount:RequestDeduplicationManager.kt$RequestDeduplicationManager$suspend fun &lt;T&gt; executeDeduplicatedRequest( requestKey: String, requestType: String, operation: suspend () -&gt; T, ): RequestResult&lt;T&gt;</ID>
+    <ID>ReturnCount:TreemapLayout.kt$TreemapLayout$fun computeTreemapRects( assets: List&lt;AssetItem&gt;, width: Float, height: Float, spacing: Float = 0f, othersGroupName: String = "Others", ): List&lt;TreemapRect&gt;</ID>
+    <ID>ReturnCount:WearSyncManager.kt$WearSyncManager$private fun shouldSync( totalAssets: Double, lastUpdated: Long, hasError: Boolean, ): Boolean</ID>
+    <ID>ReturnCount:WearSyncManager.kt$WearSyncManager$suspend fun syncTotalsFromDashboard( totalAssets: Double, lastUpdated: Long, hasError: Boolean, )</ID>
+    <ID>StringLiteralDuplication:AndroidKeystoreManager.kt$AndroidKeystoreManager$"AES/GCM/NoPadding"</ID>
+    <ID>StringLiteralDuplication:AndroidKeystoreManager.kt$AndroidKeystoreManager$"AndroidKeyStore"</ID>
+    <ID>StringLiteralDuplication:AndroidKeystoreManager.kt$AndroidKeystoreManager$"KEYSTORE"</ID>
+    <ID>StringLiteralDuplication:ApiDiagnostic.kt$ApiDiagnostic$"DIAGNOSTIC"</ID>
+    <ID>StringLiteralDuplication:ApiErrorHandler.kt$ApiErrorHandler$"API_ERROR"</ID>
+    <ID>StringLiteralDuplication:ApiErrorHandler.kt$ApiErrorHandler$"Use cached data"</ID>
+    <ID>StringLiteralDuplication:ApiProviderService.kt$ApiProviderService$"API_PROVIDER"</ID>
+    <ID>StringLiteralDuplication:ApiProviderService.kt$ApiProviderService$"Android Keystore not available"</ID>
+    <ID>StringLiteralDuplication:ApiProviderService.kt$ApiProviderService$"^\\d{4}$"</ID>
+    <ID>StringLiteralDuplication:ApiProviderTest.kt$ApiProviderTest$"API_TEST"</ID>
+    <ID>StringLiteralDuplication:ApiRetryManager.kt$ApiRetryManager$"API_RETRY"</ID>
+    <ID>StringLiteralDuplication:ApiStatusManager.kt$ApiStatusManager$"API_STATUS"</ID>
+    <ID>StringLiteralDuplication:ApiTestService.kt$ApiTestService$"API_TEST"</ID>
+    <ID>StringLiteralDuplication:ApiUsageManager.kt$ApiUsageManager$"API_USAGE"</ID>
+    <ID>StringLiteralDuplication:AppHealthMonitor.kt$AppHealthMonitor$"HEALTH_MONITOR"</ID>
+    <ID>StringLiteralDuplication:AssetRepository.kt$AssetRepository$"REPOSITORY"</ID>
+    <ID>StringLiteralDuplication:AssetsViewModel.kt$AssetsViewModel$"API request limit reached, please try again tomorrow"</ID>
+    <ID>StringLiteralDuplication:AssetsViewModel.kt$AssetsViewModel$"ASSETS"</ID>
+    <ID>StringLiteralDuplication:AssetsViewModel.kt$AssetsViewModel$"Network connection issue, please check network settings"</ID>
+    <ID>StringLiteralDuplication:AssetsViewModel.kt$AssetsViewModel$"Server temporarily unavailable, please try again later"</ID>
+    <ID>StringLiteralDuplication:AssetsViewModel.kt$AssetsViewModel$"Stock code not found, please check if correct"</ID>
+    <ID>StringLiteralDuplication:AssetsViewModel.kt$AssetsViewModel$"Unknown error occurred, please restart the application"</ID>
+    <ID>StringLiteralDuplication:BiometricProtectionManager.kt$BiometricProtectionManager$"BIOMETRIC"</ID>
+    <ID>StringLiteralDuplication:CacheManager.kt$CacheManager$"CACHE"</ID>
+    <ID>StringLiteralDuplication:CredentialManagerService.kt$CredentialManagerService$"CREDENTIAL_MANAGER"</ID>
+    <ID>StringLiteralDuplication:DashboardViewModel.kt$DashboardViewModel$"DASHBOARD"</ID>
+    <ID>StringLiteralDuplication:DataValidator.kt$DataValidator$"DATA_VALIDATION"</ID>
+    <ID>StringLiteralDuplication:DebugLogManager.kt$DebugLogManager$"ERROR"</ID>
+    <ID>StringLiteralDuplication:DebugLogManager.kt$DebugLogManager$"WealthManagerDebug"</ID>
+    <ID>StringLiteralDuplication:DeveloperKeyManager.kt$DeveloperKeyManager$"DEV_KEY"</ID>
+    <ID>StringLiteralDuplication:EnhancedBackupManager.kt$EnhancedBackupManager$"ENHANCED_BACKUP"</ID>
+    <ID>StringLiteralDuplication:EnhancedKeyRepository.kt$EnhancedKeyRepository$"ENHANCED_KEY_REPO"</ID>
+    <ID>StringLiteralDuplication:EnhancedKeyRepository.kt$EnhancedKeyRepository$"available"</ID>
+    <ID>StringLiteralDuplication:EnhancedKeyRepository.kt$EnhancedKeyRepository$"exchange"</ID>
+    <ID>StringLiteralDuplication:EnhancedKeyRepository.kt$EnhancedKeyRepository$"finnhub"</ID>
+    <ID>StringLiteralDuplication:EnhancedKeyRepository.kt$EnhancedKeyRepository$"not_available"</ID>
+    <ID>StringLiteralDuplication:ErrorRecoveryService.kt$ErrorRecoveryService$"ERROR_RECOVERY"</ID>
+    <ID>StringLiteralDuplication:ErrorRecoveryService.kt$ErrorRecoveryService.CircuitBreaker$"CIRCUIT_BREAKER"</ID>
+    <ID>StringLiteralDuplication:LoggingOptimizationTest.kt$LoggingOptimizationTest$"AAPL - Apple Inc"</ID>
+    <ID>StringLiteralDuplication:LoggingOptimizationTest.kt$LoggingOptimizationTest$"LoggingTest"</ID>
+    <ID>StringLiteralDuplication:LoggingOptimizationTest.kt$LoggingOptimizationTest$"Stock"</ID>
+    <ID>StringLiteralDuplication:MainActivity.kt$MainActivity$"MainActivity"</ID>
+    <ID>StringLiteralDuplication:MarketDataService.kt$MarketDataService$"API_VALIDATION"</ID>
+    <ID>StringLiteralDuplication:MarketDataService.kt$MarketDataService$"CLOSED"</ID>
+    <ID>StringLiteralDuplication:MarketDataService.kt$MarketDataService$"MARKET_DATA"</ID>
+    <ID>StringLiteralDuplication:MarketDataService.kt$MarketDataService$"USD_TWD"</ID>
+    <ID>StringLiteralDuplication:NetworkModule.kt$NetworkModule$"X-Finnhub-Token"</ID>
+    <ID>StringLiteralDuplication:PerformanceMonitor.kt$PerformanceMonitor$"PERFORMANCE"</ID>
+    <ID>StringLiteralDuplication:PieChartComponentFixed.kt$"CHART"</ID>
+    <ID>StringLiteralDuplication:RequestDeduplicationManager.kt$RequestDeduplicationManager$"REQUEST_DEDUP"</ID>
+    <ID>StringLiteralDuplication:SecureApiKeyManager.kt$SecureApiKeyManager$"SECURE_KEY_MANAGER"</ID>
+    <ID>StringLiteralDuplication:SecureApiKeyManager.kt$SecureApiKeyManager$"exchange"</ID>
+    <ID>StringLiteralDuplication:SecureApiKeyManager.kt$SecureApiKeyManager$"finnhub"</ID>
+    <ID>StringLiteralDuplication:SecurityEnhancementExample.kt$SecurityEnhancementExample$"SECURITY_EXAMPLE"</ID>
+    <ID>StringLiteralDuplication:SecurityEnhancementExample.kt$SecurityEnhancementExample$"exchange"</ID>
+    <ID>StringLiteralDuplication:SecurityEnhancementExample.kt$SecurityEnhancementExample$"finnhub"</ID>
+    <ID>StringLiteralDuplication:SecurityEnhancementExample.kt$SecurityEnhancementExample$"需要生物識別驗證"</ID>
+    <ID>StringLiteralDuplication:SettingsScreen.kt$"finnhub"</ID>
+    <ID>StringLiteralDuplication:SettingsViewModel.kt$SettingsViewModel$"exchange"</ID>
+    <ID>StringLiteralDuplication:SettingsViewModel.kt$SettingsViewModel$"finnhub"</ID>
+    <ID>StringLiteralDuplication:SmartCacheStrategy.kt$SmartCacheStrategy$"SMART_CACHE"</ID>
+    <ID>StringLiteralDuplication:TreemapChartComponent.kt$"CHART"</ID>
+    <ID>StringLiteralDuplication:TreemapLayout.kt$TreemapLayout$"Others"</ID>
+    <ID>StringLiteralDuplication:TwseCacheManager.kt$TwseCacheManager$"TWSE_CACHE"</ID>
+    <ID>StringLiteralDuplication:WealthManagerNavigation.kt$"dashboard"</ID>
+    <ID>StringLiteralDuplication:WearSyncManager.kt$WearSyncManager$"WEAR_SYNC"</ID>
+    <ID>StringShouldBeRawString:AddAssetDialog.kt$"^\\d*\\.?\\d*$"</ID>
+    <ID>StringShouldBeRawString:ApiKeyGuideDialog.kt$"\n"</ID>
+    <ID>StringShouldBeRawString:ApiProviderService.kt$ApiProviderService$"^\\d{4}$"</ID>
+    <ID>StringShouldBeRawString:ApiTestService.kt$ApiTestService$"\"TWD\""</ID>
+    <ID>StringShouldBeRawString:ApiTestService.kt$ApiTestService$"\"c\":"</ID>
+    <ID>StringShouldBeRawString:ApiTestService.kt$ApiTestService$"\"d\":"</ID>
+    <ID>StringShouldBeRawString:ApiTestService.kt$ApiTestService$"\"result\":\"success\""</ID>
+    <ID>StringShouldBeRawString:AssetsViewModel.kt$AssetsViewModel$"^\\d*\\.?\\d*"</ID>
+    <ID>StringShouldBeRawString:AssetsViewModel.kt$AssetsViewModel$"^\\d{4}$"</ID>
+    <ID>StringShouldBeRawString:DebugLogManager.kt$DebugLogManager$"\n"</ID>
+    <ID>StringShouldBeRawString:MarketDataService.kt$MarketDataService$"^\\d{4}$"</ID>
+    <ID>SwallowedException:AndroidKeystoreManager.kt$AndroidKeystoreManager$e: KeyPermanentlyInvalidatedException</ID>
+    <ID>SwallowedException:AndroidKeystoreManager.kt$AndroidKeystoreManager$e: UserNotAuthenticatedException</ID>
+    <ID>SwallowedException:ApiKeyGuideDialog.kt$e: Exception</ID>
+    <ID>SwallowedException:AppHealthMonitor.kt$AppHealthMonitor$e: Exception</ID>
+    <ID>SwallowedException:FirstLaunchManager.kt$FirstLaunchManager$e: Exception</ID>
+    <ID>SwallowedException:LocaleHelper.kt$LocaleHelper$e: Exception</ID>
+    <ID>SwallowedException:LocalePreferencesManager.kt$LocalePreferencesManager.Companion$e: Exception</ID>
+    <ID>SwallowedException:MarketDataService.kt$MarketDataService$e: Exception</ID>
+    <ID>SwallowedException:NumberFormatter.kt$NumberFormatter$e: Exception</ID>
+    <ID>SwallowedException:SecurityLevelManager.kt$SecurityLevelManager$e: IllegalArgumentException</ID>
+    <ID>SwallowedException:SettingsScreen.kt$e: Exception</ID>
+    <ID>SwallowedException:SettingsViewModel.kt$SettingsViewModel$e: Exception</ID>
+    <ID>SwallowedException:WealthManagerApplication.kt$WealthManagerApplication$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:AndroidKeystoreManager.kt$AndroidKeystoreManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ApiDiagnostic.kt$ApiDiagnostic$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ApiKeyGuideDialog.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ApiProviderService.kt$ApiProviderService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ApiProviderTest.kt$ApiProviderTest$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ApiRetryManager.kt$ApiRetryManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ApiTestService.kt$ApiTestService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:AppHealthMonitor.kt$AppHealthMonitor$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:AssetsViewModel.kt$AssetsViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:BiometricProtectionManager.kt$BiometricProtectionManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CacheManager.kt$CacheManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:CredentialManagerService.kt$CredentialManagerService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DashboardViewModel.kt$DashboardViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DataValidator.kt$DataValidator$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:DeveloperKeyManager.kt$DeveloperKeyManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:EnhancedBackupManager.kt$EnhancedBackupManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:EnhancedKeyRepository.kt$EnhancedKeyRepository$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ErrorRecoveryService.kt$ErrorRecoveryService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:ErrorRecoveryService.kt$ErrorRecoveryService$retryException: Exception</ID>
+    <ID>TooGenericExceptionCaught:ErrorRecoveryService.kt$ErrorRecoveryService.CircuitBreaker$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:FirstLaunchManager.kt$FirstLaunchManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:KeyEncryptionTool.kt$KeyEncryptionTool$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:LocaleHelper.kt$LocaleHelper$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:LocalePreferencesManager.kt$LocalePreferencesManager.Companion$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:LoggingOptimizationTest.kt$LoggingOptimizationTest$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:MainActivity.kt$MainActivity$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:MarketDataService.kt$MarketDataService$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:NumberFormatter.kt$NumberFormatter$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:PerformanceMonitor.kt$PerformanceMonitor$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:RequestDeduplicationManager.kt$RequestDeduplicationManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:SecureApiKeyManager.kt$SecureApiKeyManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:SettingsScreen.kt$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:SettingsViewModel.kt$SettingsViewModel$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:TwseDataParser.kt$TwseDataParser$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:UrlLauncher.kt$UrlLauncher$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:WealthManagerApplication.kt$WealthManagerApplication$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:WearSyncManager.kt$WearSyncManager$e: Exception</ID>
+    <ID>TooGenericExceptionCaught:WearSyncManager.kt$WearSyncManager$exception: Exception</ID>
+    <ID>TooGenericExceptionThrown:KeyEncryptionTool.kt$KeyEncryptionTool$throw RuntimeException("Failed to decrypt key: ${e.message}", e)</ID>
+    <ID>TooGenericExceptionThrown:KeyEncryptionTool.kt$KeyEncryptionTool$throw RuntimeException("Failed to encrypt key: ${e.message}", e)</ID>
+    <ID>TooGenericExceptionThrown:LoggingOptimizationTest.kt$LoggingOptimizationTest$throw RuntimeException("Test exception")</ID>
+    <ID>TooGenericExceptionThrown:MarketDataService.kt$MarketDataService$throw Exception( "API Provider failed: ${quoteResult.exceptionOrNull()?.message}", )</ID>
+    <ID>TooGenericExceptionThrown:MarketDataService.kt$MarketDataService$throw Exception("API Error: $errorMessage")</ID>
+    <ID>TooGenericExceptionThrown:MarketDataService.kt$MarketDataService$throw Exception("API Note: $note")</ID>
+    <ID>TooGenericExceptionThrown:MarketDataService.kt$MarketDataService$throw Exception("API Provider failed: ${rateResult.exceptionOrNull()?.message}")</ID>
+    <ID>TooGenericExceptionThrown:MarketDataService.kt$MarketDataService$throw Exception("No cached data available for ${stock.symbol}")</ID>
+    <ID>TooGenericExceptionThrown:MarketDataService.kt$MarketDataService$throw Exception("No cached exchange rate available")</ID>
+    <ID>TooManyFunctions:AssetRepository.kt$AssetRepository</ID>
+    <ID>TooManyFunctions:AssetsViewModel.kt$AssetsViewModel : ViewModel</ID>
+    <ID>TooManyFunctions:AuthStateManager.kt$AuthStateManager</ID>
+    <ID>TooManyFunctions:DebugLogManager.kt$DebugLogManager</ID>
+    <ID>TooManyFunctions:EnhancedBackupManager.kt$EnhancedBackupManager</ID>
+    <ID>TooManyFunctions:EnhancedKeyRepository.kt$EnhancedKeyRepository</ID>
+    <ID>TooManyFunctions:KeyRepository.kt$KeyRepository</ID>
+    <ID>TooManyFunctions:MarketDataService.kt$MarketDataService</ID>
+    <ID>TooManyFunctions:NetworkModule.kt$NetworkModule</ID>
+    <ID>TooManyFunctions:SecureApiKeyManager.kt$SecureApiKeyManager</ID>
+    <ID>TooManyFunctions:SettingsScreen.kt$com.wealthmanager.ui.settings.SettingsScreen.kt</ID>
+    <ID>TooManyFunctions:SettingsViewModel.kt$SettingsViewModel : ViewModel</ID>
+    <ID>TooManyFunctions:StandardLogger.kt$StandardLogger</ID>
+    <ID>TrimMultilineRawString:WealthManagerDatabase.kt$WealthManagerDatabase.Companion.&lt;no name provided&gt;$""" CREATE TABLE stock_assets_new ( id TEXT NOT NULL PRIMARY KEY, symbol TEXT NOT NULL, companyName TEXT NOT NULL, shares REAL NOT NULL, market TEXT NOT NULL, currentPrice REAL NOT NULL, originalCurrency TEXT NOT NULL, twdEquivalent REAL NOT NULL, lastUpdated INTEGER NOT NULL ) """</ID>
+    <ID>TrimMultilineRawString:WealthManagerDatabase.kt$WealthManagerDatabase.Companion.&lt;no name provided&gt;$""" INSERT INTO stock_assets_new SELECT id, symbol, companyName, CAST(shares AS REAL), market, currentPrice, originalCurrency, twdEquivalent, lastUpdated FROM stock_assets """</ID>
+    <ID>UnderscoresInNumericLiterals:ApiDiagnostic.kt$ApiDiagnostic$10000</ID>
+    <ID>UnderscoresInNumericLiterals:ApiErrorHandler.kt$ApiErrorHandler$60000L</ID>
+    <ID>UnderscoresInNumericLiterals:ApiRetryManager.kt$ApiRetryManager.Companion$10000L</ID>
+    <ID>UnderscoresInNumericLiterals:ApiRetryManager.kt$ApiRetryManager.Companion$60000L</ID>
+    <ID>UnderscoresInNumericLiterals:ApiTestService.kt$ApiTestService$10000</ID>
+    <ID>UnderscoresInNumericLiterals:ApiUsageManager.kt$ApiUsageManager$60000L</ID>
+    <ID>UnderscoresInNumericLiterals:ApiUsageManager.kt$ApiUsageManager$86400000L</ID>
+    <ID>UnderscoresInNumericLiterals:ApiUsageManager.kt$ApiUsageManager.Companion$12000L</ID>
+    <ID>UnderscoresInNumericLiterals:ApiUsageManager.kt$ApiUsageManager.Companion$30000</ID>
+    <ID>UnderscoresInNumericLiterals:AppHealthMonitor.kt$AppHealthMonitor$10000</ID>
+    <ID>UnderscoresInNumericLiterals:AppHealthMonitor.kt$AppHealthMonitor$300000L</ID>
+    <ID>UnderscoresInNumericLiterals:AppHealthMonitor.kt$AppHealthMonitor$30000L</ID>
+    <ID>UnderscoresInNumericLiterals:DataValidator.kt$DataValidator$10000</ID>
+    <ID>UnderscoresInNumericLiterals:DataValidator.kt$DataValidator$100000</ID>
+    <ID>UnderscoresInNumericLiterals:DataValidator.kt$DataValidator$1000000</ID>
+    <ID>UnderscoresInNumericLiterals:DataValidator.kt$DataValidator$60000</ID>
+    <ID>UnderscoresInNumericLiterals:ErrorRecoveryService.kt$ErrorRecoveryService$60000L</ID>
+    <ID>UnderscoresInNumericLiterals:ErrorRecoveryService.kt$ErrorRecoveryService.CircuitBreaker$60000L</ID>
+    <ID>UnderscoresInNumericLiterals:WearSyncManager.kt$WearSyncManager$60000</ID>
+    <ID>UnnecessaryParentheses:ApiProviderService.kt$ApiProviderService$(stockData.close.toDouble() - stockData.change.toDouble())</ID>
+    <ID>UnnecessaryParentheses:ApiRetryManager.kt$ApiRetryManager$(attempt - 1)</ID>
+    <ID>UnnecessaryParentheses:ApiUsageManager.kt$ApiUsageStats$(requestsThisMinute.toFloat() / minuteLimit)</ID>
+    <ID>UnnecessaryParentheses:ApiUsageManager.kt$ApiUsageStats$(requestsToday.toFloat() / dailyLimit)</ID>
+    <ID>UnnecessaryParentheses:AuthStateManager.kt$AuthStateManager$(60 * 60 * 1000L)</ID>
+    <ID>UnnecessaryParentheses:AuthStateManager.kt$AuthStateManager$(currentTime - authTimestamp)</ID>
+    <ID>UnnecessaryParentheses:DashboardComponentsOptimized.kt$(cashValue / totalAssets * 100)</ID>
+    <ID>UnnecessaryParentheses:DashboardComponentsOptimized.kt$(stockValue / totalAssets * 100)</ID>
+    <ID>UnnecessaryParentheses:DashboardViewModel.kt$(twdEquivalent / totalValue * 100)</ID>
+    <ID>UnnecessaryParentheses:DataValidator.kt$DataValidator$(validCount.toFloat() / total * 100)</ID>
+    <ID>UnnecessaryParentheses:DeveloperKeyManager.kt$DeveloperKeyManager$(applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE)</ID>
+    <ID>UnnecessaryParentheses:MainActivity.kt$MainActivity$(height - margin)</ID>
+    <ID>UnnecessaryParentheses:MainActivity.kt$MainActivity$(width - margin)</ID>
+    <ID>UnnecessaryParentheses:PerformanceMonitor.kt$PerformanceMonitor$(usedMemoryMB * 100)</ID>
+    <ID>UnnecessaryParentheses:TwseDataParser.kt$TwseDataParser$(changeValue / (priceValue - changeValue))</ID>
+    <ID>UnusedParameter:DashboardScreen.kt$navController: NavHostController</ID>
+    <ID>UnusedParameter:SecurityLevelDialog.kt$level: SecurityLevelManager.SecurityLevel</ID>
+    <ID>UnusedParameter:TreemapChartComponent.kt$onAssetClick: (AssetItem) -&gt; Unit</ID>
+    <ID>UnusedPrivateMember:AndroidKeystoreManager.kt$AndroidKeystoreManager$private fun generateRandomIV(): ByteArray</ID>
+    <ID>UnusedPrivateMember:ApiProviderService.kt$ApiProviderService$private fun determineMarket(symbol: String): String</ID>
+    <ID>UnusedPrivateMember:CredentialManagerService.kt$CredentialManagerService$private fun generateCredentialId(keyType: String): String</ID>
+    <ID>UnusedPrivateMember:FirstLaunchManager.kt$FirstLaunchManager$private fun getCurrentAppVersion(): String</ID>
+    <ID>UnusedPrivateMember:MarketDataService.kt$MarketDataService$private fun analyzeApiErrorMessage(errorMessage: String): SearchErrorType</ID>
+    <ID>UnusedPrivateMember:MarketDataService.kt$MarketDataService$private fun analyzeApiNote(note: String): SearchErrorType</ID>
+    <ID>UnusedPrivateMember:MarketDataService.kt$MarketDataService$private fun createMockExchangeRate(cachedRate: ExchangeRate): Any</ID>
+    <ID>UnusedPrivateMember:MarketDataService.kt$MarketDataService$private fun createMockGlobalQuote(stock: StockAsset): Any</ID>
+    <ID>UnusedPrivateMember:MarketDataService.kt$MarketDataService$private fun determineMarketState(timezone: String): String</ID>
+    <ID>UnusedPrivateMember:MarketDataService.kt$MarketDataService$private fun validateApiResponse( response: Any, symbol: String, )</ID>
+    <ID>UnusedPrivateMember:PieChartComponentFixed.kt$private fun formatCurrency(amount: Double): String</ID>
+    <ID>UnusedPrivateMember:SettingsScreen.kt$@Composable private fun DeveloperKeyCard(onUseDeveloperKeys: () -&gt; Unit)</ID>
+    <ID>UnusedPrivateMember:SettingsScreen.kt$@Composable private fun SecurityLevelSettingsCard(onShowSecurityLevelDialog: () -&gt; Unit)</ID>
+    <ID>UnusedPrivateMember:SettingsScreen.kt$@Composable private fun SecurityStatusCard( securityStatus: com.wealthmanager.ui.security.SecurityStatus, onRefresh: () -&gt; Unit, )</ID>
+    <ID>UnusedPrivateMember:TreemapChartComponent.kt$private fun DrawScope.drawTreemap( rects: List&lt;TreemapRect&gt;, onAssetClick: (AssetItem) -&gt; Unit, )</ID>
+    <ID>UnusedPrivateMember:TreemapLayout.kt$TreemapLayout$private fun layoutHorizontally( items: List&lt;NormalizedItem&gt;, x: Float, y: Float, width: Float, height: Float, result: MutableList&lt;TreemapRect&gt;, spacing: Float = 0f, )</ID>
+    <ID>UnusedPrivateMember:TreemapLayout.kt$TreemapLayout$private fun layoutVertically( items: List&lt;NormalizedItem&gt;, x: Float, y: Float, width: Float, height: Float, result: MutableList&lt;TreemapRect&gt;, spacing: Float = 0f, )</ID>
+    <ID>UnusedPrivateProperty:AndroidKeystoreManager.kt$AndroidKeystoreManager$private val context: Context</ID>
+    <ID>UnusedPrivateProperty:ApiKeyInputField.kt$val context = LocalContext.current</ID>
+    <ID>UnusedPrivateProperty:BiometricProtectionManager.kt$BiometricProtectionManager.Companion$private const val BIOMETRIC_NEGATIVE_TEXT = "biometric_prompt_negative"</ID>
+    <ID>UnusedPrivateProperty:BiometricProtectionManager.kt$BiometricProtectionManager.Companion$private const val BIOMETRIC_SUBTITLE = "biometric_prompt_subtitle"</ID>
+    <ID>UnusedPrivateProperty:BiometricProtectionManager.kt$BiometricProtectionManager.Companion$private const val BIOMETRIC_TITLE = "biometric_prompt_title"</ID>
+    <ID>UnusedPrivateProperty:DeveloperKeyManager.kt$DeveloperKeyManager$val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)</ID>
+    <ID>UnusedPrivateProperty:FirstLaunchManager.kt$FirstLaunchManager.Companion$private const val KEY_APP_VERSION = "app_version"</ID>
+    <ID>UnusedPrivateProperty:KeyValidator.kt$KeyValidator$val uniqueChars = charCounts.size</ID>
+    <ID>UnusedPrivateProperty:MarketDataService.kt$MarketDataService$private val cacheManager: CacheManager</ID>
+    <ID>UnusedPrivateProperty:MarketDataService.kt$MarketDataService$private val numberFormatter: NumberFormatter</ID>
+    <ID>UnusedPrivateProperty:MarketDataService.kt$MarketDataService$private val requestDeduplicationManager: RequestDeduplicationManager</ID>
+    <ID>UnusedPrivateProperty:PerformanceMonitor.kt$PerformanceMonitor$private val mainHandler = Handler(Looper.getMainLooper())</ID>
+    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$private val debugLogManager: DebugLogManager</ID>
+    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$private val mainHandler = Handler(Looper.getMainLooper())</ID>
+    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$// High refresh rate related constants private const val TARGET_FPS_120 = 120f</ID>
+    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$// Memory warning thresholds - 120Hz requires more aggressive memory management private const val MEMORY_WARNING_THRESHOLD_MB = 80L</ID>
+    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$// Performance statistics thresholds private const val FRAME_DROP_WARNING_THRESHOLD = 5 // 5 frame drops warning</ID>
+    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$private const val FRAME_DROP_CRITICAL_THRESHOLD = 10 // 10 frame drops critical</ID>
+    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$private const val MAIN_THREAD_BLOCK_THRESHOLD_60FPS = 16L // 16ms (60fps)</ID>
+    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$private const val MEMORY_CRITICAL_THRESHOLD_MB = 150L</ID>
+    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$private const val TARGET_FPS_60 = 60f</ID>
+    <ID>UnusedPrivateProperty:SecurityLevelManager.kt$SecurityLevelManager.Companion$private const val KEY_BIOMETRIC_ENABLED = "biometric_enabled"</ID>
+    <ID>UnusedPrivateProperty:TreemapLayout.kt$TreemapLayout$row</ID>
+    <ID>VariableNaming:ApiStatusManager.kt$ApiStatusManager$private val _apiStatus = MutableStateFlow(ApiStatus())</ID>
+    <ID>VariableNaming:AssetsViewModel.kt$AssetsViewModel$// Immediate search events (bypass debounce) private val _immediateSearch = MutableSharedFlow&lt;String&gt;(extraBufferCapacity = 1)</ID>
+    <ID>VariableNaming:AssetsViewModel.kt$AssetsViewModel$// Search query state (debounced) private val _searchQuery = MutableStateFlow("")</ID>
+    <ID>VariableNaming:AssetsViewModel.kt$AssetsViewModel$private val _cashActionButtonLabel = MutableStateFlow(R.string.add)</ID>
+    <ID>VariableNaming:AssetsViewModel.kt$AssetsViewModel$private val _cashAmountInput = MutableStateFlow("")</ID>
+    <ID>VariableNaming:AssetsViewModel.kt$AssetsViewModel$private val _selectedCashCurrency = MutableStateFlow("TWD")</ID>
+    <ID>VariableNaming:AssetsViewModel.kt$AssetsViewModel$private val _uiState = MutableStateFlow(AssetsUiState())</ID>
+    <ID>VariableNaming:AuthStateManager.kt$AuthStateManager$private val AUTH_KEY = "is_authenticated"</ID>
+    <ID>VariableNaming:AuthStateManager.kt$AuthStateManager$private val AUTH_SESSION_TIMEOUT = 24 * 60 * 60 * 1000L // 24 hours in milliseconds</ID>
+    <ID>VariableNaming:AuthStateManager.kt$AuthStateManager$private val AUTH_TIMESTAMP_KEY = "auth_timestamp"</ID>
+    <ID>VariableNaming:AuthStateManager.kt$AuthStateManager$private val BIOMETRIC_ENABLED_KEY = "biometric_enabled"</ID>
+    <ID>VariableNaming:BiometricAuthViewModel.kt$BiometricAuthViewModel$private val _uiState = MutableStateFlow(BiometricAuthUiState())</ID>
+    <ID>VariableNaming:DashboardViewModel.kt$DashboardViewModel$private val _manualSyncStatus = MutableStateFlow&lt;ManualSyncStatus?&gt;(null)</ID>
+    <ID>VariableNaming:DashboardViewModel.kt$DashboardViewModel$private val _uiState = MutableStateFlow(DashboardUiState())</ID>
+    <ID>VariableNaming:EnhancedKeyRepository.kt$EnhancedKeyRepository$private val KEY_EXCHANGE = "user_exchange_rate_api_key"</ID>
+    <ID>VariableNaming:EnhancedKeyRepository.kt$EnhancedKeyRepository$private val KEY_FINNHUB = "user_finnhub_api_key"</ID>
+    <ID>VariableNaming:KeyRepository.kt$KeyRepository$private val KEY_EXCHANGE = "user_exchange_rate_api_key"</ID>
+    <ID>VariableNaming:KeyRepository.kt$KeyRepository$private val KEY_FINNHUB = "user_finnhub_api_key"</ID>
+    <ID>VariableNaming:SettingsViewModel.kt$SettingsViewModel$private val _uiState = MutableStateFlow( SettingsUiState( biometricEnabled = authStateManager.isBiometricEnabled(), financialBackupEnabled = backupPreferencesManager.isFinancialBackupEnabled(), currentLanguageCode = localePreferencesManager.getLanguageCode(), availableLanguages = listOf( LanguageOption(languageCode = "en", displayNameRes = R.string.language_option_english), LanguageOption( languageCode = "zh-TW", displayNameRes = R.string.language_option_traditional_chinese, ), ), finnhubKeyPreview = keyRepository.preview(keyRepository.getUserFinnhubKey()), exchangeKeyPreview = keyRepository.preview(keyRepository.getUserExchangeKey()), ), )</ID>
+    <ID>VariableNaming:WearSyncManager.kt$WearSyncManager$private val MAX_RETRY_ATTEMPTS = 3</ID>
+    <ID>VariableNaming:WearSyncManager.kt$WearSyncManager$private val MIN_SYNC_INTERVAL_MS = 30 * 1000L // 30 seconds debounce interval</ID>
+    <ID>VariableNaming:WearSyncManager.kt$WearSyncManager$private val RETRY_DELAY_BASE_MS = 1000L // Base delay for exponential backoff</ID>
+    <ID>WildcardImport:AboutDialog.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:AboutDialog.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:AboutDialog.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:AddAssetDialog.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:AddAssetDialog.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:AddAssetDialog.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ApiErrorBanner.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ApiErrorBanner.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:ApiErrorBanner.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ApiKeyEmptyStateCard.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ApiKeyEmptyStateCard.kt$import androidx.compose.material.icons.filled.*</ID>
+    <ID>WildcardImport:ApiKeyEmptyStateCard.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:ApiKeyEmptyStateCard.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ApiKeyGuideDialog.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ApiKeyGuideDialog.kt$import androidx.compose.material.icons.filled.*</ID>
+    <ID>WildcardImport:ApiKeyGuideDialog.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:ApiKeyGuideDialog.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ApiKeyGuideOnboardingDialog.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ApiKeyGuideOnboardingDialog.kt$import androidx.compose.material.icons.filled.*</ID>
+    <ID>WildcardImport:ApiKeyGuideOnboardingDialog.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:ApiKeyGuideOnboardingDialog.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ApiKeyInputField.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ApiKeyInputField.kt$import androidx.compose.material.icons.filled.*</ID>
+    <ID>WildcardImport:ApiKeyInputField.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:ApiKeyInputField.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ApiKeyValidationFeedback.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ApiKeyValidationFeedback.kt$import androidx.compose.material.icons.filled.*</ID>
+    <ID>WildcardImport:ApiKeyValidationFeedback.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:ApiKeyValidationFeedback.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:AssetsComponents.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:AssetsScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:AssetsScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:AssetsScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:BiometricAuthScreen.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:BiometricAuthScreen.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:BiometricAuthScreen.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:CashAssetDao.kt$import androidx.room.*</ID>
+    <ID>WildcardImport:DashboardComponentsOptimized.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:DashboardComponentsOptimized.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:EditAssetDialog.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:EditAssetDialog.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:EditAssetDialog.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:ExchangeRateDao.kt$import androidx.room.*</ID>
+    <ID>WildcardImport:GooglePasswordManagerOnboardingDialog.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:GooglePasswordManagerOnboardingDialog.kt$import androidx.compose.material.icons.filled.*</ID>
+    <ID>WildcardImport:GooglePasswordManagerOnboardingDialog.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:GooglePasswordManagerOnboardingDialog.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:HighRefreshRateComponents.kt$import androidx.compose.animation.core.*</ID>
+    <ID>WildcardImport:HighRefreshRateComponents.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:HighRefreshRateComponents.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:MainActivity.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:NotificationPermissionManager.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:NotificationPermissionManager.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:NotificationPermissionManager.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:OnboardingFlow.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:OnboardingManager.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:PerformanceMonitor.kt$import kotlinx.coroutines.*</ID>
+    <ID>WildcardImport:PerformanceMonitor120Hz.kt$import kotlinx.coroutines.*</ID>
+    <ID>WildcardImport:PieChartComponentFixed.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:PieChartComponentFixed.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:PieChartComponentFixed.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:PieChartComponentFixed.kt$import kotlin.math.*</ID>
+    <ID>WildcardImport:ResponsiveLayout.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:ResponsiveLayout.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:ResponsiveLayout.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:StockAssetDao.kt$import androidx.room.*</ID>
+    <ID>WildcardImport:TreemapChartComponent.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:TreemapChartComponent.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:TreemapChartComponent.kt$import androidx.compose.runtime.*</ID>
+    <ID>WildcardImport:TreemapChartComponent.kt$import kotlin.math.*</ID>
+    <ID>WildcardImport:TreemapLayout.kt$import kotlin.math.*</ID>
+    <ID>WildcardImport:WelcomeOnboardingDialog.kt$import androidx.compose.foundation.layout.*</ID>
+    <ID>WildcardImport:WelcomeOnboardingDialog.kt$import androidx.compose.material.icons.filled.*</ID>
+    <ID>WildcardImport:WelcomeOnboardingDialog.kt$import androidx.compose.material3.*</ID>
+    <ID>WildcardImport:WelcomeOnboardingDialog.kt$import androidx.compose.runtime.*</ID>
+  </CurrentIssues>
+</SmellBaseline>

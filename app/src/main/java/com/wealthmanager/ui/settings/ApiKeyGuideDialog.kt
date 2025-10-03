@@ -3,16 +3,20 @@ package com.wealthmanager.ui.settings
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
+import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.*
+import androidx.compose.material.icons.automirrored.filled.OpenInNew
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -29,9 +33,14 @@ fun ApiKeyGuideDialog(onDismiss: () -> Unit) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
-    // 檢測是否可以向下滾動（用於顯示滾動提示）
-    val canScrollDown = scrollState.value < scrollState.maxValue
-    val canScrollUp = scrollState.value > 0
+    // 使用 LaunchedEffect 和 remember 來穩定滾動狀態檢測
+    var canScrollDown by remember { mutableStateOf(false) }
+    var canScrollUp by remember { mutableStateOf(false) }
+
+    LaunchedEffect(scrollState.value, scrollState.maxValue) {
+        canScrollDown = scrollState.value < scrollState.maxValue - 10 // 添加緩衝區避免邊界問題
+        canScrollUp = scrollState.value > 10 // 添加緩衝區避免邊界問題
+    }
 
     Dialog(
         onDismissRequest = onDismiss,
@@ -51,6 +60,7 @@ fun ApiKeyGuideDialog(onDismiss: () -> Unit) {
                         Modifier
                             .fillMaxSize()
                             .padding(24.dp)
+                            .padding(bottom = 24.dp)
                             .verticalScroll(scrollState),
                 ) {
                     Row(
@@ -82,13 +92,13 @@ fun ApiKeyGuideDialog(onDismiss: () -> Unit) {
                     Spacer(modifier = Modifier.height(20.dp))
 
                     ApiKeyGuideCard(
-                        title = "Finnhub API",
+                        title = stringResource(R.string.api_guide_finnhub_title),
                         description = stringResource(R.string.api_guide_finnhub_description),
                         features =
                             listOf(
                                 stringResource(R.string.api_guide_finnhub_features).split("\n"),
                             ).flatten(),
-                        freeLimit = "60 calls/minute",
+                        freeLimit = stringResource(R.string.api_guide_finnhub_free_limit),
                         onApplyClick = {
                             openBrowser(context, "https://finnhub.io/register")
                         },
@@ -97,13 +107,13 @@ fun ApiKeyGuideDialog(onDismiss: () -> Unit) {
                     Spacer(modifier = Modifier.height(16.dp))
 
                     ApiKeyGuideCard(
-                        title = "Exchange Rate API",
+                        title = stringResource(R.string.api_guide_exchange_title),
                         description = stringResource(R.string.api_guide_exchange_description),
                         features =
                             listOf(
                                 stringResource(R.string.api_guide_exchange_features).split("\n"),
                             ).flatten(),
-                        freeLimit = "1,500 requests/month",
+                        freeLimit = stringResource(R.string.api_guide_exchange_free_limit),
                         onApplyClick = {
                             openBrowser(context, "https://v6.exchangerate-api.com/")
                         },
@@ -194,12 +204,19 @@ fun ApiKeyGuideDialog(onDismiss: () -> Unit) {
                 } // End of Column (scrollable content)
 
                 // 頂部漸變遮罩 - 提示可以向上滾動
-                if (canScrollUp) {
+                val topGradientAlpha by animateFloatAsState(
+                    targetValue = if (canScrollUp) 1f else 0f,
+                    animationSpec = tween(durationMillis = 200),
+                    label = "top_gradient_alpha",
+                )
+
+                if (topGradientAlpha > 0.01f) {
                     Box(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
                                 .height(32.dp)
+                                .graphicsLayer { alpha = topGradientAlpha }
                                 .background(
                                     brush =
                                         androidx.compose.ui.graphics.Brush.verticalGradient(
@@ -214,38 +231,27 @@ fun ApiKeyGuideDialog(onDismiss: () -> Unit) {
                     )
                 }
 
-                // 底部漸變遮罩 + 向下箭頭 - 提示可以向下滾動
+                // 底部滾動指示器 - 移到內容區域外，避免重疊
                 if (canScrollDown) {
-                    Column(
+                    Box(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .align(Alignment.BottomCenter),
-                        horizontalAlignment = Alignment.CenterHorizontally,
+                                .height(80.dp) // 增加高度確保漸層完整顯示
+                                .align(Alignment.BottomCenter)
+                                .background(
+                                    brush =
+                                        androidx.compose.ui.graphics.Brush.verticalGradient(
+                                            colors =
+                                                listOf(
+                                                    MaterialTheme.colorScheme.surface.copy(alpha = 0f),
+                                                    MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+                                                ),
+                                        ),
+                                ),
+                        contentAlignment = Alignment.Center,
                     ) {
-                        // 漸變遮罩
-                        Box(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height(64.dp)
-                                    .background(
-                                        brush =
-                                            androidx.compose.ui.graphics.Brush.verticalGradient(
-                                                colors =
-                                                    listOf(
-                                                        MaterialTheme.colorScheme.surface.copy(alpha = 0f),
-                                                        MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
-                                                    ),
-                                            ),
-                                    ),
-                        )
-
-                        // 向下箭頭指示器
                         Surface(
-                            modifier =
-                                Modifier
-                                    .padding(bottom = 16.dp),
                             color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f),
                             shape = MaterialTheme.shapes.small,
                         ) {
@@ -355,7 +361,7 @@ private fun ApiKeyGuideCard(
                     ),
             ) {
                 Icon(
-                    imageVector = Icons.Default.OpenInNew,
+                    imageVector = Icons.AutoMirrored.Filled.OpenInNew,
                     contentDescription = null,
                     modifier = Modifier.size(18.dp),
                 )

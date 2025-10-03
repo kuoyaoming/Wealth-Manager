@@ -1,0 +1,21 @@
+<?xml version="1.0" ?>
+<SmellBaseline>
+  <ManuallySuppressedIssues></ManuallySuppressedIssues>
+  <CurrentIssues>
+    <ID>ExpressionBodySyntax:TwseDataParserTest.kt$return Mockito.mock(DebugLogManager::class.java)</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test getSearchResults with error results`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test getSearchResults with success results`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isApiLimitError with API limit error type`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isApiLimitError with API limit reached`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isErrorState with empty success results`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isErrorState with non-empty success results`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isStockNotFoundError with empty success results`()</ID>
+    <ID>FunctionMaxLength:SearchResultHandlerTest.kt$SearchResultHandlerTest$@Test fun `test isStockNotFoundError with stock not found reason`()</ID>
+    <ID>FunctionMaxLength:TwseDataParserTest.kt$TwseDataParserTest$@Test fun cleanTaiwanStockSymbol_removesSuffixes()</ID>
+    <ID>FunctionMaxLength:TwseDataParserTest.kt$TwseDataParserTest$@Test fun findStockFromAllData_returnsConvertedData_whenPresent()</ID>
+    <ID>FunctionMaxLength:TwseDataParserTest.kt$TwseDataParserTest$@Test fun findStockFromAllData_returnsNull_whenMissing()</ID>
+    <ID>FunctionMaxLength:TwseDataParserTest.kt$TwseDataParserTest$@Test fun validateTwseResponse_checksNonEmpty()</ID>
+    <ID>ImplicitDefaultLocale:TwseDataParserTest.kt$TwseDataParserTest$String.format("%.2f", 2.0 / 598.0 * 100.0)</ID>
+    <ID>LongParameterList:TwseDataParserTest.kt$TwseDataParserTest$( code: String, name: String = "$code Name", tradeVolume: String = "1000", tradeValue: String = "1000000", open: String = "590.00", high: String = "610.00", low: String = "580.00", close: String = "600.00", change: String = "1.00", tx: String = "100", )</ID>
+  </CurrentIssues>
+</SmellBaseline>

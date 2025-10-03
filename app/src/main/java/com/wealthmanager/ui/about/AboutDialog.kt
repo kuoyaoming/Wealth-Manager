@@ -7,10 +7,10 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material.icons.filled.Info
+import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Storage
-import androidx.compose.material.icons.filled.Key
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -42,8 +42,15 @@ fun AboutDialog(
     val (hapticManager, view) = rememberHapticFeedbackWithView()
     val scrollState = rememberScrollState()
 
-    val canScrollDown = scrollState.value < scrollState.maxValue
-    val canScrollUp = scrollState.value > 0
+    // 使用 LaunchedEffect 和 remember 來穩定滾動狀態檢測
+    var canScrollDown by remember { mutableStateOf(false) }
+    var canScrollUp by remember { mutableStateOf(false) }
+
+    LaunchedEffect(scrollState.value, scrollState.maxValue) {
+        canScrollDown = scrollState.value < scrollState.maxValue - 10 // 添加緩衝區避免邊界問題
+        canScrollUp = scrollState.value > 10 // 添加緩衝區避免邊界問題
+    }
+
     var showApiGuideDialog by remember { mutableStateOf(false) }
 
     Dialog(
@@ -69,6 +76,7 @@ fun AboutDialog(
                         Modifier
                             .fillMaxSize()
                             .padding(16.dp)
+                            .padding(bottom = 16.dp)
                             .verticalScroll(scrollState),
                 ) {
                     // Header
@@ -177,33 +185,27 @@ fun AboutDialog(
                     )
                 }
 
+                // 底部滾動指示器 - 移到內容區域外，避免重疊
                 if (canScrollDown) {
-                    Column(
+                    Box(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .align(Alignment.BottomCenter),
-                        horizontalAlignment = Alignment.CenterHorizontally,
+                                .height(80.dp) // 增加高度確保漸層完整顯示
+                                .align(Alignment.BottomCenter)
+                                .background(
+                                    brush =
+                                        androidx.compose.ui.graphics.Brush.verticalGradient(
+                                            colors =
+                                                listOf(
+                                                    MaterialTheme.colorScheme.surface.copy(alpha = 0f),
+                                                    MaterialTheme.colorScheme.surface.copy(alpha = 0.9f),
+                                                ),
+                                        ),
+                                ),
+                        contentAlignment = Alignment.Center,
                     ) {
-                        Box(
-                            modifier =
-                                Modifier
-                                    .fillMaxWidth()
-                                    .height(64.dp)
-                                    .background(
-                                        brush =
-                                            androidx.compose.ui.graphics.Brush.verticalGradient(
-                                                colors =
-                                                    listOf(
-                                                        MaterialTheme.colorScheme.surface.copy(alpha = 0f),
-                                                        MaterialTheme.colorScheme.surface.copy(alpha = 0.95f),
-                                                    ),
-                                            ),
-                                    ),
-                        )
-
                         Surface(
-                            modifier = Modifier.padding(bottom = 16.dp),
                             color = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.9f),
                             shape = MaterialTheme.shapes.small,
                         ) {

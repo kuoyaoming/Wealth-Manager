@@ -13,7 +13,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.input.pointer.pointerInput
-import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
@@ -91,7 +90,7 @@ fun Modifier.highRefreshRateClickable(onClick: () -> Unit): Modifier {
         }
         .pointerInput(Unit) {
             detectDragGestures(
-                onDragStart = { 
+                onDragStart = {
                     isPressed = true
                     hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                 },

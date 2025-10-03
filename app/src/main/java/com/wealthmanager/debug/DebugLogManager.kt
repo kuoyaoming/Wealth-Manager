@@ -164,7 +164,11 @@ class DebugLogManager
             }
 
             val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("Debug Logs", getAllLogs())
+            val clip =
+                ClipData.newPlainText(
+                    context.getString(com.wealthmanager.R.string.debug_clipboard_label),
+                    getAllLogs(),
+                )
             clipboard.setPrimaryClip(clip)
             log("DEBUG", "Logs copied to clipboard (${getLogCount()} entries)")
         }

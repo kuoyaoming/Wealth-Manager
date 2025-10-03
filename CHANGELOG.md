@@ -12,6 +12,46 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code of Conduct
 - Changelog documentation
 
+## [1.6.0] - 2025-01-04
+
+### Added
+- 🔐 **Google Password Manager Integration**:
+  - Enhanced credential management with Google Password Manager support
+  - Improved API key security and storage mechanisms
+  - Advanced biometric authentication integration
+- 🎨 **Enhanced UI Components**:
+  - New responsive dialog components for better user experience
+  - Improved accessibility features and audit capabilities
+  - Enhanced form validation with real-time feedback
+- 🔄 **Sync and Backup Improvements**:
+  - Advanced backup management with enhanced preferences
+  - Improved sync result handling and error management
+  - Better network utility functions for connectivity management
+- 🛠️ **Developer Experience**:
+  - New onboarding flow components
+  - Enhanced debug logging and haptic feedback
+  - Improved security enhancement examples
+
+### Changed
+- 📱 **UI/UX Enhancements**:
+  - Updated dashboard and settings screens with improved layouts
+  - Enhanced asset management with better validation
+  - Improved API key management with better user guidance
+- 🔧 **Technical Improvements**:
+  - Updated security mechanisms and key repository
+  - Enhanced backup and sync management
+  - Improved error handling and diagnostics
+
+### Fixed
+- 🐛 **Bug Fixes**:
+  - Resolved various UI component issues
+  - Fixed API key management problems
+  - Improved error handling across the application
+- 🔧 **Code Quality**:
+  - Updated detekt baseline files
+  - Improved code formatting and structure
+  - Enhanced error handling mechanisms
+
 ## [1.5.2] - 2025-01-27
 
 ### Added

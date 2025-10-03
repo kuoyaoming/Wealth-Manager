@@ -2,6 +2,8 @@
 <resources>
     <string name="app_name">Wealth Manager Wear</string>
     <string name="wear_greeting">Hello Wear!</string>
+    <string name="tile_loading">載入中…</string>
+    <string name="tile_retry">重試</string>
 
     <!-- Tile strings -->
     <string name="tile_title">總資產</string>
@@ -16,7 +18,7 @@
     <string name="wear_home_sync_button">立即同步</string>
     <string name="wear_home_sync_success">同步成功</string>
     <string name="wear_home_sync_failure">同步失敗，請稍後再試</string>
-    <string name="wear_home_sync_progress">同步中...</string>
+    <string name="wear_home_sync_progress">同步中…</string>
     <string name="wear_home_tile_hint">若未看到總資產 Tile，請先新增後再同步。</string>
     <string name="wear_home_tile_added">Tiles 已啟用，總資產會在背景自動更新。</string>
 </resources>

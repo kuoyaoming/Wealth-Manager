@@ -1,8 +1,11 @@
 package com.wealthmanager.security
 
+import android.content.Context
 import androidx.fragment.app.FragmentActivity
+import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.ui.security.SecureApiKeyManager
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -16,6 +19,7 @@ class SecurityEnhancementExample
     constructor(
         private val secureApiKeyManager: SecureApiKeyManager,
         private val debugLogManager: DebugLogManager,
+        @ApplicationContext private val context: Context,
     ) {
         /**
          * 範例：安全地設定Finnhub API金鑰
@@ -45,7 +49,7 @@ class SecurityEnhancementExample
                 },
                 onBiometricRequired = {
                     debugLogManager.log("SECURITY_EXAMPLE", "Biometric authentication required")
-                    onError("需要生物識別驗證")
+                    onError(context.getString(R.string.security_biometric_required))
                 },
             )
         }
@@ -73,7 +77,7 @@ class SecurityEnhancementExample
                 },
                 onBiometricRequired = {
                     debugLogManager.log("SECURITY_EXAMPLE", "Biometric authentication required")
-                    onError("需要生物識別驗證")
+                    onError(context.getString(R.string.security_biometric_required))
                 },
             )
         }
@@ -164,10 +168,10 @@ class SecurityEnhancementExample
                     checkCompletion()
                 },
                 onError = { error ->
-                    onError("Finnhub金鑰設定失敗: $error")
+                    onError(context.getString(R.string.security_finnhub_key_failed, error))
                 },
                 onBiometricRequired = {
-                    onError("需要生物識別驗證")
+                    onError(context.getString(R.string.security_biometric_required))
                 },
             )
 
@@ -180,10 +184,10 @@ class SecurityEnhancementExample
                     checkCompletion()
                 },
                 onError = { error ->
-                    onError("Exchange Rate金鑰設定失敗: $error")
+                    onError(context.getString(R.string.security_exchange_key_failed, error))
                 },
                 onBiometricRequired = {
-                    onError("需要生物識別驗證")
+                    onError(context.getString(R.string.security_biometric_required))
                 },
             )
         }

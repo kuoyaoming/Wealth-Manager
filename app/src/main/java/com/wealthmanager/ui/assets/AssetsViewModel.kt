@@ -305,6 +305,10 @@ class AssetsViewModel
                     assetRepository.insertCashAsset(cashAsset)
                 }
                 loadExistingCashAsset()
+
+                // 立即同步匯率和價格數據
+                debugLogManager.log("ASSETS", "Triggering immediate price sync after cash asset addition")
+                syncMarketData()
             }
         }
 
@@ -341,6 +345,10 @@ class AssetsViewModel
                 debugLogManager.log("ASSETS", "Stock asset created: $symbol, $shares shares, currency: $currency")
                 assetRepository.insertStockAsset(stockAsset)
                 debugLogManager.log("ASSETS", "Stock asset inserted to database")
+
+                // 立即同步匯率和價格數據
+                debugLogManager.log("ASSETS", "Triggering immediate price sync after stock asset addition")
+                syncMarketData()
             }
         }
 
@@ -357,6 +365,27 @@ class AssetsViewModel
             viewModelScope.launch {
                 assetRepository.deleteStockAsset(asset)
                 debugLogManager.log("ASSETS", "Stock asset deleted successfully")
+            }
+        }
+
+        /**
+         * 同步市場數據（匯率和股票價格）
+         */
+        private suspend fun syncMarketData() {
+            try {
+                debugLogManager.log("ASSETS", "Starting immediate market data sync")
+
+                // 更新匯率
+                marketDataService.updateExchangeRates()
+                debugLogManager.log("ASSETS", "Exchange rates updated")
+
+                // 更新股票價格
+                marketDataService.updateStockPrices()
+                debugLogManager.log("ASSETS", "Stock prices updated")
+
+                debugLogManager.log("ASSETS", "Market data sync completed successfully")
+            } catch (e: Exception) {
+                debugLogManager.logError("ASSETS: Failed to sync market data: ${e.message}", e)
             }
         }
 

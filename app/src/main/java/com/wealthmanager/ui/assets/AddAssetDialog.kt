@@ -5,8 +5,6 @@ import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.selection.selectable
 import androidx.compose.foundation.selection.selectableGroup
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.*
@@ -16,8 +14,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 import com.wealthmanager.data.model.StockSearchItem
@@ -141,7 +137,10 @@ fun AddAssetDialog(
                                                         "UI",
                                                         "User selected TWD currency for cash asset",
                                                     )
-                                                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                                                    hapticManager.triggerHaptic(
+                                                        view,
+                                                        HapticFeedbackManager.HapticIntensity.LIGHT,
+                                                    )
                                                     onCurrencyChange("TWD")
                                                 },
                                                 role = Role.RadioButton,
@@ -168,7 +167,10 @@ fun AddAssetDialog(
                                                         "UI",
                                                         "User selected USD currency for cash asset",
                                                     )
-                                                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
+                                                    hapticManager.triggerHaptic(
+                                                        view,
+                                                        HapticFeedbackManager.HapticIntensity.LIGHT,
+                                                    )
                                                     onCurrencyChange("USD")
                                                 },
                                                 role = Role.RadioButton,
@@ -193,10 +195,7 @@ fun AddAssetDialog(
                                 )
                                 Spacer(modifier = Modifier.height(12.dp))
                             }
-                            Text(stringResource(R.string.cash_amount))
-                            Spacer(modifier = Modifier.height(8.dp))
-                            val amountExample = if (cashCurrency == "TWD") "1000" else "1000.50"
-                            OutlinedTextField(
+                            CashAmountInputField(
                                 value = cashAmount,
                                 onValueChange = {
                                     debugLogManager.log("UI", "User typing cash amount: $it")
@@ -204,33 +203,14 @@ fun AddAssetDialog(
                                         onCashAmountChange(it)
                                     }
                                 },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Decimal),
-                                placeholder = {
-                                    Text(
-                                        stringResource(R.string.assets_amount_placeholder, amountExample),
-                                    )
-                                },
-                                isError = cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null,
-                                supportingText =
-                                    if (cashAmount.isNotEmpty() && cashAmount.toDoubleOrNull() == null) {
-                                        {
-                                            Text(
-                                                stringResource(R.string.validation_enter_valid_number),
-                                                color = MaterialTheme.colorScheme.error,
-                                            )
-                                        }
-                                    } else {
-                                        null
-                                    },
+                                currency = cashCurrency,
                                 modifier = Modifier.fillMaxWidth(),
                             )
                         }
                     }
                     1 -> { // Stock
                         Column {
-                            Text(stringResource(R.string.stock_symbol))
-                            Spacer(modifier = Modifier.height(8.dp))
-                            OutlinedTextField(
+                            StockSymbolInputField(
                                 value = stockSymbol,
                                 onValueChange = {
                                     debugLogManager.log("UI", "User typing stock symbol: $it")
@@ -239,23 +219,7 @@ fun AddAssetDialog(
                                     onSearchQueryChange(it)
                                     showSearchResults = it.isNotEmpty()
                                 },
-                                placeholder = { Text(stringResource(R.string.assets_stock_symbol_placeholder)) },
-                                keyboardOptions =
-                                    KeyboardOptions(
-                                        keyboardType = KeyboardType.Text,
-                                        imeAction = ImeAction.Search,
-                                    ),
-                                keyboardActions =
-                                    KeyboardActions(
-                                        onSearch = {
-                                            if (stockSymbol.isNotEmpty()) {
-                                                debugLogManager.logUserAction("IME Search Triggered")
-                                                debugLogManager.log("UI", "IME Search for: $stockSymbol")
-                                                onSearchStocks(stockSymbol, "")
-                                                showSearchResults = true
-                                            }
-                                        },
-                                    ),
+                                modifier = Modifier.fillMaxWidth(),
                                 trailingIcon = {
                                     if (isSearching) {
                                         CircularProgressIndicator(modifier = Modifier.size(20.dp))
@@ -266,7 +230,10 @@ fun AddAssetDialog(
                                                 "UI",
                                                 "User clicked manual search button for: $stockSymbol",
                                             )
-                                            hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                                            hapticManager.triggerHaptic(
+                                                view,
+                                                HapticFeedbackManager.HapticIntensity.MEDIUM,
+                                            )
                                             if (stockSymbol.isNotEmpty()) {
                                                 onSearchStocks(stockSymbol, "")
                                                 showSearchResults = true
@@ -279,7 +246,6 @@ fun AddAssetDialog(
                                         }
                                     }
                                 },
-                                modifier = Modifier.fillMaxWidth(),
                             )
 
                             // Show search results when available
@@ -309,7 +275,10 @@ fun AddAssetDialog(
                                                     "UI",
                                                     "User selected stock: ${result.symbol} - ${result.longName}",
                                                 )
-                                                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                                                hapticManager.triggerHaptic(
+                                                    view,
+                                                    HapticFeedbackManager.HapticIntensity.MEDIUM,
+                                                )
                                                 stockSymbol = result.symbol
                                                 showSearchResults = false
                                                 searchError = ""
@@ -363,28 +332,12 @@ fun AddAssetDialog(
                                 )
                             }
                             Spacer(modifier = Modifier.height(16.dp))
-                            Text(stringResource(R.string.stock_shares))
-                            Spacer(modifier = Modifier.height(8.dp))
-                            OutlinedTextField(
+                            StockSharesInputField(
                                 value = stockShares,
                                 onValueChange = {
                                     debugLogManager.log("UI", "User typing stock shares: $it")
                                     stockShares = it
                                 },
-                                keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Number),
-                                placeholder = { Text(stringResource(R.string.assets_shares_placeholder)) },
-                                isError = stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null,
-                                supportingText =
-                                    if (stockShares.isNotEmpty() && stockShares.toDoubleOrNull() == null) {
-                                        {
-                                            Text(
-                                                stringResource(R.string.validation_enter_valid_shares),
-                                                color = MaterialTheme.colorScheme.error,
-                                            )
-                                        }
-                                    } else {
-                                        null
-                                    },
                                 modifier = Modifier.fillMaxWidth(),
                             )
                         }
