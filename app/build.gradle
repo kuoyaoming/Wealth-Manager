@@ -25,7 +25,7 @@ def isCi = (System.getenv('CI') ?: 'false').toBoolean()
 
 android {
     namespace = 'com.wealthmanager'
-    compileSdk = 36
+    compileSdk = 35
 
     signingConfigs {
         release {
@@ -53,7 +53,7 @@ android {
     defaultConfig {
         applicationId = "com.wealthmanager"
         minSdk = 34
-        targetSdk = 36
+        targetSdk = 35
         versionCode = wmVersionCode
         versionName = wmVersionName
 
@@ -122,7 +122,7 @@ android {
         }
     }
     
-    buildToolsVersion = '36.1.0'
+    buildToolsVersion = '35.0.0'
     
     testOptions {
         unitTests {
