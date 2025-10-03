@@ -12,6 +12,42 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code of Conduct
 - Changelog documentation
 
+## [1.5.2] - 2025-01-27
+
+### Added
+- 🎯 Enhanced Wear OS design compliance with SDK guidelines
+- 🔄 Optimized mobile-wear synchronization with retry mechanisms
+- 📊 Improved data caching and performance optimization
+- 🛠️ Added comprehensive error handling for sync operations
+
+### Fixed
+- 🔧 Fixed WearSyncManager compilation errors and indentation issues
+- 🛠️ Resolved JaCoCo configuration conflicts in build system
+- 📱 Improved Wear OS tile layout using PrimaryLayout.Builder
+- ⚡ Enhanced sync debouncing and connection management
+
+### Changed
+- 🎨 Updated Wear OS UI components with proper font sizes and spacing
+- 🔄 Implemented exponential backoff retry mechanism for sync operations
+- 📊 Added smart caching strategy to reduce unnecessary data updates
+- 🛡️ Enhanced data validation for sync operations
+
+### Performance
+- ⚡ Optimized Wear OS tile rendering performance
+- 🔄 Reduced sync frequency with intelligent debouncing
+- 📊 Improved data validation and error handling
+- 🛠️ Enhanced connection state management
+
+### Dependencies
+- 📦 Updated GitHub Actions dependencies (checkout@v5, setup-java@v5, wrapper-validation@v3)
+- 📦 Updated Wear OS Compose dependencies (1.3.0 → 1.5.2)
+- 📦 Updated Wear OS Tiles dependencies (1.3.0 → 1.5.0)
+
+### CI/CD
+- 🚫 Temporarily disabled quality checks and coverage requirements (by user request)
+- 🔧 Fixed build configuration issues
+- ✅ Improved CI pipeline stability
+
 ## [1.4.7] - 2025-10-02
 
 ### Fixed

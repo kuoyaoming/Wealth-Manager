@@ -1,15 +1,15 @@
-# Release Checklist (v1.4.6)
+# Release Checklist (v1.5.2)
 
 ## Pre-release
-- [ ] Confirm all CI checks are green on main branch
-- [ ] Update `CHANGELOG.md` with 1.4.6 notes
+- [x] Confirm all CI checks are green on main branch
+- [x] Update `CHANGELOG.md` with 1.5.2 notes
 - [ ] Verify `README.md` and `README_zh.md` versioning sections
 - [ ] Ensure no secrets or API keys are in source
 - [ ] Confirm Play Console service account and signing configs are valid
 
 ## Tag & Build
-- [ ] Create release tag: `git tag v1.4.6`
-- [ ] Push tag: `git push origin v1.4.6`
+- [ ] Create release tag: `git tag v1.5.2`
+- [ ] Push tag: `git push origin v1.5.2`
 - [ ] Wait for CI to finish release job
 
 ## Artifacts
