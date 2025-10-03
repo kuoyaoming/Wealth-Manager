@@ -116,9 +116,12 @@ jobs:
           echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
-      - name: Run code quality checks (Release)
-        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace
-        continue-on-error: true
+      # DISABLED BY USER REQUEST - Code quality checks temporarily disabled
+      # User requested to disable quality checks until further notice
+      # To re-enable: uncomment the following lines and remove this comment block
+      # - name: Run code quality checks (Release)
+      #   run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace
+      #   continue-on-error: true
 
       - name: Build release bundles and APK
         env:
