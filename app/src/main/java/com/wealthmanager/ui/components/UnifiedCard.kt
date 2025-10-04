@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.Dp
+import androidx.compose.ui.unit.LayoutDirection
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.ui.responsive.ResponsiveLayout
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
@@ -157,10 +158,10 @@ private fun getCardConfig(
     return baseConfig.copy(
         elevation = baseConfig.elevation * responsiveMultiplier,
         padding = PaddingValues(
-            start = baseConfig.padding.calculateStartPadding(null) * responsiveMultiplier,
-            top = baseConfig.padding.calculateTopPadding(null) * responsiveMultiplier,
-            end = baseConfig.padding.calculateEndPadding(null) * responsiveMultiplier,
-            bottom = baseConfig.padding.calculateBottomPadding(null) * responsiveMultiplier,
+            start = baseConfig.padding.calculateStartPadding(LayoutDirection.Ltr) * responsiveMultiplier,
+            top = baseConfig.padding.calculateTopPadding() * responsiveMultiplier,
+            end = baseConfig.padding.calculateEndPadding(LayoutDirection.Ltr) * responsiveMultiplier,
+            bottom = baseConfig.padding.calculateBottomPadding() * responsiveMultiplier,
         ),
         cornerRadius = baseConfig.cornerRadius * responsiveMultiplier
     )
