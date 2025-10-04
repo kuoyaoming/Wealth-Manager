@@ -13,6 +13,7 @@ import com.wealthmanager.ui.components.PrimaryCard
 import com.wealthmanager.ui.components.SecondaryCard
 import com.wealthmanager.ui.components.StatusCard
 import com.wealthmanager.ui.components.StatusType
+import com.wealthmanager.ui.responsive.ResponsiveLayout
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
 import com.wealthmanager.utils.MoneyFormatter
 import com.wealthmanager.utils.rememberMoneyText
