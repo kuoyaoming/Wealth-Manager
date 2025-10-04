@@ -29,24 +29,7 @@ android {
 
     signingConfigs {
         release {
-            def keystorePath = System.getenv('ANDROID_KEYSTORE_PATH') ?: new File(rootDir, 'keystore.jks').absolutePath
-            def storePassword = System.getenv('ANDROID_KEYSTORE_PASSWORD')
-            def keyAlias = System.getenv('ANDROID_KEY_ALIAS')
-            def keyPassword = System.getenv('ANDROID_KEY_PASSWORD')
-            
-            // Only configure signing if all required environment variables are set and not empty
-            if (storePassword && !storePassword.isEmpty() && 
-                keyAlias && !keyAlias.isEmpty() && 
-                keyPassword && !keyPassword.isEmpty()) {
-                storeFile file(keystorePath)
-                storePassword storePassword
-                keyAlias keyAlias
-                keyPassword keyPassword
-                def keystoreType = System.getenv('ANDROID_KEYSTORE_TYPE')
-                if (keystoreType != null && !keystoreType.isEmpty()) {
-                    storeType keystoreType
-                }
-            }
+            // Simplified signing config for CI compatibility
         }
     }
 
