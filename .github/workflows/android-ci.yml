@@ -36,7 +36,7 @@ jobs:
       - name: Install Android SDK components
         run: |
           yes | sdkmanager --licenses
-          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;36.1.0" || sdkmanager --install "build-tools;35.0.0"
+          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Grant Gradle permissions
         run: chmod +x gradlew
@@ -99,7 +99,7 @@ jobs:
       - name: Install Android SDK components
         run: |
           yes | sdkmanager --licenses
-          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;36.1.0" || sdkmanager --install "build-tools;35.0.0"
+          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.0"
 
       - name: Grant Gradle permissions
         run: chmod +x gradlew
