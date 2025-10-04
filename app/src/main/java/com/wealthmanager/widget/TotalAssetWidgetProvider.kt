@@ -104,6 +104,10 @@ class WidgetUpdateWorker(
         return try {
             DebugLogManager.log("WIDGET_WORKER", "Starting widget update")
             
+            // Check error conditions first
+            val displayState = WidgetErrorHandler.determineDisplayState(applicationContext)
+            DebugLogManager.log("WIDGET_WORKER", "Display state: $displayState")
+            
             // Get total assets from repository
             val assetRepository = com.wealthmanager.data.repository.AssetRepository(
                 com.wealthmanager.data.database.WealthManagerDatabase.getDatabase(applicationContext).cashAssetDao(),
@@ -120,8 +124,10 @@ class WidgetUpdateWorker(
             
             DebugLogManager.log("WIDGET_WORKER", "Total assets: $totalAssets")
             
-            // Format the amount based on privacy settings
-            val formattedAmount = WidgetPrivacyManager.getDisplayText(applicationContext, totalAssets)
+            // Get appropriate display text based on current state
+            val formattedAmount = WidgetErrorHandler.getDisplayText(applicationContext, totalAssets)
+            val statusMessage = WidgetErrorHandler.getStatusMessage(applicationContext)
+            DebugLogManager.log("WIDGET_WORKER", "Status: $statusMessage")
             
             // Update all widget instances
             val appWidgetManager = AppWidgetManager.getInstance(applicationContext)
@@ -131,9 +137,19 @@ class WidgetUpdateWorker(
             for (appWidgetId in appWidgetIds) {
                 val views = RemoteViews(applicationContext.packageName, R.layout.widget_total_asset_layout)
                 
-                // Update text
+                // Update text based on state
                 views.setTextViewText(R.id.widget_total_amount, formattedAmount)
-                views.setTextViewText(R.id.widget_currency_unit, "TWD")
+                
+                // Set currency unit based on state
+                val currencyUnit = when (displayState) {
+                    WidgetErrorHandler.WidgetDisplayState.NO_DATA -> "Add Assets"
+                    WidgetErrorHandler.WidgetDisplayState.NO_NETWORK -> "Offline"
+                    WidgetErrorHandler.WidgetDisplayState.NO_API -> "Setup"
+                    WidgetErrorHandler.WidgetDisplayState.ERROR -> "Error"
+                    WidgetErrorHandler.WidgetDisplayState.PRIVACY_HIDDEN -> "Hidden"
+                    else -> "TWD"
+                }
+                views.setTextViewText(R.id.widget_currency_unit, currencyUnit)
                 
                 // Set last updated time
                 val lastUpdated = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
@@ -154,11 +170,47 @@ class WidgetUpdateWorker(
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             }
             
-            DebugLogManager.log("WIDGET_WORKER", "Widget update completed")
+            DebugLogManager.log("WIDGET_WORKER", "Widget update completed successfully")
             Result.success()
         } catch (e: Exception) {
             DebugLogManager.logError("WIDGET_WORKER: Failed to update widget: ${e.message}", e)
+            
+            // Try to show error state on widgets
+            try {
+                showErrorStateOnWidgets()
+            } catch (errorException: Exception) {
+                DebugLogManager.logError("WIDGET_WORKER: Failed to show error state: ${errorException.message}", errorException)
+            }
+            
             Result.failure()
+        }
+    }
+    
+    /**
+     * Show error state on all widgets when update fails
+     */
+    private fun showErrorStateOnWidgets() {
+        val appWidgetManager = AppWidgetManager.getInstance(applicationContext)
+        val componentName = android.content.ComponentName(applicationContext, TotalAssetWidgetProvider::class.java)
+        val appWidgetIds = appWidgetManager.getAppWidgetIds(componentName)
+        
+        for (appWidgetId in appWidgetIds) {
+            val views = RemoteViews(applicationContext.packageName, R.layout.widget_total_asset_layout)
+            
+            views.setTextViewText(R.id.widget_total_amount, "Error")
+            views.setTextViewText(R.id.widget_currency_unit, "Tap to retry")
+            
+            // Set click intent to open app
+            val intent = Intent(applicationContext, MainActivity::class.java).apply {
+                flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
+            }
+            val pendingIntent = PendingIntent.getActivity(
+                applicationContext, 0, intent,
+                PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE
+            )
+            views.setOnClickPendingIntent(R.id.widget_total_amount, pendingIntent)
+            
+            appWidgetManager.updateAppWidget(appWidgetId, views)
         }
     }
 }
