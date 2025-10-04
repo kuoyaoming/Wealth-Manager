@@ -47,6 +47,22 @@
 3. 需要驗證才能查看敏感的財務資訊。
 4. 若選擇跳過驗證，資料安全性將降低。</string>
     
+    <!-- Card Design System -->
+    <string name="card_design_system_examples">統一卡片設計系統範例</string>
+    <string name="primary_cards_title">主要卡片 (Primary Cards)</string>
+    <string name="secondary_cards_title">次要卡片 (Secondary Cards)</string>
+    <string name="outlined_cards_title">輪廓卡片 (Outlined Cards)</string>
+    <string name="status_cards_title">狀態卡片 (Status Cards)</string>
+    <string name="clickable_cards_title">可點擊卡片 (Clickable Cards)</string>
+    <string name="total_assets_example">總資產</string>
+    <string name="cash_assets_example">現金資產</string>
+    <string name="stock_assets_example">股票資產</string>
+    <string name="data_sync_success">數據同步成功</string>
+    <string name="api_key_expiring_warning">API密鑰即將過期</string>
+    <string name="network_connection_failed">網路連接失敗</string>
+    <string name="new_feature_available">新功能已上線</string>
+    <string name="settings_example">設定</string>
+
     <!-- Navigation -->
     <string name="nav_dashboard">儀表板</string>
     <string name="nav_assets">資產</string>

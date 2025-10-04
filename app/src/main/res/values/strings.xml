@@ -47,6 +47,22 @@
 3. Authentication is required to access sensitive financial information.
 4. You may skip authentication, but your data will be less secure.</string>
 
+    <!-- Card Design System -->
+    <string name="card_design_system_examples">Unified Card Design System Examples</string>
+    <string name="primary_cards_title">Primary Cards</string>
+    <string name="secondary_cards_title">Secondary Cards</string>
+    <string name="outlined_cards_title">Outlined Cards</string>
+    <string name="status_cards_title">Status Cards</string>
+    <string name="clickable_cards_title">Clickable Cards</string>
+    <string name="total_assets_example">Total Assets</string>
+    <string name="cash_assets_example">Cash Assets</string>
+    <string name="stock_assets_example">Stock Assets</string>
+    <string name="data_sync_success">Data sync successful</string>
+    <string name="api_key_expiring_warning">API key expiring soon</string>
+    <string name="network_connection_failed">Network connection failed</string>
+    <string name="new_feature_available">New feature available</string>
+    <string name="settings_example">Settings</string>
+
     <!-- Navigation -->
     <string name="nav_dashboard">Dashboard</string>
     <string name="nav_assets">Assets</string>

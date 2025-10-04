@@ -34,7 +34,7 @@ fun CardDesignSystemExamples() {
     ) {
         item {
             Text(
-                text = "統一卡片設計系統範例",
+                text = stringResource(R.string.card_design_system_examples),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold
             )
@@ -42,7 +42,7 @@ fun CardDesignSystemExamples() {
         
         item {
             Text(
-                text = "主要卡片 (Primary Cards)",
+                text = stringResource(R.string.primary_cards_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
@@ -61,7 +61,7 @@ fun CardDesignSystemExamples() {
                             tint = MaterialTheme.colorScheme.primary
                         )
                         Text(
-                            text = "總資產",
+                            text = stringResource(R.string.total_assets_example),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Bold
                         )
@@ -81,7 +81,7 @@ fun CardDesignSystemExamples() {
         
         item {
             Text(
-                text = "次要卡片 (Secondary Cards)",
+                text = stringResource(R.string.secondary_cards_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
@@ -96,7 +96,7 @@ fun CardDesignSystemExamples() {
                 ) {
                     Column {
                         Text(
-                            text = "現金資產",
+                            text = stringResource(R.string.cash_assets_example),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -118,7 +118,7 @@ fun CardDesignSystemExamples() {
         
         item {
             Text(
-                text = "輪廓卡片 (Outlined Cards)",
+                text = stringResource(R.string.outlined_cards_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
@@ -133,7 +133,7 @@ fun CardDesignSystemExamples() {
                 ) {
                     Column {
                         Text(
-                            text = "股票資產",
+                            text = stringResource(R.string.stock_assets_example),
                             style = MaterialTheme.typography.titleSmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant
                         )
@@ -155,7 +155,7 @@ fun CardDesignSystemExamples() {
         
         item {
             Text(
-                text = "狀態卡片 (Status Cards)",
+                text = stringResource(R.string.status_cards_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
@@ -173,7 +173,7 @@ fun CardDesignSystemExamples() {
                         tint = MaterialTheme.colorScheme.primary
                     )
                     Text(
-                        text = "數據同步成功",
+                        text = stringResource(R.string.data_sync_success),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium
                     )
@@ -193,7 +193,7 @@ fun CardDesignSystemExamples() {
                         tint = MaterialTheme.colorScheme.tertiary
                     )
                     Text(
-                        text = "API密鑰即將過期",
+                        text = stringResource(R.string.api_key_expiring_warning),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium
                     )
@@ -213,7 +213,7 @@ fun CardDesignSystemExamples() {
                         tint = MaterialTheme.colorScheme.error
                     )
                     Text(
-                        text = "網路連接失敗",
+                        text = stringResource(R.string.network_connection_failed),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium
                     )
@@ -233,7 +233,7 @@ fun CardDesignSystemExamples() {
                         tint = MaterialTheme.colorScheme.secondary
                     )
                     Text(
-                        text = "新功能已上線",
+                        text = stringResource(R.string.new_feature_available),
                         style = MaterialTheme.typography.bodyMedium,
                         fontWeight = FontWeight.Medium
                     )
@@ -243,7 +243,7 @@ fun CardDesignSystemExamples() {
         
         item {
             Text(
-                text = "可點擊卡片 (Clickable Cards)",
+                text = stringResource(R.string.clickable_cards_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.SemiBold
             )
@@ -268,7 +268,7 @@ fun CardDesignSystemExamples() {
                             tint = MaterialTheme.colorScheme.primary
                         )
                         Text(
-                            text = "設定",
+                            text = stringResource(R.string.settings_example),
                             style = MaterialTheme.typography.titleMedium,
                             fontWeight = FontWeight.Medium
                         )
