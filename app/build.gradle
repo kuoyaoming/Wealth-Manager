@@ -29,7 +29,19 @@ android {
 
     signingConfigs {
         release {
-            // Simplified signing config for CI compatibility
+            if (isCi) {
+                // CI signing configuration
+                storeFile file(System.getenv("ANDROID_KEYSTORE_PATH") ?: "debug.keystore")
+                storePassword System.getenv("ANDROID_KEYSTORE_PASSWORD") ?: "android"
+                keyAlias System.getenv("ANDROID_KEY_ALIAS") ?: "androiddebugkey"
+                keyPassword System.getenv("ANDROID_KEY_PASSWORD") ?: "android"
+            } else {
+                // Local development - use debug keystore
+                storeFile file("debug.keystore")
+                storePassword "android"
+                keyAlias "androiddebugkey"
+                keyPassword "android"
+            }
         }
     }
 
@@ -62,16 +74,8 @@ android {
                 debugSymbolLevel = 'FULL'
             }
             
-            // Use release signing if environment variables are set, otherwise use debug signing
-            def hasSigningConfig = System.getenv('ANDROID_KEYSTORE_PASSWORD') && 
-                                 System.getenv('ANDROID_KEY_ALIAS') && 
-                                 System.getenv('ANDROID_KEY_PASSWORD')
-            if (hasSigningConfig) {
-                signingConfig signingConfigs.release
-            } else {
-                // Use debug signing for development builds
-                signingConfig signingConfigs.debug
-            }
+            // Always use release signing config (it will fallback to debug keystore if CI vars not set)
+            signingConfig signingConfigs.release
         }
         debug {
             minifyEnabled = false
