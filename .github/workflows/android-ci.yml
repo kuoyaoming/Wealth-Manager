@@ -25,7 +25,9 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v3
@@ -88,7 +90,9 @@ jobs:
         with:
           distribution: temurin
           java-version: '17'
-          cache: gradle
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v3
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v3
@@ -140,6 +144,34 @@ jobs:
           name: app-release-bundle
           path: |
             app/build/outputs/bundle/release/*.aab
+            app/build/outputs/mapping/release/mapping.txt
+
+      - name: Compute checksums
+        run: |
+          set -e
+          cd app
+          echo "Generating SHA256 checksums..."
+          sha256sum build/outputs/bundle/release/*.aab > SHA256SUMS.txt
+          sha256sum build/outputs/apk/release/*.apk >> SHA256SUMS.txt
+          if [ -f build/outputs/mapping/release/mapping.txt ]; then
+            sha256sum build/outputs/mapping/release/mapping.txt >> SHA256SUMS.txt
+          fi
+          cat SHA256SUMS.txt
+
+      - name: Create GitHub Release and upload assets
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ github.ref_name }}
+          name: v${{ env.WM_VERSION_NAME }}
+          draft: false
+          prerelease: false
+          files: |
+            app/build/outputs/bundle/release/*.aab
+            app/build/outputs/apk/release/*.apk
+            app/build/outputs/mapping/release/mapping.txt
+            app/SHA256SUMS.txt
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}            app/build/outputs/bundle/release/*.aab
             app/build/outputs/mapping/release/mapping.txt
 
       - name: Compute checksums
