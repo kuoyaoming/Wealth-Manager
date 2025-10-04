@@ -28,9 +28,11 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: false
 
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v3
+        uses: gradle/wrapper-validation-action@v2
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -61,7 +63,7 @@ jobs:
       #   continue-on-error: true
 
       - name: Build app and wear (Debug)
-        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:assembleDebug :wear:assembleDebug --no-daemon --stacktrace
+        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:assembleDebug :wear:assembleDebug --stacktrace
 
       - name: Upload app artifacts
         uses: actions/upload-artifact@v4
@@ -93,9 +95,11 @@ jobs:
 
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+        with:
+          cache-read-only: false
 
       - name: Validate Gradle wrapper
-        uses: gradle/wrapper-validation-action@v3
+        uses: gradle/wrapper-validation-action@v2
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -136,7 +140,7 @@ jobs:
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:bundleRelease :app:assembleRelease --no-daemon --stacktrace
+        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:bundleRelease :app:assembleRelease --stacktrace
 
       - name: Upload release bundles
         uses: actions/upload-artifact@v4
