@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Widget Colors - Dark Theme Override -->
+    <color name="widget_background_color">@color/widget_background_color_dark</color>
+    <color name="widget_border_color">@color/widget_border_color_dark</color>
+    <color name="widget_text_primary">@color/widget_text_primary_dark</color>
+    <color name="widget_text_secondary">@color/widget_text_secondary_dark</color>
+    <color name="widget_text_tertiary">@color/widget_text_tertiary_dark</color>
+</resources>

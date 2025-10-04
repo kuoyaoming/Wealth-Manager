@@ -120,6 +120,12 @@ class DashboardViewModel
                             debugLogManager.logError("WEAR_SYNC: Failed to sync to wear: ${e.message}", e)
                         }
                     }
+                    
+                    // Schedule widget update when data changes
+                    debugLogManager.log("WIDGET_SYNC", "Scheduling widget update")
+                    com.wealthmanager.widget.WidgetUpdateScheduler.scheduleUpdate(
+                        com.wealthmanager.WealthManagerApplication.getInstance()
+                    )
                 }.collect { }
             }
         }

@@ -48,6 +48,10 @@ data class SettingsUiState(
     val finnhubKeyPreview: String = "",
     val exchangeKeyPreview: String = "",
     val lastKeyActionMessage: String = "",
+    // Widget privacy settings
+    val widgetShowAssetAmount: Boolean = true,
+    val widgetPrivacyEnabled: Boolean = false,
+    val widgetInstalledCount: Int = 0,
     val lastKeyErrorMessage: String = "", // 專門用於錯誤訊息
     // Biometric fallback dialog state
     val showBiometricFallbackDialog: Boolean = false,
@@ -124,6 +128,10 @@ class SettingsViewModel
                     finnhubKeyPreview = keyRepository.preview(keyRepository.getUserFinnhubKey()),
                     exchangeKeyPreview = keyRepository.preview(keyRepository.getUserExchangeKey()),
                     previousFinnhubKey = keyRepository.getUserFinnhubKey() ?: "",
+                    // Initialize widget privacy settings
+                    widgetShowAssetAmount = com.wealthmanager.widget.WidgetPrivacyManager.shouldShowAssetAmount(context),
+                    widgetPrivacyEnabled = com.wealthmanager.widget.WidgetPrivacyManager.isPrivacyEnabled(context),
+                    widgetInstalledCount = com.wealthmanager.widget.WidgetManager.getInstalledWidgetCount(context),
                     previousExchangeKey = keyRepository.getUserExchangeKey() ?: "",
                 ),
             )

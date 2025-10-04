@@ -74,6 +74,9 @@ class MainActivity : FragmentActivity() {
         // Start performance monitoring
         performanceMonitor.startMonitoring()
         setupInputEventHandling()
+        
+        // Initialize widget system
+        com.wealthmanager.widget.WidgetManager.initialize(this)
 
         setContent {
             var showAboutDialog by remember { mutableStateOf(false) }
