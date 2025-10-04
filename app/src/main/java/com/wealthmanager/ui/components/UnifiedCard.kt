@@ -1,7 +1,10 @@
 package com.wealthmanager.ui.components
 
 import androidx.compose.foundation.layout.PaddingValues
+import androidx.compose.foundation.layout.calculateEndPadding
+import androidx.compose.foundation.layout.calculateStartPadding
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.shape.CornerSize
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.MaterialTheme
@@ -45,16 +48,17 @@ fun UnifiedCard(
             contentColor = cardConfig.contentColor,
         ),
         shape = MaterialTheme.shapes.medium.copy(
-            topStart = cardConfig.cornerRadius,
-            topEnd = cardConfig.cornerRadius,
-            bottomStart = cardConfig.cornerRadius,
-            bottomEnd = cardConfig.cornerRadius,
+            topStart = CornerSize(cardConfig.cornerRadius),
+            topEnd = CornerSize(cardConfig.cornerRadius),
+            bottomStart = CornerSize(cardConfig.cornerRadius),
+            bottomEnd = CornerSize(cardConfig.cornerRadius),
         ),
     ) {
         androidx.compose.foundation.layout.Box(
-            modifier = Modifier.padding(cardConfig.padding),
-            content = content
-        )
+            modifier = Modifier.padding(cardConfig.padding)
+        ) {
+            content()
+        }
     }
 }
 
