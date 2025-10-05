@@ -15,6 +15,7 @@ import com.wealthmanager.MainActivity
 import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
@@ -32,9 +33,12 @@ import java.util.Locale
 @AndroidEntryPoint
 class TotalAssetWidgetProvider : AppWidgetProvider() {
     
+    @Inject
+    lateinit var debugLogManager: DebugLogManager
+    
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
-        DebugLogManager.log("WIDGET", "Total Asset Widget enabled")
+        debugLogManager.log("WIDGET", "Total Asset Widget enabled")
         
         // Schedule periodic updates
         WidgetUpdateScheduler.schedulePeriodicUpdate(context)
@@ -42,7 +46,7 @@ class TotalAssetWidgetProvider : AppWidgetProvider() {
     
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
-        DebugLogManager.log("WIDGET", "Total Asset Widget disabled")
+        debugLogManager.log("WIDGET", "Total Asset Widget disabled")
         
         // Cancel periodic updates
         WorkManager.getInstance(context).cancelUniqueWork("widget_periodic_update")
@@ -54,7 +58,7 @@ class TotalAssetWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        DebugLogManager.log("WIDGET", "Total Asset Widget updated for ${appWidgetIds.size} widgets")
+        debugLogManager.log("WIDGET", "Total Asset Widget updated for ${appWidgetIds.size} widgets")
         
         // Update all widget instances
         for (appWidgetId in appWidgetIds) {

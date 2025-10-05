@@ -14,6 +14,29 @@ import javax.inject.Singleton
 class DebugLogManager
     @Inject
     constructor() {
+        
+        companion object {
+            @Volatile
+            private var INSTANCE: DebugLogManager? = null
+            
+            fun getInstance(): DebugLogManager {
+                return INSTANCE ?: synchronized(this) {
+                    INSTANCE ?: DebugLogManager().also { INSTANCE = it }
+                }
+            }
+            
+            fun log(tag: String, message: String) {
+                getInstance().log(tag, message)
+            }
+            
+            fun logError(tag: String, message: String) {
+                getInstance().logError(tag, message)
+            }
+            
+            fun logError(error: String, throwable: Throwable? = null) {
+                getInstance().logError(error, throwable)
+            }
+        }
         private val logs = mutableListOf<String>()
         private val dateFormat = SimpleDateFormat("HH:mm:ss.SSS", Locale.getDefault())
 
@@ -109,27 +132,27 @@ class DebugLogManager
         }
 
         fun logUserAction(action: String) {
-            log("USER_ACTION", action)
+            this.log("USER_ACTION", action)
         }
 
         fun logNavigation(
             from: String,
             to: String,
         ) {
-            log("NAVIGATION", "From: $from -> To: $to")
+            this.log("NAVIGATION", "From: $from -> To: $to")
         }
 
         fun logError(
             error: String,
             throwable: Throwable? = null,
         ) {
-            logError("ERROR", error)
+            this.logError("ERROR", error)
             throwable?.let {
-                logError("ERROR", "Exception: ${it.message}")
+                this.logError("ERROR", "Exception: ${it.message}")
                 if (isDebugBuild()) {
-                    logError("ERROR", "Stack trace: ${it.stackTraceToString()}")
+                    this.logError("ERROR", "Stack trace: ${it.stackTraceToString()}")
                 } else {
-                    logError("ERROR", "Exception type: ${it::class.simpleName}")
+                    this.logError("ERROR", "Exception type: ${it::class.simpleName}")
                 }
             }
         }
@@ -142,7 +165,7 @@ class DebugLogManager
             status: String,
             details: String = "",
         ) {
-            log("BIOMETRIC", "$status ${if (details.isNotEmpty()) "- $details" else ""}")
+            this.log("BIOMETRIC", "$status ${if (details.isNotEmpty()) "- $details" else ""}")
         }
 
         fun logAsset(
@@ -150,7 +173,7 @@ class DebugLogManager
             assetType: String,
             details: String = "",
         ) {
-            log("ASSET", "$action $assetType ${if (details.isNotEmpty()) "- $details" else ""}")
+            this.log("ASSET", "$action $assetType ${if (details.isNotEmpty()) "- $details" else ""}")
         }
 
         fun getAllLogs(): String {
@@ -170,7 +193,7 @@ class DebugLogManager
                     getAllLogs(),
                 )
             clipboard.setPrimaryClip(clip)
-            log("DEBUG", "Logs copied to clipboard (${getLogCount()} entries)")
+            this.log("DEBUG", "Logs copied to clipboard (${getLogCount()} entries)")
         }
 
         fun clearLogs() {
