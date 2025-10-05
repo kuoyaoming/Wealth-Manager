@@ -17,6 +17,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.wealthmanager.R
 import com.wealthmanager.widget.WidgetManager
 import com.wealthmanager.widget.WidgetStatusMonitor
+import com.wealthmanager.widget.WidgetErrorHandler
 
 /**
  * Settings screen for widget configuration and privacy management.
