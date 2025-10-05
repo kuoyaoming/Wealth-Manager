@@ -10,6 +10,7 @@ import androidx.core.content.ContextCompat
 import androidx.work.ExistingWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
+import androidx.work.PeriodicWorkRequestBuilder
 import com.wealthmanager.MainActivity
 import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
