@@ -6,74 +6,37 @@
 
 ### 主要工作流程
 
-- **`android-ci.yml`** - 主要的 Android 建置和發布工作流程
-- **`security-scan.yml`** - 安全掃描工作流程
-- **`test.yml`** - 測試套件工作流程
+- **`release.yml`** - 發布工作流程（標籤觸發）
 
-## 🔧 主要改進 (基於 GitHub 2025年10月指南)
+## 🔧 發布工作流程功能
 
-### ✅ 已修復的問題
+### ✅ 主要功能
 
-1. **YAML 語法錯誤**
-   - 移除了重複的步驟定義
-   - 修復了語法結構問題
+1. **自動化發布**
+   - 標籤觸發（v*.*.*格式）
+   - 自動構建AAB和APK文件
+   - 自動創建GitHub Release
 
-2. **Actions 版本升級**
-   - `actions/checkout@v4` → `@v5`
-   - `actions/upload-artifact@v4` → `@v5`
-   - `softprops/action-gh-release@v2` → `@v2.1.0`
-   - `gradle/actions/setup-gradle@v3` → `@v4`
+2. **環境配置**
+   - JDK 17 (Temurin)
+   - Android SDK 35 (Android 15)
+   - Gradle 8.13
+   - Build Tools 35.0.0
 
-3. **安全權限改善**
-   - 使用最小權限原則
-   - 添加了 `security-events: write` 權限
-   - 移除了過於寬鬆的 `contents: write` 權限
+3. **安全簽名**
+   - 使用GitHub Secrets管理簽名密鑰
+   - 支援Release和Debug簽名配置
+   - 自動解碼keystore文件
 
-### 🛡️ 新增安全功能
+4. **版本管理**
+   - 從Git標籤自動計算版本號
+   - 使用GitHub Run Number作為版本代碼
+   - 支援語義化版本標籤
 
-1. **CodeQL 安全掃描**
-   - 自動化靜態程式碼分析
-   - 支援 Java/Kotlin 語言
-   - 整合到主要工作流程中
-
-2. **依賴項漏洞檢查**
-   - 使用 OWASP Dependency Check
-   - 定期掃描第三方依賴項
-   - 生成詳細的安全報告
-
-3. **秘密掃描**
-   - 使用 TruffleHog 掃描敏感資訊洩露
-   - 檢查 Git 歷史記錄
-   - 防止憑證洩露
-
-### ⚡ 效能優化
-
-1. **改善快取策略**
-   - 升級 Gradle 快取設定
-   - 啟用 `gradle-home-cache-cleanup`
-   - 優化建置時間
-
-2. **並行測試**
-   - 使用矩陣策略測試多個 Android API 版本
-   - 支援不同的目標平台
-   - 減少整體測試時間
-
-### 📊 測試覆蓋率
-
-1. **重新啟用程式碼品質檢查**
-   - 啟用 Detekt 靜態分析
-   - 強制執行程式碼標準
-   - 防止品質下降
-
-2. **單元測試**
-   - 自動執行單元測試
-   - 支援 Debug 和 Release 版本
-   - 測試失敗時阻止建置
-
-3. **整合測試**
-   - 使用 Android 模擬器
-   - 支援多個 API 版本測試
-   - 自動化 UI 測試
+5. **文件完整性**
+   - 自動生成SHA256校驗碼
+   - 包含mapping.txt混淆映射
+   - 提供完整的發布包
 
 ## 🚀 使用方式
 
