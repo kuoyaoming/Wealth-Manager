@@ -9,16 +9,48 @@ on:
   pull_request:
 
 permissions:
-  contents: write
+  contents: read
+  packages: write
+  security-events: write
+  actions: read
 
 jobs:
+  # CodeQL security analysis
+  codeql:
+    if: github.event_name == 'push' || github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ['java']
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v5
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@v4
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Autobuild
+        uses: github/codeql-action/autobuild@v4
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@v4
+        with:
+          category: "/language:${{matrix.language}}"
+
   debug:
     if: startsWith(github.ref, 'refs/heads/')
     runs-on: ubuntu-latest
     timeout-minutes: 45
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up JDK 17
         uses: actions/setup-java@v5
@@ -27,9 +59,10 @@ jobs:
           java-version: '17'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: false
+          gradle-home-cache-cleanup: true
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v2
@@ -55,11 +88,13 @@ jobs:
           echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
-      # DISABLED BY USER REQUEST - Code quality checks temporarily disabled
-      # To re-enable: uncomment the following lines and remove this comment block
-      # - name: Run code quality checks
-      #   run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace
-      #   continue-on-error: true
+      - name: Run code quality checks
+        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace
+        continue-on-error: false
+
+      - name: Run unit tests
+        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:testDebugUnitTest --no-daemon --stacktrace
+        continue-on-error: false
 
       - name: Build app and wear (Debug) and Save Log
         id: debug_build_log
@@ -94,14 +129,14 @@ jobs:
 
       - name: Upload app artifacts
         if: success() && env.BUILD_EXIT_CODE == '0'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: app-debug-apk
           path: app/build/outputs/apk/debug/*.apk
 
       - name: Upload wear artifacts
         if: success() && env.BUILD_EXIT_CODE == '0'
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: wear-debug-apk
           path: wear/build/outputs/apk/debug/*.apk
@@ -112,7 +147,7 @@ jobs:
           
       - name: Upload Error Log (on failure)
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: build-failure-log
           path: ${{ env.BUILD_LOG_PATH }} # 使用先前步驟設定的路徑
@@ -134,9 +169,10 @@ jobs:
           java-version: '17'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
+        uses: gradle/actions/setup-gradle@v4
         with:
           cache-read-only: false
+          gradle-home-cache-cleanup: true
 
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v2
@@ -167,11 +203,13 @@ jobs:
           echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
-      # DISABLED BY USER REQUEST - Code quality checks temporarily disabled
-      # To re-enable: uncomment the following lines and remove this comment block
-      # - name: Run code quality checks (Release)
-      #   run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace
-      #   continue-on-error: true
+      - name: Run code quality checks (Release)
+        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace
+        continue-on-error: false
+
+      - name: Run unit tests (Release)
+        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:testReleaseUnitTest --no-daemon --stacktrace
+        continue-on-error: false
 
       - name: Build release bundles and APK
         env:
@@ -182,7 +220,7 @@ jobs:
         run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:bundleRelease :app:assembleRelease --stacktrace
 
       - name: Upload release bundles
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v5
         with:
           name: app-release-bundle
           path: |
@@ -202,38 +240,7 @@ jobs:
           cat SHA256SUMS.txt
 
       - name: Create GitHub Release and upload assets
-        uses: softprops/action-gh-release@v2
-        with:
-          tag_name: ${{ github.ref_name }}
-          name: v${{ env.WM_VERSION_NAME }}
-          draft: false
-          prerelease: false
-          files: |
-            app/build/outputs/bundle/release/*.aab
-            app/build/outputs/apk/release/*.apk
-            app/build/outputs/mapping/release/mapping.txt
-            app/SHA256SUMS.txt
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}        with:
-          name: app-release-bundle
-          path: |
-            app/build/outputs/bundle/release/*.aab
-            app/build/outputs/mapping/release/mapping.txt
-
-      - name: Compute checksums
-        run: |
-          set -e
-          cd app
-          echo "Generating SHA256 checksums..."
-          sha256sum build/outputs/bundle/release/*.aab > SHA256SUMS.txt
-          sha256sum build/outputs/apk/release/*.apk >> SHA256SUMS.txt
-          if [ -f build/outputs/mapping/release/mapping.txt ]; then
-            sha256sum build/outputs/mapping/release/mapping.txt >> SHA256SUMS.txt
-          fi
-          cat SHA256SUMS.txt
-
-      - name: Create GitHub Release and upload assets
-        uses: softprops/action-gh-release@v2
+        uses: softprops/action-gh-release@v2.1.0
         with:
           tag_name: ${{ github.ref_name }}
           name: v${{ env.WM_VERSION_NAME }}
