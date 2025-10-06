@@ -28,10 +28,9 @@ jobs:
           java-version: '17'
 
       - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v4
+        uses: gradle/actions/setup-gradle@v3
         with:
           cache-read-only: false
-          gradle-home-cache-cleanup: true
 
       - name: Run dependency vulnerability check
         run: ./gradlew dependencyCheckAnalyze --no-daemon --stacktrace
