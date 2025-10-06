@@ -34,6 +34,20 @@ jobs:
           gradle-home-cache-cleanup: false
         continue-on-error: true
 
+      - name: Clear Gradle cache on failure
+        if: failure()
+        run: |
+          echo "Cache service unavailable, clearing Gradle cache..."
+          ./gradlew --stop || true
+          rm -rf ~/.gradle/caches || true
+          rm -rf .gradle || true
+
+      - name: Disable Gradle caching if cache service failed
+        if: failure()
+        run: |
+          echo "Disabling Gradle caching due to cache service failure..."
+          echo "org.gradle.caching=false" >> gradle.properties
+
       - name: Run dependency vulnerability check
         run: |
           echo "正在執行依賴項漏洞檢查..."
