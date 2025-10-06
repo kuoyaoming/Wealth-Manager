@@ -6,6 +6,19 @@
         android:name="android.hardware.type.watch"
         android:required="true" />
     
+    <!-- Additional Wear OS requirements -->
+    <uses-feature
+        android:name="android.hardware.type.round"
+        android:required="false" />
+    
+    <!-- Prevent installation on non-wear devices -->
+    <uses-feature
+        android:name="android.hardware.type.television"
+        android:required="false" />
+    <uses-feature
+        android:name="android.hardware.type.automotive"
+        android:required="false" />
+    
     <!-- Vibration permission for haptic feedback -->
     <uses-permission android:name="android.permission.VIBRATE" />
 

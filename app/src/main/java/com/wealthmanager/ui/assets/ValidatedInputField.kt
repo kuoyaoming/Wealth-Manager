@@ -18,9 +18,12 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
+// import com.wealthmanager.ui.components.UnifiedOutlinedTextField
+// import com.wealthmanager.ui.components.TextFieldSize
+// import com.wealthmanager.ui.components.ValidationState
 
 /**
- * 帶有即時驗證的輸入欄位
+ * Input field with real-time validation
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -58,10 +61,8 @@ fun ValidatedInputField(
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
-                    // 驗證狀態圖標
                     ValidationStatusIcon(validationResult)
 
-                    // 自定義尾隨圖標
                     trailingIcon?.invoke()
                 }
             },
@@ -72,7 +73,7 @@ fun ValidatedInputField(
 }
 
 /**
- * 驗證狀態圖標
+ * Validation status icon
  */
 @Composable
 private fun ValidationStatusIcon(validationResult: ValidationResult) {
@@ -95,12 +96,11 @@ private fun ValidationStatusIcon(validationResult: ValidationResult) {
 }
 
 /**
- * 驗證支持文本
+ * Validation supporting text
  */
 @Composable
 private fun ValidationSupportingText(validationResult: ValidationResult) {
     Column {
-        // 錯誤訊息
         if (!validationResult.isValid && validationResult.errorMessage != null) {
             Text(
                 text = validationResult.errorMessage,
@@ -109,7 +109,6 @@ private fun ValidationSupportingText(validationResult: ValidationResult) {
             )
         }
 
-        // 警告訊息
         if (validationResult.isValid && validationResult.warningMessage != null) {
             Text(
                 text = validationResult.warningMessage,
@@ -118,7 +117,6 @@ private fun ValidationSupportingText(validationResult: ValidationResult) {
             )
         }
 
-        // 建議訊息
         if (validationResult.suggestion != null) {
             Text(
                 text = stringResource(R.string.validation_suggestion_prefix, validationResult.suggestion),
@@ -131,7 +129,7 @@ private fun ValidationSupportingText(validationResult: ValidationResult) {
 }
 
 /**
- * 現金金額輸入欄位
+ * Cash amount input field
  */
 @Composable
 fun CashAmountInputField(
@@ -147,7 +145,7 @@ fun CashAmountInputField(
         onValueChange = onValueChange,
         label = stringResource(R.string.asset_form_amount_label),
         placeholder =
-            if (currency == "TWD") {
+            if (currency == stringResource(R.string.assets_currency_twd)) {
                 stringResource(R.string.validation_amount_example_twd)
             } else {
                 stringResource(R.string.validation_amount_example_usd)
@@ -159,7 +157,7 @@ fun CashAmountInputField(
 }
 
 /**
- * 股票代碼輸入欄位
+ * Stock symbol input field
  */
 @Composable
 fun StockSymbolInputField(
@@ -184,7 +182,7 @@ fun StockSymbolInputField(
 }
 
 /**
- * 股票股數輸入欄位
+ * Stock shares input field
  */
 @Composable
 fun StockSharesInputField(

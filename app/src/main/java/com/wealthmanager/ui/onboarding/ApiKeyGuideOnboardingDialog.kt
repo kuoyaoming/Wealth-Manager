@@ -18,8 +18,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.wealthmanager.R
 
 /**
- * API Key 指南導覽對話框
- * 引導用戶如何取得和設定 API 金鑰
+ * API Key guide onboarding dialog.
  */
 @Composable
 fun ApiKeyGuideOnboardingDialog(
@@ -50,7 +49,6 @@ fun ApiKeyGuideOnboardingDialog(
                             .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                // 標題和圖示
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -72,7 +70,6 @@ fun ApiKeyGuideOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // 主要說明
                 Text(
                     text = stringResource(id = R.string.onboarding_api_key_setup_desc),
                     style = MaterialTheme.typography.titleMedium,
@@ -82,7 +79,6 @@ fun ApiKeyGuideOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // 為什麼需要 API Key
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors =
@@ -108,7 +104,6 @@ fun ApiKeyGuideOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // 取得步驟
                 Text(
                     text = stringResource(id = R.string.onboarding_api_key_steps_title),
                     style = MaterialTheme.typography.titleMedium,
@@ -191,7 +186,6 @@ fun ApiKeyGuideOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // 安全提示
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors =
@@ -220,7 +214,6 @@ fun ApiKeyGuideOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // 操作按鈕
                 Column(
                     modifier = Modifier.fillMaxWidth(),
                     verticalArrangement = Arrangement.spacedBy(8.dp),

@@ -17,7 +17,8 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentActivity
 import com.wealthmanager.data.FirstLaunchManager
-import com.wealthmanager.data.service.PerformanceMonitor120Hz
+import com.wealthmanager.ui.performance.ModernFrameRateManager
+import com.wealthmanager.ui.performance.ContentBasedFrameRateOptimizer
 import com.wealthmanager.ui.about.AboutDialog
 import com.wealthmanager.ui.navigation.WealthManagerNavigation
 import com.wealthmanager.ui.onboarding.OnboardingFlow
@@ -37,7 +38,7 @@ import javax.inject.Inject
  * - Memory management and optimization
  *
  * @property firstLaunchManager Manages first-time app launch logic
- * @property performanceMonitor Monitors app performance metrics
+ * @property frameRateManager Manages modern frame rate optimization using Android 16+ APIs
  */
 @AndroidEntryPoint
 @androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi
@@ -46,7 +47,10 @@ class MainActivity : FragmentActivity() {
     lateinit var firstLaunchManager: FirstLaunchManager
 
     @Inject
-    lateinit var performanceMonitor: PerformanceMonitor120Hz
+    lateinit var frameRateManager: ModernFrameRateManager
+
+    @Inject
+    lateinit var frameRateOptimizer: ContentBasedFrameRateOptimizer
 
     /**
      * Initializes the activity and sets up the UI.
@@ -54,7 +58,7 @@ class MainActivity : FragmentActivity() {
      * This method handles:
      * - Splash screen installation
      * - Edge-to-edge display configuration
-     * - Performance monitoring initialization
+     * - Modern frame rate management initialization
      * - Input event handling setup
      * - Navigation and theme setup
      */
@@ -71,8 +75,8 @@ class MainActivity : FragmentActivity() {
         insetsController.systemBarsBehavior =
             WindowInsetsControllerCompat.BEHAVIOR_SHOW_TRANSIENT_BARS_BY_SWIPE
 
-        // Start performance monitoring
-        performanceMonitor.startMonitoring()
+        // Initialize modern frame rate management
+        frameRateManager.initialize(this)
         setupInputEventHandling()
         
         // Initialize widget system
@@ -131,12 +135,14 @@ class MainActivity : FragmentActivity() {
 
     override fun onResume() {
         super.onResume()
-        hintFrameRate(0f)
+        // Set optimal frame rate for main activity (static content)
+        frameRateOptimizer.optimizeForDashboard(this)
     }
 
     override fun onPause() {
         super.onPause()
-        hintFrameRate(0f)
+        // Reset frame rate when pausing
+        frameRateOptimizer.resetToDefault(this)
     }
 
     override fun onTouchEvent(event: MotionEvent): Boolean {
@@ -217,32 +223,30 @@ class MainActivity : FragmentActivity() {
     }
 
     /**
-     * Hints the system about the preferred frame rate for smooth rendering.
+     * Sets optimal frame rate based on content type using modern Android APIs.
+     * This replaces the deprecated preferredRefreshRate approach.
      *
-     * @param frameRate The desired frame rate (0 to disable hinting)
+     * @param contentType The type of content being displayed
      */
-    private fun hintFrameRate(frameRate: Float) {
+    private fun setOptimalFrameRate(contentType: ModernFrameRateManager.ContentType) {
         try {
-            val lp = window.attributes
-            lp.preferredRefreshRate = if (frameRate > 0f) frameRate else 0f
-            window.attributes = lp
+            frameRateManager.setFrameRateForContent(this, contentType)
         } catch (e: Exception) {
-            StandardLogger.warn("MainActivity", "Failed to hint frame rate: $frameRate", e)
+            StandardLogger.warn("MainActivity", "Failed to set optimal frame rate for $contentType", e)
         }
     }
 
     override fun onDestroy() {
         super.onDestroy()
         StandardLogger.debug("MainActivity", "onDestroy called")
-
-        performanceMonitor.stopMonitoring()
+        // Modern frame rate manager doesn't need explicit cleanup
     }
 
     override fun onLowMemory() {
         super.onLowMemory()
         StandardLogger.warn("MainActivity", "onLowMemory called - trigger memory optimization")
         System.gc()
-        performanceMonitor.getPerformanceStats()
+        // Modern frame rate manager handles memory optimization automatically
     }
 
     override fun onTrimMemory(level: Int) {

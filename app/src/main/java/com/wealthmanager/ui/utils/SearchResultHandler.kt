@@ -28,7 +28,7 @@ object SearchResultHandler {
             is SearchResult.NoResults -> {
                 when (searchResult.reason) {
                     NoResultsReason.STOCK_NOT_FOUND -> stringResource(R.string.search_error_stock_not_found)
-                    NoResultsReason.API_LIMIT_REACHED -> stringResource(R.string.search_error_api_limit_reached)
+                    NoResultsReason.API_LIMIT_REACHED -> stringResource(R.string.search_error_api_limit)
                     NoResultsReason.NETWORK_ERROR -> stringResource(R.string.search_error_network)
                     NoResultsReason.INVALID_QUERY -> stringResource(R.string.search_error_invalid_query)
                     NoResultsReason.SERVER_ERROR -> stringResource(R.string.search_error_server)

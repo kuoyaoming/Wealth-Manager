@@ -30,7 +30,7 @@ import androidx.compose.ui.focus.onFocusChanged
 import com.wealthmanager.R
 
 /**
- * 支援 Credentials/Autofill 的 API Key 輸入欄位
+ * API Key input field with Credentials/Autofill support
  */
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
@@ -68,13 +68,11 @@ fun ApiKeyInputField(
         modifier = modifier,
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        // 標籤
         Text(
             text = label,
             style = MaterialTheme.typography.bodyMedium,
         )
 
-        // 自動填入狀態提示
         if (showAutofillStatus && value.isNotEmpty()) {
             Card(
                 modifier = Modifier.fillMaxWidth(),
@@ -103,7 +101,6 @@ fun ApiKeyInputField(
             }
         }
 
-        // 輸入欄位
         var fieldModifier = textFieldModifier
         if (focusRequester != null) fieldModifier = fieldModifier.focusRequester(focusRequester)
         fieldModifier = fieldModifier
@@ -162,11 +159,8 @@ fun ApiKeyInputField(
                     }
                 }
             },
-            // 添加 autofillHints 支援
-            // 注意：這需要在 Android 層面實現，這裡只是 UI 層面的準備
         )
 
-        // 自動填入提示
         if (value.isEmpty()) {
             Card(
                 modifier = Modifier.fillMaxWidth(),

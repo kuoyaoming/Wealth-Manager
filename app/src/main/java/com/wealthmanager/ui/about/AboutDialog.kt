@@ -24,6 +24,11 @@ import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.wealthmanager.BuildConfig
 import com.wealthmanager.R
+import com.wealthmanager.ui.components.DialogCard
+import com.wealthmanager.ui.components.SecondaryCard
+import com.wealthmanager.ui.components.PrimaryButton
+import com.wealthmanager.ui.components.SecondaryButton
+import com.wealthmanager.ui.components.TextButton
 import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
@@ -31,8 +36,7 @@ import com.wealthmanager.ui.settings.ApiKeyGuideDialog
 import com.wealthmanager.utils.rememberUrlLauncher
 
 /**
- * About Dialog Component - Completely Redesigned
- * Modern about page showcasing app features, technology stack, and user benefits
+ * About dialog showcasing app features and information.
  */
 @Composable
 fun AboutDialog(
@@ -43,7 +47,6 @@ fun AboutDialog(
     val scrollState = rememberScrollState()
     val openUrl = rememberUrlLauncher()
 
-    // Scroll state detection
     var canScrollDown by remember { mutableStateOf(false) }
     var canScrollUp by remember { mutableStateOf(false) }
 
@@ -62,12 +65,10 @@ fun AboutDialog(
             usePlatformDefaultWidth = false,
         ),
     ) {
-        Card(
+        DialogCard(
             modifier = Modifier
                 .fillMaxWidth(0.95f)
                 .fillMaxHeight(0.95f)
-                .padding(vertical = 16.dp, horizontal = 16.dp),
-            elevation = CardDefaults.cardElevation(defaultElevation = 12.dp),
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Column(
@@ -76,32 +77,26 @@ fun AboutDialog(
                         .padding(20.dp)
                         .verticalScroll(scrollState),
                 ) {
-                    // Header with app branding
                     AppHeaderSection(onClose = onDismiss)
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    // Version and build info
                     VersionInfoSection()
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Key features showcase
                     KeyFeaturesSection()
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Technology stack
                     TechnologyStackSection()
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Security and privacy highlights
                     SecurityPrivacySection()
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // API configuration guide
                     ApiConfigurationSection(
                         onShowGuide = {
                             hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
@@ -111,7 +106,6 @@ fun AboutDialog(
 
                     Spacer(modifier = Modifier.height(16.dp))
 
-                    // Development and contribution info
                     DevelopmentSection(
                         onOpenGitHub = { openUrl("https://github.com/kuoyaoming/Wealth-Manager") },
                         onOpenIssues = { openUrl("https://github.com/kuoyaoming/Wealth-Manager/issues") },
@@ -121,7 +115,6 @@ fun AboutDialog(
 
                     Spacer(modifier = Modifier.height(20.dp))
 
-                    // Action buttons
                     ActionButtonsSection(
                         onDismiss = onDismiss,
                         firstLaunchManager = firstLaunchManager,
@@ -130,7 +123,6 @@ fun AboutDialog(
                     )
                 }
 
-                // Scroll indicators
                 if (canScrollUp) {
                     ScrollIndicator(
                         modifier = Modifier.align(Alignment.TopCenter),
@@ -148,7 +140,6 @@ fun AboutDialog(
         }
     }
 
-    // API Key guide dialog
     if (showApiGuideDialog) {
         ApiKeyGuideDialog(onDismiss = { showApiGuideDialog = false })
     }
@@ -189,12 +180,8 @@ private fun AppHeaderSection(
 
 @Composable
 private fun VersionInfoSection() {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -237,9 +224,8 @@ private fun VersionInfoSection() {
 
 @Composable
 private fun KeyFeaturesSection() {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -261,14 +247,14 @@ private fun KeyFeaturesSection() {
                 )
             }
 
-            // Feature grid
+            val featureItems = getFeatureItems()
             LazyVerticalGrid(
                 columns = GridCells.Fixed(2),
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 verticalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.height(200.dp)
             ) {
-                items(getFeatureItems()) { feature ->
+                items(featureItems) { feature ->
                     FeatureCard(feature = feature)
                 }
             }
@@ -278,9 +264,8 @@ private fun KeyFeaturesSection() {
 
 @Composable
 private fun TechnologyStackSection() {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -307,12 +292,12 @@ private fun TechnologyStackSection() {
                 style = MaterialTheme.typography.bodyMedium,
             )
 
-            // Technology badges
+            val techStackItems = getTechStackItems()
             LazyRow(
                 horizontalArrangement = Arrangement.spacedBy(8.dp),
                 modifier = Modifier.fillMaxWidth()
             ) {
-                items(getTechStackItems()) { tech ->
+                items(techStackItems) { tech ->
                     TechBadge(tech = tech)
                 }
             }
@@ -322,12 +307,8 @@ private fun TechnologyStackSection() {
 
 @Composable
 private fun SecurityPrivacySection() {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.errorContainer.copy(alpha = 0.1f)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -372,12 +353,8 @@ private fun SecurityPrivacySection() {
 
 @Composable
 private fun ApiConfigurationSection(onShowGuide: () -> Unit) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -408,11 +385,8 @@ private fun ApiConfigurationSection(onShowGuide: () -> Unit) {
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.End,
             ) {
-                Button(
-                    onClick = onShowGuide,
-                    colors = ButtonDefaults.buttonColors(
-                        containerColor = MaterialTheme.colorScheme.primary
-                    )
+                PrimaryButton(
+                    onClick = onShowGuide
                 ) {
                     Icon(
                         imageVector = Icons.Default.Settings,
@@ -434,9 +408,8 @@ private fun DevelopmentSection(
     hapticManager: HapticFeedbackManager,
     view: android.view.View
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -467,7 +440,7 @@ private fun DevelopmentSection(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceEvenly,
             ) {
-                OutlinedButton(
+                SecondaryButton(
                     onClick = { 
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                         onOpenGitHub()
@@ -485,7 +458,7 @@ private fun DevelopmentSection(
                 
                 Spacer(modifier = Modifier.width(8.dp))
                 
-                OutlinedButton(
+                SecondaryButton(
                     onClick = { 
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                         onOpenIssues()
@@ -527,7 +500,7 @@ private fun ActionButtonsSection(
 
         Spacer(modifier = Modifier.width(8.dp))
 
-        Button(
+        PrimaryButton(
             onClick = {
                 hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
                 firstLaunchManager?.markAboutDialogShown()
@@ -593,7 +566,6 @@ private fun ScrollIndicator(
     }
 }
 
-// Data classes and helper functions
 data class FeatureItem(
     val icon: ImageVector,
     val title: String,
@@ -607,12 +579,8 @@ data class TechStackItem(
 
 @Composable
 private fun FeatureCard(feature: FeatureItem) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.surfaceVariant.copy(alpha = 0.5f)
-        ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(12.dp),
@@ -686,39 +654,40 @@ private fun SecurityHighlight(
     }
 }
 
-// Helper functions for data
+@Composable
 private fun getFeatureItems(): List<FeatureItem> {
     return listOf(
         FeatureItem(
             icon = Icons.Default.AccountBalance,
-            title = "Portfolio Management",
-            description = "Track cash and stocks"
+            title = stringResource(R.string.feature_assets_tracking_title),
+            description = stringResource(R.string.feature_assets_tracking_desc)
         ),
         FeatureItem(
             icon = Icons.Default.TrendingUp,
-            title = "Real-time Data",
-            description = "Live market prices"
+            title = stringResource(R.string.feature_insights_title),
+            description = stringResource(R.string.feature_insights_desc)
         ),
         FeatureItem(
             icon = Icons.Default.Security,
-            title = "Biometric Security",
-            description = "Fingerprint protection"
+            title = stringResource(R.string.feature_secure_backup_title),
+            description = stringResource(R.string.feature_secure_backup_desc)
         ),
         FeatureItem(
             icon = Icons.Default.PhoneAndroid,
-            title = "Wear OS Support",
-            description = "Smartwatch integration"
+            title = stringResource(R.string.feature_wear_title),
+            description = stringResource(R.string.feature_wear_desc)
         )
     )
 }
 
+@Composable
 private fun getTechStackItems(): List<TechStackItem> {
     return listOf(
-        TechStackItem("Kotlin", "Language"),
-        TechStackItem("Compose", "UI Framework"),
-        TechStackItem("Material 3", "Design System"),
-        TechStackItem("Room", "Database"),
-        TechStackItem("Hilt", "DI Framework"),
-        TechStackItem("Retrofit", "Networking")
+        TechStackItem(stringResource(R.string.tech_kotlin), stringResource(R.string.about_tech_description)),
+        TechStackItem(stringResource(R.string.tech_compose), stringResource(R.string.about_tech_description)),
+        TechStackItem(stringResource(R.string.tech_material3), stringResource(R.string.about_tech_description)),
+        TechStackItem(stringResource(R.string.tech_room), stringResource(R.string.about_tech_description)),
+        TechStackItem(stringResource(R.string.tech_hilt), stringResource(R.string.about_tech_description)),
+        TechStackItem(stringResource(R.string.tech_retrofit), stringResource(R.string.about_tech_description))
     )
 }

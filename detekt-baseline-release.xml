@@ -68,8 +68,6 @@
     <ID>BooleanPropertyNaming:EnhancedBackupSettingsCard.kt$var showRecommendationsDialog by remember { mutableStateOf(false) }</ID>
     <ID>BooleanPropertyNaming:HapticFeedbackManager.kt$HapticFeedbackManager.HapticSettings$val hapticEnabled: Boolean = true</ID>
     <ID>BooleanPropertyNaming:HapticFeedbackManager.kt$HapticFeedbackManager.HapticSettings$val soundEnabled: Boolean = true</ID>
-    <ID>BooleanPropertyNaming:HighRefreshRateComponents.kt$val isPressed by interactionSource.collectIsPressedAsState()</ID>
-    <ID>BooleanPropertyNaming:HighRefreshRateComponents.kt$var isPressed by remember { mutableStateOf(false) }</ID>
     <ID>BooleanPropertyNaming:KeyValidator.kt$KeyValidationResult$val isValid: Boolean</ID>
     <ID>BooleanPropertyNaming:KeyValidator.kt$KeyValidator$val isValid = issues.isEmpty()</ID>
     <ID>BooleanPropertyNaming:MainActivity.kt$MainActivity$val isValid = x &gt;= margin &amp;&amp; x &lt;= (width - margin) &amp;&amp; y &gt;= margin &amp;&amp; y &lt;= (height - margin)</ID>
@@ -83,8 +81,6 @@
     <ID>BooleanPropertyNaming:NotificationPermissionManager.kt$var hasPermission by remember { mutableStateOf(checkNotificationPermission(context)) }</ID>
     <ID>BooleanPropertyNaming:PerformanceMonitor.kt$PerformanceMonitor$private var isMonitoring = false</ID>
     <ID>BooleanPropertyNaming:PerformanceMonitor.kt$PerformanceMonitor.PerformanceStats$val isMonitoring: Boolean</ID>
-    <ID>BooleanPropertyNaming:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$private var isMonitoring = false</ID>
-    <ID>BooleanPropertyNaming:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$val isHighRefreshRate: Boolean</ID>
     <ID>BooleanPropertyNaming:ResponsiveLayout.kt$ResponsiveLayout$// Screen type detection val isTablet: Boolean get() = screenWidth &gt;= 600.dp || screenHeight &gt;= 600.dp</ID>
     <ID>BooleanPropertyNaming:ResponsiveLayout.kt$ResponsiveLayout$val isLandscape: Boolean</ID>
     <ID>BooleanPropertyNaming:ResponsiveLayout.kt$ResponsiveLayout$val isLargeScreen: Boolean get() = screenWidth &gt;= 840.dp || screenHeight &gt;= 840.dp</ID>
@@ -134,7 +130,6 @@
     <ID>ClassOrdering:KeyValidator.kt$KeyValidator$Companion</ID>
     <ID>ClassOrdering:NumberFormatter.kt$NumberFormatter$Companion</ID>
     <ID>ClassOrdering:PerformanceMonitor.kt$PerformanceMonitor$Companion</ID>
-    <ID>ClassOrdering:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$Companion</ID>
     <ID>ClassOrdering:RequestDeduplicationManager.kt$RequestDeduplicationManager$Companion</ID>
     <ID>ClassOrdering:SecurityLevelManager.kt$SecurityLevelManager$Companion</ID>
     <ID>ClassOrdering:SmartCacheStrategy.kt$SmartCacheStrategy$Companion</ID>
@@ -244,7 +239,6 @@
     <ID>ExpressionBodySyntax:FirstLaunchManager.kt$FirstLaunchManager$return sharedPreferences.getBoolean(KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN, false)</ID>
     <ID>ExpressionBodySyntax:HapticFeedbackManager.kt$HapticFeedbackModule$return HapticFeedbackManager()</ID>
     <ID>ExpressionBodySyntax:HapticFeedbackManager.kt$return remember { HapticFeedbackManager() }</ID>
-    <ID>ExpressionBodySyntax:HighRefreshRateComponents.kt$return rememberLazyListState()</ID>
     <ID>ExpressionBodySyntax:KeyRepository.kt$KeyRepository$return androidKeystoreManager.isAuthenticationRequired()</ID>
     <ID>ExpressionBodySyntax:KeyRepository.kt$KeyRepository$return androidKeystoreManager.isKeystoreAvailable()</ID>
     <ID>ExpressionBodySyntax:KeyRepository.kt$KeyRepository$return keyValidator.generateKeyStrengthSuggestions(validationResult)</ID>
@@ -259,7 +253,6 @@
     <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return DataValidator(debugLogManager)</ID>
     <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return KeyValidator(debugLogManager)</ID>
     <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return NumberFormatter()</ID>
-    <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return PerformanceMonitor120Hz(debugLogManager)</ID>
     <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return RequestDeduplicationManager(debugLogManager)</ID>
     <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return SmartCacheStrategy(debugLogManager)</ID>
     <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return TwseCacheManager(debugLogManager)</ID>
@@ -270,7 +263,6 @@
     <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return finnhubRetrofit.create(FinnhubApi::class.java)</ID>
     <ID>ExpressionBodySyntax:NetworkModule.kt$NetworkModule$return twseRetrofit.create(TwseApi::class.java)</ID>
     <ID>ExpressionBodySyntax:OnboardingManager.kt$OnboardingManager$return firstLaunchManager.shouldShowGooglePasswordManagerOnboarding()</ID>
-    <ID>ExpressionBodySyntax:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$return currentRefreshRate &gt;= 120f</ID>
     <ID>ExpressionBodySyntax:RequestDeduplicationManager.kt$RequestDeduplicationManager$return "${requestType}_${requestKey}_${System.currentTimeMillis()}"</ID>
     <ID>ExpressionBodySyntax:SecurityLevelManager.kt$SecurityLevelManager$return prefs.getBoolean(KEY_FALLBACK_MODE, false)</ID>
     <ID>ExpressionBodySyntax:SettingsViewModel.kt$SettingsViewModel$return _uiState.value.backupRecommendations</ID>
@@ -295,13 +287,8 @@
     <ID>FunctionMaxLength:FirstLaunchManager.kt$FirstLaunchManager$fun markGooglePasswordManagerOnboardingShown()</ID>
     <ID>FunctionMaxLength:FirstLaunchManager.kt$FirstLaunchManager$fun shouldShowGooglePasswordManagerOnboarding(): Boolean</ID>
     <ID>FunctionMaxLength:GooglePasswordManagerOnboardingDialog.kt$@Composable fun GooglePasswordManagerOnboardingDialog( onDismiss: () -&gt; Unit, onEnableAutoFill: () -&gt; Unit, )</ID>
-    <ID>FunctionMaxLength:HighRefreshRateComponents.kt$@Composable fun &lt;T&gt; rememberHighRefreshRateAnimatedVisibility( targetState: T, content: @Composable (T) -&gt; Unit, ): T</ID>
-    <ID>FunctionMaxLength:HighRefreshRateComponents.kt$@Composable fun &lt;T&gt; rememberHighRefreshRatePageTransition( targetPage: T, content: @Composable (T) -&gt; Unit, )</ID>
-    <ID>FunctionMaxLength:HighRefreshRateComponents.kt$@Composable fun HighRefreshRateProgressIndicator( isVisible: Boolean, modifier: Modifier = Modifier, )</ID>
-    <ID>FunctionMaxLength:HighRefreshRateComponents.kt$@Composable fun rememberHighRefreshRateScrollState(): LazyListState</ID>
     <ID>FunctionMaxLength:NetworkModule.kt$NetworkModule$@Provides @Singleton fun provideBiometricProtectionManager( @ApplicationContext context: Context, debugLogManager: com.wealthmanager.debug.DebugLogManager, ): BiometricProtectionManager</ID>
     <ID>FunctionMaxLength:NetworkModule.kt$NetworkModule$@Provides @Singleton fun provideRequestDeduplicationManager( debugLogManager: com.wealthmanager.debug.DebugLogManager, ): RequestDeduplicationManager</ID>
-    <ID>FunctionMaxLength:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$fun getRecommendedAnimationDuration(): Int</ID>
     <ID>FunctionNaming:AboutDialog.kt$@Composable fun AboutDialog( onDismiss: () -&gt; Unit, firstLaunchManager: FirstLaunchManager? = null, )</ID>
     <ID>FunctionNaming:AboutDialog.kt$@Composable private fun ApiKeyGuideEntrySection(onShowGuide: () -&gt; Unit)</ID>
     <ID>FunctionNaming:AboutDialog.kt$@Composable private fun AppVersionSection()</ID>
@@ -336,10 +323,6 @@
     <ID>FunctionNaming:EnhancedBackupSettingsCard.kt$@Composable private fun BackupRecommendationsDialog( onDismiss: () -&gt; Unit, backupStatus: EnhancedBackupManager.BackupStatus, )</ID>
     <ID>FunctionNaming:EnhancedBackupSettingsCard.kt$@Composable private fun GooglePasswordManagerInfoDialog( onDismiss: () -&gt; Unit, isAvailable: Boolean, isSignedIn: Boolean, )</ID>
     <ID>FunctionNaming:GooglePasswordManagerOnboardingDialog.kt$@Composable fun GooglePasswordManagerOnboardingDialog( onDismiss: () -&gt; Unit, onEnableAutoFill: () -&gt; Unit, )</ID>
-    <ID>FunctionNaming:HighRefreshRateComponents.kt$@Composable fun HighRefreshRateButton( onClick: () -&gt; Unit, modifier: Modifier = Modifier, enabled: Boolean = true, content: @Composable () -&gt; Unit, )</ID>
-    <ID>FunctionNaming:HighRefreshRateComponents.kt$@Composable fun HighRefreshRateCard( onClick: () -&gt; Unit, modifier: Modifier = Modifier, content: @Composable () -&gt; Unit, )</ID>
-    <ID>FunctionNaming:HighRefreshRateComponents.kt$@Composable fun HighRefreshRateListItem( onClick: () -&gt; Unit, modifier: Modifier = Modifier, content: @Composable () -&gt; Unit, )</ID>
-    <ID>FunctionNaming:HighRefreshRateComponents.kt$@Composable fun HighRefreshRateProgressIndicator( isVisible: Boolean, modifier: Modifier = Modifier, )</ID>
     <ID>FunctionNaming:NotificationPermissionManager.kt$@Composable fun NotificationPermissionSection( modifier: Modifier = Modifier, onPermissionGranted: () -&gt; Unit = {}, onPermissionDenied: () -&gt; Unit = {}, )</ID>
     <ID>FunctionNaming:NotificationPermissionManager.kt$@Composable fun NotificationPermissionStatus(modifier: Modifier = Modifier)</ID>
     <ID>FunctionNaming:OnboardingFlow.kt$@Composable fun OnboardingFlow( firstLaunchManager: FirstLaunchManager, onComplete: () -&gt; Unit, onNavigateToSettings: () -&gt; Unit, )</ID>
@@ -378,17 +361,14 @@
     <ID>InjectDispatcher:ApiTestService.kt$ApiTestService$IO</ID>
     <ID>InjectDispatcher:MobileWearSyncService.kt$MobileWearSyncService$IO</ID>
     <ID>InjectDispatcher:PerformanceMonitor.kt$PerformanceMonitor$Default</ID>
-    <ID>InjectDispatcher:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$Default</ID>
     <ID>InjectDispatcher:WearSyncManager.kt$WearSyncManager$IO</ID>
     <ID>InstanceOfCheckForException:ApiRetryManager.kt$ApiRetryManager$e is HttpException</ID>
     <ID>LambdaParameterNaming:AddAssetDialog.kt$_</ID>
     <ID>LambdaParameterNaming:AssetsScreen.kt$_</ID>
     <ID>LambdaParameterNaming:CacheManager.kt$CacheManager$_</ID>
-    <ID>LambdaParameterNaming:HighRefreshRateComponents.kt$_</ID>
     <ID>LambdaParameterNaming:RequestDeduplicationManager.kt$RequestDeduplicationManager$_</ID>
     <ID>LambdaParameterNaming:SmartCacheStrategy.kt$SmartCacheStrategy$_</ID>
     <ID>LateinitUsage:MainActivity.kt$MainActivity$@Inject lateinit var firstLaunchManager: FirstLaunchManager</ID>
-    <ID>LateinitUsage:MainActivity.kt$MainActivity$@Inject lateinit var performanceMonitor: PerformanceMonitor120Hz</ID>
     <ID>LateinitUsage:MobileWearSyncService.kt$MobileWearSyncService$@Inject lateinit var wearSyncManager: WearSyncManager</ID>
     <ID>LateinitUsage:WealthManagerApplication.kt$WealthManagerApplication$@Inject lateinit var authStateManager: AuthStateManager</ID>
     <ID>LateinitUsage:WealthManagerApplication.kt$WealthManagerApplication$@Inject lateinit var localePreferencesManager: LocalePreferencesManager</ID>
@@ -592,12 +572,6 @@
     <ID>MagicNumber:HapticFeedbackManager.kt$HapticFeedbackManager$200L</ID>
     <ID>MagicNumber:HapticFeedbackManager.kt$HapticFeedbackManager$255</ID>
     <ID>MagicNumber:HapticFeedbackManager.kt$HapticFeedbackManager$50</ID>
-    <ID>MagicNumber:HighRefreshRateComponents.kt$0.01f</ID>
-    <ID>MagicNumber:HighRefreshRateComponents.kt$100</ID>
-    <ID>MagicNumber:HighRefreshRateComponents.kt$50</ID>
-    <ID>MagicNumber:HighRefreshRateComponents.kt$HighRefreshRateAnimations$0.2f</ID>
-    <ID>MagicNumber:HighRefreshRateComponents.kt$HighRefreshRateAnimations$0.4f</ID>
-    <ID>MagicNumber:HighRefreshRateComponents.kt$HighRefreshRateAnimations$0.6f</ID>
     <ID>MagicNumber:KeyValidator.kt$KeyValidator$3.0</ID>
     <ID>MagicNumber:KeyValidator.kt$KeyValidator$4.5</ID>
     <ID>MagicNumber:MainActivity.kt$MainActivity$10f</ID>
@@ -622,21 +596,6 @@
     <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$1000L</ID>
     <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$1024</ID>
     <ID>MagicNumber:PerformanceMonitor.kt$PerformanceMonitor$5000L</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$1.5</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$1000</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$120f</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$150</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$300</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$60f</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$0.05f</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$0.1f</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$0.2f</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$100f</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$10L</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$40f</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$5L</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$60f</ID>
-    <ID>MagicNumber:PerformanceMonitor120Hz.kt$PerformanceStats120Hz$80f</ID>
     <ID>MagicNumber:PieChartComponentFixed.kt$0xFF00BCD4</ID>
     <ID>MagicNumber:PieChartComponentFixed.kt$0xFF2196F3</ID>
     <ID>MagicNumber:PieChartComponentFixed.kt$0xFF4CAF50</ID>
@@ -747,7 +706,6 @@
     <ID>MagicNumber:WelcomeOnboardingDialog.kt$16</ID>
     <ID>MagicNumber:WelcomeOnboardingDialog.kt$24</ID>
     <ID>MagicNumber:WelcomeOnboardingDialog.kt$32</ID>
-    <ID>MatchingDeclarationName:HighRefreshRateComponents.kt$HighRefreshRateAnimations</ID>
     <ID>MaxLineLength:ApiKeyInputField.kt$imageVector = if (isPasswordVisible) Icons.Default.VisibilityOff else Icons.Default.Visibility</ID>
     <ID>MaxLineLength:ApiProviderService.kt$ApiProviderService$"API diagnostic failed: Network=${diagnostic.networkStatus.isConnected}, API Key=${diagnostic.apiKeyStatus.finnhubKeyValid}, Finnhub=${diagnostic.finnhubStatus.isReachable}"</ID>
     <ID>MaxLineLength:ApiProviderTest.kt$ApiProviderTest$"Exchange rate test passed: ${rateData.fromCurrency}/${rateData.toCurrency} = ${rateData.rate} (Provider: ${rateData.provider})"</ID>
@@ -834,7 +792,6 @@
     <ID>RedundantSuspendModifier:CacheManager.kt$CacheManager$suspend</ID>
     <ID>RedundantSuspendModifier:CredentialManagerService.kt$CredentialManagerService$suspend</ID>
     <ID>RedundantSuspendModifier:EnhancedKeyRepository.kt$EnhancedKeyRepository$suspend</ID>
-    <ID>RedundantSuspendModifier:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$suspend</ID>
     <ID>RedundantSuspendModifier:RequestDeduplicationManager.kt$RequestDeduplicationManager$suspend</ID>
     <ID>RedundantSuspendModifier:SecureApiKeyManager.kt$SecureApiKeyManager$suspend</ID>
     <ID>ReturnCount:ApiProviderService.kt$ApiProviderService$suspend fun getExchangeRate( fromCurrency: String = "USD", toCurrency: String = "TWD", ): Result&lt;ExchangeRateData&gt;</ID>
@@ -849,7 +806,6 @@
     <ID>ReturnCount:WearSyncManager.kt$WearSyncManager$private fun shouldSync( totalAssets: Double, lastUpdated: Long, hasError: Boolean, ): Boolean</ID>
     <ID>ReturnCount:WearSyncManager.kt$WearSyncManager$suspend fun syncTotalsFromDashboard( totalAssets: Double, lastUpdated: Long, hasError: Boolean, )</ID>
     <ID>SleepInsteadOfDelay:PerformanceMonitor.kt$PerformanceMonitor$sleep(1)</ID>
-    <ID>SleepInsteadOfDelay:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$sleep(1)</ID>
     <ID>StringLiteralDuplication:AndroidKeystoreManager.kt$AndroidKeystoreManager$"AES/GCM/NoPadding"</ID>
     <ID>StringLiteralDuplication:AndroidKeystoreManager.kt$AndroidKeystoreManager$"AndroidKeyStore"</ID>
     <ID>StringLiteralDuplication:AndroidKeystoreManager.kt$AndroidKeystoreManager$"KEYSTORE"</ID>
@@ -1078,15 +1034,6 @@
     <ID>UnusedPrivateProperty:MarketDataService.kt$MarketDataService$private val numberFormatter: NumberFormatter</ID>
     <ID>UnusedPrivateProperty:MarketDataService.kt$MarketDataService$private val requestDeduplicationManager: RequestDeduplicationManager</ID>
     <ID>UnusedPrivateProperty:PerformanceMonitor.kt$PerformanceMonitor$private val mainHandler = Handler(Looper.getMainLooper())</ID>
-    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$private val debugLogManager: DebugLogManager</ID>
-    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz$private val mainHandler = Handler(Looper.getMainLooper())</ID>
-    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$// High refresh rate related constants private const val TARGET_FPS_120 = 120f</ID>
-    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$// Memory warning thresholds - 120Hz requires more aggressive memory management private const val MEMORY_WARNING_THRESHOLD_MB = 80L</ID>
-    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$// Performance statistics thresholds private const val FRAME_DROP_WARNING_THRESHOLD = 5 // 5 frame drops warning</ID>
-    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$private const val FRAME_DROP_CRITICAL_THRESHOLD = 10 // 10 frame drops critical</ID>
-    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$private const val MAIN_THREAD_BLOCK_THRESHOLD_60FPS = 16L // 16ms (60fps)</ID>
-    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$private const val MEMORY_CRITICAL_THRESHOLD_MB = 150L</ID>
-    <ID>UnusedPrivateProperty:PerformanceMonitor120Hz.kt$PerformanceMonitor120Hz.Companion$private const val TARGET_FPS_60 = 60f</ID>
     <ID>UnusedPrivateProperty:SecurityLevelManager.kt$SecurityLevelManager.Companion$private const val KEY_BIOMETRIC_ENABLED = "biometric_enabled"</ID>
     <ID>UnusedPrivateProperty:TreemapLayout.kt$TreemapLayout$row</ID>
     <ID>UseOrEmpty:ApiDiagnostic.kt$ApiDiagnostic$keyRepository.getUserExchangeKey() ?: ""</ID>
@@ -1173,9 +1120,6 @@
     <ID>WildcardImport:GooglePasswordManagerOnboardingDialog.kt$import androidx.compose.material.icons.filled.*</ID>
     <ID>WildcardImport:GooglePasswordManagerOnboardingDialog.kt$import androidx.compose.material3.*</ID>
     <ID>WildcardImport:GooglePasswordManagerOnboardingDialog.kt$import androidx.compose.runtime.*</ID>
-    <ID>WildcardImport:HighRefreshRateComponents.kt$import androidx.compose.animation.core.*</ID>
-    <ID>WildcardImport:HighRefreshRateComponents.kt$import androidx.compose.material3.*</ID>
-    <ID>WildcardImport:HighRefreshRateComponents.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:MainActivity.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:NotificationPermissionManager.kt$import androidx.compose.foundation.layout.*</ID>
     <ID>WildcardImport:NotificationPermissionManager.kt$import androidx.compose.material3.*</ID>
@@ -1183,7 +1127,6 @@
     <ID>WildcardImport:OnboardingFlow.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:OnboardingManager.kt$import androidx.compose.runtime.*</ID>
     <ID>WildcardImport:PerformanceMonitor.kt$import kotlinx.coroutines.*</ID>
-    <ID>WildcardImport:PerformanceMonitor120Hz.kt$import kotlinx.coroutines.*</ID>
     <ID>WildcardImport:PieChartComponentFixed.kt$import androidx.compose.foundation.layout.*</ID>
     <ID>WildcardImport:PieChartComponentFixed.kt$import androidx.compose.material3.*</ID>
     <ID>WildcardImport:PieChartComponentFixed.kt$import androidx.compose.runtime.*</ID>

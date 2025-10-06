@@ -189,55 +189,44 @@
     <string name="validation_no_matching_stock">No matching stock found. Please verify the symbol.</string>
     
     <!-- Asset Form Validation -->
-    <string name="validation_amount_required">請輸入金額</string>
-    <string name="validation_amount_example_twd">例如：1000</string>
-    <string name="validation_amount_example_usd">例如：1000.50</string>
-    <string name="validation_amount_invalid_number">請輸入有效的數字</string>
-    <string name="validation_amount_only_numbers">只允許數字和小數點</string>
-    <string name="validation_amount_must_positive">金額必須大於0</string>
-    <string name="validation_amount_enter_positive">請輸入正數金額</string>
-    <string name="validation_amount_too_large">金額似乎過大，請確認是否正確</string>
-    <string name="validation_amount_ignore_if_correct">如果正確，請忽略此提示</string>
-    <string name="validation_amount_decimal_places">金額通常只需要2位小數</string>
-    <string name="validation_amount_auto_adjusted">已自動調整為2位小數</string>
+    <string name="validation_amount_required">Please enter amount</string>
+    <string name="validation_amount_example_twd">e.g.: 1000</string>
+    <string name="validation_amount_example_usd">e.g.: 1000.50</string>
+    <string name="validation_amount_invalid_number">Please enter a valid number</string>
+    <string name="validation_amount_only_numbers">Only numbers and decimal points allowed</string>
+    <string name="validation_amount_must_positive">Amount must be greater than 0</string>
+    <string name="validation_amount_enter_positive">Please enter a positive amount</string>
+    <string name="validation_amount_too_large">Amount seems too large, please confirm if correct</string>
+    <string name="validation_amount_ignore_if_correct">Ignore this warning if correct</string>
+    <string name="validation_amount_decimal_places">Amount usually needs only 2 decimal places</string>
+    <string name="validation_amount_auto_adjusted">Automatically adjusted to 2 decimal places</string>
     
-    <string name="validation_symbol_required">請輸入股票代碼</string>
-    <string name="validation_symbol_example">例如：AAPL, TSLA, 2330</string>
-    <string name="validation_symbol_invalid_format">股票代碼格式不正確</string>
-    <string name="validation_symbol_only_alphanumeric">只允許字母、數字和點號，最多10個字符</string>
-    <string name="validation_symbol_taiwan_stock">台灣股票，將以台幣計算</string>
-    <string name="validation_symbol_us_stock">美股代碼，將以美元計算</string>
-    <string name="validation_symbol_confirm_correct">請確認股票代碼是否正確</string>
-    <string name="validation_symbol_search_confirm">建議搜尋確認股票代碼</string>
+    <string name="validation_symbol_required">Please enter stock symbol</string>
+    <string name="validation_symbol_example">e.g.: AAPL, TSLA, 2330</string>
+    <string name="validation_symbol_invalid_format">Invalid stock symbol format</string>
+    <string name="validation_symbol_only_alphanumeric">Only letters, numbers and dots allowed, max 10 characters</string>
+    <string name="validation_symbol_taiwan_stock">Taiwan stock, will be calculated in TWD</string>
+    <string name="validation_symbol_us_stock">US stock symbol, will be calculated in USD</string>
+    <string name="validation_symbol_confirm_correct">Please confirm if stock symbol is correct</string>
+    <string name="validation_symbol_search_confirm">Suggest searching to confirm stock symbol</string>
     
-    <string name="validation_shares_required">請輸入股數</string>
-    <string name="validation_shares_example">例如：10, 100.5</string>
-    <string name="validation_shares_invalid_number">請輸入有效的股數</string>
-    <string name="validation_shares_only_numbers">只允許數字和小數點</string>
-    <string name="validation_shares_must_positive">股數必須大於0</string>
-    <string name="validation_shares_enter_positive">請輸入正數股數</string>
-    <string name="validation_shares_too_large">股數似乎過大，請確認是否正確</string>
-    <string name="validation_shares_ignore_if_correct">如果正確，請忽略此提示</string>
-    <string name="validation_shares_decimal_places">股數通常只需要4位小數</string>
-    <string name="validation_shares_auto_adjusted">已自動調整為4位小數</string>
+    <string name="validation_shares_required">Please enter shares</string>
+    <string name="validation_shares_example">e.g.: 10, 100.5</string>
+    <string name="validation_shares_invalid_number">Please enter a valid number of shares</string>
+    <string name="validation_shares_only_numbers">Only numbers and decimal points allowed</string>
+    <string name="validation_shares_must_positive">Shares must be greater than 0</string>
+    <string name="validation_shares_enter_positive">Please enter a positive number of shares</string>
+    <string name="validation_shares_too_large">Shares seem too large, please confirm if correct</string>
+    <string name="validation_shares_ignore_if_correct">Ignore this warning if correct</string>
+    <string name="validation_shares_decimal_places">Shares usually need only 4 decimal places</string>
+    <string name="validation_shares_auto_adjusted">Automatically adjusted to 4 decimal places</string>
     
     <!-- Additional validation strings -->
-    <string name="validation_suggestion_prefix">💡 %s</string>
-    <string name="asset_form_amount_label">金額</string>
-    <string name="asset_form_symbol_label">股票代碼</string>
-    <string name="asset_form_shares_label">股數</string>
+    <string name="validation_suggestion_prefix">Tip: %s</string>
+    <string name="asset_form_amount_label">Amount</string>
+    <string name="asset_form_symbol_label">Stock Symbol</string>
+    <string name="asset_form_shares_label">Shares</string>
 
-    <!-- Search Error Messages -->
-    <string name="search_error_api_limit">API request limit reached. Please try again tomorrow.</string>
-    <string name="search_error_stock_not_found">Stock code not found. Please verify the symbol.</string>
-    <string name="search_error_network">Network connection issue. Please check your settings.</string>
-    <string name="search_error_server">Server temporarily unavailable. Please try again later.</string>
-    <string name="search_error_invalid_api_key">Invalid API key. Please contact technical support.</string>
-    <string name="search_error_authentication">API authentication failed. Please verify the key.</string>
-    <string name="search_error_rate_limit">Request rate limit exceeded. Please try again later.</string>
-    <string name="search_error_unknown">Unknown error occurred. Please restart the app.</string>
-    <string name="search_error_invalid_query">Please enter at least 1 character to search.</string>
-    <string name="search_error_api_limit_reached">API request limit reached. Please try again tomorrow.</string>
 
     <!-- Dialog Messages -->
     <string name="dialog_add_asset">Add Asset</string>
@@ -392,10 +381,10 @@
     <!-- Settings Screen -->
     <string name="settings_apply_api_keys">Apply for API Keys</string>
     <string name="settings_apply_api_keys_desc">Get free API keys to use full features</string>
-    <string name="settings_api_tip">💡 Tip: After applying for free API keys, you will be able to:\n• Get real-time stock prices\n• Query exchange rate information\n• Access comprehensive market data</string>
+    <string name="settings_api_tip">Tip: After applying for free API keys, you will be able to:\n• Get real-time stock prices\n• Query exchange rate information\n• Access comprehensive market data</string>
     <string name="settings_developer_mode">Developer Mode</string>
     <string name="settings_developer_mode_desc">Use built-in test API keys</string>
-    <string name="settings_developer_warning">⚠️ Note: This feature is only available in developer mode and will automatically fill in test API keys</string>
+    <string name="settings_developer_warning">Note: This feature is only available in developer mode and will automatically fill in test API keys</string>
     <string name="settings_security_status">Security Status</string>
     
     <!-- Chart Components -->
@@ -682,4 +671,24 @@
     <string name="widget_last_updated_format">Updated: %1$s</string>
     <string name="widget_error_loading_data">Error loading data</string>
     <string name="widget_tap_to_open_app">Tap to open Wealth Manager</string>
+    
+    <!-- Technology Stack -->
+    <string name="tech_kotlin">Kotlin</string>
+    <string name="tech_compose">Compose</string>
+    <string name="tech_material3">Material 3</string>
+    <string name="tech_room">Room</string>
+    <string name="tech_hilt">Hilt</string>
+    <string name="tech_retrofit">Retrofit</string>
+    
+    <!-- Search Error Messages -->
+    <string name="search_error_stock_not_found">Stock code not found, please check if correct</string>
+    <string name="search_error_api_limit">API request limit reached, please try again tomorrow</string>
+    <string name="search_error_network">Network connection issue, please check network settings</string>
+    <string name="search_error_invalid_query">Please enter at least 1 character to search</string>
+    <string name="search_error_server">Server temporarily unavailable, please try again later</string>
+    <string name="search_error_invalid_api_key">Invalid API key, please contact technical support</string>
+    <string name="search_error_authentication">API authentication failed, please check API key settings</string>
+    <string name="search_error_rate_limit">Request rate limit exceeded, please try again later</string>
+    <string name="search_error_unknown">Unknown error occurred, please restart the application</string>
+    
 </resources>

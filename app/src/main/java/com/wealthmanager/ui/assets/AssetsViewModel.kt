@@ -2,6 +2,7 @@ package com.wealthmanager.ui.assets
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import android.content.Context
 import com.wealthmanager.R
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
@@ -39,11 +40,12 @@ class AssetsViewModel
         private val assetRepository: AssetRepository,
         private val marketDataService: MarketDataService,
         private val debugLogManager: DebugLogManager,
+        private val context: Context,
     ) : ViewModel() {
         private val _uiState = MutableStateFlow(AssetsUiState())
         val uiState: StateFlow<AssetsUiState> = _uiState.asStateFlow()
 
-        private val _selectedCashCurrency = MutableStateFlow("TWD")
+        private val _selectedCashCurrency = MutableStateFlow("TWD") // Will be initialized with string resource
         val selectedCashCurrency: StateFlow<String> = _selectedCashCurrency.asStateFlow()
 
         private val _cashAmountInput = MutableStateFlow("")
@@ -54,14 +56,11 @@ class AssetsViewModel
 
         private var existingCashAsset: CashAsset? = null
 
-        // Search query state (debounced)
         private val _searchQuery = MutableStateFlow("")
 
-        // Immediate search events (bypass debounce)
         private val _immediateSearch = MutableSharedFlow<String>(extraBufferCapacity = 1)
 
         init {
-            // Merge debounced query flow with immediate searches, cancel previous via flatMapLatest
             viewModelScope.launch {
                 merge(
                     _searchQuery
@@ -90,7 +89,7 @@ class AssetsViewModel
                                     _uiState.value.copy(
                                         searchResults = searchResult.results,
                                         isSearching = false,
-                                        searchError = if (searchResult.results.isEmpty()) "Stock code not found, please check if correct" else "",
+                                        searchError = if (searchResult.results.isEmpty()) context.getString(R.string.search_error_stock_not_found) else "",
                                     )
                             }
                             is SearchResult.NoResults -> {
@@ -101,11 +100,11 @@ class AssetsViewModel
                                         isSearching = false,
                                         searchError =
                                             when (searchResult.reason) {
-                                                NoResultsReason.STOCK_NOT_FOUND -> "Stock code not found, please check if correct"
-                                                NoResultsReason.API_LIMIT_REACHED -> "API request limit reached, please try again tomorrow"
-                                                NoResultsReason.NETWORK_ERROR -> "Network connection issue, please check network settings"
-                                                NoResultsReason.INVALID_QUERY -> "Please enter at least 1 character to search"
-                                                NoResultsReason.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
+                                                NoResultsReason.STOCK_NOT_FOUND -> context.getString(R.string.search_error_stock_not_found)
+                                                NoResultsReason.API_LIMIT_REACHED -> context.getString(R.string.search_error_api_limit)
+                                                NoResultsReason.NETWORK_ERROR -> context.getString(R.string.search_error_network)
+                                                NoResultsReason.INVALID_QUERY -> context.getString(R.string.search_error_invalid_query)
+                                                NoResultsReason.SERVER_ERROR -> context.getString(R.string.search_error_server)
                                             },
                                     )
                             }
@@ -120,13 +119,13 @@ class AssetsViewModel
                                         isSearching = false,
                                         searchError =
                                             when (searchResult.errorType) {
-                                                SearchErrorType.API_LIMIT -> "API request limit reached, please try again tomorrow"
-                                                SearchErrorType.NETWORK_ERROR -> "Network connection issue, please check network settings"
-                                                SearchErrorType.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
-                                                SearchErrorType.INVALID_API_KEY -> "Invalid API key, please contact technical support"
-                                                SearchErrorType.AUTHENTICATION_ERROR -> "API authentication failed, please check API key settings"
-                                                SearchErrorType.RATE_LIMIT_ERROR -> "Request rate limit exceeded, please try again later"
-                                                SearchErrorType.UNKNOWN_ERROR -> "Unknown error occurred, please restart the application"
+                                                SearchErrorType.API_LIMIT -> context.getString(R.string.search_error_api_limit)
+                                                SearchErrorType.NETWORK_ERROR -> context.getString(R.string.search_error_network)
+                                                SearchErrorType.SERVER_ERROR -> context.getString(R.string.search_error_server)
+                                                SearchErrorType.INVALID_API_KEY -> context.getString(R.string.search_error_invalid_api_key)
+                                                SearchErrorType.AUTHENTICATION_ERROR -> context.getString(R.string.search_error_authentication)
+                                                SearchErrorType.RATE_LIMIT_ERROR -> context.getString(R.string.search_error_rate_limit)
+                                                SearchErrorType.UNKNOWN_ERROR -> context.getString(R.string.search_error_unknown)
                                             },
                                     )
                             }
@@ -171,7 +170,7 @@ class AssetsViewModel
                                     _uiState.value.copy(
                                         searchResults = searchResult.results,
                                         isSearching = false,
-                                        searchError = if (searchResult.results.isEmpty()) "Stock code not found, please check if correct" else "",
+                                        searchError = if (searchResult.results.isEmpty()) context.getString(R.string.search_error_stock_not_found) else "",
                                     )
                             }
                             is SearchResult.NoResults -> {
@@ -182,11 +181,11 @@ class AssetsViewModel
                                         isSearching = false,
                                         searchError =
                                             when (searchResult.reason) {
-                                                NoResultsReason.STOCK_NOT_FOUND -> "Stock code not found, please check if correct"
-                                                NoResultsReason.API_LIMIT_REACHED -> "API request limit reached, please try again tomorrow"
-                                                NoResultsReason.NETWORK_ERROR -> "Network connection issue, please check network settings"
-                                                NoResultsReason.INVALID_QUERY -> "Please enter at least 2 characters to search"
-                                                NoResultsReason.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
+                                                NoResultsReason.STOCK_NOT_FOUND -> context.getString(R.string.search_error_stock_not_found)
+                                                NoResultsReason.API_LIMIT_REACHED -> context.getString(R.string.search_error_api_limit)
+                                                NoResultsReason.NETWORK_ERROR -> context.getString(R.string.search_error_network)
+                                                NoResultsReason.INVALID_QUERY -> context.getString(R.string.search_error_invalid_query)
+                                                NoResultsReason.SERVER_ERROR -> context.getString(R.string.search_error_server)
                                             },
                                     )
                             }
@@ -201,13 +200,13 @@ class AssetsViewModel
                                         isSearching = false,
                                         searchError =
                                             when (searchResult.errorType) {
-                                                SearchErrorType.API_LIMIT -> "API request limit reached, please try again tomorrow"
-                                                SearchErrorType.NETWORK_ERROR -> "Network connection issue, please check network settings"
-                                                SearchErrorType.SERVER_ERROR -> "Server temporarily unavailable, please try again later"
-                                                SearchErrorType.INVALID_API_KEY -> "Invalid API key, please contact technical support"
-                                                SearchErrorType.AUTHENTICATION_ERROR -> "API authentication failed, please check API key settings"
-                                                SearchErrorType.RATE_LIMIT_ERROR -> "Request rate limit exceeded, please try again later"
-                                                SearchErrorType.UNKNOWN_ERROR -> "Unknown error occurred, please restart the application"
+                                                SearchErrorType.API_LIMIT -> context.getString(R.string.search_error_api_limit)
+                                                SearchErrorType.NETWORK_ERROR -> context.getString(R.string.search_error_network)
+                                                SearchErrorType.SERVER_ERROR -> context.getString(R.string.search_error_server)
+                                                SearchErrorType.INVALID_API_KEY -> context.getString(R.string.search_error_invalid_api_key)
+                                                SearchErrorType.AUTHENTICATION_ERROR -> context.getString(R.string.search_error_authentication)
+                                                SearchErrorType.RATE_LIMIT_ERROR -> context.getString(R.string.search_error_rate_limit)
+                                                SearchErrorType.UNKNOWN_ERROR -> context.getString(R.string.search_error_unknown)
                                             },
                                     )
                             }
@@ -221,7 +220,7 @@ class AssetsViewModel
                         _uiState.value.copy(
                             searchResults = emptyList(),
                             isSearching = false,
-                            searchError = "Unknown error occurred, please restart the application",
+                            searchError = context.getString(R.string.search_error_unknown),
                         )
                     debugLogManager.log("ASSETS", "UI state updated with empty results due to error")
                 }
@@ -306,7 +305,6 @@ class AssetsViewModel
                 }
                 loadExistingCashAsset()
 
-                // 立即同步匯率和價格數據
                 debugLogManager.log("ASSETS", "Triggering immediate price sync after cash asset addition")
                 syncMarketData()
             }
@@ -346,7 +344,6 @@ class AssetsViewModel
                 assetRepository.insertStockAsset(stockAsset)
                 debugLogManager.log("ASSETS", "Stock asset inserted to database")
 
-                // 立即同步匯率和價格數據
                 debugLogManager.log("ASSETS", "Triggering immediate price sync after stock asset addition")
                 syncMarketData()
             }
@@ -369,17 +366,15 @@ class AssetsViewModel
         }
 
         /**
-         * 同步市場數據（匯率和股票價格）
+         * Sync market data (exchange rates and stock prices).
          */
         private suspend fun syncMarketData() {
             try {
                 debugLogManager.log("ASSETS", "Starting immediate market data sync")
 
-                // 更新匯率
                 marketDataService.updateExchangeRates()
                 debugLogManager.log("ASSETS", "Exchange rates updated")
 
-                // 更新股票價格
                 marketDataService.updateStockPrices()
                 debugLogManager.log("ASSETS", "Stock prices updated")
 

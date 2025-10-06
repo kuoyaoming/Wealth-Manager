@@ -48,7 +48,6 @@ class WearSyncManager
                 "syncTotalsFromDashboard called - total: $totalAssets, lastUpdated: $lastUpdated, hasError: $hasError",
             )
 
-            // 檢查基本條件
             if (!validateSyncData(totalAssets, lastUpdated)) {
                 debugLogManager.log("WEAR_SYNC", "Sync skipped - invalid data")
                 return
@@ -59,7 +58,6 @@ class WearSyncManager
                 return
             }
 
-            // 檢查連接狀態
             if (!ensureWearableConnection()) {
                 debugLogManager.log("WEAR_SYNC", "Sync skipped - no wearable connection")
                 return
@@ -72,7 +70,6 @@ class WearSyncManager
         suspend fun respondToSyncRequest() {
             withContext(Dispatchers.IO) {
                 try {
-                    // 檢查連接狀態
                     if (!ensureWearableConnection()) {
                         debugLogManager.log("WEAR_SYNC", "Sync request ignored - no wearable connection")
                         return@withContext
@@ -116,13 +113,11 @@ class WearSyncManager
             debugLogManager.log("WEAR_SYNC", "manualSync requested - total: $totalAssets, lastUpdated: $lastUpdated")
             return withContext(Dispatchers.IO) {
                 try {
-                    // 檢查數據有效性
                     if (!validateSyncData(totalAssets, lastUpdated)) {
                         debugLogManager.log("WEAR_SYNC", "Manual sync failed - invalid data")
                         return@withContext ManualSyncResult.Failure("Invalid sync data")
                     }
 
-                    // 檢查連接狀態
                     if (!ensureWearableConnection()) {
                         debugLogManager.log("WEAR_SYNC", "Manual sync failed - no wearable connection")
                         return@withContext ManualSyncResult.WearAppNotInstalled

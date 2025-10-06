@@ -16,6 +16,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import com.wealthmanager.ui.components.DialogCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -55,7 +56,7 @@ fun ResponsiveDialog(
         onDismissRequest = onDismissRequest,
         properties = properties,
     ) {
-        Card(
+        DialogCard(
             modifier =
                 Modifier
                     .fillMaxWidth(
@@ -72,15 +73,6 @@ fun ResponsiveDialog(
                             else -> 0.9f // Phones
                         },
                     )
-                    .padding(
-                        when {
-                            accessibilityState.isLargeFontEnabled -> 24.dp
-                            accessibilityState.isTalkBackEnabled -> 20.dp
-                            else -> 16.dp
-                        },
-                    ),
-            elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
-            shape = MaterialTheme.shapes.extraLarge,
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Column(

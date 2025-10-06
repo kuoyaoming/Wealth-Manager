@@ -16,8 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 
 /**
- * API Key 空狀態卡片
- * 當用戶沒有設定任何 API Key 時顯示引導
+ * API Key empty state card.
  */
 @Composable
 fun ApiKeyEmptyStateCard(
@@ -43,7 +42,6 @@ fun ApiKeyEmptyStateCard(
             horizontalAlignment = Alignment.CenterHorizontally,
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
-            // 空狀態圖示和標題
             Icon(
                 imageVector = Icons.Default.Key,
                 contentDescription = null,
@@ -65,7 +63,6 @@ fun ApiKeyEmptyStateCard(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
-            // 推薦的 API 提供商
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors =
@@ -84,7 +81,6 @@ fun ApiKeyEmptyStateCard(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    // Finnhub 推薦
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -120,7 +116,6 @@ fun ApiKeyEmptyStateCard(
 
                     Spacer(modifier = Modifier.height(12.dp))
 
-                    // Exchange Rate API 推薦
                     Row(
                         modifier = Modifier.fillMaxWidth(),
                         verticalAlignment = Alignment.CenterVertically,
@@ -156,7 +151,6 @@ fun ApiKeyEmptyStateCard(
                 }
             }
 
-            // 快速開始指南
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors =
@@ -204,7 +198,6 @@ fun ApiKeyEmptyStateCard(
                 }
             }
 
-            // 操作按鈕
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.spacedBy(12.dp),
@@ -236,7 +229,6 @@ fun ApiKeyEmptyStateCard(
                 }
             }
 
-            // 提示訊息
             Card(
                 modifier = Modifier.fillMaxWidth(),
                 colors =

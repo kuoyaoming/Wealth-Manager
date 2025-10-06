@@ -26,20 +26,6 @@ import javax.inject.Inject
 
 /**
  * ViewModel for the dashboard screen managing portfolio data and UI state.
- *
- * This ViewModel handles:
- * - Portfolio data aggregation and calculation
- * - Real-time market data updates
- * - API status monitoring and error handling
- * - Wear OS synchronization
- * - Asset loading and refresh operations
- *
- * @property assetRepository Repository for asset data operations
- * @property marketDataService Service for fetching market data
- * @property debugLogManager Manager for debug logging
- * @property apiStatusManager Manager for API status monitoring
- * @property wearSyncManager Manager for Wear OS synchronization
- * @property keyRepository Repository for API key management
  */
 @HiltViewModel
 class DashboardViewModel
@@ -159,7 +145,6 @@ class DashboardViewModel
             _uiState.value = _uiState.value.copy(isLoading = true)
             apiStatusManager.setRetrying(true)
 
-            // 開始同步操作
             syncFeedbackManager.startSync(
                 type = SyncType.MANUAL_REFRESH,
                 description = "Refreshing data"
@@ -179,7 +164,6 @@ class DashboardViewModel
                     if (hasStockAssets) {
                         debugLogManager.log("DASHBOARD", "Updating exchange rates and stock prices")
                         
-                        // 開始市場數據同步
                         syncFeedbackManager.startSync(
                             type = SyncType.MARKET_DATA,
                             description = "Syncing market data"
@@ -192,7 +176,6 @@ class DashboardViewModel
                             marketDataService.updateExchangeRates()
                             marketDataService.updateStockPrices()
                             
-                            // 計算更新的項目數量（這裡簡化為股票數量）
                             itemsUpdated = stockAssets.size
                             
                             if (hasNetwork) {
@@ -202,7 +185,6 @@ class DashboardViewModel
                                     itemsUpdated = itemsUpdated
                                 )
                             } else {
-                                // 沒有網路但使用了緩存數據
                                 syncFeedbackManager.syncSuccess(
                                     type = SyncType.MARKET_DATA,
                                     message = "Using cached data (no internet connection)",
@@ -210,27 +192,23 @@ class DashboardViewModel
                                 )
                             }
                         } catch (e: Exception) {
-                            // 檢查是否為網路錯誤
                             val isNetworkError = e.message?.contains("network", ignoreCase = true) == true ||
                                 e.message?.contains("connection", ignoreCase = true) == true ||
                                 e.message?.contains("timeout", ignoreCase = true) == true
                             
                             if (isNetworkError && !hasNetwork) {
-                                // 沒有網路且無法使用緩存
                                 syncFeedbackManager.syncFailure(
                                     type = SyncType.MARKET_DATA,
                                     message = "No internet connection and no cached data available",
                                     canRetry = true
                                 )
                             } else if (isNetworkError) {
-                                // 有網路但連接失敗
                                 syncFeedbackManager.syncFailure(
                                     type = SyncType.MARKET_DATA,
                                     message = "Network connection failed. Please check your internet connection.",
                                     canRetry = true
                                 )
                             } else {
-                                // 其他錯誤
                                 syncFeedbackManager.syncFailure(
                                     type = SyncType.MARKET_DATA,
                                     message = "Failed to sync market data: ${e.message}",
@@ -246,7 +224,6 @@ class DashboardViewModel
                     apiStatusManager.setApiSuccess()
                     _uiState.value = _uiState.value.copy(isLoading = false)
                     
-                    // 手動刷新成功
                     syncFeedbackManager.syncSuccess(
                         type = SyncType.MANUAL_REFRESH,
                         message = "Data refreshed successfully",
@@ -261,7 +238,6 @@ class DashboardViewModel
                     )
                     _uiState.value = _uiState.value.copy(isLoading = false)
 
-                    // 同步失敗
                     syncFeedbackManager.syncFailure(
                         type = SyncType.MANUAL_REFRESH,
                         message = "Failed to refresh data: ${e.message}",
@@ -292,7 +268,6 @@ class DashboardViewModel
         fun manualSyncToWear() {
             val currentState = _uiState.value
             
-            // 開始Wear同步
             syncFeedbackManager.startSync(
                 type = SyncType.WEAR_SYNC,
                 description = "Syncing to Wear"

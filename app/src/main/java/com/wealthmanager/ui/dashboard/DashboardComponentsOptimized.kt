@@ -12,6 +12,8 @@ import com.wealthmanager.R
 import com.wealthmanager.ui.charts.PieChartComponentFixed
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
 import com.wealthmanager.ui.theme.ColorGuidelines
+import com.wealthmanager.ui.components.PrimaryCard
+import com.wealthmanager.ui.components.SecondaryCard
 import com.wealthmanager.utils.MoneyFormatter
 import com.wealthmanager.utils.rememberMoneyText
 
@@ -25,19 +27,11 @@ fun TotalAssetsCardOptimized(
 ) {
     val responsiveLayout = rememberResponsiveLayout()
 
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation =
-            CardDefaults.cardElevation(
-                defaultElevation = if (responsiveLayout.isTablet) 6.dp else 4.dp,
-            ),
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-            ),
+    PrimaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
-            modifier = Modifier.padding(responsiveLayout.paddingLarge),
+            modifier = Modifier.fillMaxWidth(),
             horizontalAlignment = Alignment.CenterHorizontally,
         ) {
             Text(
@@ -79,19 +73,11 @@ fun CashAssetsCardOptimized(
 ) {
     val responsiveLayout = rememberResponsiveLayout()
 
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation =
-            CardDefaults.cardElevation(
-                defaultElevation = if (responsiveLayout.isTablet) 4.dp else 2.dp,
-            ),
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-            ),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
-            modifier = Modifier.padding(responsiveLayout.paddingMedium),
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
                 text = stringResource(R.string.cash_assets),
@@ -143,19 +129,11 @@ fun StockAssetsCardOptimized(
 ) {
     val responsiveLayout = rememberResponsiveLayout()
 
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation =
-            CardDefaults.cardElevation(
-                defaultElevation = if (responsiveLayout.isTablet) 4.dp else 2.dp,
-            ),
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.surface,
-            ),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
-            modifier = Modifier.padding(responsiveLayout.paddingMedium),
+            modifier = Modifier.fillMaxWidth(),
         ) {
             Text(
                 text = stringResource(R.string.stock_assets),
@@ -268,4 +246,3 @@ fun StatusIndicator(
     )
 }
 
-// Removed local formatter; unified via MoneyFormatter

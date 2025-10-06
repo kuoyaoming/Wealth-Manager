@@ -14,6 +14,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
+import com.wealthmanager.ui.components.CardTitle
+import com.wealthmanager.ui.components.SecondaryText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -52,35 +54,29 @@ fun StockAssetItem(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             Column(modifier = Modifier.weight(1f)) {
-                Text(
-                    text =
-                        stringResource(
-                            R.string.assets_stock_symbol_market,
-                            asset.symbol,
-                            asset.market,
-                        ),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Medium,
+                CardTitle(
+                    text = stringResource(
+                        R.string.assets_stock_symbol_market,
+                        asset.symbol,
+                        asset.market,
+                    )
                 )
-                Text(
-                    text =
-                        stringResource(
-                            R.string.assets_stock_shares_price,
-                            rememberMoneyText(
-                                asset.shares,
-                                "USD",
-                                style = MoneyFormatter.Style.NumberOnly,
-                                maxFractionDigits = 2,
-                            ),
-                            rememberMoneyText(
-                                asset.currentPrice,
-                                asset.originalCurrency,
-                                style = MoneyFormatter.Style.CurrencyCode,
-                                moneyContext = MoneyFormatter.MoneyContext.StockPrice,
-                            ),
+                SecondaryText(
+                    text = stringResource(
+                        R.string.assets_stock_shares_price,
+                        rememberMoneyText(
+                            asset.shares,
+                            "USD",
+                            style = MoneyFormatter.Style.NumberOnly,
+                            maxFractionDigits = 2,
                         ),
-                    style = MaterialTheme.typography.bodyMedium,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
+                        rememberMoneyText(
+                            asset.currentPrice,
+                            asset.originalCurrency,
+                            style = MoneyFormatter.Style.CurrencyCode,
+                            moneyContext = MoneyFormatter.MoneyContext.StockPrice,
+                        ),
+                    )
                 )
                 Text(
                     text =

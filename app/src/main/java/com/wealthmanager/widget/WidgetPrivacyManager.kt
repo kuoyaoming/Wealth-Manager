@@ -2,7 +2,7 @@ package com.wealthmanager.widget
 
 import android.content.Context
 import android.content.SharedPreferences
-import com.wealthmanager.debug.DebugLogManager
+import android.util.Log
 
 /**
  * Manages widget privacy settings and controls what information is displayed.
@@ -36,7 +36,7 @@ object WidgetPrivacyManager {
             .putBoolean(KEY_SHOW_ASSET_AMOUNT, show)
             .apply()
         
-        DebugLogManager.log("WIDGET_PRIVACY", "Asset amount display set to: $show")
+        Log.d("WealthManagerWidget", "Asset amount display set to: $show")
         
         // Update all widgets when privacy setting changes
         WidgetManager.updateAllWidgets(context)
@@ -59,7 +59,7 @@ object WidgetPrivacyManager {
             .putBoolean(KEY_PRIVACY_ENABLED, enabled)
             .apply()
         
-        DebugLogManager.log("WIDGET_PRIVACY", "Privacy mode set to: $enabled")
+        Log.d("WealthManagerWidget", "Privacy mode set to: $enabled")
         
         // Update all widgets when privacy setting changes
         WidgetManager.updateAllWidgets(context)

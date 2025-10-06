@@ -8,43 +8,37 @@ import android.content.Intent
 import android.widget.RemoteViews
 import androidx.core.content.ContextCompat
 import androidx.work.ExistingWorkPolicy
+import androidx.work.ExistingPeriodicWorkPolicy
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.PeriodicWorkRequestBuilder
 import com.wealthmanager.MainActivity
 import com.wealthmanager.R
-import com.wealthmanager.debug.DebugLogManager
+import android.util.Log
 import dagger.hilt.android.AndroidEntryPoint
 import java.text.SimpleDateFormat
 import java.util.Date
 import java.util.Locale
+import kotlinx.coroutines.runBlocking
+import kotlinx.coroutines.flow.first
 
 /**
- * Traditional App Widget Provider for displaying total asset value.
- * 
- * Features:
- * - Shows total asset value in TWD
- * - Adapts to system theme (light/dark)
- * - Clickable to open main app
- * - Auto-updates every 30 minutes
- * - Responsive design with rounded corners
+ * App Widget Provider for displaying total asset value.
  */
 @AndroidEntryPoint
 class TotalAssetWidgetProvider : AppWidgetProvider() {
     
     override fun onEnabled(context: Context) {
         super.onEnabled(context)
-        DebugLogManager.log("WIDGET", "Total Asset Widget enabled")
+        Log.d("WealthManagerWidget", "Total Asset Widget enabled")
         
-        // Schedule periodic updates
         WidgetUpdateScheduler.schedulePeriodicUpdate(context)
     }
     
     override fun onDisabled(context: Context) {
         super.onDisabled(context)
-        DebugLogManager.log("WIDGET", "Total Asset Widget disabled")
+        Log.d("WealthManagerWidget", "Total Asset Widget disabled")
         
-        // Cancel periodic updates
         WorkManager.getInstance(context).cancelUniqueWork("widget_periodic_update")
     }
     
@@ -54,9 +48,8 @@ class TotalAssetWidgetProvider : AppWidgetProvider() {
         appWidgetIds: IntArray
     ) {
         super.onUpdate(context, appWidgetManager, appWidgetIds)
-        DebugLogManager.log("WIDGET", "Total Asset Widget updated for ${appWidgetIds.size} widgets")
+        Log.d("WealthManagerWidget", "Total Asset Widget updated for ${appWidgetIds.size} widgets")
         
-        // Update all widget instances
         for (appWidgetId in appWidgetIds) {
             updateAppWidget(context, appWidgetManager, appWidgetId)
         }
@@ -70,7 +63,6 @@ class TotalAssetWidgetProvider : AppWidgetProvider() {
         ) {
             val views = RemoteViews(context.packageName, R.layout.widget_total_asset_layout)
             
-            // Set click intent to open main app
             val intent = Intent(context, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
@@ -80,14 +72,11 @@ class TotalAssetWidgetProvider : AppWidgetProvider() {
             )
             views.setOnClickPendingIntent(R.id.widget_total_amount, pendingIntent)
             
-            // Set initial values (will be updated by WorkManager)
             views.setTextViewText(R.id.widget_total_amount, "NT$ 0")
             views.setTextViewText(R.id.widget_currency_unit, "TWD")
             
-            // Update widget
             appWidgetManager.updateAppWidget(appWidgetId, views)
             
-            // Trigger data update
             WidgetUpdateScheduler.scheduleUpdate(context)
         }
     }
@@ -103,34 +92,25 @@ class WidgetUpdateWorker(
     
     override suspend fun doWork(): Result {
         return try {
-            DebugLogManager.log("WIDGET_WORKER", "Starting widget update")
+            Log.d("WealthManagerWidget", "Starting widget update")
             
-            // Check error conditions first
             val displayState = WidgetErrorHandler.determineDisplayState(applicationContext)
-            DebugLogManager.log("WIDGET_WORKER", "Display state: $displayState")
+            Log.d("WealthManagerWidget", "Display state: $displayState")
             
-            // Get total assets from repository
-            val assetRepository = com.wealthmanager.data.repository.AssetRepository(
-                com.wealthmanager.data.database.WealthManagerDatabase.getDatabase(applicationContext).cashAssetDao(),
-                com.wealthmanager.data.database.WealthManagerDatabase.getDatabase(applicationContext).stockAssetDao(),
-                com.wealthmanager.data.database.WealthManagerDatabase.getDatabase(applicationContext).exchangeRateDao(),
-                com.wealthmanager.debug.DebugLogManager
-            )
-            val cashAssets = assetRepository.getAllCashAssetsSync()
-            val stockAssets = assetRepository.getAllStockAssetsSync()
+            val database = com.wealthmanager.data.database.WealthManagerDatabase.getDatabase(applicationContext)
+            val cashAssets = runBlocking { database.cashAssetDao().getAllCashAssets().first() }
+            val stockAssets = runBlocking { database.stockAssetDao().getAllStockAssets().first() }
             
             val totalCash = cashAssets.sumOf { it.twdEquivalent }
             val totalStock = stockAssets.sumOf { it.twdEquivalent }
             val totalAssets = totalCash + totalStock
             
-            DebugLogManager.log("WIDGET_WORKER", "Total assets: $totalAssets")
+            Log.d("WealthManagerWidget", "Total assets: $totalAssets")
             
-            // Get appropriate display text based on current state
             val formattedAmount = WidgetErrorHandler.getDisplayText(applicationContext, totalAssets)
             val statusMessage = WidgetErrorHandler.getStatusMessage(applicationContext)
-            DebugLogManager.log("WIDGET_WORKER", "Status: $statusMessage")
+            Log.d("WealthManagerWidget", "Status: $statusMessage")
             
-            // Update all widget instances
             val appWidgetManager = AppWidgetManager.getInstance(applicationContext)
             val componentName = android.content.ComponentName(applicationContext, TotalAssetWidgetProvider::class.java)
             val appWidgetIds = appWidgetManager.getAppWidgetIds(componentName)
@@ -138,10 +118,8 @@ class WidgetUpdateWorker(
             for (appWidgetId in appWidgetIds) {
                 val views = RemoteViews(applicationContext.packageName, R.layout.widget_total_asset_layout)
                 
-                // Update text based on state
                 views.setTextViewText(R.id.widget_total_amount, formattedAmount)
                 
-                // Set currency unit based on state
                 val currencyUnit = when (displayState) {
                     WidgetErrorHandler.WidgetDisplayState.NO_DATA -> "Add Assets"
                     WidgetErrorHandler.WidgetDisplayState.NO_NETWORK -> "Offline"
@@ -152,12 +130,10 @@ class WidgetUpdateWorker(
                 }
                 views.setTextViewText(R.id.widget_currency_unit, currencyUnit)
                 
-                // Set last updated time
                 val lastUpdated = SimpleDateFormat("HH:mm", Locale.getDefault()).format(Date())
                 views.setTextViewText(R.id.widget_last_updated, "Updated: $lastUpdated")
                 views.setViewVisibility(R.id.widget_last_updated, android.view.View.VISIBLE)
                 
-                // Set click intent
                 val intent = Intent(applicationContext, MainActivity::class.java).apply {
                     flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
                 }
@@ -167,20 +143,18 @@ class WidgetUpdateWorker(
                 )
                 views.setOnClickPendingIntent(R.id.widget_total_amount, pendingIntent)
                 
-                // Update widget
                 appWidgetManager.updateAppWidget(appWidgetId, views)
             }
             
-            DebugLogManager.log("WIDGET_WORKER", "Widget update completed successfully")
+            Log.d("WealthManagerWidget", "Widget update completed successfully")
             Result.success()
         } catch (e: Exception) {
-            DebugLogManager.logError("WIDGET_WORKER: Failed to update widget: ${e.message}", e)
+            Log.e("WealthManagerWidget", "Failed to update widget: ${e.message}", e)
             
-            // Try to show error state on widgets
             try {
                 showErrorStateOnWidgets()
             } catch (errorException: Exception) {
-                DebugLogManager.logError("WIDGET_WORKER: Failed to show error state: ${errorException.message}", errorException)
+                Log.e("WealthManagerWidget", "Failed to show error state: ${errorException.message}", errorException)
             }
             
             Result.failure()
@@ -201,7 +175,6 @@ class WidgetUpdateWorker(
             views.setTextViewText(R.id.widget_total_amount, "Error")
             views.setTextViewText(R.id.widget_currency_unit, "Tap to retry")
             
-            // Set click intent to open app
             val intent = Intent(applicationContext, MainActivity::class.java).apply {
                 flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TOP
             }
@@ -242,7 +215,7 @@ object WidgetUpdateScheduler {
         WorkManager.getInstance(context)
             .enqueueUniquePeriodicWork(
                 "widget_periodic_update",
-                ExistingWorkPolicy.KEEP,
+                ExistingPeriodicWorkPolicy.KEEP,
                 workRequest
             )
     }

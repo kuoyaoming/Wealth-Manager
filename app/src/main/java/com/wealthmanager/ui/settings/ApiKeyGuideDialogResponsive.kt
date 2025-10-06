@@ -44,8 +44,7 @@ import com.wealthmanager.accessibility.rememberAccessibilityState
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
 
 /**
- * 響應式API金鑰申請引導對話框
- * 符合2025 Android設計指導和無障礙性要求
+ * Responsive API key application guide dialog.
  */
 @Composable
 fun ApiKeyGuideDialogResponsive(onDismiss: () -> Unit) {
@@ -54,7 +53,6 @@ fun ApiKeyGuideDialogResponsive(onDismiss: () -> Unit) {
     val responsiveLayout = rememberResponsiveLayout()
     val scrollState = rememberScrollState()
     
-    // 滾動狀態檢測
     var canScrollDown by remember { mutableStateOf(false) }
     var canScrollUp by remember { mutableStateOf(false) }
     
@@ -80,14 +78,12 @@ fun ApiKeyGuideDialogResponsive(onDismiss: () -> Unit) {
                     .padding(24.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp)
             ) {
-                // 標題
                 Text(
-                    text = "API金鑰申請指南",
+                    text = stringResource(R.string.api_guide_title),
                     style = MaterialTheme.typography.headlineSmall,
                     fontWeight = FontWeight.Bold
                 )
                 
-                // 滾動指示器
                 if (canScrollDown || canScrollUp) {
                     Row(
                         modifier = Modifier.fillMaxWidth(),
@@ -112,48 +108,37 @@ fun ApiKeyGuideDialogResponsive(onDismiss: () -> Unit) {
                     }
                 }
                 
-                // 內容
                 Column(
                     modifier = Modifier
                         .weight(1f)
                         .verticalScroll(scrollState),
                     verticalArrangement = Arrangement.spacedBy(16.dp)
                 ) {
-                    // 介紹文字
                     Text(
-                        text = "為了獲取即時市場數據，您需要申請以下API金鑰：",
+                        text = stringResource(R.string.api_guide_description),
                         style = MaterialTheme.typography.bodyLarge
                     )
                     
-                    // Finnhub API 卡片
                     ApiKeyCard(
                         title = stringResource(R.string.api_guide_finnhub_global_title),
                         description = stringResource(R.string.api_guide_finnhub_global_desc),
                         steps = listOf(
-                            "1. 訪問 finnhub.io",
-                            "2. 註冊免費帳戶",
-                            "3. 在儀表板中複製API金鑰",
-                            "4. 貼上到下方輸入框"
-                        ),
+                            stringResource(R.string.api_guide_steps).split("\n")
+                        ).flatten(),
                         websiteUrl = "https://finnhub.io",
                         context = context
                     )
                     
-                    // Exchange Rate API 卡片
                     ApiKeyCard(
                         title = stringResource(R.string.api_guide_exchange_rate_title),
                         description = stringResource(R.string.api_guide_exchange_rate_desc),
                         steps = listOf(
-                            "1. 訪問 exchangerate-api.com",
-                            "2. 註冊免費帳戶",
-                            "3. 獲取API金鑰",
-                            "4. 貼上到下方輸入框"
-                        ),
+                            stringResource(R.string.api_guide_steps).split("\n")
+                        ).flatten(),
                         websiteUrl = "https://exchangerate-api.com",
                         context = context
                     )
                     
-                    // 安全提示
                     Card(
                         modifier = Modifier.fillMaxWidth(),
                         colors = CardDefaults.cardColors(
@@ -165,13 +150,13 @@ fun ApiKeyGuideDialogResponsive(onDismiss: () -> Unit) {
                             verticalArrangement = Arrangement.spacedBy(8.dp)
                         ) {
                             Text(
-                                text = "安全提示",
+                                text = stringResource(R.string.api_guide_important_reminder),
                                 style = MaterialTheme.typography.titleMedium,
                                 fontWeight = FontWeight.Bold,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
                             Text(
-                                text = "• API金鑰僅存儲在您的設備上\n• 不會上傳到任何雲端服務\n• 支援生物識別保護",
+                                text = stringResource(R.string.api_guide_reminder_points),
                                 style = MaterialTheme.typography.bodyMedium,
                                 color = MaterialTheme.colorScheme.onPrimaryContainer
                             )
@@ -179,7 +164,6 @@ fun ApiKeyGuideDialogResponsive(onDismiss: () -> Unit) {
                     }
                 }
                 
-                // 按鈕
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End

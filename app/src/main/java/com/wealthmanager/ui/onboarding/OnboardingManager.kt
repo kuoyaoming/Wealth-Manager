@@ -6,8 +6,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 首次導覽管理器
- * 管理完整的首次啟動導覽流程
+ * First-time onboarding manager.
  */
 @Singleton
 class OnboardingManager
@@ -16,31 +15,31 @@ class OnboardingManager
         private val firstLaunchManager: FirstLaunchManager,
     ) {
         /**
-         * 導覽步驟枚舉
+         * Onboarding step enumeration.
          */
         enum class OnboardingStep {
-            WELCOME, // 歡迎與價值介紹
-            GOOGLE_PASSWORD, // Google Password Manager 介紹
-            API_KEY_GUIDE, // API Key 取得指南
-            COMPLETE, // 完成
+            WELCOME,
+            GOOGLE_PASSWORD,
+            API_KEY_GUIDE,
+            COMPLETE,
         }
 
         /**
-         * 檢查是否應該顯示首次導覽
+         * Check if first-time onboarding should be shown.
          */
         fun shouldShowOnboarding(): Boolean {
             return firstLaunchManager.shouldShowGooglePasswordManagerOnboarding()
         }
 
         /**
-         * 標記導覽完成
+         * Mark onboarding as completed.
          */
         fun markOnboardingCompleted() {
             firstLaunchManager.markGooglePasswordManagerOnboardingShown()
         }
 
         /**
-         * 重置導覽狀態（用於測試或重新導覽）
+         * Reset onboarding state (for testing or re-onboarding).
          */
         fun resetOnboarding() {
             firstLaunchManager.resetFirstLaunch()

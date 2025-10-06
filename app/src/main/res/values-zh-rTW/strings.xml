@@ -18,7 +18,7 @@
     <string name="about_encryption">端對端加密</string>
     <string name="about_encryption_desc">使用 Android Keystore 加密資料，提供最高安全性</string>
     <string name="about_api_configuration">API 配置</string>
-    <string name="about_api_description">配置 API 金鑰以從可信賴的提供者獲取即時市場數據</string>
+    <string name="about_api_description">配置 API 金鑰以從可信賴的提供者獲取即時市場資料</string>
     <string name="about_configure_apis">配置 API</string>
     <string name="about_development">開發</string>
     <string name="about_development_description">採用現代 Android 開發實踐的開源專案</string>
@@ -49,16 +49,16 @@
     
     <!-- Card Design System -->
     <string name="card_design_system_examples">統一卡片設計系統範例</string>
-    <string name="primary_cards_title">主要卡片 (Primary Cards)</string>
-    <string name="secondary_cards_title">次要卡片 (Secondary Cards)</string>
-    <string name="outlined_cards_title">輪廓卡片 (Outlined Cards)</string>
-    <string name="status_cards_title">狀態卡片 (Status Cards)</string>
-    <string name="clickable_cards_title">可點擊卡片 (Clickable Cards)</string>
+    <string name="primary_cards_title">主要卡片</string>
+    <string name="secondary_cards_title">次要卡片</string>
+    <string name="outlined_cards_title">輪廓卡片</string>
+    <string name="status_cards_title">狀態卡片</string>
+    <string name="clickable_cards_title">可點擊卡片</string>
     <string name="total_assets_example">總資產</string>
     <string name="cash_assets_example">現金資產</string>
     <string name="stock_assets_example">股票資產</string>
-    <string name="data_sync_success">數據同步成功</string>
-    <string name="api_key_expiring_warning">API密鑰即將過期</string>
+    <string name="data_sync_success">資料同步成功</string>
+    <string name="api_key_expiring_warning">API金鑰即將過期</string>
     <string name="network_connection_failed">網路連接失敗</string>
     <string name="new_feature_available">新功能已上線</string>
     <string name="settings_example">設定</string>
@@ -73,14 +73,14 @@
     <string name="total_assets">總資產</string>
     <string name="cash_assets">現金資產</string>
     <string name="stock_assets">股票資產</string>
-    <string name="refresh_data">刷新數據</string>
+    <string name="refresh_data">刷新資料</string>
     
     <!-- Assets -->
     <string name="assets_title">管理資產</string>
     <string name="add_cash">新增現金</string>
     <string name="add_stock">新增股票</string>
     <string name="cash_twd">台幣現金</string>
-    <string name="cash_usd">美金現金</string>
+    <string name="cash_usd">美元現金</string>
     <string name="stock_tw">台股</string>
     <string name="stock_us">美股</string>
     
@@ -152,7 +152,7 @@
     
     <!-- Error Messages -->
     <string name="error_network">網路錯誤，請檢查您的連線</string>
-    <string name="error_api">無法取得市場數據</string>
+    <string name="error_api">無法取得市場資料</string>
     <string name="error_invalid_amount">請輸入有效金額</string>
     <string name="error_invalid_symbol">請輸入有效股票代號</string>
     <string name="error_stock_not_found">找不到股票</string>
@@ -177,7 +177,7 @@
     <string name="settings_api_exchange_label">Exchange Rate API 金鑰</string>
     <string name="settings_api_input_placeholder">輸入您的 API 金鑰</string>
     <string name="settings_api_validate_and_save">驗證並儲存</string>
-    <string name="settings_api_saved_preview">已保存：%1$s</string>
+    <string name="settings_api_saved_preview">已儲存：%1$s</string>
     
     <!-- Input Validation -->
     <string name="validation_enter_valid_number">請輸入有效數字。</string>
@@ -185,16 +185,6 @@
     <string name="validation_search_minimum_chars">請輸入至少 1 個字元進行搜尋。</string>
     <string name="validation_no_matching_stock">查無符合的股票，請確認代號。</string>
 
-    <!-- Search Error Messages -->
-    <string name="search_error_api_limit">API 請求次數已達上限，請明天再試。</string>
-    <string name="search_error_stock_not_found">找不到股票代碼，請確認是否正確。</string>
-    <string name="search_error_network">網路連線異常，請檢查設定。</string>
-    <string name="search_error_server">伺服器暫時無法使用，請稍後再試。</string>
-    <string name="search_error_invalid_api_key">API 金鑰無效，請聯絡技術支援。</string>
-    <string name="search_error_authentication">API 驗證失敗，請確認金鑰設定。</string>
-    <string name="search_error_rate_limit">請求速度過快，請稍後再試。</string>
-    <string name="search_error_unknown">發生未知錯誤，請重新啟動應用程式。</string>
-    <string name="search_error_invalid_query">請輸入至少 1 個字元進行搜尋。</string>
     <string name="search_error_api_limit_reached">API 請求次數已達上限，請明天再試。</string>
 
     <!-- Dialog Messages -->
@@ -207,9 +197,9 @@
     <!-- About Dialog -->
     <string name="about_title">關於財富管理</string>
     <string name="about_version">版本 1.4.5</string>
-    <string name="about_description">一個全面的個人理財應用程式，協助您追蹤資產、監控股票投資，並透過即時市場數據管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地儲存。</string>
+    <string name="about_description">一個全面的個人理財應用程式，協助您追蹤資產、監控股票投資，並透過即時市場資料管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地儲存。</string>
     <string name="about_app_information_title">應用程式資訊</string>
-    <string name="about_information_description">一個全面的個人理財管理應用程式，協助您追蹤資產、監控股票投資，並透過即時市場數據管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地資料儲存。</string>
+    <string name="about_information_description">一個全面的個人理財管理應用程式，協助您追蹤資產、監控股票投資，並透過即時市場資料管理財務投資組合。功能包含生物識別驗證、多幣別支援與安全的本地資料儲存。</string>
     <string name="about_data_usage_title">資料使用政策</string>
     <string name="about_data_usage_description">您的財務資料儲存在裝置本機，未經您允許絕不傳輸至外部伺服器。</string>
     <string name="about_data_usage_points">• 現金、股票等資產資料以 Android Room 本地資料庫儲存
@@ -218,7 +208,7 @@
 • 所有計算均在裝置本地執行</string>
     <string name="about_third_party_title">第三方 API 使用</string>
     <string name="about_third_party_description">本應用程式使用以下第三方服務：</string>
-    <string name="about_third_party_points">• Finnhub API：即時股票價格與市場數據
+    <string name="about_third_party_points">• Finnhub API：即時股票價格與市場資料
   - 限額：每分鐘 60 次（免費方案）
   - 資料：股票報價、股票搜尋、外匯匯率
   - 隱私：僅傳輸股票代號與市場資料
@@ -261,7 +251,7 @@
     <string name="assets_tab_cash">現金</string>
     <string name="assets_tab_stock">股票</string>
     <string name="assets_currency_twd">台幣</string>
-    <string name="assets_currency_usd">美金</string>
+    <string name="assets_currency_usd">美元</string>
     <string name="assets_cash_title">%1$s 現金</string>
     <string name="assets_amount_placeholder">輸入金額（例如 %1$s）</string>
     <string name="assets_stock_symbol_placeholder">例如：VT、AAPL、TSMC</string>
@@ -337,7 +327,7 @@
     <string name="validation_shares_ignore_if_correct">如果正確，請忽略此提示</string>
     <string name="validation_shares_decimal_places">股數通常只需要4位小數</string>
     <string name="validation_shares_auto_adjusted">已自動調整為4位小數</string>
-    <string name="validation_suggestion_prefix">💡 %1$s</string>
+    <string name="validation_suggestion_prefix">提示：%1$s</string>
     
     <!-- Asset Form Labels -->
     <string name="asset_form_amount_label">金額</string>
@@ -385,17 +375,17 @@
     <string name="api_guide_description">為了使用完整的財富管理功能，您需要申請以下API金鑰：</string>
     <string name="api_guide_steps_title">申請步驟：</string>
     <string name="api_guide_important_reminder">重要提醒</string>
-    <string name="api_guide_reminder_points">• 請妥善保存您的API金鑰，不要分享給他人\n• 免費額度有限，建議申請自己的金鑰\n• 如遇問題，請查看API提供商的官方文檔</string>
+    <string name="api_guide_reminder_points">• 請妥善儲存您的API金鑰，不要分享給他人\n• 免費額度有限，建議申請自己的金鑰\n• 如遇問題，請查看API提供商的官方文檔</string>
     <string name="api_guide_main_features">主要功能：</string>
     <string name="api_guide_free_quota">免費額度：%1$s</string>
     
     <!-- Settings Screen -->
     <string name="settings_apply_api_keys">申請API金鑰</string>
     <string name="settings_apply_api_keys_desc">獲取免費API金鑰以使用完整功能</string>
-    <string name="settings_api_tip">💡 提示：申請免費API金鑰後，您將可以：\n• 獲取即時股票價格\n• 查詢匯率資訊\n• 存取完整的市場數據</string>
+    <string name="settings_api_tip">提示：申請免費API金鑰後，您將可以：\n• 獲取即時股票價格\n• 查詢匯率資訊\n• 存取完整的市場資料</string>
     <string name="settings_developer_mode">開發者模式</string>
     <string name="settings_developer_mode_desc">使用內建測試用API金鑰</string>
-    <string name="settings_developer_warning">⚠️ 注意：此功能僅在開發者模式下可用，將自動填入測試用API金鑰</string>
+    <string name="settings_developer_warning">注意：此功能僅在開發者模式下可用，將自動填入測試用API金鑰</string>
     <string name="settings_security_status">安全狀態</string>
     
     <!-- Chart Components -->
@@ -412,7 +402,7 @@
     <string name="security_level_description">選擇適合您需求的安全級別。較高的安全級別提供更好的保護，但可能需要更多驗證步驟。</string>
     <string name="security_level_choose">選擇安全級別</string>
     <string name="security_level_explanation">安全級別說明</string>
-    <string name="security_level_basic">• 基本功能：完全可用\n• API 密鑰：降低安全級別儲存\n• 敏感操作：需要重新驗證</string>
+    <string name="security_level_basic">• 基本功能：完全可用\n• API 金鑰：降低安全級別儲存\n• 敏感操作：需要重新驗證</string>
     <string name="scroll_down_more">向下滑動查看更多</string>
     <string name="cd_refresh_security_status">刷新安全狀態</string>
     <string name="cd_scroll_down_more">向下滾動查看更多內容</string>
@@ -495,10 +485,10 @@
     <string name="dialog_go_apply">前往申請</string>
     
     <!-- API Guide Content -->
-    <string name="api_guide_finnhub_description">用於獲取股票價格和市場數據</string>
-    <string name="api_guide_finnhub_features">即時股票報價\n歷史價格數據\n公司財務資訊\n市場新聞</string>
-    <string name="api_guide_exchange_description">用於獲取即時匯率數據</string>
-    <string name="api_guide_exchange_features">即時匯率查詢\n多種貨幣支援\n歷史匯率數據\n匯率趨勢分析</string>
+    <string name="api_guide_finnhub_description">用於獲取股票價格和市場資料</string>
+    <string name="api_guide_finnhub_features">即時股票報價\n歷史價格資料\n公司財務資訊\n市場新聞</string>
+    <string name="api_guide_exchange_description">用於獲取即時匯率資料</string>
+    <string name="api_guide_exchange_features">即時匯率查詢\n多種貨幣支援\n歷史匯率資料\n匯率趨勢分析</string>
     <string name="api_guide_steps">1. 點擊上方「前往申請」按鈕\n2. 在官網註冊或登入帳戶\n3. 找到API金鑰管理頁面\n4. 複製生成的API金鑰\n5. 回到此APP並貼上金鑰</string>
     <string name="api_guide_finnhub_title">Finnhub API</string>
     <string name="api_guide_exchange_title">Exchange Rate API</string>
@@ -513,10 +503,10 @@
     <string name="api_name_finnhub">Finnhub</string>
     <string name="api_name_exchange_rate">Exchange Rate</string>
     <string name="api_key_autofill_status">已自動填入 %1$s</string>
-    <string name="api_key_use_saved_key">使用已保存的金鑰</string>
+    <string name="api_key_use_saved_key">使用已儲存的金鑰</string>
     <string name="api_key_hide_password">隱藏密碼</string>
     <string name="api_key_show_password">顯示密碼</string>
-    <string name="api_key_autofill_hint">提示：如果您之前保存過 API 金鑰，點擊此欄位會自動填入</string>
+    <string name="api_key_autofill_hint">提示：如果您之前儲存過 API 金鑰，點擊此欄位會自動填入</string>
     
     <!-- API Guide Dialog Responsive -->
     <string name="api_guide_complete">完成</string>
@@ -524,20 +514,20 @@
     <string name="api_guide_scroll_up">向上滾動</string>
     <string name="api_guide_scroll_down">向下滾動查看更多內容</string>
     <string name="api_guide_open_in_new_window">在新視窗中開啟</string>
-    <string name="api_guide_finnhub_global_title">Finnhub API (全球股票數據)</string>
-    <string name="api_guide_finnhub_global_desc">提供全球股票價格、公司資訊等數據</string>
-    <string name="api_guide_exchange_rate_title">ExchangeRate-API (匯率數據)</string>
+    <string name="api_guide_finnhub_global_title">Finnhub API (全球股票資料)</string>
+    <string name="api_guide_finnhub_global_desc">提供全球股票價格、公司資訊等資料</string>
+    <string name="api_guide_exchange_rate_title">ExchangeRate-API (匯率資料)</string>
     <string name="api_guide_exchange_rate_desc">提供USD/TWD等匯率資訊</string>
     
     <!-- Sync Messages -->
     <string name="sync_cancelled">同步已取消</string>
-    <string name="sync_market_data_success">市場數據更新成功</string>
-    <string name="sync_market_data_cached">使用快取數據（無網路連線）</string>
-    <string name="sync_market_data_no_connection">無網路連線且無快取數據可用</string>
+    <string name="sync_market_data_success">市場資料更新成功</string>
+    <string name="sync_market_data_cached">使用快取資料（無網路連線）</string>
+    <string name="sync_market_data_no_connection">無網路連線且無快取資料可用</string>
     <string name="sync_market_data_network_failed">網路連線失敗。請檢查您的網路連線。</string>
-    <string name="sync_market_data_failed">同步市場數據失敗：%1$s</string>
-    <string name="sync_manual_refresh_success">數據刷新成功</string>
-    <string name="sync_manual_refresh_failed">刷新數據失敗：%1$s</string>
+    <string name="sync_market_data_failed">同步市場資料失敗：%1$s</string>
+    <string name="sync_manual_refresh_success">資料刷新成功</string>
+    <string name="sync_manual_refresh_failed">刷新資料失敗：%1$s</string>
     <string name="sync_wear_success">Wear 同步完成</string>
     <string name="sync_wear_not_installed">Wear 應用程式未安裝</string>
     <string name="sync_wear_failed">Wear 同步失敗：%1$s</string>
@@ -580,7 +570,7 @@
     <string name="action_start_setup">開始設定</string>
 
     <string name="settings_api_key_not_set_title">尚未設定 API 金鑰</string>
-    <string name="settings_api_key_not_set_desc">為了獲取即時金融數據，您需要設定至少一個 API 金鑰</string>
+    <string name="settings_api_key_not_set_desc">為了獲取即時金融資料，您需要設定至少一個 API 金鑰</string>
     <string name="settings_api_key_providers_title">推薦的 API 提供商</string>
     <string name="provider_finnhub_name">Finnhub</string>
     <string name="provider_finnhub_free_tier_desc">免費方案：60 次/分鐘</string>
@@ -593,14 +583,14 @@
     <string name="quick_start_step_3">3. 複製您的 API 金鑰</string>
     <string name="quick_start_step_4">4. 回到應用程式貼上金鑰</string>
     <string name="action_view_detailed_guide">查看詳細教學</string>
-    <string name="settings_api_key_tip_after_setup">設定 API 金鑰後，您就可以開始追蹤資產和獲取即時數據了！</string>
+    <string name="settings_api_key_tip_after_setup">設定 API 金鑰後，您就可以開始追蹤資產和獲取即時資料了！</string>
 
     <string name="onboarding_api_key_setup_title">API 金鑰設定</string>
-    <string name="onboarding_api_key_setup_desc">為了獲取即時金融數據，您需要設定 API 金鑰</string>
+    <string name="onboarding_api_key_setup_desc">為了獲取即時金融資料，您需要設定 API 金鑰</string>
     <string name="onboarding_api_key_why_title">為什麼需要 API 金鑰？</string>
-    <string name="onboarding_api_key_why_desc">API 金鑰讓我們能夠安全地從金融數據提供商獲取即時股價、匯率等資訊，確保您看到的數據是最新且準確的。</string>
+    <string name="onboarding_api_key_why_desc">API 金鑰讓我們能夠安全地從金融資料提供商獲取即時股價、匯率等資訊，確保您看到的資料是最新且準確的。</string>
     <string name="onboarding_api_key_steps_title">如何取得 API 金鑰：</string>
-    <string name="onboarding_api_key_step_title_1">選擇數據提供商</string>
+    <string name="onboarding_api_key_step_title_1">選擇資料提供商</string>
     <string name="onboarding_api_key_step_desc_1">我們支援 Finnhub、Alpha Vantage 等</string>
     <string name="onboarding_api_key_step_title_2">註冊帳戶</string>
     <string name="onboarding_api_key_step_desc_2">前往官網免費註冊</string>
@@ -615,16 +605,16 @@
 
     <string name="gpm_title">Google Password Manager</string>
     <string name="gpm_intro_title">讓您的 API 金鑰更安全、更方便！</string>
-    <string name="gpm_feature_autosave_title">🔐 自動保存 API 金鑰</string>
-    <string name="gpm_feature_autosave_desc">當您輸入 API 金鑰時，Google Password Manager 會自動提示保存，無需手動記錄。</string>
+    <string name="gpm_feature_autosave_title">🔐 自動儲存 API 金鑰</string>
+    <string name="gpm_feature_autosave_desc">當您輸入 API 金鑰時，Google Password Manager 會自動提示儲存，無需手動記錄。</string>
     <string name="gpm_feature_autofill_title">⚡ 一鍵自動填入</string>
-    <string name="gpm_feature_autofill_desc">下次輸入時，只需點擊輸入框，系統會自動填入已保存的 API 金鑰。</string>
+    <string name="gpm_feature_autofill_desc">下次輸入時，只需點擊輸入框，系統會自動填入已儲存的 API 金鑰。</string>
     <string name="gpm_feature_sync_title">🔄 跨設備同步</string>
     <string name="gpm_feature_sync_desc">您的 API 金鑰會安全地同步到所有登入相同 Google 帳戶的設備。</string>
     <string name="gpm_how_to_title">如何使用：</string>
     <string name="gpm_step_1">1. 在設定頁面輸入您的 API 金鑰</string>
-    <string name="gpm_step_2">2. 系統會提示是否保存到 Google Password Manager</string>
-    <string name="gpm_step_3">3. 選擇「保存」，金鑰將安全存儲</string>
+    <string name="gpm_step_2">2. 系統會提示是否儲存到 Google Password Manager</string>
+    <string name="gpm_step_3">3. 選擇「儲存」，金鑰將安全存儲</string>
     <string name="gpm_step_4">4. 下次輸入時，點擊輸入框即可自動填入</string>
     <string name="action_maybe_later">稍後再說</string>
     <string name="action_enable_autofill">啟用自動填入</string>
@@ -671,4 +661,67 @@
 
     <!-- Debug -->
     <string name="debug_clipboard_label">除錯日誌</string>
+    
+    <!-- Widget -->
+    <string name="widget_total_asset_description">總資產小工具 - 一目了然地顯示您的投資組合價值</string>
+    <string name="widget_total_asset_title">總資產</string>
+    <string name="widget_last_updated_format">更新時間：%1$s</string>
+    <string name="widget_error_loading_data">載入資料時發生錯誤</string>
+    <string name="widget_tap_to_open_app">點擊開啟財富管理應用程式</string>
+    
+    <!-- Content Descriptions -->
+    <string name="cd_toggle_password_visibility">切換密碼可見性</string>
+    
+    <!-- Snackbar Messages -->
+    <string name="snackbar_prompt_gpm_save">API 金鑰已儲存。是否儲存到 Google Password Manager？</string>
+    <string name="snackbar_action_learn_more">了解更多</string>
+    
+    <!-- GPM Info -->
+    <string name="gpm_info_title">Google Password Manager</string>
+    <string name="gpm_info_body">將您的 API 金鑰儲存到 Google Password Manager 可實現安全儲存和跨設備同步。您可以啟用自動填入功能以便下次快速輸入。</string>
+    
+    <!-- Technology Stack -->
+    <string name="tech_kotlin">Kotlin</string>
+    <string name="tech_compose">Compose</string>
+    <string name="tech_material3">Material 3</string>
+    <string name="tech_room">Room</string>
+    <string name="tech_hilt">Hilt</string>
+    <string name="tech_retrofit">Retrofit</string>
+    
+    <!-- Search Error Messages -->
+    <string name="search_error_stock_not_found">找不到股票代碼，請檢查是否正確</string>
+    <string name="search_error_api_limit">API 請求限制已達上限，請明天再試</string>
+    <string name="search_error_network">網路連線問題，請檢查網路設定</string>
+    <string name="search_error_invalid_query">請輸入至少 1 個字符進行搜尋</string>
+    <string name="search_error_server">伺服器暫時無法使用，請稍後再試</string>
+    <string name="search_error_invalid_api_key">無效的 API 金鑰，請聯繫技術支援</string>
+    <string name="search_error_authentication">API 驗證失敗，請檢查 API 金鑰設定</string>
+    <string name="search_error_rate_limit">請求頻率限制已超出，請稍後再試</string>
+    <string name="search_error_unknown">發生未知錯誤，請重新啟動應用程式</string>
+    
+    <!-- Missing Accessibility Strings -->
+    <string name="accessibility_audit_title">無障礙性檢查</string>
+    <string name="accessibility_color_contrast">顏色對比</string>
+    <string name="accessibility_content_description">內容描述</string>
+    <string name="accessibility_failed">未通過</string>
+    <string name="accessibility_insufficient_contrast">文字與背景對比不足</string>
+    <string name="accessibility_issues_found">發現的問題：</string>
+    <string name="accessibility_keyboard_issue">鍵盤導航問題</string>
+    <string name="accessibility_keyboard_navigation">鍵盤導航</string>
+    <string name="accessibility_missing_content_description">缺少內容描述</string>
+    <string name="accessibility_missing_semantic_role">缺少語義角色</string>
+    <string name="accessibility_passed">通過</string>
+    <string name="accessibility_semantic_role">語義角色</string>
+    <string name="accessibility_small_touch_target">觸控目標過小</string>
+    <string name="accessibility_touch_target">觸控目標</string>
+    
+    <!-- Missing Sync Strings -->
+    <string name="sync_backup_failed">備份失敗</string>
+    <string name="sync_backup_success">備份成功</string>
+    <string name="sync_in_progress">同步中</string>
+    <string name="sync_issues_detected">檢測到同步問題</string>
+    <string name="sync_manual_refresh">手動刷新</string>
+    <string name="sync_market_data">同步市場資料</string>
+    <string name="sync_retry">重試</string>
+    <string name="sync_undo">撤銷</string>
 </resources>

@@ -1,19 +1,19 @@
 package com.wealthmanager.ui.sync
 
 /**
- * 同步操作結果的統一數據類
+ * Unified data class for sync operation results.
  */
 sealed class SyncResult {
     /**
-     * 同步進行中
+     * Sync in progress.
      */
     object InProgress : SyncResult()
 
     /**
-     * 同步成功
-     * @param message 成功訊息
-     * @param itemsUpdated 更新的項目數量
-     * @param canUndo 是否可以復原
+     * Sync success.
+     * @param message Success message
+     * @param itemsUpdated Number of updated items
+     * @param canUndo Whether undo is available
      */
     data class Success(
         val message: String,
@@ -22,10 +22,10 @@ sealed class SyncResult {
     ) : SyncResult()
 
     /**
-     * 同步失敗
-     * @param message 錯誤訊息
-     * @param canRetry 是否可以重試
-     * @param errorCode 錯誤代碼（可選）
+     * Sync failure.
+     * @param message Error message
+     * @param canRetry Whether retry is available
+     * @param errorCode Error code (optional)
      */
     data class Failure(
         val message: String,
@@ -34,28 +34,28 @@ sealed class SyncResult {
     ) : SyncResult()
 
     /**
-     * 同步被取消
+     * Sync cancelled.
      */
     object Cancelled : SyncResult()
 }
 
 /**
- * 同步操作類型
+ * Sync operation type.
  */
 enum class SyncType {
-    MARKET_DATA, // 市場數據同步（股價、匯率）
-    WEAR_SYNC, // Wear OS 同步
-    BACKUP, // 備份同步
-    MANUAL_REFRESH, // 手動刷新
+    MARKET_DATA,
+    WEAR_SYNC,
+    BACKUP,
+    MANUAL_REFRESH,
 }
 
 /**
- * 同步操作詳細信息
+ * Sync operation details.
  */
 data class SyncOperation(
     val type: SyncType,
     val description: String,
     val startTime: Long = System.currentTimeMillis(),
     val canUndo: Boolean = false,
-    val undoData: Any? = null, // 用於復原的數據
+    val undoData: Any? = null,
 )

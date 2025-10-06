@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 
 /**
- * API Key 驗證錯誤提示與修正建議組件
+ * API Key validation error feedback component.
  */
 @Composable
 fun ApiKeyValidationFeedback(
@@ -43,7 +43,6 @@ fun ApiKeyValidationFeedback(
                         .padding(16.dp),
                 verticalArrangement = Arrangement.spacedBy(12.dp),
             ) {
-                // 錯誤標題
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -62,14 +61,12 @@ fun ApiKeyValidationFeedback(
                     )
                 }
 
-                // 錯誤訊息
                 Text(
                     text = errorMessage,
                     style = MaterialTheme.typography.bodyMedium,
                     color = MaterialTheme.colorScheme.onErrorContainer,
                 )
 
-                // 修正建議
                 val suggestions = getValidationSuggestions(errorMessage, keyType)
                 if (suggestions.isNotEmpty()) {
                     Card(
@@ -114,7 +111,6 @@ fun ApiKeyValidationFeedback(
                     }
                 }
 
-                // 操作按鈕
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(8.dp),
@@ -146,7 +142,6 @@ fun ApiKeyValidationFeedback(
                     }
                 }
 
-                // 關閉按鈕
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.End,
@@ -163,7 +158,7 @@ fun ApiKeyValidationFeedback(
 }
 
 /**
- * 根據錯誤訊息和 API 類型提供修正建議
+ * Provide correction suggestions based on error message and API type.
  */
 @Composable
 private fun getValidationSuggestions(
@@ -183,29 +178,29 @@ private fun getValidationSuggestions(
         errorMessage.contains("invalid", ignoreCase = true) -> {
             when (keyType.lowercase()) {
                 "finnhub" -> {
-                    suggestions.add("檢查Finnhub API Key狀態")
-                    suggestions.add("確認API Key已啟用")
-                    suggestions.add("檢查API使用限制")
+                    suggestions.add(context.getString(R.string.api_validation_finnhub_check_status))
+                    suggestions.add(context.getString(R.string.api_validation_finnhub_check_enabled))
+                    suggestions.add(context.getString(R.string.api_validation_finnhub_check_limits))
                 }
                 "exchange" -> {
-                    suggestions.add("檢查Exchange Rate API狀態")
-                    suggestions.add("確認API Key有效")
-                    suggestions.add("檢查API使用限制")
+                    suggestions.add(context.getString(R.string.api_validation_exchange_check_status))
+                    suggestions.add(context.getString(R.string.api_validation_exchange_check_valid))
+                    suggestions.add(context.getString(R.string.api_validation_exchange_check_limits))
                 }
             }
         }
 
         errorMessage.contains("network", ignoreCase = true) ||
             errorMessage.contains("connection", ignoreCase = true) -> {
-            suggestions.add("檢查網路連線")
-            suggestions.add("嘗試其他網路")
-            suggestions.add("稍後再試")
+            suggestions.add(context.getString(R.string.api_validation_check_network))
+            suggestions.add(context.getString(R.string.api_validation_try_other_network))
+            suggestions.add(context.getString(R.string.api_validation_try_later))
         }
 
         errorMessage.contains("rate limit", ignoreCase = true) -> {
-            suggestions.add("等待幾分鐘後再試")
-            suggestions.add("檢查API配額")
-            suggestions.add("考慮升級方案")
+            suggestions.add(context.getString(R.string.api_validation_wait_minutes))
+            suggestions.add(context.getString(R.string.api_validation_check_quota))
+            suggestions.add(context.getString(R.string.api_validation_consider_upgrade))
         }
 
         errorMessage.contains("authentication", ignoreCase = true) -> {

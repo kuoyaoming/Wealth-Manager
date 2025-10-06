@@ -3,7 +3,7 @@ package com.wealthmanager.widget
 import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
-import com.wealthmanager.debug.DebugLogManager
+import android.util.Log
 import com.wealthmanager.data.repository.AssetRepository
 import com.wealthmanager.data.database.WealthManagerDatabase
 import kotlinx.coroutines.flow.first
@@ -59,7 +59,7 @@ object WidgetErrorHandler {
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
         } catch (e: Exception) {
-            DebugLogManager.logError("WIDGET_ERROR: Network check failed: ${e.message}", e)
+            Log.e("WealthManagerWidget", "Network check failed: ${e.message}", e)
             false
         }
     }
@@ -69,16 +69,15 @@ object WidgetErrorHandler {
      */
     suspend fun hasAssets(context: Context): Boolean {
         return try {
-            val assetRepository = createAssetRepository(context)
-            val cashAssets = assetRepository.getAllCashAssetsSync()
-            val stockAssets = assetRepository.getAllStockAssetsSync()
+            val cashAssets = getCashAssetsDirectly(context)
+            val stockAssets = getStockAssetsDirectly(context)
             
             val hasCash = cashAssets.isNotEmpty() && cashAssets.any { it.amount > 0 }
             val hasStock = stockAssets.isNotEmpty() && stockAssets.any { it.shares > 0 }
             
             hasCash || hasStock
         } catch (e: Exception) {
-            DebugLogManager.logError("WIDGET_ERROR: Asset check failed: ${e.message}", e)
+            Log.e("WealthManagerWidget", "Asset check failed: ${e.message}", e)
             false
         }
     }
@@ -100,7 +99,7 @@ object WidgetErrorHandler {
             // In a real implementation, this would check the actual API keys
             false
         } catch (e: Exception) {
-            DebugLogManager.logError("WIDGET_ERROR: API key check failed: ${e.message}", e)
+            Log.e("WealthManagerWidget", "API key check failed: ${e.message}", e)
             false
         }
     }
@@ -136,7 +135,7 @@ object WidgetErrorHandler {
             
             WidgetDisplayState.NORMAL
         } catch (e: Exception) {
-            DebugLogManager.logError("WIDGET_ERROR: Display state determination failed: ${e.message}", e)
+            Log.e("WealthManagerWidget", "Display state determination failed: ${e.message}", e)
             WidgetDisplayState.ERROR
         }
     }
@@ -243,15 +242,18 @@ object WidgetErrorHandler {
     }
     
     /**
-     * Create asset repository safely
+     * Get cash assets directly from DAO (avoiding AssetRepository dependency injection)
      */
-    private fun createAssetRepository(context: Context): AssetRepository {
+    private suspend fun getCashAssetsDirectly(context: Context): List<com.wealthmanager.data.entity.CashAsset> {
         val database = WealthManagerDatabase.getDatabase(context)
-        return AssetRepository(
-            database.cashAssetDao(),
-            database.stockAssetDao(),
-            database.exchangeRateDao(),
-            DebugLogManager
-        )
+        return database.cashAssetDao().getAllCashAssets().first()
+    }
+    
+    /**
+     * Get stock assets directly from DAO (avoiding AssetRepository dependency injection)
+     */
+    private suspend fun getStockAssetsDirectly(context: Context): List<com.wealthmanager.data.entity.StockAsset> {
+        val database = WealthManagerDatabase.getDatabase(context)
+        return database.stockAssetDao().getAllStockAssets().first()
     }
 }

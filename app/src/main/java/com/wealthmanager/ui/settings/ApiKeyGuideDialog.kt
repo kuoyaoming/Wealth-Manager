@@ -26,20 +26,19 @@ import androidx.compose.ui.window.DialogProperties
 import com.wealthmanager.R
 
 /**
- * API金鑰申請引導對話框
+ * API key application guide dialog.
  */
 @Composable
 fun ApiKeyGuideDialog(onDismiss: () -> Unit) {
     val context = LocalContext.current
     val scrollState = rememberScrollState()
 
-    // 使用 LaunchedEffect 和 remember 來穩定滾動狀態檢測
     var canScrollDown by remember { mutableStateOf(false) }
     var canScrollUp by remember { mutableStateOf(false) }
 
     LaunchedEffect(scrollState.value, scrollState.maxValue) {
-        canScrollDown = scrollState.value < scrollState.maxValue - 10 // 添加緩衝區避免邊界問題
-        canScrollUp = scrollState.value > 10 // 添加緩衝區避免邊界問題
+        canScrollDown = scrollState.value < scrollState.maxValue - 10
+        canScrollUp = scrollState.value > 10
     }
 
     Dialog(
@@ -203,7 +202,6 @@ fun ApiKeyGuideDialog(onDismiss: () -> Unit) {
                     }
                 } // End of Column (scrollable content)
 
-                // 頂部漸變遮罩 - 提示可以向上滾動
                 val topGradientAlpha by animateFloatAsState(
                     targetValue = if (canScrollUp) 1f else 0f,
                     animationSpec = tween(durationMillis = 200),
@@ -231,13 +229,12 @@ fun ApiKeyGuideDialog(onDismiss: () -> Unit) {
                     )
                 }
 
-                // 底部滾動指示器 - 移到內容區域外，避免重疊
                 if (canScrollDown) {
                     Box(
                         modifier =
                             Modifier
                                 .fillMaxWidth()
-                                .height(80.dp) // 增加高度確保漸層完整顯示
+                                .height(80.dp)
                                 .align(Alignment.BottomCenter)
                                 .background(
                                     brush =
@@ -373,7 +370,7 @@ private fun ApiKeyGuideCard(
 }
 
 /**
- * 開啟瀏覽器
+ * Open browser
  */
 private fun openBrowser(
     context: Context,

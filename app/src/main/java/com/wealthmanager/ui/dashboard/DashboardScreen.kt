@@ -107,7 +107,6 @@ fun DashboardScreen(
             }
         }
 
-        // 統一的同步回饋處理
         SyncFeedbackHandler(
             syncFeedbackManager = viewModel.syncFeedbackManager,
             snackbarHostState = snackbarHostState,
@@ -120,7 +119,6 @@ fun DashboardScreen(
                 }
             },
             onUndo = { syncType, undoData ->
-                // 復原功能（未來實現）
                 debugLogManager.log("SYNC_FEEDBACK", "Undo requested for $syncType")
             },
         )
@@ -187,7 +185,6 @@ fun DashboardScreen(
                 verticalArrangement = Arrangement.spacedBy(responsiveLayout.paddingMedium),
                 modifier = Modifier.padding(paddingValues),
             ) {
-                // 同步狀態指示器
                 item {
                     SyncStatusIndicator(
                         syncFeedbackManager = viewModel.syncFeedbackManager,

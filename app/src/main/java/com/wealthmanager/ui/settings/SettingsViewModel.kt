@@ -52,7 +52,7 @@ data class SettingsUiState(
     val widgetShowAssetAmount: Boolean = true,
     val widgetPrivacyEnabled: Boolean = false,
     val widgetInstalledCount: Int = 0,
-    val lastKeyErrorMessage: String = "", // 專門用於錯誤訊息
+    val lastKeyErrorMessage: String = "",
     // Biometric fallback dialog state
     val showBiometricFallbackDialog: Boolean = false,
     val pendingKeyAction: (() -> Unit)? = null,

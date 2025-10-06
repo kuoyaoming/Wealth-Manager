@@ -19,8 +19,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.wealthmanager.R
 
 /**
- * 歡迎導覽對話框
- * 介紹應用程式的核心價值與功能
+ * Welcome onboarding dialog.
  */
 @Composable
 fun WelcomeOnboardingDialog(
@@ -50,7 +49,6 @@ fun WelcomeOnboardingDialog(
                             .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                // 標題和圖示
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -76,7 +74,6 @@ fun WelcomeOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // 主要價值介紹
                 Text(
                     text = stringResource(id = R.string.onboarding_welcome_subtitle),
                     style = MaterialTheme.typography.titleMedium,
@@ -86,7 +83,6 @@ fun WelcomeOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // 核心功能介紹
                 val features =
                     listOf(
                         Triple(
@@ -151,7 +147,6 @@ fun WelcomeOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // 使用步驟預覽
                 Text(
                     text = stringResource(id = R.string.onboarding_get_started_title),
                     style = MaterialTheme.typography.titleMedium,
@@ -183,7 +178,6 @@ fun WelcomeOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // 操作按鈕
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),

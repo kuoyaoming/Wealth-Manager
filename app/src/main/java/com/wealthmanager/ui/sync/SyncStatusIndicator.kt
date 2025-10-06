@@ -32,8 +32,7 @@ import androidx.compose.runtime.collectAsState
 import com.wealthmanager.R
 
 /**
- * 同步狀態指示器
- * 顯示當前同步操作的狀態
+ * Sync status indicator.
  */
 @Composable
 fun SyncStatusIndicator(
@@ -43,7 +42,6 @@ fun SyncStatusIndicator(
     val currentOperation by syncFeedbackManager.currentOperation.collectAsState()
     val syncResults by syncFeedbackManager.syncResults.collectAsState()
     
-    // 檢查是否有正在進行的同步
     val hasActiveSync = syncResults.values.any { it is SyncResult.InProgress }
     val hasErrors = syncResults.values.any { it is SyncResult.Failure }
     
@@ -55,7 +53,6 @@ fun SyncStatusIndicator(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            // 狀態圖標
             when {
                 hasActiveSync -> {
                     val rotation by animateFloatAsState(
@@ -81,7 +78,6 @@ fun SyncStatusIndicator(
                 }
             }
             
-            // 狀態文本
             Text(
                 text = when {
                     hasActiveSync -> currentOperation?.description ?: "Syncing..."
@@ -99,7 +95,6 @@ fun SyncStatusIndicator(
             
             Spacer(modifier = Modifier.weight(1f))
             
-            // 進度指示器（僅在同步中時顯示）
             if (hasActiveSync) {
                 CircularProgressIndicator(
                     modifier = Modifier.size(16.dp),
@@ -112,8 +107,7 @@ fun SyncStatusIndicator(
 }
 
 /**
- * 簡化的同步狀態指示器
- * 只顯示圖標和簡短文本
+ * Simplified sync status indicator.
  */
 @Composable
 fun CompactSyncStatusIndicator(

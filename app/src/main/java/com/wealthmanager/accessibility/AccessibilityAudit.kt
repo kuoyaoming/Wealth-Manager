@@ -21,10 +21,12 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.wealthmanager.R
 
 /**
- * 無障礙性審計結果
+ * Accessibility audit result.
  */
 data class AccessibilityAuditResult(
     val hasContentDescription: Boolean,
@@ -36,7 +38,7 @@ data class AccessibilityAuditResult(
 )
 
 /**
- * 無障礙性問題
+ * Accessibility issue.
  */
 data class AccessibilityIssue(
     val type: IssueType,
@@ -59,7 +61,7 @@ enum class Severity {
 }
 
 /**
- * 無障礙性審計組件
+ * Accessibility audit component.
  */
 @Composable
 fun AccessibilityAuditCard(
@@ -82,7 +84,6 @@ fun AccessibilityAuditCard(
             modifier = Modifier.padding(16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            // 標題
             Row(
                 verticalAlignment = Alignment.CenterVertically,
                 horizontalArrangement = Arrangement.spacedBy(8.dp)
@@ -103,39 +104,37 @@ fun AccessibilityAuditCard(
                     }
                 )
                 Text(
-                    text = "無障礙性檢查",
+                    text = stringResource(R.string.accessibility_audit_title),
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = androidx.compose.ui.text.font.FontWeight.Bold
                 )
             }
             
-            // 檢查項目
             AccessibilityCheckItem(
-                label = "Content Description",
+                label = stringResource(R.string.accessibility_audit_content_description),
                 passed = auditResult.hasContentDescription
             )
             AccessibilityCheckItem(
-                label = "Semantic Role",
+                label = stringResource(R.string.accessibility_audit_semantic_role),
                 passed = auditResult.hasSemanticRole
             )
             AccessibilityCheckItem(
-                label = "Color Contrast",
+                label = stringResource(R.string.accessibility_audit_color_contrast),
                 passed = auditResult.hasProperContrast
             )
             AccessibilityCheckItem(
-                label = "Touch Target",
+                label = stringResource(R.string.accessibility_audit_touch_target),
                 passed = auditResult.hasTouchTarget
             )
             AccessibilityCheckItem(
-                label = "Keyboard Navigation",
+                label = stringResource(R.string.accessibility_audit_keyboard_navigation),
                 passed = auditResult.hasKeyboardNavigation
             )
             
-            // 問題列表
             if (auditResult.issues.isNotEmpty()) {
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
-                    text = "發現的問題:",
+                    text = stringResource(R.string.accessibility_audit_issues_found),
                     style = MaterialTheme.typography.bodyMedium,
                     fontWeight = androidx.compose.ui.text.font.FontWeight.Medium
                 )
@@ -163,7 +162,7 @@ private fun AccessibilityCheckItem(
         )
         Icon(
             imageVector = if (passed) Icons.Default.CheckCircle else Icons.Default.Error,
-            contentDescription = if (passed) "通過" else "未通過",
+            contentDescription = if (passed) stringResource(R.string.accessibility_passed) else stringResource(R.string.accessibility_failed),
             tint = if (passed) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
         )
     }

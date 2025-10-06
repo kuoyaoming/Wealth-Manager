@@ -14,7 +14,8 @@ import com.wealthmanager.data.service.ApiStatusManager
 import com.wealthmanager.data.service.CacheManager
 import com.wealthmanager.data.service.DataValidator
 import com.wealthmanager.data.service.MarketDataService
-import com.wealthmanager.data.service.PerformanceMonitor120Hz
+import com.wealthmanager.ui.performance.ModernFrameRateManager
+import com.wealthmanager.ui.performance.ContentBasedFrameRateOptimizer
 import com.wealthmanager.data.service.RequestDeduplicationManager
 import com.wealthmanager.data.service.SmartCacheStrategy
 import com.wealthmanager.data.service.TwseCacheManager
@@ -202,12 +203,22 @@ object NetworkModule {
         return NumberFormatter()
     }
 
+
     @Provides
     @Singleton
-    fun providePerformanceMonitor120Hz(
+    fun provideModernFrameRateManager(
         debugLogManager: com.wealthmanager.debug.DebugLogManager,
-    ): PerformanceMonitor120Hz {
-        return PerformanceMonitor120Hz(debugLogManager)
+    ): ModernFrameRateManager {
+        return ModernFrameRateManager(debugLogManager)
+    }
+
+    @Provides
+    @Singleton
+    fun provideContentBasedFrameRateOptimizer(
+        frameRateManager: ModernFrameRateManager,
+        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+    ): ContentBasedFrameRateOptimizer {
+        return ContentBasedFrameRateOptimizer(frameRateManager, debugLogManager)
     }
 
     @Provides

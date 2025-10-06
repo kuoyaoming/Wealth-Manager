@@ -10,7 +10,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 網路連接狀態管理器
+ * Network connection status manager.
  */
 @Singleton
 class NetworkUtils
@@ -24,12 +24,11 @@ class NetworkUtils
         private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
 
         init {
-            // 初始檢查網路狀態
             _isConnected.value = isNetworkAvailable()
         }
 
         /**
-         * 檢查網路是否可用
+         * Check if network is available.
          */
         fun isNetworkAvailable(): Boolean {
             val network = connectivityManager.activeNetwork ?: return false
@@ -41,7 +40,7 @@ class NetworkUtils
         }
 
         /**
-         * 檢查是否有網路連接
+         * Check if there is network connection.
          */
         suspend fun hasNetworkConnection(): Boolean {
             return isNetworkAvailable()

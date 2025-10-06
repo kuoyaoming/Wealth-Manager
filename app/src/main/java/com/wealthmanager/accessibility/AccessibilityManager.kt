@@ -14,8 +14,7 @@ import kotlin.math.pow
 import android.view.accessibility.AccessibilityManager as AndroidAccessibilityManager
 
 /**
- * 無障礙性管理器
- * 符合2025 Android設計指導的無障礙性實現
+ * Accessibility manager following 2025 Android design guidelines.
  */
 @Singleton
 class AccessibilityManager
@@ -24,7 +23,7 @@ class AccessibilityManager
         private val context: Context,
     ) {
         /**
-         * 檢查是否啟用TalkBack
+         * Check if TalkBack is enabled.
          */
         fun isTalkBackEnabled(): Boolean {
             return context.getSystemService(Context.ACCESSIBILITY_SERVICE)
@@ -35,7 +34,7 @@ class AccessibilityManager
         }
 
         /**
-         * 檢查是否啟用動態字體
+         * Check if large font is enabled.
          */
         fun isLargeFontEnabled(): Boolean {
             val configuration = context.resources.configuration
@@ -44,7 +43,7 @@ class AccessibilityManager
         }
 
         /**
-         * 檢查是否啟用高對比度
+         * Check if high contrast is enabled.
          */
         fun isHighContrastEnabled(): Boolean {
             val configuration = context.resources.configuration
@@ -52,14 +51,14 @@ class AccessibilityManager
         }
 
         /**
-         * 獲取動態字體縮放比例
+         * Get font scale factor.
          */
         fun getFontScale(): Float {
             return context.resources.configuration.fontScale
         }
 
         /**
-         * 檢查是否為無障礙模式
+         * Check if accessibility mode is enabled.
          */
         fun isAccessibilityMode(): Boolean {
             return isTalkBackEnabled() || isLargeFontEnabled() || isHighContrastEnabled()
@@ -67,7 +66,7 @@ class AccessibilityManager
     }
 
 /**
- * 無障礙性狀態
+ * Accessibility state.
  */
 data class AccessibilityState(
     val isTalkBackEnabled: Boolean = false,
@@ -78,7 +77,7 @@ data class AccessibilityState(
 )
 
 /**
- * 無障礙性主題配置
+ * Accessibility theme configuration.
  */
 @Composable
 fun rememberAccessibilityState(): AccessibilityState {
@@ -100,7 +99,7 @@ fun rememberAccessibilityState(): AccessibilityState {
 }
 
 /**
- * 動態字體大小計算
+ * Dynamic font size calculation.
  */
 @Composable
 fun getAccessibleFontSize(
@@ -119,7 +118,7 @@ fun getAccessibleFontSize(
 }
 
 /**
- * 無障礙性間距計算
+ * Accessibility spacing calculation.
  */
 @Composable
 fun getAccessibleSpacing(
@@ -137,17 +136,16 @@ fun getAccessibleSpacing(
 }
 
 /**
- * 無障礙性顏色對比度檢查
+ * Accessibility color contrast checking.
  */
 object AccessibilityColors {
     /**
-     * 檢查顏色對比度是否符合WCAG AA標準
+     * Check if color contrast meets WCAG AA standards.
      */
     fun isContrastSufficient(
         foreground: Long,
         background: Long,
     ): Boolean {
-        // 簡化的對比度檢查，實際應用中應該使用更精確的算法
         val foregroundLuminance = calculateLuminance(foreground)
         val backgroundLuminance = calculateLuminance(background)
 
@@ -158,7 +156,7 @@ object AccessibilityColors {
                 (backgroundLuminance + 0.05) / (foregroundLuminance + 0.05)
             }
 
-        return contrast >= 4.5 // WCAG AA標準
+        return contrast >= 4.5
     }
 
     private fun calculateLuminance(color: Long): Double {

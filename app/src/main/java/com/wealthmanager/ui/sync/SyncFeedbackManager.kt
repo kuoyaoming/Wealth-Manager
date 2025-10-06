@@ -19,8 +19,7 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 /**
- * 統一同步回饋管理器
- * 負責管理所有同步操作的狀態和用戶回饋
+ * Unified sync feedback manager.
  */
 @Singleton
 class SyncFeedbackManager @Inject constructor(
@@ -33,7 +32,7 @@ class SyncFeedbackManager @Inject constructor(
     val currentOperation: StateFlow<SyncOperation?> = _currentOperation.asStateFlow()
     
     /**
-     * 開始同步操作
+     * Start sync operation.
      */
     fun startSync(type: SyncType, description: String, canUndo: Boolean = false, undoData: Any? = null) {
         val operation = SyncOperation(
@@ -50,7 +49,7 @@ class SyncFeedbackManager @Inject constructor(
     }
     
     /**
-     * 同步成功
+     * Sync success.
      */
     fun syncSuccess(type: SyncType, message: String, itemsUpdated: Int = 0, canUndo: Boolean = false) {
         val result = SyncResult.Success(
@@ -66,7 +65,7 @@ class SyncFeedbackManager @Inject constructor(
     }
     
     /**
-     * 同步失敗
+     * Sync failure.
      */
     fun syncFailure(type: SyncType, message: String, canRetry: Boolean = true, errorCode: String? = null) {
         val result = SyncResult.Failure(
@@ -82,7 +81,7 @@ class SyncFeedbackManager @Inject constructor(
     }
     
     /**
-     * 取消同步
+     * Cancel sync.
      */
     fun cancelSync(type: SyncType) {
         _syncResults.value = _syncResults.value + (type to SyncResult.Cancelled)
@@ -92,7 +91,7 @@ class SyncFeedbackManager @Inject constructor(
     }
     
     /**
-     * 清除特定類型的同步結果
+     * Clear sync result for specific type.
      */
     fun clearSyncResult(type: SyncType) {
         _syncResults.value = _syncResults.value - type
@@ -100,7 +99,7 @@ class SyncFeedbackManager @Inject constructor(
     }
     
     /**
-     * 清除所有同步結果
+     * Clear all sync results.
      */
     fun clearAllSyncResults() {
         _syncResults.value = emptyMap()
@@ -109,14 +108,14 @@ class SyncFeedbackManager @Inject constructor(
     }
     
     /**
-     * 獲取特定類型的同步結果
+     * Get sync result for specific type.
      */
     fun getSyncResult(type: SyncType): SyncResult? {
         return _syncResults.value[type]
     }
     
     /**
-     * 檢查是否有正在進行的同步
+     * Check if there are any ongoing sync operations.
      */
     fun hasActiveSync(): Boolean {
         return _syncResults.value.values.any { it is SyncResult.InProgress }
@@ -124,8 +123,7 @@ class SyncFeedbackManager @Inject constructor(
 }
 
 /**
- * 同步回饋UI組件
- * 使用Snackbar顯示同步結果
+ * Sync feedback UI component using Snackbar.
  */
 @Composable
 fun SyncFeedbackHandler(
@@ -138,7 +136,6 @@ fun SyncFeedbackHandler(
     val syncResults by syncFeedbackManager.syncResults.collectAsState()
     val currentOperation by syncFeedbackManager.currentOperation.collectAsState()
     
-    // 處理同步結果的Snackbar顯示
     LaunchedEffect(syncResults) {
         syncResults.forEach { entry ->
             val type = entry.key
@@ -164,7 +161,6 @@ fun SyncFeedbackHandler(
                         onUndo(type, currentOperation?.undoData)
                     }
                     
-                    // 清除成功結果
                     syncFeedbackManager.clearSyncResult(type)
                 }
                 
@@ -182,7 +178,6 @@ fun SyncFeedbackHandler(
                         onRetry(type)
                     }
                     
-                    // 清除失敗結果
                     syncFeedbackManager.clearSyncResult(type)
                 }
                 
@@ -192,12 +187,10 @@ fun SyncFeedbackHandler(
                         duration = SnackbarDuration.Short
                     )
                     
-                    // 清除取消結果
                     syncFeedbackManager.clearSyncResult(type)
                 }
                 
                 is SyncResult.InProgress -> {
-                    // 進行中的同步不顯示Snackbar，由UI組件處理
                 }
             }
         }

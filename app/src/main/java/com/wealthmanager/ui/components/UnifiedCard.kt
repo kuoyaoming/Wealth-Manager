@@ -17,9 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.wealthmanager.ui.responsive.rememberResponsiveLayout
 
 /**
- * 统一的卡片设计系统 - 基于2025年Material Design 3最佳实践
- * 
- * 提供一致的卡片样式，支持响应式设计和语义化颜色
+ * Unified card design system based on Material Design 3 best practices.
  */
 @Composable
 fun UnifiedCard(
@@ -62,36 +60,54 @@ fun UnifiedCard(
 }
 
 /**
- * 卡片类型枚举
+ * Card type enumeration based on 2025 Android development guidelines
  */
 enum class CardType {
     /**
-     * 主要卡片 - 用于重要数据展示、主要功能
-     * Elevation: 4dp, Padding: 20dp, 圆角: 12dp
+     * Primary card for important data display and main functions
+     * Elevation: 4dp, Padding: 20dp, Corner radius: 12dp
+     * Usage: Total asset display, main function entry
      */
     Primary,
     
     /**
-     * 次要卡片 - 用于设置项、次要信息  
-     * Elevation: 2dp, Padding: 16dp, 圆角: 8dp
+     * Secondary card for settings and secondary information
+     * Elevation: 2dp, Padding: 16dp, Corner radius: 8dp
+     * Usage: Settings options, list items, secondary functions
      */
     Secondary,
     
     /**
-     * 轮廓卡片 - 用于可选内容、辅助信息
-     * Elevation: 0dp, Padding: 16dp, 圆角: 8dp
+     * Outlined card for optional content and auxiliary information
+     * Elevation: 0dp, Padding: 16dp, Corner radius: 8dp
+     * Usage: Optional settings, auxiliary information, secondary content
      */
     Outlined,
     
     /**
-     * 状态卡片 - 用于状态提示、警告信息
-     * Elevation: 3dp, Padding: 16dp, 圆角: 8dp
+     * Status card for status prompts and warning information
+     * Elevation: 3dp, Padding: 16dp, Corner radius: 8dp
+     * Usage: Success/error/warning/information prompts
      */
-    Status
+    Status,
+    
+    /**
+     * Dialog card for modal dialogs
+     * Elevation: 8dp, Padding: 24dp, Corner radius: 16dp
+     * Usage: Dialogs, popups, important confirmations
+     */
+    Dialog,
+    
+    /**
+     * Banner card for top banners and notifications
+     * Elevation: 4dp, Padding: 16dp, Corner radius: 8dp
+     * Usage: Error banners, notification banners, status banners
+     */
+    Banner
 }
 
 /**
- * 状态类型枚举
+ * Status type enumeration
  */
 enum class StatusType {
     Success,
@@ -101,7 +117,7 @@ enum class StatusType {
 }
 
 /**
- * 卡片配置数据类
+ * Card configuration data class
  */
 private data class CardConfig(
     val elevation: Dp,
@@ -112,7 +128,7 @@ private data class CardConfig(
 )
 
 /**
- * 根据卡片类型和响应式布局获取卡片配置
+ * Get card configuration based on card type and responsive layout
  */
 @Composable
 private fun getCardConfig(
@@ -149,9 +165,22 @@ private fun getCardConfig(
             containerColor = getStatusColor(statusType),
             contentColor = MaterialTheme.colorScheme.onSurface
         )
+        CardType.Dialog -> CardConfig(
+            elevation = 8.dp,
+            padding = PaddingValues(24.dp),
+            cornerRadius = 16.dp,
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
+        CardType.Banner -> CardConfig(
+            elevation = 4.dp,
+            padding = PaddingValues(16.dp),
+            cornerRadius = 8.dp,
+            containerColor = MaterialTheme.colorScheme.surface,
+            contentColor = MaterialTheme.colorScheme.onSurface
+        )
     }
     
-    // 响应式调整
     val responsiveMultiplier = when {
         responsiveLayout.isTablet -> 1.2f
         responsiveLayout.isLargeScreen -> 1.4f
@@ -171,7 +200,7 @@ private fun getCardConfig(
 }
 
 /**
- * 根据状态类型获取颜色
+ * Get color based on status type
  */
 @Composable
 private fun getStatusColor(statusType: StatusType?): Color {
@@ -185,7 +214,7 @@ private fun getStatusColor(statusType: StatusType?): Color {
 }
 
 /**
- * 便捷的卡片组件 - 主要卡片
+ * Convenient card component - Primary card
  */
 @Composable
 fun PrimaryCard(
@@ -202,7 +231,7 @@ fun PrimaryCard(
 }
 
 /**
- * 便捷的卡片组件 - 次要卡片
+ * Convenient card component - Secondary card
  */
 @Composable
 fun SecondaryCard(
@@ -219,7 +248,7 @@ fun SecondaryCard(
 }
 
 /**
- * 便捷的卡片组件 - 轮廓卡片
+ * Convenient card component - Outlined card
  */
 @Composable
 fun OutlinedCard(
@@ -236,7 +265,7 @@ fun OutlinedCard(
 }
 
 /**
- * 便捷的卡片组件 - 状态卡片
+ * Convenient card component - Status card
  */
 @Composable
 fun StatusCard(
@@ -249,6 +278,40 @@ fun StatusCard(
         modifier = modifier,
         cardType = CardType.Status,
         statusType = statusType,
+        onClick = onClick,
+        content = content
+    )
+}
+
+/**
+ * Convenient card component - Dialog card
+ */
+@Composable
+fun DialogCard(
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+    content: @Composable () -> Unit
+) {
+    UnifiedCard(
+        modifier = modifier,
+        cardType = CardType.Dialog,
+        onClick = onClick,
+        content = content
+    )
+}
+
+/**
+ * Convenient card component - Banner card
+ */
+@Composable
+fun BannerCard(
+    modifier: Modifier = Modifier,
+    onClick: (() -> Unit)? = null,
+    content: @Composable () -> Unit
+) {
+    UnifiedCard(
+        modifier = modifier,
+        cardType = CardType.Banner,
         onClick = onClick,
         content = content
     )

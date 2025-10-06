@@ -6,7 +6,7 @@ import androidx.compose.ui.platform.LocalContext
 import com.wealthmanager.R
 
 /**
- * 資產表單驗證結果
+ * Asset form validation result.
  */
 @Immutable
 data class ValidationResult(
@@ -17,11 +17,11 @@ data class ValidationResult(
 )
 
 /**
- * 現金金額驗證器
+ * Cash amount validator.
  */
 object CashAmountValidator {
     /**
-     * 驗證現金金額
+     * Validate cash amount.
      */
     @Composable
     fun validate(
@@ -35,7 +35,7 @@ object CashAmountValidator {
                 isValid = false,
                 errorMessage = context.getString(R.string.validation_amount_required),
                 suggestion =
-                    if (currency == "TWD") {
+                    if (currency == context.getString(R.string.assets_currency_twd)) {
                         context.getString(R.string.validation_amount_example_twd)
                     } else {
                         context.getString(R.string.validation_amount_example_usd)
@@ -60,8 +60,7 @@ object CashAmountValidator {
             )
         }
 
-        // 檢查金額是否過大（可能是輸入錯誤）
-        val maxReasonableAmount = if (currency == "TWD") 1_000_000_000.0 else 100_000_000.0
+        val maxReasonableAmount = if (currency == context.getString(R.string.assets_currency_twd)) 1_000_000_000.0 else 100_000_000.0
         if (numericAmount > maxReasonableAmount) {
             return ValidationResult(
                 isValid = true,
@@ -70,7 +69,6 @@ object CashAmountValidator {
             )
         }
 
-        // 檢查小數位數（只有當有小數點時才檢查）
         if (amount.contains(".")) {
             val decimalPlaces = amount.substringAfter(".").length
             if (decimalPlaces > 2) {
@@ -87,11 +85,11 @@ object CashAmountValidator {
 }
 
 /**
- * 股票代碼驗證器
+ * Stock symbol validator.
  */
 object StockSymbolValidator {
     /**
-     * 驗證股票代碼
+     * Validate stock symbol.
      */
     @Composable
     fun validate(symbol: String): ValidationResult {
@@ -107,7 +105,6 @@ object StockSymbolValidator {
 
         val trimmedSymbol = symbol.trim().uppercase()
 
-        // 檢查是否包含無效字符
         if (!trimmedSymbol.matches(Regex("^[A-Z0-9.]{1,10}$"))) {
             return ValidationResult(
                 isValid = false,
@@ -116,7 +113,6 @@ object StockSymbolValidator {
             )
         }
 
-        // 檢查是否為台灣股票格式
         val isTaiwanStock =
             trimmedSymbol.matches(Regex("^\\d{4}$")) ||
                 trimmedSymbol.endsWith(".TW") ||
@@ -129,7 +125,6 @@ object StockSymbolValidator {
             )
         }
 
-        // 檢查是否為美股格式
         if (trimmedSymbol.matches(Regex("^[A-Z]{1,5}$"))) {
             return ValidationResult(
                 isValid = true,
@@ -146,11 +141,11 @@ object StockSymbolValidator {
 }
 
 /**
- * 股票股數驗證器
+ * Stock shares validator.
  */
 object StockSharesValidator {
     /**
-     * 驗證股票股數
+     * Validate stock shares.
      */
     @Composable
     fun validate(shares: String): ValidationResult {
@@ -181,7 +176,6 @@ object StockSharesValidator {
             )
         }
 
-        // 檢查股數是否過大
         if (numericShares > 1_000_000) {
             return ValidationResult(
                 isValid = true,
@@ -190,7 +184,6 @@ object StockSharesValidator {
             )
         }
 
-        // 檢查小數位數（只有當有小數點時才檢查）
         if (shares.contains(".")) {
             val decimalPlaces = shares.substringAfter(".").length
             if (decimalPlaces > 4) {
@@ -207,11 +200,11 @@ object StockSharesValidator {
 }
 
 /**
- * 表單整體驗證器
+ * Form validation utility.
  */
 object AssetFormValidator {
     /**
-     * 驗證現金表單
+     * Validate cash form.
      */
     @Composable
     fun validateCashForm(
@@ -222,7 +215,7 @@ object AssetFormValidator {
     }
 
     /**
-     * 驗證股票表單
+     * Validate stock form.
      */
     @Composable
     fun validateStockForm(
@@ -239,7 +232,6 @@ object AssetFormValidator {
             return sharesResult
         }
 
-        // 如果都有警告，合併警告信息
         val warnings = listOfNotNull(symbolResult.warningMessage, sharesResult.warningMessage)
         val suggestions = listOfNotNull(symbolResult.suggestion, sharesResult.suggestion)
 

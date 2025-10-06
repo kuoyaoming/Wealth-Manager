@@ -18,8 +18,7 @@ import androidx.compose.ui.window.DialogProperties
 import com.wealthmanager.R
 
 /**
- * Google Password Manager 引導對話框
- * 在首次啟動時向用戶介紹 Google Password Manager 功能
+ * Google Password Manager onboarding dialog.
  */
 @Composable
 fun GooglePasswordManagerOnboardingDialog(
@@ -49,7 +48,6 @@ fun GooglePasswordManagerOnboardingDialog(
                             .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                // 標題和圖示
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     verticalAlignment = Alignment.CenterVertically,
@@ -71,7 +69,6 @@ fun GooglePasswordManagerOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // 主要介紹
                 Text(
                     text = stringResource(id = R.string.gpm_intro_title),
                     style = MaterialTheme.typography.titleMedium,
@@ -81,7 +78,6 @@ fun GooglePasswordManagerOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                // 功能介紹卡片
                 Card(
                     modifier = Modifier.fillMaxWidth(),
                     colors =
@@ -157,7 +153,6 @@ fun GooglePasswordManagerOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(24.dp))
 
-                // 使用步驟
                 Text(
                     text = stringResource(id = R.string.gpm_how_to_title),
                     style = MaterialTheme.typography.titleMedium,
@@ -190,7 +185,6 @@ fun GooglePasswordManagerOnboardingDialog(
 
                 Spacer(modifier = Modifier.height(32.dp))
 
-                // 操作按鈕
                 Row(
                     modifier = Modifier.fillMaxWidth(),
                     horizontalArrangement = Arrangement.spacedBy(12.dp),

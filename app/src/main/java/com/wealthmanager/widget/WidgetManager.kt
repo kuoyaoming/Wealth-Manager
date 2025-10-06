@@ -3,7 +3,7 @@ package com.wealthmanager.widget
 import android.appwidget.AppWidgetManager
 import android.content.ComponentName
 import android.content.Context
-import com.wealthmanager.debug.DebugLogManager
+import android.util.Log
 
 /**
  * Manager class for handling widget operations and integration with the main app.
@@ -20,7 +20,7 @@ object WidgetManager {
      * Initialize widget system and schedule updates.
      */
     fun initialize(context: Context) {
-        DebugLogManager.log("WIDGET_MANAGER", "Initializing widget system")
+        Log.d("WealthManagerWidget", "Initializing widget system")
         
         // Schedule periodic updates
         WidgetUpdateScheduler.schedulePeriodicUpdate(context)
@@ -28,7 +28,7 @@ object WidgetManager {
         // Trigger immediate update if widgets are already installed
         updateAllWidgets(context)
         
-        DebugLogManager.log("WIDGET_MANAGER", "Widget system initialized")
+        Log.d("WealthManagerWidget", "Widget system initialized")
     }
     
     /**
@@ -41,7 +41,7 @@ object WidgetManager {
             val appWidgetIds = appWidgetManager.getAppWidgetIds(componentName)
             
             if (appWidgetIds.isNotEmpty()) {
-                DebugLogManager.log("WIDGET_MANAGER", "Updating ${appWidgetIds.size} widget instances")
+                Log.d("WealthManagerWidget", "Updating ${appWidgetIds.size} widget instances")
                 
                 // Trigger widget update
                 val intent = android.content.Intent(context, TotalAssetWidgetProvider::class.java).apply {
@@ -53,10 +53,10 @@ object WidgetManager {
                 // Schedule data update
                 WidgetUpdateScheduler.scheduleUpdate(context)
             } else {
-                DebugLogManager.log("WIDGET_MANAGER", "No widget instances found")
+                Log.d("WealthManagerWidget", "No widget instances found")
             }
         } catch (e: Exception) {
-            DebugLogManager.logError("WIDGET_MANAGER: Failed to update widgets: ${e.message}", e)
+            Log.e("WealthManagerWidget", "Failed to update widgets: ${e.message}", e)
         }
     }
     
@@ -70,7 +70,7 @@ object WidgetManager {
             val appWidgetIds = appWidgetManager.getAppWidgetIds(componentName)
             appWidgetIds.isNotEmpty()
         } catch (e: Exception) {
-            DebugLogManager.logError("WIDGET_MANAGER: Failed to check widget status: ${e.message}", e)
+            Log.e("WealthManagerWidget", "Failed to check widget status: ${e.message}", e)
             false
         }
     }
@@ -85,7 +85,7 @@ object WidgetManager {
             val appWidgetIds = appWidgetManager.getAppWidgetIds(componentName)
             appWidgetIds.size
         } catch (e: Exception) {
-            DebugLogManager.logError("WIDGET_MANAGER: Failed to get widget count: ${e.message}", e)
+            Log.e("WealthManagerWidget", "Failed to get widget count: ${e.message}", e)
             0
         }
     }
@@ -94,13 +94,13 @@ object WidgetManager {
      * Clean up widget resources when app is being destroyed.
      */
     fun cleanup(context: Context) {
-        DebugLogManager.log("WIDGET_MANAGER", "Cleaning up widget resources")
+        Log.d("WealthManagerWidget", "Cleaning up widget resources")
         
         // Cancel all widget-related work
         val workManager = androidx.work.WorkManager.getInstance(context)
         workManager.cancelUniqueWork("widget_update")
         workManager.cancelUniqueWork("widget_periodic_update")
         
-        DebugLogManager.log("WIDGET_MANAGER", "Widget cleanup completed")
+        Log.d("WealthManagerWidget", "Widget cleanup completed")
     }
 }

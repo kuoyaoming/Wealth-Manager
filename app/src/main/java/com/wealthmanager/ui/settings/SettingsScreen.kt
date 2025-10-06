@@ -45,7 +45,7 @@ import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
+// import androidx.compose.material3.TextButton - Using custom TextButton instead
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -71,22 +71,16 @@ import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 import com.wealthmanager.ui.about.AboutDialog
 import com.wealthmanager.ui.permissions.NotificationPermissionSection
 import com.wealthmanager.ui.security.BiometricFallbackDialog
+import com.wealthmanager.ui.components.SecondaryCard
+import com.wealthmanager.ui.components.PrimaryCard
+import com.wealthmanager.ui.components.PrimaryButton
+import com.wealthmanager.ui.components.SecondaryButton
+import com.wealthmanager.ui.components.TextButton
 import com.wealthmanager.util.LanguageManager
 import kotlinx.coroutines.launch
 
 /**
  * Settings screen for configuring app preferences and security options.
- *
- * This screen provides:
- * - API key management and configuration
- * - Security settings including biometric authentication
- * - Language and locale preferences
- * - Haptic feedback and notification settings
- * - Backup and restore functionality
- * - About dialog and help information
- *
- * @param onNavigateBack Callback to navigate back to previous screen
- * @param viewModel ViewModel managing settings state and data
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -106,7 +100,6 @@ fun SettingsScreen(
     var showAboutDialog by remember { mutableStateOf(false) }
     var showBackupWarningDialog by remember { mutableStateOf(false) }
     var pendingFinancialBackupToggle by remember { mutableStateOf(false) }
-    // var showSecurityLevelDialog by remember { mutableStateOf(false) }  // No longer used
     val snackbarHostState = remember { SnackbarHostState() }
 
     LaunchedEffect(hapticEnabled, soundEnabled, hapticIntensity) {
@@ -119,7 +112,6 @@ fun SettingsScreen(
         )
     }
 
-    // Initialize backup status when screen loads
     LaunchedEffect(Unit) {
         viewModel.refreshBackupStatus()
     }
@@ -130,7 +122,6 @@ fun SettingsScreen(
     LaunchedEffect(uiState.currentLanguageCode) {
         if (uiState.currentLanguageCode.isNotEmpty() && uiState.currentLanguageCode != currentLanguage) {
             currentLanguage = uiState.currentLanguageCode
-            // Apply per-app language immediately via LanguageManager; Compose will recompose
             LanguageManager.setAppLanguage(context, uiState.currentLanguageCode)
         }
     }
@@ -186,7 +177,6 @@ fun SettingsScreen(
                 view = view,
             )
 
-            // Notification Permission Section
             NotificationPermissionSection(
                 onPermissionGranted = {
                     hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
@@ -203,19 +193,15 @@ fun SettingsScreen(
                 },
             )
 
-            // 檢查是否沒有任何 API Key
             val hasNoApiKeys = uiState.finnhubKeyPreview.isBlank() && uiState.exchangeKeyPreview.isBlank()
             var showApiInput by rememberSaveable { mutableStateOf(!hasNoApiKeys) }
             LaunchedEffect(hasNoApiKeys) { if (!hasNoApiKeys) showApiInput = true }
-            // 當顯示輸入區時，於組合提交後再請求焦點，避免未附加 FocusRequester 時呼叫
             LaunchedEffect(showApiInput) {
                 if (showApiInput && hasNoApiKeys) {
                     focusRequester.requestFocus()
                 }
             }
 
-            // API Key 成功儲存後的非阻斷提示，可一鍵觸發 GPM 儲存
-            // 只在首次保存或Key有變更時才提示
             LaunchedEffect(uiState.shouldPromptGpmSave, uiState.lastKeyActionMessage) {
                 if (uiState.shouldPromptGpmSave && uiState.lastKeyActionMessage.isNotEmpty() && uiState.lastKeyActionMessage.contains("saved", ignoreCase = true)) {
                     val result =
@@ -244,13 +230,11 @@ fun SettingsScreen(
                             showGpmInfo = true
                         }
                     }
-                    // Clear both the action message and GPM prompt flag
                     viewModel.clearLastActionMessage()
                     viewModel.clearGpmSavePrompt()
                 }
             }
 
-            // 若沒有任何金鑰，顯示引導卡片
             if (hasNoApiKeys && !showApiInput) {
                 ApiKeyEmptyStateCard(
                     onGetFinnhubKey = {
@@ -276,7 +260,6 @@ fun SettingsScreen(
                 )
             }
 
-            // 顯示 API Key 管理輸入區（條件）
             if (showApiInput) {
                 ApiKeyManagementCard(
                     finnhubKeyPreview = uiState.finnhubKeyPreview,
@@ -316,7 +299,6 @@ fun SettingsScreen(
                 )
             }
 
-            // 改進的錯誤提示與修正建議
             if (uiState.lastKeyErrorMessage.isNotEmpty()) {
                 val keyType =
                     if (uiState.lastKeyErrorMessage.contains(
@@ -332,10 +314,9 @@ fun SettingsScreen(
                     errorMessage = uiState.lastKeyErrorMessage,
                     keyType = keyType,
                     onRetry = {
-                        // Re-validate the last failed API key. Implementation will be added in a follow-up.
+                        // TODO: Implement re-validation
                     },
                     onViewGuide = {
-                        // 開啟 API Key 教學
                         showApiKeyGuide = true
                     },
                     onClearError = {
@@ -363,7 +344,6 @@ fun SettingsScreen(
                 },
             )
 
-            // Enhanced backup settings card
             uiState.backupStatus?.let { backupStatus ->
                 EnhancedBackupSettingsCard(
                     backupStatus = backupStatus,
@@ -379,16 +359,14 @@ fun SettingsScreen(
                     },
                     onShowGooglePasswordManagerInfo = {
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                        // Show GPM info dialog without checking status to avoid triggering credential dialogs
                         showGpmInfo = true
                     },
                     onShowBackupRecommendations = {
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                        // Open backup recommendations (to be implemented in a follow-up dialog)
+                        // TODO: Implement backup recommendations dialog
                     },
                 )
             } ?: run {
-                // Fallback to original backup settings card
                 BackupSettingsCard(
                     enabled = uiState.financialBackupEnabled,
                     onToggle = { enabled ->
@@ -404,13 +382,6 @@ fun SettingsScreen(
                 )
             }
 
-            // SecurityLevelSettingsCard has been removed since security is now handled automatically
-            // SecurityLevelSettingsCard(
-            //     onShowSecurityLevelDialog = {
-            //         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-            //         showSecurityLevelDialog = true
-            //     }
-            // )
 
             AboutSettingsCard(
                 onShowAbout = {
@@ -432,40 +403,42 @@ fun SettingsScreen(
                 Text(stringResource(R.string.backup_warning_message))
             },
             confirmButton = {
-                TextButton(onClick = {
-                    showBackupWarningDialog = false
-                    if (pendingFinancialBackupToggle) {
-                        viewModel.setFinancialBackupEnabled(true)
-                        pendingFinancialBackupToggle = false
+                TextButton(
+                    onClick = {
+                        showBackupWarningDialog = false
+                        if (pendingFinancialBackupToggle) {
+                            viewModel.setFinancialBackupEnabled(true)
+                            pendingFinancialBackupToggle = false
+                        }
                     }
-                }) {
+                ) {
                     Text(stringResource(R.string.enable_backup_confirm))
                 }
             },
             dismissButton = {
-                TextButton(onClick = {
-                    showBackupWarningDialog = false
-                    pendingFinancialBackupToggle = false
-                    viewModel.setFinancialBackupEnabled(false)
-                }) {
+                TextButton(
+                    onClick = {
+                        showBackupWarningDialog = false
+                        pendingFinancialBackupToggle = false
+                        viewModel.setFinancialBackupEnabled(false)
+                    }
+                ) {
                     Text(stringResource(R.string.cancel))
                 }
             },
         )
     }
 
-    // Google Password Manager 簡要說明對話框
     if (showGpmInfo) {
         GooglePasswordManagerInfoDialog(
             onDismiss = { showGpmInfo = false },
-            isAvailable = true, // Assume GPM is available to avoid triggering credential dialogs
-            isSignedIn = true, // Assume user is signed in to avoid triggering credential dialogs
+            isAvailable = true,
+            isSignedIn = true,
             onEnableAutofill = {
                 val intent = android.content.Intent(Settings.ACTION_SETTINGS)
                 try {
                     context.startActivity(intent)
                 } catch (e: Exception) {
-                    // Fallback to general settings if specific intent is not available
                     context.startActivity(android.content.Intent(Settings.ACTION_SETTINGS))
                 }
             },
@@ -485,7 +458,6 @@ fun SettingsScreen(
         )
     }
 
-    // Biometric fallback dialog
     if (uiState.showBiometricFallbackDialog) {
         BiometricFallbackDialog(
             onDismiss = { viewModel.onBiometricFallbackCancel() },
@@ -494,16 +466,6 @@ fun SettingsScreen(
         )
     }
 
-    // Security level dialog has been removed - security is now handled automatically
-    // if (showSecurityLevelDialog) {
-    //     SecurityLevelDialog(
-    //         onDismiss = { showSecurityLevelDialog = false },
-    //         onSecurityLevelSelected = { level ->
-    //             viewModel.setSecurityLevel(level)
-    //             showSecurityLevelDialog = false
-    //         }
-    //     )
-    // }
 }
 
 @Composable
@@ -512,9 +474,8 @@ private fun LanguageSettingsCard(
     languageOptions: List<LanguageOption>,
     onLanguageSelected: (String) -> Unit,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -574,9 +535,8 @@ private fun HapticFeedbackSettingsCard(
     hapticManager: HapticFeedbackManager,
     view: android.view.View,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -598,7 +558,6 @@ private fun HapticFeedbackSettingsCard(
                 )
             }
 
-            // Enable haptic feedback
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -624,7 +583,6 @@ private fun HapticFeedbackSettingsCard(
                 )
             }
 
-            // Enable sound feedback
             Row(
                 modifier = Modifier.fillMaxWidth(),
                 horizontalArrangement = Arrangement.SpaceBetween,
@@ -650,16 +608,14 @@ private fun HapticFeedbackSettingsCard(
                 )
             }
 
-            // intensity selection removed per product decision
         }
     }
 }
 
 @Composable
 private fun ApiKeyApplicationCard(onShowGuide: () -> Unit) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -686,7 +642,7 @@ private fun ApiKeyApplicationCard(onShowGuide: () -> Unit) {
 
                 Spacer(modifier = Modifier.width(8.dp))
 
-                Button(onClick = onShowGuide) {
+                PrimaryButton(onClick = onShowGuide) {
                     Text(stringResource(R.string.dialog_apply_tutorial))
                 }
             }
@@ -704,9 +660,8 @@ private fun ApiKeyApplicationCard(onShowGuide: () -> Unit) {
 
 @Composable
 private fun DeveloperKeyCard(onUseDeveloperKeys: () -> Unit) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -730,12 +685,8 @@ private fun DeveloperKeyCard(onUseDeveloperKeys: () -> Unit) {
                     )
                 }
 
-                Button(
+                PrimaryButton(
                     onClick = onUseDeveloperKeys,
-                    colors =
-                        ButtonDefaults.buttonColors(
-                            containerColor = MaterialTheme.colorScheme.primary,
-                        ),
                 ) {
                     Icon(
                         imageVector = Icons.Default.Key,
@@ -763,9 +714,8 @@ private fun SecurityStatusCard(
     securityStatus: com.wealthmanager.ui.security.SecurityStatus,
     onRefresh: () -> Unit,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -898,9 +848,8 @@ private fun ApiKeyManagementCard(
         imm?.hideSoftInputFromWindow((context as? Activity)?.currentFocus?.windowToken, 0)
     }
 
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -922,7 +871,6 @@ private fun ApiKeyManagementCard(
                 )
             }
 
-            // Finnhub
             if (finnhubKeyPreview.isNotBlank()) {
                 Text(
                     text = stringResource(R.string.settings_api_saved_preview, finnhubKeyPreview),
@@ -946,22 +894,23 @@ private fun ApiKeyManagementCard(
                 focusRequester = firstFieldFocusRequester,
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = {
+                PrimaryButton(onClick = {
                     hideKeyboard()
                     onValidateAndSaveFinnhub(finnhubInput)
                 }) {
                     Text(stringResource(R.string.settings_api_validate_and_save))
                 }
-                TextButton(onClick = {
-                    hideKeyboard()
-                    finnhubInput = ""
-                    onClearFinnhub()
-                }) {
+                TextButton(
+                    onClick = {
+                        hideKeyboard()
+                        finnhubInput = ""
+                        onClearFinnhub()
+                    }
+                ) {
                     Text(stringResource(R.string.clear))
                 }
             }
 
-            // Exchange Rate
             if (exchangeKeyPreview.isNotBlank()) {
                 Text(
                     text = stringResource(R.string.settings_api_saved_preview, exchangeKeyPreview),
@@ -984,17 +933,19 @@ private fun ApiKeyManagementCard(
                 },
             )
             Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                Button(onClick = {
+                PrimaryButton(onClick = {
                     hideKeyboard()
                     onValidateAndSaveExchange(exchangeInput)
                 }) {
                     Text(stringResource(R.string.settings_api_validate_and_save))
                 }
-                TextButton(onClick = {
-                    hideKeyboard()
-                    exchangeInput = ""
-                    onClearExchange()
-                }) {
+                TextButton(
+                    onClick = {
+                        hideKeyboard()
+                        exchangeInput = ""
+                        onClearExchange()
+                    }
+                ) {
                     Text(stringResource(R.string.clear))
                 }
             }
@@ -1008,9 +959,8 @@ private fun ApiKeyManagementCard(
 
 @Composable
 private fun SecurityLevelSettingsCard(onShowSecurityLevelDialog: () -> Unit) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -1038,7 +988,7 @@ private fun SecurityLevelSettingsCard(onShowSecurityLevelDialog: () -> Unit) {
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
-            Button(
+            PrimaryButton(
                 onClick = onShowSecurityLevelDialog,
                 modifier = Modifier.fillMaxWidth(),
             ) {
@@ -1053,9 +1003,8 @@ private fun BackupSettingsCard(
     enabled: Boolean,
     onToggle: (Boolean) -> Unit,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -1108,9 +1057,8 @@ private fun BiometricSettingsCard(
     enabled: Boolean,
     onToggle: (Boolean) -> Unit,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -1160,9 +1108,8 @@ private fun BiometricSettingsCard(
 
 @Composable
 private fun AboutSettingsCard(onShowAbout: () -> Unit) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -1188,7 +1135,7 @@ private fun AboutSettingsCard(onShowAbout: () -> Unit) {
                 style = MaterialTheme.typography.bodySmall,
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
-            Button(
+            PrimaryButton(
                 onClick = onShowAbout,
                 modifier = Modifier.align(Alignment.End),
             ) {
@@ -1204,9 +1151,8 @@ private fun ApiKeyCheckCard(
     isTestingApis: Boolean,
     onTestApis: () -> Unit,
 ) {
-    Card(
-        modifier = Modifier.fillMaxWidth(),
-        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp),
+    SecondaryCard(
+        modifier = Modifier.fillMaxWidth()
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -1234,7 +1180,6 @@ private fun ApiKeyCheckCard(
                 color = MaterialTheme.colorScheme.onSurfaceVariant,
             )
 
-            // API Test Results
             if (apiTestResults.isNotEmpty()) {
                 apiTestResults.forEach { result ->
                     Row(
@@ -1273,7 +1218,7 @@ private fun ApiKeyCheckCard(
                 }
             }
 
-            Button(
+            PrimaryButton(
                 onClick = onTestApis,
                 enabled = !isTestingApis,
                 modifier = Modifier.fillMaxWidth(),

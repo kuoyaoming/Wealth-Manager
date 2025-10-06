@@ -13,6 +13,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
+import com.wealthmanager.ui.components.BannerCard
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 
@@ -26,13 +27,8 @@ fun ApiErrorBanner(
     modifier: Modifier = Modifier,
 ) {
     val (hapticManager, view) = rememberHapticFeedbackWithView()
-    Card(
-        modifier = modifier.fillMaxWidth(),
-        colors =
-            CardDefaults.cardColors(
-                containerColor = MaterialTheme.colorScheme.errorContainer,
-            ),
-        elevation = CardDefaults.cardElevation(defaultElevation = 4.dp),
+    BannerCard(
+        modifier = modifier.fillMaxWidth()
     ) {
         Row(
             modifier =

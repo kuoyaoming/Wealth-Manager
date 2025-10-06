@@ -58,8 +58,7 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 /**
- * 無障礙性審計屏幕
- * 提供全面的無障礙性檢查和建議
+ * Accessibility audit screen.
  */
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -70,7 +69,6 @@ fun AccessibilityAuditScreen(
     val accessibilityState = rememberAccessibilityState()
     val responsiveLayout = rememberResponsiveLayout()
     
-    // 模擬審計結果（實際應用中應該從ViewModel獲取）
     val auditResults = remember {
         listOf(
             AccessibilityAuditResult(
@@ -116,7 +114,7 @@ fun AccessibilityAuditScreen(
                 modifier = Modifier.statusBarsPadding(),
                 title = { 
                     Text(
-                        text = "無障礙性檢查",
+                        text = stringResource(R.string.accessibility_audit_title),
                         style = MaterialTheme.typography.headlineSmall,
                         fontWeight = FontWeight.Bold
                     )
@@ -125,7 +123,7 @@ fun AccessibilityAuditScreen(
                     IconButton(onClick = onNavigateBack) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back to Settings"
+                            contentDescription = stringResource(R.string.accessibility_audit_back)
                         )
                     }
                 }
@@ -139,17 +137,14 @@ fun AccessibilityAuditScreen(
             contentPadding = PaddingValues(responsiveLayout.paddingMedium),
             verticalArrangement = Arrangement.spacedBy(responsiveLayout.paddingMedium)
         ) {
-            // 無障礙性狀態概覽
             item {
                 AccessibilityStatusOverview(accessibilityState = accessibilityState)
             }
             
-            // 審計結果
             items(auditResults) { auditResult ->
                 AccessibilityAuditCard(auditResult = auditResult)
             }
             
-            // 改進建議
             item {
                 AccessibilityImprovementSuggestions()
             }
@@ -172,33 +167,33 @@ private fun AccessibilityStatusOverview(
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = "無障礙性狀態",
+                text = stringResource(R.string.accessibility_audit_title),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onPrimaryContainer
             )
             
             AccessibilityStatusItem(
-                label = "TalkBack",
+                label = stringResource(R.string.accessibility_audit_talkback_label),
                 enabled = accessibilityState.isTalkBackEnabled,
-                description = "Screen reader support"
+                description = stringResource(R.string.accessibility_audit_talkback_desc)
             )
             
             AccessibilityStatusItem(
-                label = "Large Font",
+                label = stringResource(R.string.accessibility_audit_large_font_label),
                 enabled = accessibilityState.isLargeFontEnabled,
-                description = "Font scale: ${String.format("%.1f", accessibilityState.fontScale)}x"
+                description = stringResource(R.string.accessibility_audit_large_font_desc, String.format("%.1f", accessibilityState.fontScale))
             )
             
             AccessibilityStatusItem(
-                label = "High Contrast",
+                label = stringResource(R.string.accessibility_audit_high_contrast_label),
                 enabled = accessibilityState.isHighContrastEnabled,
-                description = "High contrast mode"
+                description = stringResource(R.string.accessibility_audit_high_contrast_desc)
             )
             
             if (accessibilityState.isAccessibilityMode) {
                 Text(
-                    text = "檢測到無障礙性功能已啟用，應用已自動調整以提供最佳體驗。",
+                    text = stringResource(R.string.accessibility_audit_talkback_desc),
                     style = MaterialTheme.typography.bodySmall,
                     color = MaterialTheme.colorScheme.onPrimaryContainer
                 )
@@ -233,7 +228,7 @@ private fun AccessibilityStatusItem(
         
         Icon(
             imageVector = if (enabled) Icons.Default.CheckCircle else Icons.Default.Error,
-            contentDescription = if (enabled) "已啟用" else "未啟用",
+            contentDescription = if (enabled) stringResource(R.string.settings_status_enabled) else stringResource(R.string.settings_status_disabled),
             tint = if (enabled) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.error
         )
     }
@@ -252,18 +247,16 @@ private fun AccessibilityImprovementSuggestions() {
             verticalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Text(
-                text = "改進建議",
+                text = stringResource(R.string.accessibility_audit_issues_found),
                 style = MaterialTheme.typography.titleMedium,
                 fontWeight = FontWeight.Bold,
                 color = MaterialTheme.colorScheme.onSecondaryContainer
             )
             
             val suggestions = listOf(
-                "確保所有互動元素都有適當的內容描述",
-                "維持至少4.5:1的顏色對比度比例",
-                "觸控目標至少44dp x 44dp",
-                "支援鍵盤導航和焦點管理",
-                "提供語義化標籤和角色"
+                stringResource(R.string.accessibility_audit_issue_missing_content),
+                stringResource(R.string.accessibility_audit_issue_contrast),
+                stringResource(R.string.accessibility_audit_issue_keyboard)
             )
             
             suggestions.forEach { suggestion ->
