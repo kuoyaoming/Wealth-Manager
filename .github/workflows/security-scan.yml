@@ -31,9 +31,14 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         with:
           cache-read-only: false
+          gradle-home-cache-cleanup: false
+        continue-on-error: true
 
       - name: Run dependency vulnerability check
-        run: ./gradlew dependencyCheckAnalyze --no-daemon --stacktrace
+        run: |
+          echo "正在執行依賴項漏洞檢查..."
+          ./gradlew dependencyCheckAnalyze --no-daemon --stacktrace
+          echo "依賴項漏洞檢查完成"
         continue-on-error: true
 
       - name: Upload dependency check report

@@ -35,6 +35,8 @@ jobs:
         uses: gradle/actions/setup-gradle@v3
         with:
           cache-read-only: false
+          gradle-home-cache-cleanup: false
+        continue-on-error: true
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
@@ -50,10 +52,13 @@ jobs:
       - name: Compute version
         shell: bash
         run: |
+          echo "正在計算測試版本號..."
           TAG="$(git describe --tags --abbrev=0 2>/dev/null || echo v0.0.0)"
           BASE_NAME="${TAG#v}"
           SHORT_SHA="$(git rev-parse --short HEAD)"
           VERSION_NAME="${BASE_NAME}-test.${GITHUB_RUN_NUMBER}+${SHORT_SHA}"
+          echo "測試版本名稱: $VERSION_NAME"
+          echo "版本代碼: ${GITHUB_RUN_NUMBER}"
           echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
