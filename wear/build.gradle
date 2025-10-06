@@ -76,7 +76,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
 
     // Compose for Wear OS
-    implementation platform('androidx.compose:compose-bom:2025.01.01')
+    implementation platform('androidx.compose:compose-bom:2025.09.01')
     implementation 'androidx.wear.compose:compose-material:1.5.2'
     implementation 'androidx.wear.compose:compose-foundation:1.5.2'
     implementation 'androidx.wear.compose:compose-navigation:1.5.2'
