@@ -195,18 +195,19 @@ jobs:
       - name: Check Google Play service account configuration
         run: |
           echo "檢查 Google Play 服務帳戶配置..."
-          if [ -z "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" ]; then
+          SERVICE_ACCOUNT_JSON="${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}"
+          if [ -z "${SERVICE_ACCOUNT_JSON}" ]; then
             echo "❌ PLAY_SERVICE_ACCOUNT_JSON secret 未設定"
             echo "請在 GitHub repository settings > Secrets and variables > Actions 中設定此 secret"
             exit 1
           else
             echo "✅ PLAY_SERVICE_ACCOUNT_JSON secret 已設定"
             # 驗證 JSON 格式
-            echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" | jq . > /dev/null 2>&1
+            echo "${SERVICE_ACCOUNT_JSON}" | jq . > /dev/null 2>&1
             if [ $? -eq 0 ]; then
               echo "✅ JSON 格式有效"
               # 檢查必要的欄位
-              if echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" | jq -e '.type' > /dev/null 2>&1; then
+              if echo "${SERVICE_ACCOUNT_JSON}" | jq -e '.type' > /dev/null 2>&1; then
                 echo "✅ 服務帳戶類型欄位存在"
               else
                 echo "❌ 服務帳戶類型欄位缺失"
@@ -242,7 +243,7 @@ jobs:
             echo "❌ Google Play Internal Test 上傳失敗"
             echo "上傳結果: ${{ steps.upload_play.outcome }}"
             echo ""
-            echo "可能的失敗原因:"
+            echo "🔍 2025 年 Google Play 政策相關的失敗原因:"
             echo "1. 🔐 服務帳戶權限不足 - 檢查 Google Play Console 中的服務帳戶權限"
             echo "2. 📦 AAB 檔案格式問題 - 檢查 AAB 是否正確構建"
             echo "3. 🔢 版本代碼衝突 - 檢查是否已有相同版本代碼的發布"
@@ -251,10 +252,18 @@ jobs:
             echo "6. 🔑 服務帳戶 JSON 格式錯誤 - 檢查 secret 設定"
             echo "7. 📱 應用程式包名不匹配 - 檢查 packageName 設定"
             echo ""
+            echo "🚨 2025 年新政策要求檢查:"
+            echo "8. 📄 16KB 記憶體分頁支援 - 確保應用支援 Android 15 的 16KB 分頁 (2025-11-01 生效)"
+            echo "9. 📸 照片/影片權限政策 - 檢查是否使用 READ_MEDIA_IMAGES/VIDEO 權限 (2025-01-22 生效)"
+            echo "10. 🏥 健康資料政策 - 檢查是否處理健康資料 (2025-03-05 生效)"
+            echo "11. 🔒 隱私政策更新 - 確保符合最新的隱私保護要求"
+            echo ""
             echo "建議的檢查步驟:"
             echo "1. 檢查 Google Play Console 中的應用程式設定"
             echo "2. 確認服務帳戶有正確的權限"
             echo "3. 檢查是否有相同版本代碼的發布"
             echo "4. 驗證 AAB 檔案是否正確生成"
+            echo "5. 確認應用符合 2025 年新政策要求"
+            echo "6. 檢查 Google Play Console 的公告和政策更新"
             exit 1
           fi
