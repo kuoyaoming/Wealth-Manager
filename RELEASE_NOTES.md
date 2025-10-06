@@ -2,11 +2,51 @@
 
 This document provides detailed information about each release of Wealth Manager, including new features, improvements, and bug fixes.
 
-## 📱 Latest Release: v1.6.0
+## 📱 Latest Release: v1.8.0
+
+**Release Date**: January 15, 2025  
+**Version Code**: 180  
+**Target SDK**: Android 16 (API 36)
+
+### 🎯 What's New
+
+#### 🎯 **Total Asset Widget Development**
+- Complete minimalist total asset widget implementation
+- Enhanced widget privacy settings and configuration
+- Improved widget syntax checking and validation
+- Better widget performance and reliability
+- Streamlined widget design for better user experience
+
+#### 🔧 **CI/CD Improvements**
+- Enhanced GitHub Actions workflow with Chinese prompts
+- Improved error handling and security scanning
+- Fixed GitHub Actions version compatibility issues
+- Optimized CI scripts for better stability
+- Enhanced build configuration management
+
+#### 🛠️ **Developer Tools**
+- Added comprehensive widget syntax checking script
+- Enhanced build configuration and dependency management
+- Improved error reporting and debugging capabilities
+- Better development workflow and tooling
+
+### 🔄 **Migration Guide**
+
+No migration required for existing users. The app will automatically benefit from improved widget functionality and enhanced stability.
+
+### 📋 **System Requirements**
+
+- **Android**: 14+ (API 34+)
+- **RAM**: 4GB minimum
+- **Storage**: 100MB free space
+- **Biometric**: Fingerprint or face recognition supported
+
+---
+
+## 📱 Release v1.6.0
 
 **Release Date**: January 4, 2025  
-**Version Code**: 160  
-**Target SDK**: Android 16 (API 36)
+**Version Code**: 160
 
 ### 🎯 What's New
 
@@ -342,7 +382,8 @@ This is the initial development version. Users should upgrade to v1.0.0 or later
 
 | Version | Release Date | Key Features | Status |
 |---------|-------------|--------------|---------|
-| 1.6.0   | 2025-01-04  | Google Password Manager integration, enhanced UI | ✅ Current |
+| 1.8.0   | 2025-01-15  | Total Asset Widget, CI/CD improvements, developer tools | ✅ Current |
+| 1.6.0   | 2025-01-04  | Google Password Manager integration, enhanced UI | ✅ Supported |
 | 1.4.7   | 2025-10-02  | API fixes, security enhancements | ✅ Supported |
 | 1.4.6   | 2025-10-01  | Release build fixes, ProGuard rules | ✅ Supported |
 | 1.4.5   | 2025-10-01  | Android 2025 compliance, Splash Screen | ✅ Supported |

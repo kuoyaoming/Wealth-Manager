@@ -12,6 +12,50 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Code of Conduct
 - Changelog documentation
 
+## [1.8.0] - 2025-01-15
+
+### Added
+- 🎯 **Total Asset Widget Development**:
+  - Complete minimalist total asset widget implementation
+  - Enhanced widget privacy settings and configuration
+  - Improved widget syntax checking and validation
+  - Better widget performance and reliability
+- 🔧 **CI/CD Improvements**:
+  - Enhanced GitHub Actions workflow with Chinese prompts
+  - Improved error handling and security scanning
+  - Fixed GitHub Actions version compatibility issues
+  - Optimized CI scripts for better stability
+- 🛠️ **Developer Tools**:
+  - Added comprehensive widget syntax checking script
+  - Enhanced build configuration and dependency management
+  - Improved error reporting and debugging capabilities
+
+### Changed
+- 📱 **Widget System**:
+  - Streamlined total asset widget design
+  - Enhanced privacy controls for widget data
+  - Improved widget rendering performance
+- 🔧 **Build System**:
+  - Updated GitHub Actions dependencies and workflows
+  - Enhanced CI/CD pipeline stability
+  - Improved build configuration management
+
+### Fixed
+- 🐛 **CI/CD Issues**:
+  - Resolved GitHub Actions version and logic issues
+  - Fixed actions/upload-artifact version compatibility
+  - Corrected workflow name field case sensitivity
+  - Enhanced error handling in CI processes
+- 🛠️ **Build Configuration**:
+  - Fixed dependency version conflicts
+  - Improved build stability and reliability
+  - Enhanced error reporting mechanisms
+
+### Dependencies
+- 📦 Updated GitHub Actions dependencies for better compatibility
+- 📦 Enhanced security scanning and error handling
+- 📦 Improved build tool configuration
+
 ## [1.6.0] - 2025-01-04
 
 ### Added
