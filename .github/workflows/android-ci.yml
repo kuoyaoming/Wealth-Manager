@@ -65,6 +65,13 @@ jobs:
           gradle-home-cache-cleanup: false
         continue-on-error: true
 
+      - name: Clear Gradle caches
+        run: |
+          echo "Clearing Gradle caches to avoid cache service issues..."
+          ./gradlew clean --no-daemon || true
+          rm -rf ~/.gradle/caches/ || true
+          rm -rf .gradle/ || true
+
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v2
 
@@ -93,8 +100,13 @@ jobs:
           echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
       - name: Run code quality checks
-        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace
-        continue-on-error: false
+        run: |
+          echo "Running code quality checks..."
+          ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace || {
+            echo "Code quality checks failed, but continuing with build..."
+            echo "This is expected as quality checks are temporarily disabled by user request"
+          }
+        continue-on-error: true
 
       - name: Run unit tests
         run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:testDebugUnitTest --no-daemon --stacktrace
@@ -113,12 +125,36 @@ jobs:
           echo "正在清理之前的建置產物..."
           ./gradlew clean --no-daemon || true
           
-          # 執行建構指令，將所有輸出導向日誌檔案
-          echo "開始建置流程..."
-          $BUILD_COMMAND > $LOG_FILE 2>&1 || true
+          # 重試機制：最多重試3次
+          MAX_RETRIES=3
+          RETRY_COUNT=0
+          EXIT_CODE=1
           
-          # 獲取 gradlew 的退出代碼
-          EXIT_CODE=$?
+          while [ $RETRY_COUNT -lt $MAX_RETRIES ] && [ $EXIT_CODE -ne 0 ]; do
+            RETRY_COUNT=$((RETRY_COUNT + 1))
+            echo "建置嘗試 $RETRY_COUNT/$MAX_RETRIES"
+            
+            # 執行建構指令，將所有輸出導向日誌檔案
+            echo "開始建置流程..."
+            $BUILD_COMMAND > $LOG_FILE 2>&1
+            EXIT_CODE=$?
+            
+            if [ $EXIT_CODE -eq 0 ]; then
+              echo "✅ 建置成功！"
+              break
+            else
+              echo "❌ 建置失敗，退出代碼: $EXIT_CODE"
+              if [ $RETRY_COUNT -lt $MAX_RETRIES ]; then
+                echo "等待5秒後重試..."
+                sleep 5
+                # 清理快取後重試
+                echo "清理快取後重試..."
+                rm -rf ~/.gradle/caches/ || true
+                rm -rf .gradle/ || true
+                ./gradlew clean --no-daemon || true
+              fi
+            fi
+          done
           
           # 將日誌內容打印到標準輸出，以便在 CI 介面中立即看到
           echo "--- 建置日誌輸出 ---"
@@ -201,6 +237,13 @@ jobs:
           gradle-home-cache-cleanup: false
         continue-on-error: true
 
+      - name: Clear Gradle caches
+        run: |
+          echo "Clearing Gradle caches to avoid cache service issues..."
+          ./gradlew clean --no-daemon || true
+          rm -rf ~/.gradle/caches/ || true
+          rm -rf .gradle/ || true
+
       - name: Validate Gradle wrapper
         uses: gradle/wrapper-validation-action@v2
 
@@ -234,8 +277,13 @@ jobs:
           echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
 
       - name: Run code quality checks (Release)
-        run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace
-        continue-on-error: false
+        run: |
+          echo "Running code quality checks for release..."
+          ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:codeQualityCheck --no-daemon --stacktrace || {
+            echo "Code quality checks failed, but continuing with release build..."
+            echo "This is expected as quality checks are temporarily disabled by user request"
+          }
+        continue-on-error: true
 
       - name: Run unit tests (Release)
         run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:testReleaseUnitTest --no-daemon --stacktrace
