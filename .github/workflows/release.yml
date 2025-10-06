@@ -195,30 +195,68 @@ jobs:
       - name: Check Google Play service account configuration
         run: |
           echo "檢查 Google Play 服務帳戶配置..."
-          SERVICE_ACCOUNT_JSON="${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}"
-          if [ -z "${SERVICE_ACCOUNT_JSON}" ]; then
-            echo "❌ PLAY_SERVICE_ACCOUNT_JSON secret 未設定"
+          
+          # 安全地讀取 secret 並寫入臨時文件
+          echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" > /tmp/service_account.json
+          
+          if [ ! -s /tmp/service_account.json ]; then
+            echo "❌ PLAY_SERVICE_ACCOUNT_JSON secret 未設定或為空"
             echo "請在 GitHub repository settings > Secrets and variables > Actions 中設定此 secret"
             exit 1
-          else
-            echo "✅ PLAY_SERVICE_ACCOUNT_JSON secret 已設定"
-            # 驗證 JSON 格式
-            echo "${SERVICE_ACCOUNT_JSON}" | jq . > /dev/null 2>&1
-            if [ $? -eq 0 ]; then
-              echo "✅ JSON 格式有效"
-              # 檢查必要的欄位
-              if echo "${SERVICE_ACCOUNT_JSON}" | jq -e '.type' > /dev/null 2>&1; then
-                echo "✅ 服務帳戶類型欄位存在"
-              else
-                echo "❌ 服務帳戶類型欄位缺失"
-                exit 1
-              fi
+          fi
+          
+          echo "✅ PLAY_SERVICE_ACCOUNT_JSON secret 已設定"
+          
+          # 檢查文件大小
+          FILE_SIZE=$(wc -c < /tmp/service_account.json)
+          echo "JSON 文件大小: ${FILE_SIZE} bytes"
+          
+          # 驗證 JSON 格式
+          if jq . /tmp/service_account.json > /dev/null 2>&1; then
+            echo "✅ JSON 格式有效"
+            
+            # 檢查必要的欄位
+            if jq -e '.type' /tmp/service_account.json > /dev/null 2>&1; then
+              echo "✅ 服務帳戶類型欄位存在"
+              ACCOUNT_TYPE=$(jq -r '.type' /tmp/service_account.json)
+              echo "服務帳戶類型: ${ACCOUNT_TYPE}"
             else
-              echo "❌ JSON 格式無效"
-              echo "請檢查 PLAY_SERVICE_ACCOUNT_JSON secret 的格式是否正確"
+              echo "❌ 服務帳戶類型欄位缺失"
+              echo "JSON 內容預覽:"
+              head -c 200 /tmp/service_account.json
               exit 1
             fi
+            
+            # 檢查其他必要欄位
+            if jq -e '.project_id' /tmp/service_account.json > /dev/null 2>&1; then
+              PROJECT_ID=$(jq -r '.project_id' /tmp/service_account.json)
+              echo "✅ 專案 ID: ${PROJECT_ID}"
+            else
+              echo "❌ 專案 ID 欄位缺失"
+              exit 1
+            fi
+            
+          else
+            echo "❌ JSON 格式無效"
+            echo "JSON 內容預覽 (前 200 字符):"
+            head -c 200 /tmp/service_account.json
+            echo ""
+            echo "請檢查 PLAY_SERVICE_ACCOUNT_JSON secret 的格式是否正確"
+            echo "常見問題:"
+            echo "1. JSON 文件包含換行符或特殊字符"
+            echo "2. JSON 格式不正確 (缺少引號、括號等)"
+            echo "3. 文件編碼問題"
+            exit 1
           fi
+          
+          # 清理臨時文件
+          rm -f /tmp/service_account.json
+
+      - name: Prepare service account JSON for upload
+        run: |
+          echo "準備服務帳戶 JSON 文件..."
+          echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" > /tmp/service_account_upload.json
+          echo "✅ 服務帳戶 JSON 文件已準備完成"
 
       - name: Upload AAB to Google Play Internal Test
         id: upload_play
