@@ -59,10 +59,12 @@ jobs:
           echo "正在計算發布版本號..."
           TAG="$(git describe --tags --abbrev=0)"
           VERSION_NAME="${TAG#v}"
+          # Ensure version code is greater than 24
+          VERSION_CODE=$((GITHUB_RUN_NUMBER + 25))
           echo "發布版本名稱: $VERSION_NAME"
-          echo "版本代碼: ${GITHUB_RUN_NUMBER}"
+          echo "版本代碼: $VERSION_CODE (base: ${GITHUB_RUN_NUMBER} + 25)"
           echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-          echo "WM_VERSION_CODE=${GITHUB_RUN_NUMBER}" >> $GITHUB_ENV
+          echo "WM_VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
 
       - name: Build release bundles and APK
         env:
@@ -151,9 +153,10 @@ jobs:
         run: |
           echo "正在計算內部測試版本號..."
           VERSION_NAME="1.8.0-internal"
-          VERSION_CODE="${GITHUB_RUN_NUMBER}"
+          # Ensure version code is greater than 24
+          VERSION_CODE=$((GITHUB_RUN_NUMBER + 25))
           echo "內部測試版本名稱: $VERSION_NAME"
-          echo "版本代碼: $VERSION_CODE"
+          echo "版本代碼: $VERSION_CODE (base: ${GITHUB_RUN_NUMBER} + 25)"
           echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
           echo "WM_VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
 
@@ -170,7 +173,54 @@ jobs:
             --stacktrace --no-daemon
           echo "構建完成"
 
+      - name: Verify AAB file exists before upload
+        run: |
+          echo "檢查 AAB 檔案是否存在..."
+          if [ -f "app/build/outputs/bundle/release/app-release.aab" ]; then
+            echo "✅ AAB 檔案存在: app/build/outputs/bundle/release/app-release.aab"
+            ls -la app/build/outputs/bundle/release/app-release.aab
+          else
+            echo "❌ AAB 檔案不存在: app/build/outputs/bundle/release/app-release.aab"
+            echo "可用的檔案:"
+            ls -la app/build/outputs/bundle/release/ || echo "目錄不存在"
+            exit 1
+          fi
+
+      - name: Install jq for JSON validation
+        run: |
+          echo "安裝 jq 工具..."
+          sudo apt-get update
+          sudo apt-get install -y jq
+
+      - name: Check Google Play service account configuration
+        run: |
+          echo "檢查 Google Play 服務帳戶配置..."
+          if [ -z "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" ]; then
+            echo "❌ PLAY_SERVICE_ACCOUNT_JSON secret 未設定"
+            echo "請在 GitHub repository settings > Secrets and variables > Actions 中設定此 secret"
+            exit 1
+          else
+            echo "✅ PLAY_SERVICE_ACCOUNT_JSON secret 已設定"
+            # 驗證 JSON 格式
+            echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" | jq . > /dev/null 2>&1
+            if [ $? -eq 0 ]; then
+              echo "✅ JSON 格式有效"
+              # 檢查必要的欄位
+              if echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" | jq -e '.type' > /dev/null 2>&1; then
+                echo "✅ 服務帳戶類型欄位存在"
+              else
+                echo "❌ 服務帳戶類型欄位缺失"
+                exit 1
+              fi
+            else
+              echo "❌ JSON 格式無效"
+              echo "請檢查 PLAY_SERVICE_ACCOUNT_JSON secret 的格式是否正確"
+              exit 1
+            fi
+          fi
+
       - name: Upload AAB to Google Play Internal Test
+        id: upload_play
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
@@ -178,3 +228,33 @@ jobs:
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: internal
           status: completed
+        continue-on-error: true
+
+      - name: Check upload result
+        run: |
+          echo "檢查上傳結果..."
+          if [ "${{ steps.upload_play.outcome }}" = "success" ]; then
+            echo "✅ Google Play Internal Test 上傳成功"
+            echo "版本名稱: ${{ env.WM_VERSION_NAME }}"
+            echo "版本代碼: ${{ env.WM_VERSION_CODE }}"
+            echo "軌道: internal"
+          else
+            echo "❌ Google Play Internal Test 上傳失敗"
+            echo "上傳結果: ${{ steps.upload_play.outcome }}"
+            echo ""
+            echo "可能的失敗原因:"
+            echo "1. 🔐 服務帳戶權限不足 - 檢查 Google Play Console 中的服務帳戶權限"
+            echo "2. 📦 AAB 檔案格式問題 - 檢查 AAB 是否正確構建"
+            echo "3. 🔢 版本代碼衝突 - 檢查是否已有相同版本代碼的發布"
+            echo "4. 🌐 網路連線問題 - 檢查 GitHub Actions 網路連線"
+            echo "5. ⚙️  Google Play Console 設定問題 - 檢查應用程式設定"
+            echo "6. 🔑 服務帳戶 JSON 格式錯誤 - 檢查 secret 設定"
+            echo "7. 📱 應用程式包名不匹配 - 檢查 packageName 設定"
+            echo ""
+            echo "建議的檢查步驟:"
+            echo "1. 檢查 Google Play Console 中的應用程式設定"
+            echo "2. 確認服務帳戶有正確的權限"
+            echo "3. 檢查是否有相同版本代碼的發布"
+            echo "4. 驗證 AAB 檔案是否正確生成"
+            exit 1
+          fi
