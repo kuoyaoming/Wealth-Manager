@@ -129,14 +129,14 @@ jobs:
 
       - name: Upload app artifacts
         if: success() && env.BUILD_EXIT_CODE == '0'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
           name: app-debug-apk
           path: app/build/outputs/apk/debug/*.apk
 
       - name: Upload wear artifacts
         if: success() && env.BUILD_EXIT_CODE == '0'
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
           name: wear-debug-apk
           path: wear/build/outputs/apk/debug/*.apk
@@ -147,7 +147,7 @@ jobs:
           
       - name: Upload Error Log (on failure)
         if: failure()
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
           name: build-failure-log
           path: ${{ env.BUILD_LOG_PATH }} # 使用先前步驟設定的路徑
@@ -220,7 +220,7 @@ jobs:
         run: ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:bundleRelease :app:assembleRelease --stacktrace
 
       - name: Upload release bundles
-        uses: actions/upload-artifact@v5
+        uses: actions/upload-artifact@v4
         with:
           name: app-release-bundle
           path: |
