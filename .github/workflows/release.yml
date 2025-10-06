@@ -1,104 +1,108 @@
-name: Release Build and Deploy
+name: Release
 
 on:
   push:
     tags:
       - 'v*.*.*'
-    branches:
-      - main
 
 permissions:
   contents: write
-  packages: write
+
+env:
+  JAVA_VERSION: '17'
+  ANDROID_SDK_VERSION: '35'
+  BUILD_TOOLS_VERSION: '35.0.0'
 
 jobs:
-  release:
+  setup:
     runs-on: ubuntu-latest
-    timeout-minutes: 60
-    # 只有標籤推送時才創建GitHub Release
-    if: startsWith(github.ref, 'refs/tags/')
+    outputs:
+      version-name: ${{ steps.version.outputs.name }}
+      version-code: ${{ steps.version.outputs.code }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
 
-      - name: Set up JDK 17
+      - name: Set Version
+        id: version
+        run: |
+          TAG=$(git describe --tags --abbrev=0)
+          VERSION_NAME=${TAG#v}
+          VERSION_CODE=$((GITHUB_RUN_NUMBER + 25))
+          echo "name=$VERSION_NAME" >> $GITHUB_OUTPUT
+          echo "code=$VERSION_CODE" >> $GITHUB_OUTPUT
+
+  build:
+    needs: setup
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    strategy:
+      matrix:
+        build-type: [release, internal]
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Setup Java
         uses: actions/setup-java@v5
         with:
           distribution: temurin
-          java-version: '17'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          cache-read-only: false
-        continue-on-error: true
+          java-version: ${{ env.JAVA_VERSION }}
 
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Android SDK components
+      - name: Install Android SDK
         run: |
           yes | sdkmanager --licenses
-          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.0"
+          sdkmanager --install "platform-tools" "platforms;android-${{ env.ANDROID_SDK_VERSION }}" "build-tools;${{ env.BUILD_TOOLS_VERSION }}"
 
-      - name: Grant Gradle permissions
-        run: chmod +x gradlew
-
-      - name: Decode Android keystore
+      - name: Setup Keystore
         if: env.ANDROID_KEYSTORE_BASE64 != ''
-        run: |
-          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > keystore.jks
+        run: echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > keystore.jks
         env:
           ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
 
-      - name: Compute version
-        shell: bash
+      - name: Set Build Version
         run: |
-          echo "正在計算發布版本號..."
-          TAG="$(git describe --tags --abbrev=0)"
-          VERSION_NAME="${TAG#v}"
-          # Ensure version code is greater than 24
-          VERSION_CODE=$((GITHUB_RUN_NUMBER + 25))
-          echo "發布版本名稱: $VERSION_NAME"
-          echo "版本代碼: $VERSION_CODE (base: ${GITHUB_RUN_NUMBER} + 25)"
+          if [ "${{ matrix.build-type }}" = "internal" ]; then
+            VERSION_NAME="1.8.0-internal"
+          else
+            VERSION_NAME="${{ needs.setup.outputs.version-name }}"
+          fi
           echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-          echo "WM_VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
+          echo "WM_VERSION_CODE=${{ needs.setup.outputs.version-code }}" >> $GITHUB_ENV
 
-      - name: Build release bundles and APK
+      - name: Build
         env:
           ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/keystore.jks
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          echo "開始構建發布版本..."
-          ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} \
-            :app:bundleRelease :app:assembleRelease \
-            --stacktrace --no-daemon
-          echo "構建完成"
+          if [ "${{ matrix.build-type }}" = "release" ]; then
+            ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} \
+              :app:bundleRelease :app:assembleRelease --no-daemon
+          else
+            ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} \
+              :app:bundleRelease --no-daemon
+          fi
 
-      - name: Compute checksums
+      - name: Generate Checksums
+        if: matrix.build-type == 'release'
         run: |
-          set -e
           cd app
-          echo "正在生成 SHA256 校驗碼..."
           sha256sum build/outputs/bundle/release/*.aab > SHA256SUMS.txt
           sha256sum build/outputs/apk/release/*.apk >> SHA256SUMS.txt
-          if [ -f build/outputs/mapping/release/mapping.txt ]; then
+          [ -f build/outputs/mapping/release/mapping.txt ] && \
             sha256sum build/outputs/mapping/release/mapping.txt >> SHA256SUMS.txt
-          fi
-          echo "校驗碼生成完成:"
-          cat SHA256SUMS.txt
 
-      - name: Create GitHub Release
+      - name: Create Release
+        if: matrix.build-type == 'release'
         uses: softprops/action-gh-release@v2.1.0
         with:
           tag_name: ${{ github.ref_name }}
           name: v${{ env.WM_VERSION_NAME }}
-          draft: false
-          prerelease: false
           files: |
             app/build/outputs/bundle/release/*.aab
             app/build/outputs/apk/release/*.apk
@@ -107,159 +111,8 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-  internal_test:
-    runs-on: ubuntu-latest
-    timeout-minutes: 60
-    # 只有main分支推送時才部署到Internal Test
-    if: startsWith(github.ref, 'refs/tags/')
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-        with:
-          fetch-depth: 0
-
-      - name: Set up JDK 17
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: '17'
-
-      - name: Setup Gradle
-        uses: gradle/actions/setup-gradle@v3
-        with:
-          cache-read-only: false
-        continue-on-error: true
-
-      - name: Setup Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Install Android SDK components
-        run: |
-          yes | sdkmanager --licenses
-          sdkmanager --install "platform-tools" "platforms;android-35" "build-tools;35.0.0"
-
-      - name: Grant Gradle permissions
-        run: chmod +x gradlew
-
-      - name: Decode Android keystore
-        if: env.ANDROID_KEYSTORE_BASE64 != ''
-        run: |
-          echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > keystore.jks
-        env:
-          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
-
-      - name: Compute version for internal test
-        shell: bash
-        run: |
-          echo "正在計算內部測試版本號..."
-          VERSION_NAME="1.8.0-internal"
-          # Ensure version code is greater than 24
-          VERSION_CODE=$((GITHUB_RUN_NUMBER + 25))
-          echo "內部測試版本名稱: $VERSION_NAME"
-          echo "版本代碼: $VERSION_CODE (base: ${GITHUB_RUN_NUMBER} + 25)"
-          echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-          echo "WM_VERSION_CODE=$VERSION_CODE" >> $GITHUB_ENV
-
-      - name: Build release bundle for internal test
-        env:
-          ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/keystore.jks
-          ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-          ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-          ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-        run: |
-          echo "開始構建內部測試版本..."
-          ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} \
-            :app:bundleRelease \
-            --stacktrace --no-daemon
-          echo "構建完成"
-
-      - name: Verify AAB file exists before upload
-        run: |
-          echo "檢查 AAB 檔案是否存在..."
-          if [ -f "app/build/outputs/bundle/release/app-release.aab" ]; then
-            echo "✅ AAB 檔案存在: app/build/outputs/bundle/release/app-release.aab"
-            ls -la app/build/outputs/bundle/release/app-release.aab
-          else
-            echo "❌ AAB 檔案不存在: app/build/outputs/bundle/release/app-release.aab"
-            echo "可用的檔案:"
-            ls -la app/build/outputs/bundle/release/ || echo "目錄不存在"
-            exit 1
-          fi
-
-      - name: Install jq for JSON validation
-        run: |
-          echo "安裝 jq 工具..."
-          sudo apt-get update
-          sudo apt-get install -y jq
-
-      - name: Check Google Play service account configuration
-        run: |
-          echo "檢查 Google Play 服務帳戶配置..."
-          
-          # 安全地讀取 secret 並寫入臨時文件
-          echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" > /tmp/service_account.json
-          
-          if [ ! -s /tmp/service_account.json ]; then
-            echo "❌ PLAY_SERVICE_ACCOUNT_JSON secret 未設定或為空"
-            echo "請在 GitHub repository settings > Secrets and variables > Actions 中設定此 secret"
-            exit 1
-          fi
-          
-          echo "✅ PLAY_SERVICE_ACCOUNT_JSON secret 已設定"
-          
-          # 檢查文件大小
-          FILE_SIZE=$(wc -c < /tmp/service_account.json)
-          echo "JSON 文件大小: ${FILE_SIZE} bytes"
-          
-          # 驗證 JSON 格式
-          if jq . /tmp/service_account.json > /dev/null 2>&1; then
-            echo "✅ JSON 格式有效"
-            
-            # 檢查必要的欄位
-            if jq -e '.type' /tmp/service_account.json > /dev/null 2>&1; then
-              echo "✅ 服務帳戶類型欄位存在"
-              ACCOUNT_TYPE=$(jq -r '.type' /tmp/service_account.json)
-              echo "服務帳戶類型: ${ACCOUNT_TYPE}"
-            else
-              echo "❌ 服務帳戶類型欄位缺失"
-              echo "JSON 內容預覽:"
-              head -c 200 /tmp/service_account.json
-              exit 1
-            fi
-            
-            # 檢查其他必要欄位
-            if jq -e '.project_id' /tmp/service_account.json > /dev/null 2>&1; then
-              PROJECT_ID=$(jq -r '.project_id' /tmp/service_account.json)
-              echo "✅ 專案 ID: ${PROJECT_ID}"
-            else
-              echo "❌ 專案 ID 欄位缺失"
-              exit 1
-            fi
-            
-          else
-            echo "❌ JSON 格式無效"
-            echo "JSON 內容預覽 (前 200 字符):"
-            head -c 200 /tmp/service_account.json
-            echo ""
-            echo "請檢查 PLAY_SERVICE_ACCOUNT_JSON secret 的格式是否正確"
-            echo "常見問題:"
-            echo "1. JSON 文件包含換行符或特殊字符"
-            echo "2. JSON 格式不正確 (缺少引號、括號等)"
-            echo "3. 文件編碼問題"
-            exit 1
-          fi
-          
-          # 清理臨時文件
-          rm -f /tmp/service_account.json
-
-      - name: Prepare service account JSON for upload
-        run: |
-          echo "準備服務帳戶 JSON 文件..."
-          echo "${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}" > /tmp/service_account_upload.json
-          echo "✅ 服務帳戶 JSON 文件已準備完成"
-
-      - name: Upload AAB to Google Play Internal Test
-        id: upload_play
+      - name: Upload to Play Console
+        if: matrix.build-type == 'internal'
         uses: r0adkll/upload-google-play@v1
         with:
           serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
@@ -267,41 +120,3 @@ jobs:
           releaseFiles: app/build/outputs/bundle/release/app-release.aab
           track: internal
           status: completed
-        continue-on-error: true
-
-      - name: Check upload result
-        run: |
-          echo "檢查上傳結果..."
-          if [ "${{ steps.upload_play.outcome }}" = "success" ]; then
-            echo "✅ Google Play Internal Test 上傳成功"
-            echo "版本名稱: ${{ env.WM_VERSION_NAME }}"
-            echo "版本代碼: ${{ env.WM_VERSION_CODE }}"
-            echo "軌道: internal"
-          else
-            echo "❌ Google Play Internal Test 上傳失敗"
-            echo "上傳結果: ${{ steps.upload_play.outcome }}"
-            echo ""
-            echo "🔍 2025 年 Google Play 政策相關的失敗原因:"
-            echo "1. 🔐 服務帳戶權限不足 - 檢查 Google Play Console 中的服務帳戶權限"
-            echo "2. 📦 AAB 檔案格式問題 - 檢查 AAB 是否正確構建"
-            echo "3. 🔢 版本代碼衝突 - 檢查是否已有相同版本代碼的發布"
-            echo "4. 🌐 網路連線問題 - 檢查 GitHub Actions 網路連線"
-            echo "5. ⚙️  Google Play Console 設定問題 - 檢查應用程式設定"
-            echo "6. 🔑 服務帳戶 JSON 格式錯誤 - 檢查 secret 設定"
-            echo "7. 📱 應用程式包名不匹配 - 檢查 packageName 設定"
-            echo ""
-            echo "🚨 2025 年新政策要求檢查:"
-            echo "8. 📄 16KB 記憶體分頁支援 - 確保應用支援 Android 15 的 16KB 分頁 (2025-11-01 生效)"
-            echo "9. 📸 照片/影片權限政策 - 檢查是否使用 READ_MEDIA_IMAGES/VIDEO 權限 (2025-01-22 生效)"
-            echo "10. 🏥 健康資料政策 - 檢查是否處理健康資料 (2025-03-05 生效)"
-            echo "11. 🔒 隱私政策更新 - 確保符合最新的隱私保護要求"
-            echo ""
-            echo "建議的檢查步驟:"
-            echo "1. 檢查 Google Play Console 中的應用程式設定"
-            echo "2. 確認服務帳戶有正確的權限"
-            echo "3. 檢查是否有相同版本代碼的發布"
-            echo "4. 驗證 AAB 檔案是否正確生成"
-            echo "5. 確認應用符合 2025 年新政策要求"
-            echo "6. 檢查 Google Play Console 的公告和政策更新"
-            exit 1
-          fi
