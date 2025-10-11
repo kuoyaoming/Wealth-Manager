@@ -18,9 +18,8 @@ interface ExchangeRateApi {
      * @param baseCurrency Base currency code (e.g., "USD", "TWD")
      * @return [ExchangeRateResponse] containing exchange rate data
      */
-    @GET("v6/{apiKey}/latest/{baseCurrency}")
+    @GET("exchangerate/latest/{baseCurrency}")
     suspend fun getExchangeRate(
-        @Path("apiKey") apiKey: String,
         @Path("baseCurrency") baseCurrency: String,
     ): ExchangeRateResponse
 }

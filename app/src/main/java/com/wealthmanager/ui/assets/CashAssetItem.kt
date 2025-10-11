@@ -13,21 +13,19 @@ import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import com.wealthmanager.ui.components.CardTitle
-import com.wealthmanager.ui.components.SecondaryText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
+import com.wealthmanager.ui.components.CardTitle
+import com.wealthmanager.ui.components.SecondaryText
 import com.wealthmanager.utils.MoneyFormatter
 import com.wealthmanager.utils.rememberMoneyText
 
@@ -55,27 +53,29 @@ fun CashAssetItem(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 CardTitle(
-                    text = stringResource(
-                        R.string.assets_cash_original_amount,
-                        rememberMoneyText(
-                            asset.amount,
+                    text =
+                        stringResource(
+                            R.string.assets_cash_original_amount,
+                            rememberMoneyText(
+                                asset.amount,
+                                asset.currency,
+                                style = MoneyFormatter.Style.CurrencyCode,
+                                moneyContext = MoneyFormatter.MoneyContext.CashAmount,
+                            ),
                             asset.currency,
-                            style = MoneyFormatter.Style.CurrencyCode,
-                            moneyContext = MoneyFormatter.MoneyContext.CashAmount,
                         ),
-                        asset.currency,
-                    )
                 )
                 SecondaryText(
-                    text = stringResource(
-                        R.string.assets_cash_twd_value,
-                        rememberMoneyText(
-                            asset.twdEquivalent,
-                            "TWD",
-                            style = MoneyFormatter.Style.CurrencyCode,
-                            moneyContext = MoneyFormatter.MoneyContext.Total,
+                    text =
+                        stringResource(
+                            R.string.assets_cash_twd_value,
+                            rememberMoneyText(
+                                asset.twdEquivalent,
+                                "TWD",
+                                style = MoneyFormatter.Style.CurrencyCode,
+                                moneyContext = MoneyFormatter.MoneyContext.Total,
+                            ),
                         ),
-                    )
                 )
             }
 

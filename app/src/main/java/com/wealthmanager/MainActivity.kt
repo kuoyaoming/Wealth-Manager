@@ -17,11 +17,11 @@ import androidx.core.view.WindowCompat
 import androidx.core.view.WindowInsetsControllerCompat
 import androidx.fragment.app.FragmentActivity
 import com.wealthmanager.data.FirstLaunchManager
-import com.wealthmanager.ui.performance.ModernFrameRateManager
-import com.wealthmanager.ui.performance.ContentBasedFrameRateOptimizer
 import com.wealthmanager.ui.about.AboutDialog
 import com.wealthmanager.ui.navigation.WealthManagerNavigation
 import com.wealthmanager.ui.onboarding.OnboardingFlow
+import com.wealthmanager.ui.performance.ContentBasedFrameRateOptimizer
+import com.wealthmanager.ui.performance.ModernFrameRateManager
 import com.wealthmanager.ui.responsive.LocalWindowWidthSizeClass
 import com.wealthmanager.ui.theme.WealthManagerTheme
 import com.wealthmanager.utils.StandardLogger
@@ -78,7 +78,7 @@ class MainActivity : FragmentActivity() {
         // Initialize modern frame rate management
         frameRateManager.initialize(this)
         setupInputEventHandling()
-        
+
         // Initialize widget system
         com.wealthmanager.widget.WidgetManager.initialize(this)
 

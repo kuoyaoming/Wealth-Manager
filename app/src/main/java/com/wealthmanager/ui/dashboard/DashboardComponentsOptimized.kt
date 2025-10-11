@@ -10,10 +10,10 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
 import com.wealthmanager.ui.charts.PieChartComponentFixed
-import com.wealthmanager.ui.responsive.rememberResponsiveLayout
-import com.wealthmanager.ui.theme.ColorGuidelines
 import com.wealthmanager.ui.components.PrimaryCard
 import com.wealthmanager.ui.components.SecondaryCard
+import com.wealthmanager.ui.responsive.rememberResponsiveLayout
+import com.wealthmanager.ui.theme.ColorGuidelines
 import com.wealthmanager.utils.MoneyFormatter
 import com.wealthmanager.utils.rememberMoneyText
 
@@ -28,7 +28,7 @@ fun TotalAssetsCardOptimized(
     val responsiveLayout = rememberResponsiveLayout()
 
     PrimaryCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -74,7 +74,7 @@ fun CashAssetsCardOptimized(
     val responsiveLayout = rememberResponsiveLayout()
 
     SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -130,7 +130,7 @@ fun StockAssetsCardOptimized(
     val responsiveLayout = rememberResponsiveLayout()
 
     SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.fillMaxWidth(),
@@ -245,4 +245,3 @@ fun StatusIndicator(
         color = color,
     )
 }
-

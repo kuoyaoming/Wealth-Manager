@@ -9,7 +9,6 @@ import com.wealthmanager.data.service.ApiStatus
 import com.wealthmanager.data.service.ApiStatusManager
 import com.wealthmanager.data.service.MarketDataService
 import com.wealthmanager.debug.DebugLogManager
-import com.wealthmanager.security.KeyRepository
 import com.wealthmanager.ui.sync.SyncFeedbackManager
 import com.wealthmanager.ui.sync.SyncType
 import com.wealthmanager.util.NetworkUtils
@@ -36,7 +35,6 @@ class DashboardViewModel
         private val debugLogManager: DebugLogManager,
         private val apiStatusManager: ApiStatusManager,
         private val wearSyncManager: WearSyncManager,
-        private val keyRepository: KeyRepository,
         val syncFeedbackManager: SyncFeedbackManager,
         private val networkUtils: NetworkUtils,
     ) : ViewModel() {
@@ -50,14 +48,6 @@ class DashboardViewModel
         init {
             debugLogManager.log("DASHBOARD", "DashboardViewModel initialized")
             observeAssets()
-        }
-
-        fun hasRequiredKeys(): Boolean {
-            val finnhub = keyRepository.getUserFinnhubKey()?.isNotBlank() == true
-            val exchange = keyRepository.getUserExchangeKey()?.isNotBlank() == true
-            debugLogManager.log("DASHBOARD", "Key status - Finnhub: $finnhub, Exchange: $exchange")
-
-            return finnhub && exchange
         }
 
         private fun observeAssets() {
@@ -106,11 +96,11 @@ class DashboardViewModel
                             debugLogManager.logError("WEAR_SYNC: Failed to sync to wear: ${e.message}", e)
                         }
                     }
-                    
+
                     // Schedule widget update when data changes
                     debugLogManager.log("WIDGET_SYNC", "Scheduling widget update")
                     com.wealthmanager.widget.WidgetUpdateScheduler.scheduleUpdate(
-                        com.wealthmanager.WealthManagerApplication.getInstance()
+                        com.wealthmanager.WealthManagerApplication.getInstance(),
                     )
                 }.collect { }
             }
@@ -147,7 +137,7 @@ class DashboardViewModel
 
             syncFeedbackManager.startSync(
                 type = SyncType.MANUAL_REFRESH,
-                description = "Refreshing data"
+                description = "Refreshing data",
             )
 
             viewModelScope.launch {
@@ -163,56 +153,57 @@ class DashboardViewModel
                     // Smart update: only update market data when needed
                     if (hasStockAssets) {
                         debugLogManager.log("DASHBOARD", "Updating exchange rates and stock prices")
-                        
+
                         syncFeedbackManager.startSync(
                             type = SyncType.MARKET_DATA,
-                            description = "Syncing market data"
+                            description = "Syncing market data",
                         )
-                        
+
                         val hasNetwork = networkUtils.hasNetworkConnection()
                         debugLogManager.log("DASHBOARD", "Network available: $hasNetwork")
-                        
+
                         try {
                             marketDataService.updateExchangeRates()
                             marketDataService.updateStockPrices()
-                            
+
                             itemsUpdated = stockAssets.size
-                            
+
                             if (hasNetwork) {
                                 syncFeedbackManager.syncSuccess(
                                     type = SyncType.MARKET_DATA,
                                     message = "Market data updated successfully",
-                                    itemsUpdated = itemsUpdated
+                                    itemsUpdated = itemsUpdated,
                                 )
                             } else {
                                 syncFeedbackManager.syncSuccess(
                                     type = SyncType.MARKET_DATA,
                                     message = "Using cached data (no internet connection)",
-                                    itemsUpdated = itemsUpdated
+                                    itemsUpdated = itemsUpdated,
                                 )
                             }
                         } catch (e: Exception) {
-                            val isNetworkError = e.message?.contains("network", ignoreCase = true) == true ||
-                                e.message?.contains("connection", ignoreCase = true) == true ||
-                                e.message?.contains("timeout", ignoreCase = true) == true
-                            
+                            val isNetworkError =
+                                e.message?.contains("network", ignoreCase = true) == true ||
+                                    e.message?.contains("connection", ignoreCase = true) == true ||
+                                    e.message?.contains("timeout", ignoreCase = true) == true
+
                             if (isNetworkError && !hasNetwork) {
                                 syncFeedbackManager.syncFailure(
                                     type = SyncType.MARKET_DATA,
                                     message = "No internet connection and no cached data available",
-                                    canRetry = true
+                                    canRetry = true,
                                 )
                             } else if (isNetworkError) {
                                 syncFeedbackManager.syncFailure(
                                     type = SyncType.MARKET_DATA,
                                     message = "Network connection failed. Please check your internet connection.",
-                                    canRetry = true
+                                    canRetry = true,
                                 )
                             } else {
                                 syncFeedbackManager.syncFailure(
                                     type = SyncType.MARKET_DATA,
                                     message = "Failed to sync market data: ${e.message}",
-                                    canRetry = true
+                                    canRetry = true,
                                 )
                             }
                         }
@@ -223,11 +214,11 @@ class DashboardViewModel
                     debugLogManager.log("DASHBOARD", "Market data update completed")
                     apiStatusManager.setApiSuccess()
                     _uiState.value = _uiState.value.copy(isLoading = false)
-                    
+
                     syncFeedbackManager.syncSuccess(
                         type = SyncType.MANUAL_REFRESH,
                         message = "Data refreshed successfully",
-                        itemsUpdated = itemsUpdated
+                        itemsUpdated = itemsUpdated,
                     )
                 } catch (e: Exception) {
                     debugLogManager.logError("Failed to refresh data: ${e.message}", e)
@@ -241,7 +232,7 @@ class DashboardViewModel
                     syncFeedbackManager.syncFailure(
                         type = SyncType.MANUAL_REFRESH,
                         message = "Failed to refresh data: ${e.message}",
-                        canRetry = true
+                        canRetry = true,
                     )
 
                     viewModelScope.launch {
@@ -267,12 +258,12 @@ class DashboardViewModel
 
         fun manualSyncToWear() {
             val currentState = _uiState.value
-            
+
             syncFeedbackManager.startSync(
                 type = SyncType.WEAR_SYNC,
-                description = "Syncing to Wear"
+                description = "Syncing to Wear",
             )
-            
+
             viewModelScope.launch {
                 _manualSyncStatus.value = ManualSyncStatus.InProgress
                 when (
@@ -287,7 +278,7 @@ class DashboardViewModel
                         _manualSyncStatus.value = ManualSyncStatus.Success
                         syncFeedbackManager.syncSuccess(
                             type = SyncType.WEAR_SYNC,
-                            message = "Wear sync completed"
+                            message = "Wear sync completed",
                         )
                     }
                     ManualSyncResult.WearAppNotInstalled -> {
@@ -295,7 +286,7 @@ class DashboardViewModel
                         syncFeedbackManager.syncFailure(
                             type = SyncType.WEAR_SYNC,
                             message = "Wear app not installed",
-                            canRetry = false
+                            canRetry = false,
                         )
                     }
                     is ManualSyncResult.Failure -> {
@@ -303,7 +294,7 @@ class DashboardViewModel
                         syncFeedbackManager.syncFailure(
                             type = SyncType.WEAR_SYNC,
                             message = "Wear sync failed: ${result.reason}",
-                            canRetry = true
+                            canRetry = true,
                         )
                     }
                 }

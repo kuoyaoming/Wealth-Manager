@@ -1,8 +1,5 @@
 package com.wealthmanager.ui.settings
 
-import android.app.Activity
-import android.provider.Settings
-import android.view.inputmethod.InputMethodManager
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -10,42 +7,28 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material.icons.filled.CheckCircle
-import androidx.compose.material.icons.filled.Error
 import androidx.compose.material.icons.filled.Info
-import androidx.compose.material.icons.filled.Key
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material.icons.filled.Refresh
-import androidx.compose.material.icons.filled.Security
 import androidx.compose.material.icons.filled.Translate
 import androidx.compose.material.icons.filled.Vibration
-import androidx.compose.material.icons.filled.Wifi
 import androidx.compose.material3.AlertDialog
-import androidx.compose.material3.Button
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.SnackbarDuration
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Switch
 import androidx.compose.material3.Text
-// import androidx.compose.material3.TextButton - Using custom TextButton instead
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -53,13 +36,9 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
-import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.focus.FocusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -69,15 +48,11 @@ import com.wealthmanager.R
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 import com.wealthmanager.ui.about.AboutDialog
-import com.wealthmanager.ui.permissions.NotificationPermissionSection
-import com.wealthmanager.ui.security.BiometricFallbackDialog
-import com.wealthmanager.ui.components.SecondaryCard
-import com.wealthmanager.ui.components.PrimaryCard
 import com.wealthmanager.ui.components.PrimaryButton
-import com.wealthmanager.ui.components.SecondaryButton
+import com.wealthmanager.ui.components.SecondaryCard
 import com.wealthmanager.ui.components.TextButton
+import com.wealthmanager.ui.permissions.NotificationPermissionSection
 import com.wealthmanager.util.LanguageManager
-import kotlinx.coroutines.launch
 
 /**
  * Settings screen for configuring app preferences and security options.
@@ -89,11 +64,7 @@ fun SettingsScreen(
     viewModel: SettingsViewModel = hiltViewModel(),
 ) {
     val (hapticManager, view) = rememberHapticFeedbackWithView()
-    val composeScope = rememberCoroutineScope()
     val uiState by viewModel.uiState.collectAsState()
-    var showApiKeyGuide by remember { mutableStateOf(false) }
-    var showGpmInfo by rememberSaveable { mutableStateOf(false) }
-    var pendingGpmKey by rememberSaveable { mutableStateOf<Pair<String, String>?>(null) }
     var hapticEnabled by remember { mutableStateOf(hapticManager.getSettings().hapticEnabled) }
     var soundEnabled by remember { mutableStateOf(hapticManager.getSettings().soundEnabled) }
     var hapticIntensity by remember { mutableStateOf(hapticManager.getSettings().intensity) }
@@ -117,7 +88,6 @@ fun SettingsScreen(
     }
 
     val context = LocalContext.current
-    val focusRequester = remember { FocusRequester() }
     var currentLanguage by remember { mutableStateOf(uiState.currentLanguageCode) }
     LaunchedEffect(uiState.currentLanguageCode) {
         if (uiState.currentLanguageCode.isNotEmpty() && uiState.currentLanguageCode != currentLanguage) {
@@ -149,11 +119,11 @@ fun SettingsScreen(
     ) { paddingValues ->
         Column(
             modifier =
-                Modifier
-                    .fillMaxSize()
-                    .padding(paddingValues)
-                    .padding(16.dp)
-                    .verticalScroll(rememberScrollState()),
+            Modifier
+                .fillMaxSize()
+                .padding(paddingValues)
+                .padding(16.dp)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             LanguageSettingsCard(
@@ -186,154 +156,6 @@ fun SettingsScreen(
                 },
             )
 
-            ApiKeyApplicationCard(
-                onShowGuide = {
-                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                    showApiKeyGuide = true
-                },
-            )
-
-            val hasNoApiKeys = uiState.finnhubKeyPreview.isBlank() && uiState.exchangeKeyPreview.isBlank()
-            var showApiInput by rememberSaveable { mutableStateOf(!hasNoApiKeys) }
-            LaunchedEffect(hasNoApiKeys) { if (!hasNoApiKeys) showApiInput = true }
-            LaunchedEffect(showApiInput) {
-                if (showApiInput && hasNoApiKeys) {
-                    focusRequester.requestFocus()
-                }
-            }
-
-            LaunchedEffect(uiState.shouldPromptGpmSave, uiState.lastKeyActionMessage) {
-                if (uiState.shouldPromptGpmSave && uiState.lastKeyActionMessage.isNotEmpty() && uiState.lastKeyActionMessage.contains("saved", ignoreCase = true)) {
-                    val result =
-                        snackbarHostState.showSnackbar(
-                            message = context.getString(R.string.snackbar_prompt_gpm_save),
-                            actionLabel = context.getString(R.string.save),
-                            duration = SnackbarDuration.Short,
-                        )
-                    if (result == androidx.compose.material3.SnackbarResult.ActionPerformed) {
-                        val pair = pendingGpmKey
-                        if (pair != null) {
-                            val (type, k) = pair
-                            val ok = viewModel.saveApiKeyToGpm(type, k)
-                            snackbarHostState.showSnackbar(
-                                message =
-                                    if (ok) {
-                                        context.getString(
-                                            R.string.settings_view,
-                                        )
-                                    } else {
-                                        context.getString(R.string.api_key_save_failed, "GPM")
-                                    },
-                                duration = SnackbarDuration.Short,
-                            )
-                        } else {
-                            showGpmInfo = true
-                        }
-                    }
-                    viewModel.clearLastActionMessage()
-                    viewModel.clearGpmSavePrompt()
-                }
-            }
-
-            if (hasNoApiKeys && !showApiInput) {
-                ApiKeyEmptyStateCard(
-                    onGetFinnhubKey = {
-                        val intent =
-                            android.content.Intent(
-                                android.content.Intent.ACTION_VIEW,
-                                android.net.Uri.parse("https://finnhub.io/register"),
-                            )
-                        context.startActivity(intent)
-                    },
-                    onGetExchangeKey = {
-                        val intent =
-                            android.content.Intent(
-                                android.content.Intent.ACTION_VIEW,
-                                android.net.Uri.parse("https://exchangerate-api.com/"),
-                            )
-                        context.startActivity(intent)
-                    },
-                    onViewGuide = { showApiKeyGuide = true },
-                    onStartSetup = {
-                        showApiInput = true
-                    },
-                )
-            }
-
-            if (showApiInput) {
-                ApiKeyManagementCard(
-                    finnhubKeyPreview = uiState.finnhubKeyPreview,
-                    exchangeKeyPreview = uiState.exchangeKeyPreview,
-                    lastActionMessage = uiState.lastKeyActionMessage,
-                    onValidateAndSaveFinnhub = { key ->
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                        viewModel.setApiKeySecurely(key, "finnhub", context as? androidx.fragment.app.FragmentActivity)
-                        pendingGpmKey = "finnhub" to key
-                    },
-                    onValidateAndSaveExchange = { key ->
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                        viewModel.setApiKeySecurely(key, "exchange", context as? androidx.fragment.app.FragmentActivity)
-                        pendingGpmKey = "exchange" to key
-                    },
-                    onClearFinnhub = {
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                        viewModel.clearFinnhubKey()
-                    },
-                    onClearExchange = {
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                        viewModel.clearExchangeKey()
-                    },
-                    onRequestFinnhubAutofill = { onFilled ->
-                        composeScope.launch {
-                            val v = viewModel.retrieveApiKeyFromGpm("finnhub")
-                            onFilled(v)
-                        }
-                    },
-                    onRequestExchangeAutofill = { onFilled ->
-                        composeScope.launch {
-                            val v = viewModel.retrieveApiKeyFromGpm("exchange")
-                            onFilled(v)
-                        }
-                    },
-                    firstFieldFocusRequester = if (hasNoApiKeys) focusRequester else null,
-                )
-            }
-
-            if (uiState.lastKeyErrorMessage.isNotEmpty()) {
-                val keyType =
-                    if (uiState.lastKeyErrorMessage.contains(
-                            "finnhub",
-                            ignoreCase = true,
-                        )
-                    ) {
-                        "Finnhub"
-                    } else {
-                        "Exchange Rate"
-                    }
-                ApiKeyValidationFeedback(
-                    errorMessage = uiState.lastKeyErrorMessage,
-                    keyType = keyType,
-                    onRetry = {
-                        // TODO: Implement re-validation
-                    },
-                    onViewGuide = {
-                        showApiKeyGuide = true
-                    },
-                    onClearError = {
-                        viewModel.clearLastActionMessage()
-                    },
-                )
-            }
-
-            ApiKeyCheckCard(
-                apiTestResults = uiState.apiTestResults,
-                isTestingApis = uiState.isTestingApis,
-                onTestApis = {
-                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                    viewModel.testApiKeysSecurely()
-                },
-            )
-
             BiometricSettingsCard(
                 enabled = uiState.biometricEnabled,
                 onToggle = { enabled ->
@@ -356,15 +178,7 @@ fun SettingsScreen(
                             hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                             viewModel.setFinancialBackupEnabled(false)
                         }
-                    },
-                    onShowGooglePasswordManagerInfo = {
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                        showGpmInfo = true
-                    },
-                    onShowBackupRecommendations = {
-                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                        // TODO: Implement backup recommendations dialog
-                    },
+                    }
                 )
             } ?: run {
                 BackupSettingsCard(
@@ -381,7 +195,6 @@ fun SettingsScreen(
                     },
                 )
             }
-
 
             AboutSettingsCard(
                 onShowAbout = {
@@ -410,7 +223,7 @@ fun SettingsScreen(
                             viewModel.setFinancialBackupEnabled(true)
                             pendingFinancialBackupToggle = false
                         }
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.enable_backup_confirm))
                 }
@@ -421,25 +234,9 @@ fun SettingsScreen(
                         showBackupWarningDialog = false
                         pendingFinancialBackupToggle = false
                         viewModel.setFinancialBackupEnabled(false)
-                    }
+                    },
                 ) {
                     Text(stringResource(R.string.cancel))
-                }
-            },
-        )
-    }
-
-    if (showGpmInfo) {
-        GooglePasswordManagerInfoDialog(
-            onDismiss = { showGpmInfo = false },
-            isAvailable = true,
-            isSignedIn = true,
-            onEnableAutofill = {
-                val intent = android.content.Intent(Settings.ACTION_SETTINGS)
-                try {
-                    context.startActivity(intent)
-                } catch (e: Exception) {
-                    context.startActivity(android.content.Intent(Settings.ACTION_SETTINGS))
                 }
             },
         )
@@ -451,21 +248,6 @@ fun SettingsScreen(
             firstLaunchManager = viewModel.firstLaunchManager,
         )
     }
-
-    if (showApiKeyGuide) {
-        ApiKeyGuideDialog(
-            onDismiss = { showApiKeyGuide = false },
-        )
-    }
-
-    if (uiState.showBiometricFallbackDialog) {
-        BiometricFallbackDialog(
-            onDismiss = { viewModel.onBiometricFallbackCancel() },
-            onUseFallback = { viewModel.onBiometricFallbackUseFallback() },
-            onRetryBiometric = { viewModel.onBiometricFallbackRetry() },
-        )
-    }
-
 }
 
 @Composable
@@ -475,7 +257,7 @@ private fun LanguageSettingsCard(
     onLanguageSelected: (String) -> Unit,
 ) {
     SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -506,9 +288,9 @@ private fun LanguageSettingsCard(
             languageOptions.forEach { option ->
                 Row(
                     modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .padding(vertical = 4.dp),
+                    Modifier
+                        .fillMaxWidth()
+                        .padding(vertical = 4.dp),
                     verticalAlignment = Alignment.CenterVertically,
                 ) {
                     RadioButton(
@@ -536,7 +318,7 @@ private fun HapticFeedbackSettingsCard(
     view: android.view.View,
 ) {
     SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -607,393 +389,6 @@ private fun HapticFeedbackSettingsCard(
                     },
                 )
             }
-
-        }
-    }
-}
-
-@Composable
-private fun ApiKeyApplicationCard(onShowGuide: () -> Unit) {
-    SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column(
-                    modifier = Modifier.weight(1f),
-                ) {
-                    Text(
-                        text = stringResource(R.string.settings_apply_api_keys),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                    )
-                    Spacer(modifier = Modifier.height(4.dp))
-                    Text(
-                        text = stringResource(R.string.settings_apply_api_keys_desc),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                    )
-                }
-
-                Spacer(modifier = Modifier.width(8.dp))
-
-                PrimaryButton(onClick = onShowGuide) {
-                    Text(stringResource(R.string.dialog_apply_tutorial))
-                }
-            }
-
-            Spacer(modifier = Modifier.height(12.dp))
-
-            Text(
-                text = stringResource(R.string.settings_api_tip),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-        }
-    }
-}
-
-@Composable
-private fun DeveloperKeyCard(onUseDeveloperKeys: () -> Unit) {
-    SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Column {
-                    Text(
-                        text = stringResource(R.string.settings_developer_mode),
-                        style = MaterialTheme.typography.titleMedium,
-                        fontWeight = FontWeight.Bold,
-                        color = MaterialTheme.colorScheme.primary,
-                    )
-                    Text(
-                        text = stringResource(R.string.settings_developer_mode_desc),
-                        style = MaterialTheme.typography.bodySmall,
-                        color = MaterialTheme.colorScheme.onPrimaryContainer,
-                    )
-                }
-
-                PrimaryButton(
-                    onClick = onUseDeveloperKeys,
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Key,
-                        contentDescription = null,
-                        modifier = Modifier.size(18.dp),
-                    )
-                    Spacer(modifier = Modifier.width(8.dp))
-                    Text(stringResource(R.string.dialog_use_developer_api))
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Text(
-                text = stringResource(R.string.settings_developer_warning),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onPrimaryContainer,
-            )
-        }
-    }
-}
-
-@Composable
-private fun SecurityStatusCard(
-    securityStatus: com.wealthmanager.ui.security.SecurityStatus,
-    onRefresh: () -> Unit,
-) {
-    SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-        ) {
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(
-                    text = stringResource(R.string.settings_security_status),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                )
-                IconButton(onClick = onRefresh) {
-                    Icon(
-                        imageVector = Icons.Default.Refresh,
-                        contentDescription = stringResource(R.string.cd_refresh_security_status),
-                    )
-                }
-            }
-
-            Spacer(modifier = Modifier.height(8.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                Text(stringResource(R.string.settings_security_status))
-                Text(
-                    text =
-                        when (securityStatus.securityLevel) {
-                            com.wealthmanager.ui.security.SecurityLevel.HIGH ->
-                                stringResource(
-                                    R.string.security_status_high,
-                                )
-                            com.wealthmanager.ui.security.SecurityLevel.MEDIUM ->
-                                stringResource(
-                                    R.string.security_status_medium,
-                                )
-                            com.wealthmanager.ui.security.SecurityLevel.LOW ->
-                                stringResource(
-                                    R.string.security_status_low,
-                                )
-                        },
-                    color =
-                        when (securityStatus.securityLevel) {
-                            com.wealthmanager.ui.security.SecurityLevel.HIGH -> Color.Green
-                            com.wealthmanager.ui.security.SecurityLevel.MEDIUM -> Color(0xFFFF9800) // Orange
-                            com.wealthmanager.ui.security.SecurityLevel.LOW -> Color.Red
-                        },
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-
-            Spacer(modifier = Modifier.height(4.dp))
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text(stringResource(R.string.settings_biometric_title))
-                Text(
-                    text =
-                        if (securityStatus.keystoreAvailable) {
-                            stringResource(
-                                R.string.security_status_available,
-                            )
-                        } else {
-                            stringResource(R.string.security_status_unavailable)
-                        },
-                    color = if (securityStatus.keystoreAvailable) Color.Green else Color.Red,
-                )
-            }
-
-            Row(
-                modifier = Modifier.fillMaxWidth(),
-                horizontalArrangement = Arrangement.SpaceBetween,
-            ) {
-                Text(stringResource(R.string.settings_biometric_title))
-                Text(
-                    text =
-                        when (securityStatus.biometricStatus) {
-                            com.wealthmanager.security.BiometricStatus.AVAILABLE ->
-                                stringResource(
-                                    R.string.security_status_available,
-                                )
-                            com.wealthmanager.security.BiometricStatus.NONE_ENROLLED ->
-                                stringResource(
-                                    R.string.security_status_not_set,
-                                )
-                            com.wealthmanager.security.BiometricStatus.NO_HARDWARE ->
-                                stringResource(
-                                    R.string.security_status_not_supported,
-                                )
-                            else -> stringResource(R.string.security_status_unavailable)
-                        },
-                    color =
-                        if (securityStatus.biometricStatus == com.wealthmanager.security.BiometricStatus.AVAILABLE) {
-                            Color.Green
-                        } else {
-                            Color(0xFFFF9800) // Orange
-                        },
-                )
-            }
-        }
-    }
-}
-
-@Composable
-private fun ApiKeyManagementCard(
-    finnhubKeyPreview: String,
-    exchangeKeyPreview: String,
-    lastActionMessage: String,
-    onValidateAndSaveFinnhub: (String) -> Unit,
-    onValidateAndSaveExchange: (String) -> Unit,
-    onClearFinnhub: () -> Unit,
-    onClearExchange: () -> Unit,
-    onRequestFinnhubAutofill: (onFilled: (String?) -> Unit) -> Unit,
-    onRequestExchangeAutofill: (onFilled: (String?) -> Unit) -> Unit,
-    firstFieldFocusRequester: androidx.compose.ui.focus.FocusRequester? = null,
-) {
-    var finnhubInput by remember { mutableStateOf("") }
-    var exchangeInput by remember { mutableStateOf("") }
-    val context = LocalContext.current
-
-    fun hideKeyboard() {
-        val imm = context.getSystemService(Activity.INPUT_METHOD_SERVICE) as? InputMethodManager
-        imm?.hideSoftInputFromWindow((context as? Activity)?.currentFocus?.windowToken, 0)
-    }
-
-    SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Lock,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-                Text(
-                    text = stringResource(R.string.settings_api_manage_title),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-
-            if (finnhubKeyPreview.isNotBlank()) {
-                Text(
-                    text = stringResource(R.string.settings_api_saved_preview, finnhubKeyPreview),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            ApiKeyInputField(
-                value = finnhubInput,
-                onValueChange = { finnhubInput = it },
-                label = stringResource(R.string.settings_api_finnhub_label),
-                autofillHint = "Finnhub API Key",
-                enableSystemAutofill = false,
-                onAutofillClick = {
-                    onRequestFinnhubAutofill { v -> if (v != null) finnhubInput = v }
-                },
-                onImeAction = {
-                    hideKeyboard()
-                    onValidateAndSaveFinnhub(finnhubInput)
-                },
-                focusRequester = firstFieldFocusRequester,
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                PrimaryButton(onClick = {
-                    hideKeyboard()
-                    onValidateAndSaveFinnhub(finnhubInput)
-                }) {
-                    Text(stringResource(R.string.settings_api_validate_and_save))
-                }
-                TextButton(
-                    onClick = {
-                        hideKeyboard()
-                        finnhubInput = ""
-                        onClearFinnhub()
-                    }
-                ) {
-                    Text(stringResource(R.string.clear))
-                }
-            }
-
-            if (exchangeKeyPreview.isNotBlank()) {
-                Text(
-                    text = stringResource(R.string.settings_api_saved_preview, exchangeKeyPreview),
-                    style = MaterialTheme.typography.bodySmall,
-                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                )
-            }
-            ApiKeyInputField(
-                value = exchangeInput,
-                onValueChange = { exchangeInput = it },
-                label = stringResource(R.string.settings_api_exchange_label),
-                autofillHint = "Exchange Rate API Key",
-                enableSystemAutofill = false,
-                onAutofillClick = {
-                    onRequestExchangeAutofill { v -> if (v != null) exchangeInput = v }
-                },
-                onImeAction = {
-                    hideKeyboard()
-                    onValidateAndSaveExchange(exchangeInput)
-                },
-            )
-            Row(horizontalArrangement = Arrangement.spacedBy(8.dp)) {
-                PrimaryButton(onClick = {
-                    hideKeyboard()
-                    onValidateAndSaveExchange(exchangeInput)
-                }) {
-                    Text(stringResource(R.string.settings_api_validate_and_save))
-                }
-                TextButton(
-                    onClick = {
-                        hideKeyboard()
-                        exchangeInput = ""
-                        onClearExchange()
-                    }
-                ) {
-                    Text(stringResource(R.string.clear))
-                }
-            }
-
-            if (lastActionMessage.isNotBlank()) {
-                Text(text = lastActionMessage, style = MaterialTheme.typography.bodySmall)
-            }
-        }
-    }
-}
-
-@Composable
-private fun SecurityLevelSettingsCard(onShowSecurityLevelDialog: () -> Unit) {
-    SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(12.dp),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Security,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-                Text(
-                    text = stringResource(R.string.security_level_settings),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-
-            Text(
-                text = stringResource(R.string.security_level_description),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-
-            PrimaryButton(
-                onClick = onShowSecurityLevelDialog,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(stringResource(R.string.dialog_choose_security_level))
-            }
         }
     }
 }
@@ -1004,7 +399,7 @@ private fun BackupSettingsCard(
     onToggle: (Boolean) -> Unit,
 ) {
     SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -1037,9 +432,9 @@ private fun BackupSettingsCard(
             ) {
                 Text(
                     text =
-                        stringResource(
-                            if (enabled) R.string.settings_status_enabled else R.string.settings_status_disabled,
-                        ),
+                    stringResource(
+                        if (enabled) R.string.settings_status_enabled else R.string.settings_status_disabled,
+                    ),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
                 )
@@ -1058,7 +453,7 @@ private fun BiometricSettingsCard(
     onToggle: (Boolean) -> Unit,
 ) {
     SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -1091,9 +486,9 @@ private fun BiometricSettingsCard(
             ) {
                 Text(
                     text =
-                        stringResource(
-                            if (enabled) R.string.settings_status_enabled else R.string.settings_status_disabled,
-                        ),
+                    stringResource(
+                        if (enabled) R.string.settings_status_enabled else R.string.settings_status_disabled,
+                    ),
                     style = MaterialTheme.typography.bodyLarge,
                     fontWeight = FontWeight.Medium,
                 )
@@ -1109,7 +504,7 @@ private fun BiometricSettingsCard(
 @Composable
 private fun AboutSettingsCard(onShowAbout: () -> Unit) {
     SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
+        modifier = Modifier.fillMaxWidth(),
     ) {
         Column(
             modifier = Modifier.padding(16.dp),
@@ -1140,99 +535,6 @@ private fun AboutSettingsCard(onShowAbout: () -> Unit) {
                 modifier = Modifier.align(Alignment.End),
             ) {
                 Text(stringResource(R.string.settings_view))
-            }
-        }
-    }
-}
-
-@Composable
-private fun ApiKeyCheckCard(
-    apiTestResults: List<com.wealthmanager.data.service.ApiTestService.ApiTestResult>,
-    isTestingApis: Boolean,
-    onTestApis: () -> Unit,
-) {
-    SecondaryCard(
-        modifier = Modifier.fillMaxWidth()
-    ) {
-        Column(
-            modifier = Modifier.padding(16.dp),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            Row(
-                verticalAlignment = Alignment.CenterVertically,
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-            ) {
-                Icon(
-                    imageVector = Icons.Default.Wifi,
-                    contentDescription = null,
-                    tint = MaterialTheme.colorScheme.primary,
-                )
-                Text(
-                    text = stringResource(R.string.settings_api_check_title),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                )
-            }
-
-            Text(
-                text = stringResource(R.string.settings_api_check_desc),
-                style = MaterialTheme.typography.bodySmall,
-                color = MaterialTheme.colorScheme.onSurfaceVariant,
-            )
-
-            if (apiTestResults.isNotEmpty()) {
-                apiTestResults.forEach { result ->
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        verticalAlignment = Alignment.CenterVertically,
-                        horizontalArrangement = Arrangement.spacedBy(8.dp),
-                    ) {
-                        Icon(
-                            imageVector = if (result.isWorking) Icons.Default.CheckCircle else Icons.Default.Error,
-                            contentDescription = null,
-                            tint =
-                                if (result.isWorking) {
-                                    MaterialTheme.colorScheme.primary
-                                } else {
-                                    MaterialTheme.colorScheme.error
-                                },
-                        )
-                        Column(modifier = Modifier.weight(1f)) {
-                            Text(
-                                text = result.apiName,
-                                style = MaterialTheme.typography.bodyMedium,
-                                fontWeight = FontWeight.Medium,
-                            )
-                            Text(
-                                text = result.message,
-                                style = MaterialTheme.typography.bodySmall,
-                                color =
-                                    if (result.isWorking) {
-                                        MaterialTheme.colorScheme.primary
-                                    } else {
-                                        MaterialTheme.colorScheme.error
-                                    },
-                            )
-                        }
-                    }
-                }
-            }
-
-            PrimaryButton(
-                onClick = onTestApis,
-                enabled = !isTestingApis,
-                modifier = Modifier.fillMaxWidth(),
-            ) {
-                Text(
-                    text =
-                        if (isTestingApis) {
-                            stringResource(
-                                R.string.settings_api_testing,
-                            )
-                        } else {
-                            stringResource(R.string.settings_api_test_button)
-                        },
-                )
             }
         }
     }

@@ -28,11 +28,11 @@ class WealthManagerApplication : Application(), AuthStateManagerEntryPoint {
 
     @Inject
     lateinit var localePreferencesManager: LocalePreferencesManager
-    
+
     companion object {
         @Volatile
         private var INSTANCE: WealthManagerApplication? = null
-        
+
         fun getInstance(): WealthManagerApplication {
             return INSTANCE ?: throw IllegalStateException("Application not initialized")
         }
@@ -52,7 +52,7 @@ class WealthManagerApplication : Application(), AuthStateManagerEntryPoint {
     override fun onCreate() {
         super.onCreate()
         INSTANCE = this
-        
+
         try {
             val languageCode = localePreferencesManager.getLanguageCode()
             if (languageCode.isNotEmpty()) {

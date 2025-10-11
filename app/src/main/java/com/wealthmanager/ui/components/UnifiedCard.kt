@@ -25,34 +25,37 @@ fun UnifiedCard(
     cardType: CardType = CardType.Secondary,
     statusType: StatusType? = null,
     onClick: (() -> Unit)? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     val responsiveLayout = rememberResponsiveLayout()
     val cardConfig = getCardConfig(cardType, statusType, responsiveLayout)
-    
+
     Card(
         modifier = modifier,
         onClick = onClick ?: {},
         enabled = onClick != null,
-        elevation = CardDefaults.cardElevation(
-            defaultElevation = cardConfig.elevation,
-            pressedElevation = if (onClick != null) cardConfig.elevation + 2.dp else cardConfig.elevation,
-            focusedElevation = if (onClick != null) cardConfig.elevation + 4.dp else cardConfig.elevation,
-            hoveredElevation = if (onClick != null) cardConfig.elevation + 2.dp else cardConfig.elevation,
-        ),
-        colors = CardDefaults.cardColors(
-            containerColor = cardConfig.containerColor,
-            contentColor = cardConfig.contentColor,
-        ),
-        shape = MaterialTheme.shapes.medium.copy(
-            topStart = CornerSize(cardConfig.cornerRadius),
-            topEnd = CornerSize(cardConfig.cornerRadius),
-            bottomStart = CornerSize(cardConfig.cornerRadius),
-            bottomEnd = CornerSize(cardConfig.cornerRadius),
-        ),
+        elevation =
+            CardDefaults.cardElevation(
+                defaultElevation = cardConfig.elevation,
+                pressedElevation = if (onClick != null) cardConfig.elevation + 2.dp else cardConfig.elevation,
+                focusedElevation = if (onClick != null) cardConfig.elevation + 4.dp else cardConfig.elevation,
+                hoveredElevation = if (onClick != null) cardConfig.elevation + 2.dp else cardConfig.elevation,
+            ),
+        colors =
+            CardDefaults.cardColors(
+                containerColor = cardConfig.containerColor,
+                contentColor = cardConfig.contentColor,
+            ),
+        shape =
+            MaterialTheme.shapes.medium.copy(
+                topStart = CornerSize(cardConfig.cornerRadius),
+                topEnd = CornerSize(cardConfig.cornerRadius),
+                bottomStart = CornerSize(cardConfig.cornerRadius),
+                bottomEnd = CornerSize(cardConfig.cornerRadius),
+            ),
     ) {
         androidx.compose.foundation.layout.Box(
-            modifier = Modifier.padding(cardConfig.padding)
+            modifier = Modifier.padding(cardConfig.padding),
         ) {
             content()
         }
@@ -69,41 +72,41 @@ enum class CardType {
      * Usage: Total asset display, main function entry
      */
     Primary,
-    
+
     /**
      * Secondary card for settings and secondary information
      * Elevation: 2dp, Padding: 16dp, Corner radius: 8dp
      * Usage: Settings options, list items, secondary functions
      */
     Secondary,
-    
+
     /**
      * Outlined card for optional content and auxiliary information
      * Elevation: 0dp, Padding: 16dp, Corner radius: 8dp
      * Usage: Optional settings, auxiliary information, secondary content
      */
     Outlined,
-    
+
     /**
      * Status card for status prompts and warning information
      * Elevation: 3dp, Padding: 16dp, Corner radius: 8dp
      * Usage: Success/error/warning/information prompts
      */
     Status,
-    
+
     /**
      * Dialog card for modal dialogs
      * Elevation: 8dp, Padding: 24dp, Corner radius: 16dp
      * Usage: Dialogs, popups, important confirmations
      */
     Dialog,
-    
+
     /**
      * Banner card for top banners and notifications
      * Elevation: 4dp, Padding: 16dp, Corner radius: 8dp
      * Usage: Error banners, notification banners, status banners
      */
-    Banner
+    Banner,
 }
 
 /**
@@ -113,7 +116,7 @@ enum class StatusType {
     Success,
     Warning,
     Error,
-    Info
+    Info,
 }
 
 /**
@@ -124,7 +127,7 @@ private data class CardConfig(
     val padding: PaddingValues,
     val cornerRadius: Dp,
     val containerColor: Color,
-    val contentColor: Color
+    val contentColor: Color,
 )
 
 /**
@@ -134,68 +137,77 @@ private data class CardConfig(
 private fun getCardConfig(
     cardType: CardType,
     statusType: StatusType?,
-    responsiveLayout: com.wealthmanager.ui.responsive.ResponsiveLayout
+    responsiveLayout: com.wealthmanager.ui.responsive.ResponsiveLayout,
 ): CardConfig {
-    val baseConfig = when (cardType) {
-        CardType.Primary -> CardConfig(
-            elevation = 4.dp,
-            padding = PaddingValues(20.dp),
-            cornerRadius = 12.dp,
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        )
-        CardType.Secondary -> CardConfig(
-            elevation = 2.dp,
-            padding = PaddingValues(16.dp),
-            cornerRadius = 8.dp,
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        )
-        CardType.Outlined -> CardConfig(
-            elevation = 0.dp,
-            padding = PaddingValues(16.dp),
-            cornerRadius = 8.dp,
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        )
-        CardType.Status -> CardConfig(
-            elevation = 3.dp,
-            padding = PaddingValues(16.dp),
-            cornerRadius = 8.dp,
-            containerColor = getStatusColor(statusType),
-            contentColor = MaterialTheme.colorScheme.onSurface
-        )
-        CardType.Dialog -> CardConfig(
-            elevation = 8.dp,
-            padding = PaddingValues(24.dp),
-            cornerRadius = 16.dp,
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        )
-        CardType.Banner -> CardConfig(
-            elevation = 4.dp,
-            padding = PaddingValues(16.dp),
-            cornerRadius = 8.dp,
-            containerColor = MaterialTheme.colorScheme.surface,
-            contentColor = MaterialTheme.colorScheme.onSurface
-        )
-    }
-    
-    val responsiveMultiplier = when {
-        responsiveLayout.isTablet -> 1.2f
-        responsiveLayout.isLargeScreen -> 1.4f
-        else -> 1.0f
-    }
-    
+    val baseConfig =
+        when (cardType) {
+            CardType.Primary ->
+                CardConfig(
+                    elevation = 4.dp,
+                    padding = PaddingValues(20.dp),
+                    cornerRadius = 12.dp,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                )
+            CardType.Secondary ->
+                CardConfig(
+                    elevation = 2.dp,
+                    padding = PaddingValues(16.dp),
+                    cornerRadius = 8.dp,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                )
+            CardType.Outlined ->
+                CardConfig(
+                    elevation = 0.dp,
+                    padding = PaddingValues(16.dp),
+                    cornerRadius = 8.dp,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                )
+            CardType.Status ->
+                CardConfig(
+                    elevation = 3.dp,
+                    padding = PaddingValues(16.dp),
+                    cornerRadius = 8.dp,
+                    containerColor = getStatusColor(statusType),
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                )
+            CardType.Dialog ->
+                CardConfig(
+                    elevation = 8.dp,
+                    padding = PaddingValues(24.dp),
+                    cornerRadius = 16.dp,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                )
+            CardType.Banner ->
+                CardConfig(
+                    elevation = 4.dp,
+                    padding = PaddingValues(16.dp),
+                    cornerRadius = 8.dp,
+                    containerColor = MaterialTheme.colorScheme.surface,
+                    contentColor = MaterialTheme.colorScheme.onSurface,
+                )
+        }
+
+    val responsiveMultiplier =
+        when {
+            responsiveLayout.isTablet -> 1.2f
+            responsiveLayout.isLargeScreen -> 1.4f
+            else -> 1.0f
+        }
+
     return baseConfig.copy(
         elevation = baseConfig.elevation * responsiveMultiplier,
-        padding = PaddingValues(
-            start = baseConfig.padding.calculateStartPadding(LayoutDirection.Ltr) * responsiveMultiplier,
-            top = baseConfig.padding.calculateTopPadding() * responsiveMultiplier,
-            end = baseConfig.padding.calculateEndPadding(LayoutDirection.Ltr) * responsiveMultiplier,
-            bottom = baseConfig.padding.calculateBottomPadding() * responsiveMultiplier,
-        ),
-        cornerRadius = baseConfig.cornerRadius * responsiveMultiplier
+        padding =
+            PaddingValues(
+                start = baseConfig.padding.calculateStartPadding(LayoutDirection.Ltr) * responsiveMultiplier,
+                top = baseConfig.padding.calculateTopPadding() * responsiveMultiplier,
+                end = baseConfig.padding.calculateEndPadding(LayoutDirection.Ltr) * responsiveMultiplier,
+                bottom = baseConfig.padding.calculateBottomPadding() * responsiveMultiplier,
+            ),
+        cornerRadius = baseConfig.cornerRadius * responsiveMultiplier,
     )
 }
 
@@ -220,13 +232,13 @@ private fun getStatusColor(statusType: StatusType?): Color {
 fun PrimaryCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     UnifiedCard(
         modifier = modifier,
         cardType = CardType.Primary,
         onClick = onClick,
-        content = content
+        content = content,
     )
 }
 
@@ -237,13 +249,13 @@ fun PrimaryCard(
 fun SecondaryCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     UnifiedCard(
         modifier = modifier,
         cardType = CardType.Secondary,
         onClick = onClick,
-        content = content
+        content = content,
     )
 }
 
@@ -254,13 +266,13 @@ fun SecondaryCard(
 fun OutlinedCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     UnifiedCard(
         modifier = modifier,
         cardType = CardType.Outlined,
         onClick = onClick,
-        content = content
+        content = content,
     )
 }
 
@@ -272,14 +284,14 @@ fun StatusCard(
     modifier: Modifier = Modifier,
     statusType: StatusType,
     onClick: (() -> Unit)? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     UnifiedCard(
         modifier = modifier,
         cardType = CardType.Status,
         statusType = statusType,
         onClick = onClick,
-        content = content
+        content = content,
     )
 }
 
@@ -290,13 +302,13 @@ fun StatusCard(
 fun DialogCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     UnifiedCard(
         modifier = modifier,
         cardType = CardType.Dialog,
         onClick = onClick,
-        content = content
+        content = content,
     )
 }
 
@@ -307,12 +319,12 @@ fun DialogCard(
 fun BannerCard(
     modifier: Modifier = Modifier,
     onClick: (() -> Unit)? = null,
-    content: @Composable () -> Unit
+    content: @Composable () -> Unit,
 ) {
     UnifiedCard(
         modifier = modifier,
         cardType = CardType.Banner,
         onClick = onClick,
-        content = content
+        content = content,
     )
 }

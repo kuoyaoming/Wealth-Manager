@@ -14,38 +14,31 @@ import com.wealthmanager.data.service.ApiStatusManager
 import com.wealthmanager.data.service.CacheManager
 import com.wealthmanager.data.service.DataValidator
 import com.wealthmanager.data.service.MarketDataService
-import com.wealthmanager.ui.performance.ModernFrameRateManager
-import com.wealthmanager.ui.performance.ContentBasedFrameRateOptimizer
 import com.wealthmanager.data.service.RequestDeduplicationManager
 import com.wealthmanager.data.service.SmartCacheStrategy
 import com.wealthmanager.data.service.TwseCacheManager
 import com.wealthmanager.data.service.TwseDataParser
 import com.wealthmanager.debug.ApiDiagnostic
-import com.wealthmanager.security.AndroidKeystoreManager
 import com.wealthmanager.security.BiometricProtectionManager
-import com.wealthmanager.security.KeyRepository
-import com.wealthmanager.security.KeyValidator
+import com.wealthmanager.ui.performance.ContentBasedFrameRateOptimizer
+import com.wealthmanager.ui.performance.ModernFrameRateManager
 import com.wealthmanager.utils.NumberFormatter
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
-import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
-import javax.inject.Named
 import javax.inject.Singleton
 
 @Module
 @InstallIn(SingletonComponent::class)
 object NetworkModule {
-    private const val FINNHUB_BASE_URL = "https://finnhub.io/api/v1/"
-    private const val TWSE_BASE_URL = "https://openapi.twse.com.tw/"
-    private const val EXCHANGE_RATE_BASE_URL = "https://v6.exchangerate-api.com/"
+    private const val PROXY_BASE_URL = "https://wealth-manager-proxy.4r099015.workers.dev/"
 
     @Provides
     @Singleton
@@ -55,10 +48,9 @@ object NetworkModule {
                 level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
                 redactHeader("Authorization")
                 redactHeader("X-Finnhub-Token")
-                redactHeader("X-API-KEY")
-                redactHeader("Api-Key")
             }
 
+        // API keys are no longer added here. The proxy handles authentication.
         return OkHttpClient.Builder()
             .addInterceptor(loggingInterceptor)
             .connectTimeout(30, TimeUnit.SECONDS)
@@ -69,55 +61,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @Named("FinnhubClient")
-    fun provideFinnhubOkHttpClient(keyRepository: KeyRepository): OkHttpClient {
-        val loggingInterceptor =
-            HttpLoggingInterceptor().apply {
-                level = if (BuildConfig.DEBUG) HttpLoggingInterceptor.Level.BODY else HttpLoggingInterceptor.Level.NONE
-                redactHeader("Authorization")
-                redactHeader("X-Finnhub-Token")
-                redactHeader("X-API-KEY")
-                redactHeader("Api-Key")
-            }
-
-        val tokenInterceptor =
-            Interceptor { chain ->
-                val original = chain.request()
-                val host = original.url.host
-                val userKey = keyRepository.getUserFinnhubKey()
-                val needsHeader = host.contains("finnhub.io", ignoreCase = true) && !userKey.isNullOrBlank()
-                val request =
-                    if (needsHeader) {
-                        original.newBuilder()
-                            .header("X-Finnhub-Token", userKey!!)
-                            .build()
-                    } else {
-                        original
-                    }
-                chain.proceed(request)
-            }
-
-        return OkHttpClient.Builder()
-            .addInterceptor(tokenInterceptor)
-            .addInterceptor(loggingInterceptor)
-            .connectTimeout(30, TimeUnit.SECONDS)
-            .readTimeout(30, TimeUnit.SECONDS)
-            .writeTimeout(30, TimeUnit.SECONDS)
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    @Named("TWSE")
-    fun provideTwseRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        // Use lenient JSON parsing to handle TWSE API responses
+    fun provideRetrofit(okHttpClient: OkHttpClient): Retrofit {
         val gson =
             GsonBuilder()
                 .setLenient()
                 .create()
 
         return Retrofit.Builder()
-            .baseUrl(TWSE_BASE_URL)
+            .baseUrl(PROXY_BASE_URL)
             .client(okHttpClient)
             .addConverterFactory(GsonConverterFactory.create(gson))
             .build()
@@ -125,50 +76,20 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    @Named("Finnhub")
-    fun provideFinnhubRetrofit(
-        @Named("FinnhubClient") okHttpClient: OkHttpClient,
-    ): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(FINNHUB_BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
+    fun provideTwseApi(retrofit: Retrofit): TwseApi {
+        return retrofit.create(TwseApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideTwseApi(
-        @Named("TWSE") twseRetrofit: Retrofit,
-    ): TwseApi {
-        return twseRetrofit.create(TwseApi::class.java)
+    fun provideFinnhubApi(retrofit: Retrofit): FinnhubApi {
+        return retrofit.create(FinnhubApi::class.java)
     }
 
     @Provides
     @Singleton
-    fun provideFinnhubApi(
-        @Named("Finnhub") finnhubRetrofit: Retrofit,
-    ): FinnhubApi {
-        return finnhubRetrofit.create(FinnhubApi::class.java)
-    }
-
-    @Provides
-    @Singleton
-    @Named("ExchangeRate")
-    fun provideExchangeRateRetrofit(okHttpClient: OkHttpClient): Retrofit {
-        return Retrofit.Builder()
-            .baseUrl(EXCHANGE_RATE_BASE_URL)
-            .client(okHttpClient)
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    @Provides
-    @Singleton
-    fun provideExchangeRateApi(
-        @Named("ExchangeRate") exchangeRateRetrofit: Retrofit,
-    ): ExchangeRateApi {
-        return exchangeRateRetrofit.create(ExchangeRateApi::class.java)
+    fun provideExchangeRateApi(retrofit: Retrofit): ExchangeRateApi {
+        return retrofit.create(ExchangeRateApi::class.java)
     }
 
     @Provides
@@ -202,7 +123,6 @@ object NetworkModule {
     fun provideNumberFormatter(): NumberFormatter {
         return NumberFormatter()
     }
-
 
     @Provides
     @Singleton
@@ -260,21 +180,6 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideAndroidKeystoreManager(
-        @ApplicationContext context: Context,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
-    ): AndroidKeystoreManager {
-        return AndroidKeystoreManager(context, debugLogManager)
-    }
-
-    @Provides
-    @Singleton
-    fun provideKeyValidator(debugLogManager: com.wealthmanager.debug.DebugLogManager): KeyValidator {
-        return KeyValidator(debugLogManager)
-    }
-
-    @Provides
-    @Singleton
     fun provideBiometricProtectionManager(
         @ApplicationContext context: Context,
         debugLogManager: com.wealthmanager.debug.DebugLogManager,
@@ -296,9 +201,8 @@ object NetworkModule {
     fun provideApiDiagnostic(
         @ApplicationContext context: Context,
         debugLogManager: com.wealthmanager.debug.DebugLogManager,
-        keyRepository: KeyRepository,
     ): ApiDiagnostic {
-        return ApiDiagnostic(context, debugLogManager, keyRepository)
+        return ApiDiagnostic(context, debugLogManager)
     }
 
     @Provides
@@ -311,7 +215,6 @@ object NetworkModule {
         twseCacheManager: TwseCacheManager,
         debugLogManager: com.wealthmanager.debug.DebugLogManager,
         apiDiagnostic: ApiDiagnostic,
-        keyRepository: KeyRepository,
     ): ApiProviderService {
         return ApiProviderService(
             finnhubApi,
@@ -321,7 +224,6 @@ object NetworkModule {
             twseCacheManager,
             debugLogManager,
             apiDiagnostic,
-            keyRepository,
         )
     }
 

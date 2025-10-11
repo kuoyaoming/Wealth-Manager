@@ -38,7 +38,7 @@ fun GooglePasswordManagerOnboardingDialog(
             elevation = CardDefaults.cardElevation(defaultElevation = 8.dp),
         ) {
             Box(
-                modifier = Modifier.fillMaxSize()
+                modifier = Modifier.fillMaxSize(),
             ) {
                 Column(
                     modifier =
@@ -48,165 +48,165 @@ fun GooglePasswordManagerOnboardingDialog(
                             .verticalScroll(rememberScrollState()),
                     horizontalAlignment = Alignment.CenterHorizontally,
                 ) {
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    verticalAlignment = Alignment.CenterVertically,
-                    horizontalArrangement = Arrangement.Center,
-                ) {
-                    Icon(
-                        imageVector = Icons.Default.Security,
-                        contentDescription = null,
-                        tint = MaterialTheme.colorScheme.primary,
-                        modifier = Modifier.size(32.dp),
-                    )
-                    Spacer(modifier = Modifier.width(12.dp))
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        verticalAlignment = Alignment.CenterVertically,
+                        horizontalArrangement = Arrangement.Center,
+                    ) {
+                        Icon(
+                            imageVector = Icons.Default.Security,
+                            contentDescription = null,
+                            tint = MaterialTheme.colorScheme.primary,
+                            modifier = Modifier.size(32.dp),
+                        )
+                        Spacer(modifier = Modifier.width(12.dp))
+                        Text(
+                            text = stringResource(id = R.string.gpm_title),
+                            style = MaterialTheme.typography.headlineSmall,
+                            fontWeight = FontWeight.Bold,
+                        )
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
                     Text(
-                        text = stringResource(id = R.string.gpm_title),
-                        style = MaterialTheme.typography.headlineSmall,
+                        text = stringResource(id = R.string.gpm_intro_title),
+                        style = MaterialTheme.typography.titleMedium,
+                        fontWeight = FontWeight.Bold,
+                        textAlign = TextAlign.Center,
+                    )
+
+                    Spacer(modifier = Modifier.height(16.dp))
+
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors =
+                            CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
+                            ),
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(16.dp),
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.gpm_feature_autosave_title),
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = stringResource(id = R.string.gpm_feature_autosave_desc),
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors =
+                            CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f),
+                            ),
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(16.dp),
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.gpm_feature_autofill_title),
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = stringResource(id = R.string.gpm_feature_autofill_desc),
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(12.dp))
+
+                    Card(
+                        modifier = Modifier.fillMaxWidth(),
+                        colors =
+                            CardDefaults.cardColors(
+                                containerColor = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.3f),
+                            ),
+                    ) {
+                        Column(
+                            modifier = Modifier.padding(16.dp),
+                        ) {
+                            Text(
+                                text = stringResource(id = R.string.gpm_feature_sync_title),
+                                style = MaterialTheme.typography.titleSmall,
+                                fontWeight = FontWeight.Bold,
+                            )
+                            Spacer(modifier = Modifier.height(8.dp))
+                            Text(
+                                text = stringResource(id = R.string.gpm_feature_sync_desc),
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
+                    }
+
+                    Spacer(modifier = Modifier.height(24.dp))
+
+                    Text(
+                        text = stringResource(id = R.string.gpm_how_to_title),
+                        style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                     )
-                }
 
-                Spacer(modifier = Modifier.height(24.dp))
+                    Spacer(modifier = Modifier.height(12.dp))
 
-                Text(
-                    text = stringResource(id = R.string.gpm_intro_title),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                    textAlign = TextAlign.Center,
-                )
-
-                Spacer(modifier = Modifier.height(16.dp))
-
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors =
-                        CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.primaryContainer.copy(alpha = 0.3f),
-                        ),
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.gpm_feature_autosave_title),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
+                    val steps =
+                        listOf(
+                            stringResource(id = R.string.gpm_step_1),
+                            stringResource(id = R.string.gpm_step_2),
+                            stringResource(id = R.string.gpm_step_3),
+                            stringResource(id = R.string.gpm_step_4),
                         )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = stringResource(id = R.string.gpm_feature_autosave_desc),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
+
+                    steps.forEach { step ->
+                        Row(
+                            modifier =
+                                Modifier
+                                    .fillMaxWidth()
+                                    .padding(vertical = 4.dp),
+                        ) {
+                            Text(
+                                text = step,
+                                style = MaterialTheme.typography.bodyMedium,
+                            )
+                        }
                     }
-                }
 
-                Spacer(modifier = Modifier.height(12.dp))
+                    Spacer(modifier = Modifier.height(32.dp))
 
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors =
-                        CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.secondaryContainer.copy(alpha = 0.3f),
-                        ),
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.gpm_feature_autofill_title),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = stringResource(id = R.string.gpm_feature_autofill_desc),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                Card(
-                    modifier = Modifier.fillMaxWidth(),
-                    colors =
-                        CardDefaults.cardColors(
-                            containerColor = MaterialTheme.colorScheme.tertiaryContainer.copy(alpha = 0.3f),
-                        ),
-                ) {
-                    Column(
-                        modifier = Modifier.padding(16.dp),
-                    ) {
-                        Text(
-                            text = stringResource(id = R.string.gpm_feature_sync_title),
-                            style = MaterialTheme.typography.titleSmall,
-                            fontWeight = FontWeight.Bold,
-                        )
-                        Spacer(modifier = Modifier.height(8.dp))
-                        Text(
-                            text = stringResource(id = R.string.gpm_feature_sync_desc),
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
-                    }
-                }
-
-                Spacer(modifier = Modifier.height(24.dp))
-
-                Text(
-                    text = stringResource(id = R.string.gpm_how_to_title),
-                    style = MaterialTheme.typography.titleMedium,
-                    fontWeight = FontWeight.Bold,
-                )
-
-                Spacer(modifier = Modifier.height(12.dp))
-
-                val steps =
-                    listOf(
-                        stringResource(id = R.string.gpm_step_1),
-                        stringResource(id = R.string.gpm_step_2),
-                        stringResource(id = R.string.gpm_step_3),
-                        stringResource(id = R.string.gpm_step_4),
-                    )
-
-                steps.forEach { step ->
                     Row(
-                        modifier =
-                            Modifier
-                                .fillMaxWidth()
-                                .padding(vertical = 4.dp),
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.spacedBy(12.dp),
                     ) {
-                        Text(
-                            text = step,
-                            style = MaterialTheme.typography.bodyMedium,
-                        )
+                        TextButton(
+                            onClick = onDismiss,
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Text(stringResource(id = R.string.action_maybe_later))
+                        }
+
+                        Button(
+                            onClick = {
+                                onEnableAutoFill()
+                                onDismiss()
+                            },
+                            modifier = Modifier.weight(1f),
+                        ) {
+                            Text(stringResource(id = R.string.action_enable_autofill))
+                        }
                     }
                 }
-
-                Spacer(modifier = Modifier.height(32.dp))
-
-                Row(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalArrangement = Arrangement.spacedBy(12.dp),
-                ) {
-                    TextButton(
-                        onClick = onDismiss,
-                        modifier = Modifier.weight(1f),
-                    ) {
-                        Text(stringResource(id = R.string.action_maybe_later))
-                    }
-
-                    Button(
-                        onClick = {
-                            onEnableAutoFill()
-                            onDismiss()
-                        },
-                        modifier = Modifier.weight(1f),
-                    ) {
-                        Text(stringResource(id = R.string.action_enable_autofill))
-                    }
-                }
-            }
             }
         }
     }
