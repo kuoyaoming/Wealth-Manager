@@ -13,9 +13,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
-import com.wealthmanager.ui.components.BannerCard
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
+import com.wealthmanager.ui.components.BannerCard
 
 @Composable
 fun ApiErrorBanner(
@@ -28,7 +28,7 @@ fun ApiErrorBanner(
 ) {
     val (hapticManager, view) = rememberHapticFeedbackWithView()
     BannerCard(
-        modifier = modifier.fillMaxWidth()
+        modifier = modifier.fillMaxWidth(),
     ) {
         Row(
             modifier =

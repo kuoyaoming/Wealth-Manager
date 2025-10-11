@@ -14,8 +14,6 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
-import com.wealthmanager.ui.components.CardTitle
-import com.wealthmanager.ui.components.SecondaryText
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -28,6 +26,8 @@ import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.haptic.HapticFeedbackManager
 import com.wealthmanager.haptic.rememberHapticFeedbackWithView
+import com.wealthmanager.ui.components.CardTitle
+import com.wealthmanager.ui.components.SecondaryText
 import com.wealthmanager.utils.MoneyFormatter
 import com.wealthmanager.utils.rememberMoneyText
 
@@ -55,28 +55,30 @@ fun StockAssetItem(
         ) {
             Column(modifier = Modifier.weight(1f)) {
                 CardTitle(
-                    text = stringResource(
-                        R.string.assets_stock_symbol_market,
-                        asset.symbol,
-                        asset.market,
-                    )
+                    text =
+                        stringResource(
+                            R.string.assets_stock_symbol_market,
+                            asset.symbol,
+                            asset.market,
+                        ),
                 )
                 SecondaryText(
-                    text = stringResource(
-                        R.string.assets_stock_shares_price,
-                        rememberMoneyText(
-                            asset.shares,
-                            "USD",
-                            style = MoneyFormatter.Style.NumberOnly,
-                            maxFractionDigits = 2,
+                    text =
+                        stringResource(
+                            R.string.assets_stock_shares_price,
+                            rememberMoneyText(
+                                asset.shares,
+                                "USD",
+                                style = MoneyFormatter.Style.NumberOnly,
+                                maxFractionDigits = 2,
+                            ),
+                            rememberMoneyText(
+                                asset.currentPrice,
+                                asset.originalCurrency,
+                                style = MoneyFormatter.Style.CurrencyCode,
+                                moneyContext = MoneyFormatter.MoneyContext.StockPrice,
+                            ),
                         ),
-                        rememberMoneyText(
-                            asset.currentPrice,
-                            asset.originalCurrency,
-                            style = MoneyFormatter.Style.CurrencyCode,
-                            moneyContext = MoneyFormatter.MoneyContext.StockPrice,
-                        ),
-                    )
                 )
                 Text(
                     text =

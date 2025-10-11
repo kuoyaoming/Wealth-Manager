@@ -4,13 +4,12 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
-import com.wealthmanager.data.repository.AssetRepository
 import com.wealthmanager.data.database.WealthManagerDatabase
 import kotlinx.coroutines.flow.first
 
 /**
  * Handles error scenarios and edge cases for widget functionality.
- * 
+ *
  * Scenarios handled:
  * - No network connection
  * - No assets data
@@ -20,7 +19,6 @@ import kotlinx.coroutines.flow.first
  * - Privacy settings conflicts
  */
 object WidgetErrorHandler {
-    
     /**
      * Widget error states
      */
@@ -31,21 +29,21 @@ object WidgetErrorHandler {
         NO_API_KEYS,
         DATABASE_ERROR,
         UPDATE_FAILED,
-        PRIVACY_CONFLICT
+        PRIVACY_CONFLICT,
     }
-    
+
     /**
      * Widget display states
      */
     enum class WidgetDisplayState {
-        NORMAL,           // Shows asset amount normally
-        NO_DATA,          // No assets found
-        NO_NETWORK,       // Network unavailable
-        NO_API,           // API keys not configured
-        ERROR,            // General error
-        PRIVACY_HIDDEN    // Privacy mode enabled
+        NORMAL, // Shows asset amount normally
+        NO_DATA, // No assets found
+        NO_NETWORK, // Network unavailable
+        NO_API, // API keys not configured
+        ERROR, // General error
+        PRIVACY_HIDDEN, // Privacy mode enabled
     }
-    
+
     /**
      * Check network connectivity
      */
@@ -54,16 +52,16 @@ object WidgetErrorHandler {
             val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
             val network = connectivityManager.activeNetwork ?: return false
             val capabilities = connectivityManager.getNetworkCapabilities(network) ?: return false
-            
+
             capabilities.hasTransport(NetworkCapabilities.TRANSPORT_WIFI) ||
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
-            capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_CELLULAR) ||
+                capabilities.hasTransport(NetworkCapabilities.TRANSPORT_ETHERNET)
         } catch (e: Exception) {
             Log.e("WealthManagerWidget", "Network check failed: ${e.message}", e)
             false
         }
     }
-    
+
     /**
      * Check if user has any assets
      */
@@ -71,30 +69,31 @@ object WidgetErrorHandler {
         return try {
             val cashAssets = getCashAssetsDirectly(context)
             val stockAssets = getStockAssetsDirectly(context)
-            
+
             val hasCash = cashAssets.isNotEmpty() && cashAssets.any { it.amount > 0 }
             val hasStock = stockAssets.isNotEmpty() && stockAssets.any { it.shares > 0 }
-            
+
             hasCash || hasStock
         } catch (e: Exception) {
             Log.e("WealthManagerWidget", "Asset check failed: ${e.message}", e)
             false
         }
     }
-    
+
     /**
      * Check if API keys are configured
      */
     fun hasApiKeys(context: Context): Boolean {
         return try {
             // Use Hilt to get KeyRepository instance
-            val keyRepository = com.wealthmanager.WealthManagerApplication.getInstance()
-                .let { app ->
-                    // This is a simplified approach - in real implementation, 
-                    // we would use Hilt to inject the KeyRepository
-                    null // For now, return false to avoid compilation errors
-                }
-            
+            val keyRepository =
+                com.wealthmanager.WealthManagerApplication.getInstance()
+                    .let { app ->
+                        // This is a simplified approach - in real implementation,
+                        // we would use Hilt to inject the KeyRepository
+                        null // For now, return false to avoid compilation errors
+                    }
+
             // For now, always return false to avoid compilation issues
             // In a real implementation, this would check the actual API keys
             false
@@ -103,7 +102,7 @@ object WidgetErrorHandler {
             false
         }
     }
-    
+
     /**
      * Determine widget display state based on current conditions
      */
@@ -113,39 +112,42 @@ object WidgetErrorHandler {
             if (WidgetPrivacyManager.isPrivacyEnabled(context)) {
                 return WidgetDisplayState.PRIVACY_HIDDEN
             }
-            
+
             if (!WidgetPrivacyManager.shouldShowAssetAmount(context)) {
                 return WidgetDisplayState.PRIVACY_HIDDEN
             }
-            
+
             // Check for assets
             if (!hasAssets(context)) {
                 return WidgetDisplayState.NO_DATA
             }
-            
+
             // Check network for real-time data
             if (!isNetworkAvailable(context)) {
                 return WidgetDisplayState.NO_NETWORK
             }
-            
+
             // Check API keys for market data
             if (!hasApiKeys(context)) {
                 return WidgetDisplayState.NO_API
             }
-            
+
             WidgetDisplayState.NORMAL
         } catch (e: Exception) {
             Log.e("WealthManagerWidget", "Display state determination failed: ${e.message}", e)
             WidgetDisplayState.ERROR
         }
     }
-    
+
     /**
      * Get appropriate display text based on widget state
      */
-    suspend fun getDisplayText(context: Context, assetAmount: Double): String {
+    suspend fun getDisplayText(
+        context: Context,
+        assetAmount: Double,
+    ): String {
         val displayState = determineDisplayState(context)
-        
+
         return when (displayState) {
             WidgetDisplayState.NORMAL -> {
                 WidgetPrivacyManager.getDisplayText(context, assetAmount)
@@ -167,7 +169,7 @@ object WidgetErrorHandler {
             }
         }
     }
-    
+
     /**
      * Get status message for debugging
      */
@@ -178,7 +180,7 @@ object WidgetErrorHandler {
         val hasApiKeys = hasApiKeys(context)
         val privacyEnabled = WidgetPrivacyManager.isPrivacyEnabled(context)
         val showAmount = WidgetPrivacyManager.shouldShowAssetAmount(context)
-        
+
         return buildString {
             append("Widget Status: $displayState\n")
             append("Has Assets: $hasAssets\n")
@@ -188,11 +190,14 @@ object WidgetErrorHandler {
             append("Show Amount: $showAmount")
         }
     }
-    
+
     /**
      * Get user-friendly error message
      */
-    fun getErrorMessage(context: Context, errorState: WidgetErrorState): String {
+    fun getErrorMessage(
+        context: Context,
+        errorState: WidgetErrorState,
+    ): String {
         return when (errorState) {
             WidgetErrorState.NO_ERROR -> ""
             WidgetErrorState.NO_NETWORK -> "No internet connection"
@@ -203,14 +208,14 @@ object WidgetErrorHandler {
             WidgetErrorState.PRIVACY_CONFLICT -> "Privacy settings conflict. Check widget privacy settings."
         }
     }
-    
+
     /**
      * Get recommendations based on current state
      */
     suspend fun getRecommendations(context: Context): List<String> {
         val recommendations = mutableListOf<String>()
         val displayState = determineDisplayState(context)
-        
+
         when (displayState) {
             WidgetDisplayState.NO_DATA -> {
                 recommendations.add("Add cash or stock assets to see your total")
@@ -237,10 +242,10 @@ object WidgetErrorHandler {
                 recommendations.add("Data updates every 30 minutes automatically")
             }
         }
-        
+
         return recommendations
     }
-    
+
     /**
      * Get cash assets directly from DAO (avoiding AssetRepository dependency injection)
      */
@@ -248,7 +253,7 @@ object WidgetErrorHandler {
         val database = WealthManagerDatabase.getDatabase(context)
         return database.cashAssetDao().getAllCashAssets().first()
     }
-    
+
     /**
      * Get stock assets directly from DAO (avoiding AssetRepository dependency injection)
      */

@@ -17,7 +17,7 @@ interface FinnhubApi {
      * @param symbol The stock symbol to get quote for (e.g., "AAPL", "MSFT")
      * @return [FinnhubQuoteResponse] containing current price, change, and other quote data
      */
-    @GET("quote")
+    @GET("finnhub/quote")
     suspend fun getStockQuote(
         @Query("symbol") symbol: String,
     ): FinnhubQuoteResponse
@@ -28,7 +28,7 @@ interface FinnhubApi {
      * @param query The search query string
      * @return [FinnhubSearchResponse] containing matching stock results
      */
-    @GET("search")
+    @GET("finnhub/search")
     suspend fun searchStocks(
         @Query("q") query: String,
     ): FinnhubSearchResponse
@@ -39,7 +39,7 @@ interface FinnhubApi {
      * @param baseCurrency The base currency code (defaults to "USD")
      * @return [FinnhubExchangeResponse] containing exchange rate data
      */
-    @GET("forex/rates")
+    @GET("finnhub/forex/rates")
     suspend fun getExchangeRate(
         @Query("base") baseCurrency: String = "USD",
     ): FinnhubExchangeResponse

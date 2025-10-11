@@ -14,9 +14,6 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Button
-import androidx.compose.material3.Card
-import androidx.compose.material3.CardDefaults
-import com.wealthmanager.ui.components.DialogCard
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
@@ -28,6 +25,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import com.wealthmanager.accessibility.rememberAccessibilityState
+import com.wealthmanager.ui.components.DialogCard
 import androidx.compose.ui.window.DialogProperties as WindowDialogProperties
 
 /**
@@ -72,7 +70,7 @@ fun ResponsiveDialog(
                             configuration.screenHeightDp >= 600 -> 0.8f // Tablets
                             else -> 0.9f // Phones
                         },
-                    )
+                    ),
         ) {
             Box(modifier = Modifier.fillMaxSize()) {
                 Column(

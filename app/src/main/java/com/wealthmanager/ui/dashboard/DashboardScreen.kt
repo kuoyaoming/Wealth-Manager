@@ -16,7 +16,6 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Sync
-import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -26,7 +25,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.SnackbarHost
 import androidx.compose.material3.SnackbarHostState
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextButton
 import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -85,7 +83,6 @@ fun DashboardScreen(
         val snackbarHostState = remember { SnackbarHostState() }
         val debugLogManager = remember { DebugLogManager() }
         val wearSyncSuccessMessage = stringResource(R.string.wear_sync_success)
-        var showMissingKeysDialog = androidx.compose.runtime.remember { androidx.compose.runtime.mutableStateOf(false) }
         val wearSyncMissingAppMessage = stringResource(R.string.wear_sync_missing_app)
         val wearSyncFailedMessage = stringResource(R.string.wear_sync_failed)
 
@@ -134,11 +131,7 @@ fun DashboardScreen(
                         IconButton(
                             onClick = {
                                 hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
-                                if (viewModel.hasRequiredKeys()) {
-                                    viewModel.refreshData()
-                                } else {
-                                    showMissingKeysDialog.value = true
-                                }
+                                viewModel.refreshData()
                             },
                         ) {
                             Icon(Icons.Default.Refresh, contentDescription = stringResource(R.string.refresh_data))
@@ -252,25 +245,6 @@ fun DashboardScreen(
                     onDismiss = {
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                         // Dismiss error logic would go here
-                    },
-                )
-            }
-
-            if (showMissingKeysDialog.value) {
-                AlertDialog(
-                    onDismissRequest = { showMissingKeysDialog.value = false },
-                    title = { Text(stringResource(R.string.missing_api_keys_title)) },
-                    text = { Text(stringResource(R.string.missing_api_keys_message)) },
-                    confirmButton = {
-                        TextButton(onClick = {
-                            showMissingKeysDialog.value = false
-                            onNavigateToSettings()
-                        }) { Text(stringResource(R.string.go_to_settings)) }
-                    },
-                    dismissButton = {
-                        TextButton(
-                            onClick = { showMissingKeysDialog.value = false },
-                        ) { Text(stringResource(R.string.cancel)) }
                     },
                 )
             }

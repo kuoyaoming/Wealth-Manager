@@ -8,7 +8,6 @@ import com.wealthmanager.data.model.SearchResult
 import com.wealthmanager.data.model.StockSearchItem
 import com.wealthmanager.debug.ApiDiagnostic
 import com.wealthmanager.debug.DebugLogManager
-import com.wealthmanager.security.KeyRepository
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import javax.inject.Inject
@@ -44,21 +43,11 @@ class ApiProviderService
         private val twseCacheManager: TwseCacheManager,
         private val debugLogManager: DebugLogManager,
         private val apiDiagnostic: ApiDiagnostic,
-        private val keyRepository: KeyRepository,
     ) {
         companion object {}
 
         suspend fun getStockQuote(symbol: String): Result<StockQuoteData> {
-            if (keyRepository.isAuthenticationRequired()) {
-                debugLogManager.log("API_PROVIDER", "Biometric authentication required for stock quote")
-                return Result.failure(Exception("Biometric authentication required"))
-            }
-
-            if (!keyRepository.isKeystoreAvailable()) {
-                debugLogManager.logError("API_PROVIDER", "Android Keystore not available for stock quote")
-                return Result.failure(Exception("Android Keystore not available"))
-            }
-
+            // API key and biometric checks are removed. Proxy handles auth.
             return if (isTaiwanStock(symbol)) {
                 tryTwseQuote(symbol)
             } else {
@@ -72,73 +61,26 @@ class ApiProviderService
         ): Flow<SearchResult> =
             flow {
                 try {
-                    debugLogManager.log("API_PROVIDER", "Searching stocks: '$query' in market: '$market'")
-
-                    if (keyRepository.isAuthenticationRequired()) {
-                        debugLogManager.log("API_PROVIDER", "Biometric authentication required for API access")
-                        emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.AUTHENTICATION_ERROR))
-                        return@flow
-                    }
-
-                    if (!keyRepository.isKeystoreAvailable()) {
-                        debugLogManager.logError("API_PROVIDER", "Android Keystore not available")
-                        emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.AUTHENTICATION_ERROR))
-                        return@flow
-                    }
-
-                    val effectiveKey = keyRepository.getUserFinnhubKey() ?: ""
-                    debugLogManager.log("API_PROVIDER", "Using API key: ${effectiveKey.take(8)}...")
-
-                    // Run diagnostic checks
-                    val diagnostic = apiDiagnostic.runDiagnostic()
-                    if (!diagnostic.isHealthy) {
-                        debugLogManager.logError(
-                            "API_PROVIDER",
-                            "API diagnostic failed: Network=${diagnostic.networkStatus.isConnected}, API Key=${diagnostic.apiKeyStatus.finnhubKeyValid}, Finnhub=${diagnostic.finnhubStatus.isReachable}",
-                        )
-
-                        when {
-                            !diagnostic.networkStatus.isConnected -> {
-                                emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.NETWORK_ERROR))
-                                return@flow
-                            }
-                            !diagnostic.apiKeyStatus.finnhubKeyValid -> {
-                                emit(
-                                    SearchResult.Error(
-                                        com.wealthmanager.data.model.SearchErrorType.AUTHENTICATION_ERROR,
-                                    ),
-                                )
-                                return@flow
-                            }
-                            !diagnostic.finnhubStatus.isReachable -> {
-                                emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.SERVER_ERROR))
-                                return@flow
-                            }
-                        }
-                    }
-
+                    debugLogManager.log("API_PROVIDER", "Searching stocks: '$query' in market: '$market' via proxy")
+                    // All diagnostic and key checks are removed. The proxy simplifies client logic.
                     val response = finnhubApi.searchStocks(query)
-                    debugLogManager.logInfo("API_PROVIDER", "Finnhub search returns ${response.result.size} results")
+                    debugLogManager.logInfo("API_PROVIDER", "Proxy search returns ${response.result.size} results")
                     emit(processFinnhubSearchResults(response.result))
                 } catch (e: Exception) {
-                    debugLogManager.logError("Finnhub search failed for '$query': ${e.message}", e)
+                    debugLogManager.logError("Proxy search failed for '$query': ${e.message}", e)
 
-                    // More detailed error analysis
+                    // Error handling is simplified as the proxy provides a unified error source.
                     when {
-                        e.message?.contains("401") == true -> {
-                            debugLogManager.logError("API_PROVIDER", "API key authentication failed")
-                            emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.AUTHENTICATION_ERROR))
-                        }
-                        e.message?.contains("429") == true -> {
-                            debugLogManager.logError("API_PROVIDER", "API rate limit exceeded")
-                            emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.RATE_LIMIT_ERROR))
+                        e.message?.contains("503") == true || e.message?.contains("500") == true -> {
+                            debugLogManager.logError("API_PROVIDER", "Proxy or upstream API server error.")
+                            emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.SERVER_ERROR))
                         }
                         e.message?.contains("timeout") == true -> {
-                            debugLogManager.logError("API_PROVIDER", "Request timeout")
+                            debugLogManager.logError("API_PROVIDER", "Request timeout to proxy.")
                             emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.NETWORK_ERROR))
                         }
                         else -> {
-                            debugLogManager.logError("API_PROVIDER", "Unknown error: ${e.message}")
+                            debugLogManager.logError("API_PROVIDER", "Unknown network error: ${e.message}")
                             emit(SearchResult.Error(com.wealthmanager.data.model.SearchErrorType.NETWORK_ERROR))
                         }
                     }
@@ -149,16 +91,7 @@ class ApiProviderService
             fromCurrency: String = "USD",
             toCurrency: String = "TWD",
         ): Result<ExchangeRateData> {
-            if (keyRepository.isAuthenticationRequired()) {
-                debugLogManager.log("API_PROVIDER", "Biometric authentication required for exchange rate")
-                return Result.failure(Exception("Biometric authentication required"))
-            }
-
-            if (!keyRepository.isKeystoreAvailable()) {
-                debugLogManager.logError("API_PROVIDER", "Android Keystore not available for exchange rate")
-                return Result.failure(Exception("Android Keystore not available"))
-            }
-
+            // API key and biometric checks are removed.
             return tryExchangeRateApi(fromCurrency, toCurrency)
         }
 
@@ -239,12 +172,12 @@ class ApiProviderService
             toCurrency: String,
         ): Result<ExchangeRateData> {
             return try {
-                debugLogManager.log("API_PROVIDER", "Getting exchange rate: $fromCurrency to $toCurrency")
-                val response = exchangeRateApi.getExchangeRate(keyRepository.getUserExchangeKey() ?: "", fromCurrency)
+                debugLogManager.log("API_PROVIDER", "Getting exchange rate via proxy: $fromCurrency to $toCurrency")
+                val response = exchangeRateApi.getExchangeRate(fromCurrency)
 
                 val rate = response.conversion_rates[toCurrency] ?: 0.0
 
-                debugLogManager.log("API_PROVIDER", "Exchange rate $fromCurrency/$toCurrency = $rate")
+                debugLogManager.log("API_PROVIDER", "Proxy exchange rate $fromCurrency/$toCurrency = $rate")
 
                 Result.success(
                     ExchangeRateData(
