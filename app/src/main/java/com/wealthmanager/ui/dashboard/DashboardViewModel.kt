@@ -1,5 +1,6 @@
 package com.wealthmanager.ui.dashboard
 
+import android.app.Application
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.wealthmanager.data.entity.CashAsset
@@ -15,6 +16,7 @@ import com.wealthmanager.ui.sync.SyncType
 import com.wealthmanager.util.NetworkUtils
 import com.wealthmanager.wear.WearSyncManager
 import com.wealthmanager.wear.WearSyncManager.ManualSyncResult
+import com.wealthmanager.widget.WidgetUpdateScheduler
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -31,6 +33,7 @@ import javax.inject.Inject
 class DashboardViewModel
     @Inject
     constructor(
+        private val application: Application,
         private val assetRepository: AssetRepository,
         private val exchangeRateRepository: ExchangeRateRepository,
         private val marketDataService: MarketDataService,
@@ -106,9 +109,7 @@ class DashboardViewModel
 
                     // Schedule widget update when data changes
                     debugLogManager.log("WIDGET_SYNC", "Scheduling widget update")
-                    com.wealthmanager.widget.WidgetUpdateScheduler.scheduleUpdate(
-                        com.wealthmanager.WealthManagerApplication.getInstance(),
-                    )
+                    WidgetUpdateScheduler.scheduleUpdate(application)
                 }.collect { }
             }
         }
@@ -336,6 +337,7 @@ data class AssetItem(
     val name: String,
     val value: Double,
     val percentage: Double = 0.0,
+    val dayChangePercentage: Double = 0.0,
 )
 
 private fun StockAsset.toAssetItem(
@@ -346,9 +348,10 @@ private fun StockAsset.toAssetItem(
     val value = if (displayCurrency == "USD") twdEquivalent / exchangeRate else twdEquivalent
     return AssetItem(
         id = id,
-        name = companyName, // Only show company name, no duplicate symbol
+        name = symbol,
         value = value,
         percentage = if (totalValue > 0) (twdEquivalent / totalValue * 100) else 0.0,
+        dayChangePercentage = dayChangePercentage, // Use real data from the database
     )
 }
 
@@ -360,9 +363,10 @@ private fun CashAsset.toAssetItem(
     val value = if (displayCurrency == "USD") twdEquivalent / exchangeRate else twdEquivalent
     return AssetItem(
         id = id,
-        name = "$currency $amount",
+        name = currency,
         value = value,
         percentage = if (totalValue > 0) (twdEquivalent / totalValue * 100) else 0.0,
+        dayChangePercentage = 0.0, // Cash has no daily change
     )
 }
 

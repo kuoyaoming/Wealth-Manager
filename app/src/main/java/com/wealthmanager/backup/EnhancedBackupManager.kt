@@ -51,8 +51,7 @@ class EnhancedBackupManager @Inject constructor(
             return cachedBackupStatus!!
         }
 
-        val isLocalBackupEnabled = backupPreferencesManager.isFinancialBackupEnabled()
-        val lastLocalBackupTime = backupPreferencesManager.getLastLocalBackupTime()
+        val lastLocalBackupTime = backupPreferencesManager.lastLocalBackupTime
 
         val strategy = if (isLocalBackupEnabled) BackupStrategy.LOCAL_ONLY else BackupStrategy.NO_BACKUP
 
@@ -78,30 +77,31 @@ class EnhancedBackupManager @Inject constructor(
      * Gets the recommended backup strategy based on current conditions.
      */
     fun getRecommendedBackupStrategy(): BackupStrategy {
-        return if (isLocalBackupEnabled()) {
+        return if (isLocalBackupEnabled) {
             BackupStrategy.LOCAL_ONLY
         } else {
             BackupStrategy.NO_BACKUP
         }
     }
 
-
     /**
      * Enables or disables local backup (Android Auto Backup).
      */
-    fun setLocalBackupEnabled(enabled: Boolean) {
-        backupPreferencesManager.setFinancialBackupEnabled(enabled)
-        debugLogManager.log("ENHANCED_BACKUP", "Local backup ${if (enabled) "enabled" else "disabled"}")
-        // Clear cache when backup settings change
-        clearCache()
-    }
+    var isLocalBackupEnabled: Boolean
+        get() = backupPreferencesManager.isFinancialBackupEnabled
+        set(enabled) {
+            backupPreferencesManager.isFinancialBackupEnabled = enabled
+            debugLogManager.log("ENHANCED_BACKUP", "Local backup ${if (enabled) "enabled" else "disabled"}")
+            // Clear cache when backup settings change
+            clearCache()
+        }
 
     /**
      * Records that a local backup was performed.
      */
     fun recordLocalBackup() {
         val currentTime = System.currentTimeMillis()
-        backupPreferencesManager.setLastLocalBackupTime(currentTime)
+        backupPreferencesManager.lastLocalBackupTime = currentTime
         debugLogManager.log("ENHANCED_BACKUP", "Local backup recorded at $currentTime")
     }
 
@@ -113,13 +113,6 @@ class EnhancedBackupManager @Inject constructor(
         cachedBackupStatus = null
         lastCacheTime = 0
         debugLogManager.log("ENHANCED_BACKUP", "Backup status cache cleared")
-    }
-
-    /**
-     * Checks if local backup is enabled.
-     */
-    fun isLocalBackupEnabled(): Boolean {
-        return backupPreferencesManager.isFinancialBackupEnabled()
     }
 
     /**

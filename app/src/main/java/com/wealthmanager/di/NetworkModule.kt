@@ -18,7 +18,7 @@ import com.wealthmanager.data.service.RequestDeduplicationManager
 import com.wealthmanager.data.service.SmartCacheStrategy
 import com.wealthmanager.data.service.TwseCacheManager
 import com.wealthmanager.data.service.TwseDataParser
-import com.wealthmanager.debug.ApiDiagnostic
+import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.security.BiometricProtectionManager
 import com.wealthmanager.ui.performance.ContentBasedFrameRateOptimizer
 import com.wealthmanager.ui.performance.ModernFrameRateManager
@@ -94,26 +94,26 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideTwseDataParser(debugLogManager: com.wealthmanager.debug.DebugLogManager): TwseDataParser {
+    fun provideTwseDataParser(debugLogManager: DebugLogManager): TwseDataParser {
         return TwseDataParser(debugLogManager)
     }
 
     @Provides
     @Singleton
-    fun provideApiErrorHandler(debugLogManager: com.wealthmanager.debug.DebugLogManager): ApiErrorHandler {
+    fun provideApiErrorHandler(debugLogManager: DebugLogManager): ApiErrorHandler {
         return ApiErrorHandler(debugLogManager)
     }
 
     @Provides
     @Singleton
-    fun provideSmartCacheStrategy(debugLogManager: com.wealthmanager.debug.DebugLogManager): SmartCacheStrategy {
+    fun provideSmartCacheStrategy(debugLogManager: DebugLogManager): SmartCacheStrategy {
         return SmartCacheStrategy(debugLogManager)
     }
 
     @Provides
     @Singleton
     fun provideRequestDeduplicationManager(
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+        debugLogManager: DebugLogManager,
     ): RequestDeduplicationManager {
         return RequestDeduplicationManager(debugLogManager)
     }
@@ -127,7 +127,7 @@ object NetworkModule {
     @Provides
     @Singleton
     fun provideModernFrameRateManager(
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+        debugLogManager: DebugLogManager,
     ): ModernFrameRateManager {
         return ModernFrameRateManager(debugLogManager)
     }
@@ -136,7 +136,7 @@ object NetworkModule {
     @Singleton
     fun provideContentBasedFrameRateOptimizer(
         frameRateManager: ModernFrameRateManager,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+        debugLogManager: DebugLogManager,
     ): ContentBasedFrameRateOptimizer {
         return ContentBasedFrameRateOptimizer(frameRateManager, debugLogManager)
     }
@@ -145,7 +145,7 @@ object NetworkModule {
     @Singleton
     fun provideCacheManager(
         assetRepository: AssetRepository,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+        debugLogManager: DebugLogManager,
         smartCacheStrategy: SmartCacheStrategy,
     ): CacheManager {
         return CacheManager(assetRepository, debugLogManager, smartCacheStrategy)
@@ -153,14 +153,14 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideDataValidator(debugLogManager: com.wealthmanager.debug.DebugLogManager): DataValidator {
+    fun provideDataValidator(debugLogManager: DebugLogManager): DataValidator {
         return DataValidator(debugLogManager)
     }
 
     @Provides
     @Singleton
     fun provideApiRetryManager(
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+        debugLogManager: DebugLogManager,
         apiErrorHandler: ApiErrorHandler,
     ): ApiRetryManager {
         return ApiRetryManager(debugLogManager, apiErrorHandler)
@@ -168,13 +168,13 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideApiStatusManager(debugLogManager: com.wealthmanager.debug.DebugLogManager): ApiStatusManager {
+    fun provideApiStatusManager(debugLogManager: DebugLogManager): ApiStatusManager {
         return ApiStatusManager(debugLogManager)
     }
 
     @Provides
     @Singleton
-    fun provideTwseCacheManager(debugLogManager: com.wealthmanager.debug.DebugLogManager): TwseCacheManager {
+    fun provideTwseCacheManager(debugLogManager: DebugLogManager): TwseCacheManager {
         return TwseCacheManager(debugLogManager)
     }
 
@@ -182,27 +182,9 @@ object NetworkModule {
     @Singleton
     fun provideBiometricProtectionManager(
         @ApplicationContext context: Context,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+        debugLogManager: DebugLogManager,
     ): BiometricProtectionManager {
         return BiometricProtectionManager(context, debugLogManager)
-    }
-
-    @Provides
-    @Singleton
-    fun provideDeveloperKeyManager(
-        @ApplicationContext context: Context,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
-    ): com.wealthmanager.security.DeveloperKeyManager {
-        return com.wealthmanager.security.DeveloperKeyManager(context, debugLogManager)
-    }
-
-    @Provides
-    @Singleton
-    fun provideApiDiagnostic(
-        @ApplicationContext context: Context,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
-    ): ApiDiagnostic {
-        return ApiDiagnostic(context, debugLogManager)
     }
 
     @Provides
@@ -213,8 +195,7 @@ object NetworkModule {
         exchangeRateApi: ExchangeRateApi,
         twseDataParser: TwseDataParser,
         twseCacheManager: TwseCacheManager,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
-        apiDiagnostic: ApiDiagnostic,
+        debugLogManager: DebugLogManager,
     ): ApiProviderService {
         return ApiProviderService(
             finnhubApi,
@@ -223,7 +204,6 @@ object NetworkModule {
             twseDataParser,
             twseCacheManager,
             debugLogManager,
-            apiDiagnostic,
         )
     }
 
@@ -232,7 +212,7 @@ object NetworkModule {
     fun provideMarketDataService(
         apiProviderService: ApiProviderService,
         assetRepository: AssetRepository,
-        debugLogManager: com.wealthmanager.debug.DebugLogManager,
+        debugLogManager: DebugLogManager,
         cacheManager: CacheManager,
         apiErrorHandler: ApiErrorHandler,
         dataValidator: DataValidator,

@@ -18,9 +18,6 @@ interface StockAssetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertStockAsset(stockAsset: StockAsset)
 
-    @Update
-    suspend fun updateStockAsset(stockAsset: StockAsset)
-
     @Delete
     suspend fun deleteStockAsset(stockAsset: StockAsset)
 

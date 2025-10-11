@@ -9,6 +9,8 @@ import com.wealthmanager.backup.BackupPreferencesManager
 import com.wealthmanager.backup.EnhancedBackupManager
 import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.preferences.LocalePreferencesManager
+import com.wealthmanager.widget.WidgetManager
+import com.wealthmanager.widget.WidgetPrivacyManager
 import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -55,16 +57,12 @@ data class LanguageOption(
  * This ViewModel handles:
  * - Biometric authentication settings
  * - Language and locale preferences
- * - API key management and testing
  * - Backup and restore settings
  * - Security configuration
  *
  * @property authStateManager Manager for authentication state
  * @property backupPreferencesManager Manager for backup preferences
  * @property localePreferencesManager Manager for locale preferences
- * @property apiTestService Service for testing API connectivity
- * @property keyRepository Repository for API key management
- * @property secureApiKeyManager Manager for secure API key operations
  * @property firstLaunchManager Manager for first launch logic
  */
 @HiltViewModel
@@ -82,8 +80,8 @@ class SettingsViewModel
             MutableStateFlow(
                 SettingsUiState(
                     biometricEnabled = authStateManager.isBiometricEnabled(),
-                    financialBackupEnabled = backupPreferencesManager.isFinancialBackupEnabled(),
-                    currentLanguageCode = localePreferencesManager.getLanguageCode(),
+                    financialBackupEnabled = backupPreferencesManager.isFinancialBackupEnabled,
+                    currentLanguageCode = localePreferencesManager.languageCode,
                     availableLanguages =
                         listOf(
                             LanguageOption(languageCode = "en", displayNameRes = R.string.language_option_english),
@@ -93,12 +91,9 @@ class SettingsViewModel
                             ),
                         ),
                     // Initialize widget privacy settings
-                    widgetShowAssetAmount =
-                        com.wealthmanager.widget.WidgetPrivacyManager.shouldShowAssetAmount(
-                            context,
-                        ),
-                    widgetPrivacyEnabled = com.wealthmanager.widget.WidgetPrivacyManager.isPrivacyEnabled(context),
-                    widgetInstalledCount = com.wealthmanager.widget.WidgetManager.getInstalledWidgetCount(context),
+                    widgetShowAssetAmount = WidgetPrivacyManager.shouldShowAssetAmount(context),
+                    widgetPrivacyEnabled = WidgetPrivacyManager.isPrivacyEnabled(context),
+                    widgetInstalledCount = WidgetManager.getInstalledWidgetCount(context),
                 ),
             )
         val uiState: StateFlow<SettingsUiState> = _uiState.asStateFlow()
@@ -113,7 +108,7 @@ class SettingsViewModel
 
         fun setFinancialBackupEnabled(enabled: Boolean) {
             viewModelScope.launch {
-                backupPreferencesManager.setFinancialBackupEnabled(enabled)
+                backupPreferencesManager.isFinancialBackupEnabled = enabled
                 _uiState.value = _uiState.value.copy(financialBackupEnabled = enabled)
                 // Refresh backup status after change
                 refreshBackupStatus()
@@ -146,7 +141,7 @@ class SettingsViewModel
 
         fun setLanguage(languageCode: String) {
             viewModelScope.launch {
-                localePreferencesManager.setLanguageCode(languageCode)
+                localePreferencesManager.languageCode = languageCode
                 _uiState.value = _uiState.value.copy(currentLanguageCode = languageCode)
             }
         }

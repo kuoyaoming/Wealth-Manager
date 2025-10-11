@@ -4,7 +4,10 @@ import android.content.Context
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
-import com.wealthmanager.data.database.WealthManagerDatabase
+import com.wealthmanager.data.entity.CashAsset
+import com.wealthmanager.data.entity.StockAsset
+import com.wealthmanager.di.DatabaseEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.first
 
 /**
@@ -81,26 +84,14 @@ object WidgetErrorHandler {
     }
 
     /**
-     * Check if API keys are configured
+     * Check if API keys are configured.
+     * NOTE: This is a simplified check. A full implementation requires Hilt injection
+     * in a context that supports it (e.g., a WorkManager worker).
      */
     fun hasApiKeys(context: Context): Boolean {
-        return try {
-            // Use Hilt to get KeyRepository instance
-            val keyRepository =
-                com.wealthmanager.WealthManagerApplication.getInstance()
-                    .let { app ->
-                        // This is a simplified approach - in real implementation,
-                        // we would use Hilt to inject the KeyRepository
-                        null // For now, return false to avoid compilation errors
-                    }
-
-            // For now, always return false to avoid compilation issues
-            // In a real implementation, this would check the actual API keys
-            false
-        } catch (e: Exception) {
-            Log.e("WealthManagerWidget", "API key check failed: ${e.message}", e)
-            false
-        }
+        // For now, always return false to avoid compilation issues.
+        // In a real implementation, this would check the actual API keys.
+        return false
     }
 
     /**
@@ -249,16 +240,18 @@ object WidgetErrorHandler {
     /**
      * Get cash assets directly from DAO (avoiding AssetRepository dependency injection)
      */
-    private suspend fun getCashAssetsDirectly(context: Context): List<com.wealthmanager.data.entity.CashAsset> {
-        val database = WealthManagerDatabase.getDatabase(context)
+    private suspend fun getCashAssetsDirectly(context: Context): List<CashAsset> {
+        val hiltEntryPoint = EntryPointAccessors.fromApplication(context, DatabaseEntryPoint::class.java)
+        val database = hiltEntryPoint.wealthManagerDatabase()
         return database.cashAssetDao().getAllCashAssets().first()
     }
 
     /**
      * Get stock assets directly from DAO (avoiding AssetRepository dependency injection)
      */
-    private suspend fun getStockAssetsDirectly(context: Context): List<com.wealthmanager.data.entity.StockAsset> {
-        val database = WealthManagerDatabase.getDatabase(context)
+    private suspend fun getStockAssetsDirectly(context: Context): List<StockAsset> {
+        val hiltEntryPoint = EntryPointAccessors.fromApplication(context, DatabaseEntryPoint::class.java)
+        val database = hiltEntryPoint.wealthManagerDatabase()
         return database.stockAssetDao().getAllStockAssets().first()
     }
 }

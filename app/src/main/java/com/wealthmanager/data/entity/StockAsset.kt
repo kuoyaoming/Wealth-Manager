@@ -13,6 +13,8 @@ data class StockAsset(
     val shares: Double, // Support fractional shares
     val market: String, // "GLOBAL" for all stocks
     val currentPrice: Double = 0.0,
+    val dayChange: Double = 0.0, // Daily price change
+    val dayChangePercentage: Double = 0.0, // Daily price change in percentage
     val originalCurrency: String = "USD", // Default to USD for global stocks
     val twdEquivalent: Double = 0.0,
     val lastUpdated: Long = System.currentTimeMillis(),

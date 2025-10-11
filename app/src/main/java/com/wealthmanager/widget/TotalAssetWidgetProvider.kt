@@ -14,7 +14,9 @@ import androidx.work.PeriodicWorkRequestBuilder
 import androidx.work.WorkManager
 import com.wealthmanager.MainActivity
 import com.wealthmanager.R
+import com.wealthmanager.di.DatabaseEntryPoint
 import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.EntryPointAccessors
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.runBlocking
 import java.text.SimpleDateFormat
@@ -95,10 +97,12 @@ class WidgetUpdateWorker(
         return try {
             Log.d("WealthManagerWidget", "Starting widget update")
 
+            val hiltEntryPoint = EntryPointAccessors.fromApplication(applicationContext, DatabaseEntryPoint::class.java)
+            val database = hiltEntryPoint.wealthManagerDatabase()
+
             val displayState = WidgetErrorHandler.determineDisplayState(applicationContext)
             Log.d("WealthManagerWidget", "Display state: $displayState")
 
-            val database = com.wealthmanager.data.database.WealthManagerDatabase.getDatabase(applicationContext)
             val cashAssets = runBlocking { database.cashAssetDao().getAllCashAssets().first() }
             val stockAssets = runBlocking { database.stockAssetDao().getAllStockAssets().first() }
 

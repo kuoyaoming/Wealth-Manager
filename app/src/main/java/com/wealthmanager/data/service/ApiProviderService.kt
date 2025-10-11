@@ -6,7 +6,6 @@ import com.wealthmanager.data.api.TwseApi
 import com.wealthmanager.data.model.NoResultsReason
 import com.wealthmanager.data.model.SearchResult
 import com.wealthmanager.data.model.StockSearchItem
-import com.wealthmanager.debug.ApiDiagnostic
 import com.wealthmanager.debug.DebugLogManager
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -29,8 +28,6 @@ import javax.inject.Singleton
  * @property twseDataParser Parser for TWSE data format
  * @property twseCacheManager Cache manager for TWSE data
  * @property debugLogManager Manager for debug logging
- * @property apiDiagnostic Diagnostic tools for API monitoring
- * @property keyRepository Repository for API key management
  */
 @Singleton
 class ApiProviderService
@@ -42,7 +39,6 @@ class ApiProviderService
         private val twseDataParser: TwseDataParser,
         private val twseCacheManager: TwseCacheManager,
         private val debugLogManager: DebugLogManager,
-        private val apiDiagnostic: ApiDiagnostic,
     ) {
         companion object {}
 
@@ -103,14 +99,14 @@ class ApiProviderService
                 Result.success(
                     StockQuoteData(
                         symbol = symbol,
-                        price = response.c,
-                        change = response.d,
-                        changePercent = response.dp,
+                        price = response.currentPrice,
+                        change = response.change,
+                        changePercent = response.changePercent,
                         volume = 0L,
-                        high = response.h,
-                        low = response.l,
-                        open = response.o,
-                        previousClose = response.pc,
+                        high = response.highPrice,
+                        low = response.lowPrice,
+                        open = response.openPrice,
+                        previousClose = response.previousClosePrice,
                         provider = "Finnhub",
                     ),
                 )
@@ -175,7 +171,7 @@ class ApiProviderService
                 debugLogManager.log("API_PROVIDER", "Getting exchange rate via proxy: $fromCurrency to $toCurrency")
                 val response = exchangeRateApi.getExchangeRate(fromCurrency)
 
-                val rate = response.conversion_rates[toCurrency] ?: 0.0
+                val rate = response.conversionRates[toCurrency] ?: 0.0
 
                 debugLogManager.log("API_PROVIDER", "Proxy exchange rate $fromCurrency/$toCurrency = $rate")
 

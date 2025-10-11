@@ -56,9 +56,9 @@ android {
         vectorDrawables {
             useSupportLibrary = true
         }
-        
+
         // Removed BuildConfig API keys. Keys must be provided by users in Settings.
-        
+
         // Support 16KB memory pages for Android 15+ (required from 2025-11-01)
         ndk {
             abiFilters 'arm64-v8a', 'armeabi-v7a', 'x86', 'x86_64'
@@ -69,16 +69,16 @@ android {
         release {
             // Enables code-related app optimization.
             minifyEnabled = true
-            
+
             // Enables resource shrinking.
             shrinkResources = true
-            
+
             // Default file with automatically generated optimization rules.
             proguardFiles = [getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro']
             ndk {
                 debugSymbolLevel = 'FULL'
             }
-            
+
             // Always use release signing config (it will fallback to debug keystore if CI vars not set)
             signingConfig signingConfigs.release
         }
@@ -91,12 +91,12 @@ android {
             }
         }
     }
-    
+
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    
+
     kotlinOptions {
         jvmTarget = "17"
         freeCompilerArgs += [
@@ -104,22 +104,22 @@ android {
             "-opt-in=androidx.compose.material3.windowsizeclass.ExperimentalMaterial3WindowSizeClassApi"
         ]
     }
-    
+
     buildFeatures {
         compose = true
         viewBinding = true
         buildConfig = true
     }
-    
-    
+
+
     packagingOptions {
         resources {
             excludes += ['/META-INF/{AL2.0,LGPL2.1}']
         }
     }
-    
+
     buildToolsVersion = '35.0.0'
-    
+
     testOptions {
         unitTests {
             includeAndroidResources = true
@@ -146,7 +146,7 @@ dependencies {
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.7.0'
     implementation 'androidx.activity:activity-compose:1.8.2'
     implementation 'androidx.core:core-splashscreen:1.0.1'
-    
+
     // Compose BOM
     implementation platform('androidx.compose:compose-bom:2025.01.01')
     implementation 'androidx.compose.ui:ui'
@@ -155,26 +155,26 @@ dependencies {
     implementation 'androidx.compose.material3:material3'
     implementation 'androidx.compose.material3:material3-window-size-class'
     implementation 'androidx.compose.material:material-icons-extended'
-    
+
     // Navigation
     implementation 'androidx.navigation:navigation-compose:2.8.0'
-    
+
     // ViewModel
     implementation 'androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0'
-    
+
     // Room Database
     implementation 'androidx.room:room-runtime:2.8.1'
     implementation 'androidx.room:room-ktx:2.8.1'
     ksp 'androidx.room:room-compiler:2.8.1'
-    
+
     // Hilt Dependency Injection
     implementation 'com.google.dagger:hilt-android:2.57.2'
     implementation 'androidx.hilt:hilt-navigation-compose:1.1.0'
     ksp 'com.google.dagger:hilt-compiler:2.57.2'
-    
+
     // Biometric Authentication
     implementation 'androidx.biometric:biometric:1.1.0'
-    
+
     // Networking
     implementation 'com.squareup.retrofit2:retrofit:2.11.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.11.0'
@@ -182,7 +182,7 @@ dependencies {
 
     // Security Crypto for EncryptedSharedPreferences
     implementation 'androidx.security:security-crypto:1.1.0'
-    
+
     // Google Credential Manager for password manager integration
     implementation 'androidx.credentials:credentials:1.2.0'
     implementation 'androidx.credentials:credentials-play-services-auth:1.2.0'
@@ -197,17 +197,17 @@ dependencies {
 
     // Coroutines extensions
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-play-services:1.10.2'
-    
+
     // Charts - Using Compose Canvas for now
     // implementation 'com.github.PhilJay:MPAndroidChart:v3.1.0'
     // implementation 'com.github.AnyChart:AnyChart-Android:1.1.2'
-    
+
     // Coroutines
     implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2'
-    
+
     // WorkManager
     implementation 'androidx.work:work-runtime-ktx:2.9.0'
-    
+
     // Testing
     testImplementation 'junit:junit:4.13.2'
     testImplementation 'org.mockito:mockito-core:5.9.0'

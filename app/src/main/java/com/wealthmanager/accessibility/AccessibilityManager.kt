@@ -1,69 +1,14 @@
 package com.wealthmanager.accessibility
 
 import android.content.Context
-import android.content.res.Configuration
+import android.os.Build
+import android.view.accessibility.AccessibilityManager as AndroidAccessibilityManager
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
-import javax.inject.Inject
-import javax.inject.Singleton
 import kotlin.math.pow
-import android.view.accessibility.AccessibilityManager as AndroidAccessibilityManager
-
-/**
- * Accessibility manager following 2025 Android design guidelines.
- */
-@Singleton
-class AccessibilityManager
-    @Inject
-    constructor(
-        private val context: Context,
-    ) {
-        /**
-         * Check if TalkBack is enabled.
-         */
-        fun isTalkBackEnabled(): Boolean {
-            return context.getSystemService(Context.ACCESSIBILITY_SERVICE)
-                ?.let { accessibilityManager ->
-                    (accessibilityManager as AndroidAccessibilityManager).isEnabled &&
-                        accessibilityManager.isTouchExplorationEnabled
-                } ?: false
-        }
-
-        /**
-         * Check if large font is enabled.
-         */
-        fun isLargeFontEnabled(): Boolean {
-            val configuration = context.resources.configuration
-            val fontScale = configuration.fontScale
-            return fontScale > 1.0f
-        }
-
-        /**
-         * Check if high contrast is enabled.
-         */
-        fun isHighContrastEnabled(): Boolean {
-            val configuration = context.resources.configuration
-            return configuration.uiMode and Configuration.UI_MODE_NIGHT_MASK == Configuration.UI_MODE_NIGHT_YES
-        }
-
-        /**
-         * Get font scale factor.
-         */
-        fun getFontScale(): Float {
-            return context.resources.configuration.fontScale
-        }
-
-        /**
-         * Check if accessibility mode is enabled.
-         */
-        fun isAccessibilityMode(): Boolean {
-            return isTalkBackEnabled() || isLargeFontEnabled() || isHighContrastEnabled()
-        }
-    }
 
 /**
  * Accessibility state.
@@ -77,24 +22,50 @@ data class AccessibilityState(
 )
 
 /**
- * Accessibility theme configuration.
+ * Remembers the current accessibility state of the system.
+ *
+ * This composable function provides an [AccessibilityState] object that reflects
+ * the current system settings for TalkBack, font size, and high contrast mode.
+ * It automatically updates when these settings change.
  */
 @Composable
 fun rememberAccessibilityState(): AccessibilityState {
     val context = LocalContext.current
-    val configuration = LocalConfiguration.current
-    val density = LocalDensity.current
+    val accessibilityManager =
+        context.getSystemService(Context.ACCESSIBILITY_SERVICE) as? AndroidAccessibilityManager
 
-    return remember(configuration.fontScale, configuration.uiMode) {
-        val accessibilityManager = AccessibilityManager(context)
+    val configuration = LocalConfiguration.current
+    val fontScale = configuration.fontScale
+
+    return remember(accessibilityManager, fontScale) {
+        val isTalkBackEnabled =
+            accessibilityManager?.isEnabled == true && accessibilityManager.isTouchExplorationEnabled
+        val isLargeFontEnabled = fontScale > 1.1f // Standard threshold for large font
+        val isHighContrastEnabled = isHighContrastTextEnabled(accessibilityManager)
 
         AccessibilityState(
-            isTalkBackEnabled = accessibilityManager.isTalkBackEnabled(),
-            isLargeFontEnabled = accessibilityManager.isLargeFontEnabled(),
-            isHighContrastEnabled = accessibilityManager.isHighContrastEnabled(),
-            fontScale = accessibilityManager.getFontScale(),
-            isAccessibilityMode = accessibilityManager.isAccessibilityMode(),
+            isTalkBackEnabled = isTalkBackEnabled,
+            isLargeFontEnabled = isLargeFontEnabled,
+            isHighContrastEnabled = isHighContrastEnabled,
+            fontScale = fontScale,
+            isAccessibilityMode = isTalkBackEnabled || isLargeFontEnabled || isHighContrastEnabled,
         )
+    }
+}
+
+/**
+ * Checks for high contrast text setting using reflection to support projects
+ * with a compileSdk lower than 29.
+ */
+private fun isHighContrastTextEnabled(manager: AndroidAccessibilityManager?): Boolean {
+    if (manager == null || Build.VERSION.SDK_INT < Build.VERSION_CODES.Q) {
+        return false
+    }
+    return try {
+        val method = manager.javaClass.getMethod("isHighContrastTextEnabled")
+        (method.invoke(manager) as? Boolean) == true
+    } catch (e: Exception) {
+        false
     }
 }
 
@@ -164,9 +135,9 @@ object AccessibilityColors {
         val g = ((color shr 8) and 0xFF) / 255.0
         val b = (color and 0xFF) / 255.0
 
-        val rLinear = if (r <= 0.03928) r / 12.92 else (r + 0.055).pow(2.4) / 1.055.pow(2.4)
-        val gLinear = if (g <= 0.03928) g / 12.92 else (g + 0.055).pow(2.4) / 1.055.pow(2.4)
-        val bLinear = if (b <= 0.03928) b / 12.92 else (b + 0.055).pow(2.4) / 1.055.pow(2.4)
+        val rLinear = if (r <= 0.03928) r / 12.92 else ((r + 0.055) / 1.055).pow(2.4)
+        val gLinear = if (g <= 0.03928) g / 12.92 else ((g + 0.055) / 1.055).pow(2.4)
+        val bLinear = if (b <= 0.03928) b / 12.92 else ((b + 0.055) / 1.055).pow(2.4)
 
         return 0.2126 * rLinear + 0.7152 * gLinear + 0.0722 * bLinear
     }

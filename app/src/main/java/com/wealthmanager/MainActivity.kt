@@ -19,12 +19,12 @@ import androidx.fragment.app.FragmentActivity
 import com.wealthmanager.data.FirstLaunchManager
 import com.wealthmanager.ui.about.AboutDialog
 import com.wealthmanager.ui.navigation.WealthManagerNavigation
-import com.wealthmanager.ui.onboarding.OnboardingFlow
 import com.wealthmanager.ui.performance.ContentBasedFrameRateOptimizer
 import com.wealthmanager.ui.performance.ModernFrameRateManager
 import com.wealthmanager.ui.responsive.LocalWindowWidthSizeClass
 import com.wealthmanager.ui.theme.WealthManagerTheme
 import com.wealthmanager.utils.StandardLogger
+import com.wealthmanager.widget.WidgetManager
 import dagger.hilt.android.AndroidEntryPoint
 import javax.inject.Inject
 
@@ -77,20 +77,15 @@ class MainActivity : FragmentActivity() {
 
         // Initialize modern frame rate management
         frameRateManager.initialize(this)
-        setupInputEventHandling()
 
         // Initialize widget system
-        com.wealthmanager.widget.WidgetManager.initialize(this)
+        WidgetManager.initialize(this)
 
         setContent {
             var showAboutDialog by remember { mutableStateOf(false) }
-            var showOnboarding by remember { mutableStateOf(false) }
-            var navigateToSettings by remember { mutableStateOf(false) }
 
             LaunchedEffect(Unit) {
-                if (firstLaunchManager.shouldShowGooglePasswordManagerOnboarding()) {
-                    showOnboarding = true
-                } else if (firstLaunchManager.shouldShowAboutDialog() && !firstLaunchManager.hasAboutDialogBeenShown()) {
+                if (firstLaunchManager.shouldShowAboutDialog() && !firstLaunchManager.hasAboutDialogBeenShown) {
                     showAboutDialog = true
                 }
             }
@@ -106,19 +101,6 @@ class MainActivity : FragmentActivity() {
                     ) {
                         WealthManagerNavigation(
                             modifier = Modifier.fillMaxSize(),
-                        )
-                    }
-
-                    if (showOnboarding) {
-                        OnboardingFlow(
-                            firstLaunchManager = firstLaunchManager,
-                            onComplete = {
-                                showOnboarding = false
-                            },
-                            onNavigateToSettings = {
-                                showOnboarding = false
-                                navigateToSettings = true
-                            },
                         )
                     }
 
@@ -170,20 +152,6 @@ class MainActivity : FragmentActivity() {
     }
 
     /**
-     * Sets up input event handling for the activity.
-     *
-     * This method configures touch event processing and error handling
-     * for user interactions throughout the app.
-     */
-    private fun setupInputEventHandling() {
-        try {
-            StandardLogger.debug("MainActivity", "Input event handling configured")
-        } catch (e: Exception) {
-            StandardLogger.error("MainActivity", "Error setting up input event handling", e)
-        }
-    }
-
-    /**
      * Validates if a touch position is within valid bounds.
      *
      * @param x The x-coordinate of the touch event
@@ -222,20 +190,6 @@ class MainActivity : FragmentActivity() {
         }
     }
 
-    /**
-     * Sets optimal frame rate based on content type using modern Android APIs.
-     * This replaces the deprecated preferredRefreshRate approach.
-     *
-     * @param contentType The type of content being displayed
-     */
-    private fun setOptimalFrameRate(contentType: ModernFrameRateManager.ContentType) {
-        try {
-            frameRateManager.setFrameRateForContent(this, contentType)
-        } catch (e: Exception) {
-            StandardLogger.warn("MainActivity", "Failed to set optimal frame rate for $contentType", e)
-        }
-    }
-
     override fun onDestroy() {
         super.onDestroy()
         StandardLogger.debug("MainActivity", "onDestroy called")
@@ -245,7 +199,6 @@ class MainActivity : FragmentActivity() {
     override fun onLowMemory() {
         super.onLowMemory()
         StandardLogger.warn("MainActivity", "onLowMemory called - trigger memory optimization")
-        System.gc()
         // Modern frame rate manager handles memory optimization automatically
     }
 
@@ -261,7 +214,6 @@ class MainActivity : FragmentActivity() {
             ComponentCallbacks2.TRIM_MEMORY_RUNNING_MODERATE,
             -> {
                 StandardLogger.warn("MainActivity", "Memory pressure detected - level: $level")
-                System.gc()
             }
             ComponentCallbacks2.TRIM_MEMORY_UI_HIDDEN -> {
                 StandardLogger.debug("MainActivity", "UI hidden - release non-essential resources")
@@ -275,7 +227,6 @@ class MainActivity : FragmentActivity() {
             }
             ComponentCallbacks2.TRIM_MEMORY_COMPLETE -> {
                 StandardLogger.warn("MainActivity", "Complete memory pressure - release all non-essential resources")
-                System.gc()
             }
         }
     }

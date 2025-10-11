@@ -70,7 +70,7 @@ class MarketDataService
                                         val quoteData = quoteResult.getOrThrow()
                                         debugLogManager.log(
                                             "MARKET_DATA",
-                                            "Quote data for ${stock.symbol}: price=${quoteData.price}",
+                                            "Quote data for ${stock.symbol}: price=${quoteData.price}, change=${quoteData.changePercent}%",
                                         )
                                         quoteData
                                     } else {
@@ -89,13 +89,13 @@ class MarketDataService
                                         StockQuoteData(
                                             symbol = stock.symbol,
                                             price = cachedStock.currentPrice,
-                                            change = 0.0,
-                                            changePercent = 0.0,
+                                            change = cachedStock.dayChange,
+                                            changePercent = cachedStock.dayChangePercentage,
                                             volume = 0L,
                                             high = cachedStock.currentPrice,
                                             low = cachedStock.currentPrice,
                                             open = cachedStock.currentPrice,
-                                            previousClose = cachedStock.currentPrice,
+                                            previousClose = cachedStock.currentPrice - cachedStock.dayChange,
                                             provider = "Cached",
                                         )
                                     } else {
@@ -116,6 +116,8 @@ class MarketDataService
                             val updatedStock =
                                 stock.copy(
                                     currentPrice = price,
+                                    dayChange = quoteData.change,
+                                    dayChangePercentage = quoteData.changePercent,
                                     twdEquivalent = twdEquivalent,
                                     lastUpdated = System.currentTimeMillis(),
                                 )
@@ -125,7 +127,7 @@ class MarketDataService
                                 assetRepository.updateStockAsset(updatedStock)
                                 debugLogManager.log(
                                     "MARKET_DATA",
-                                    "Updated ${stock.symbol}: Price=$price, TWD=$twdEquivalent",
+                                    "Updated ${stock.symbol}: Price=$price, Change=${quoteData.changePercent}%, TWD=$twdEquivalent",
                                 )
                             } else {
                                 val errorReason =

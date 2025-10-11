@@ -7,8 +7,8 @@ import retrofit2.http.Query
 /**
  * API interface for Finnhub financial data service.
  *
- * This interface provides methods to access real-time stock quotes,
- * stock search functionality, and exchange rate data from Finnhub API.
+ * This interface provides methods to access real-time stock quotes and
+ * stock search functionality from the Finnhub API.
  */
 interface FinnhubApi {
     /**
@@ -32,40 +32,29 @@ interface FinnhubApi {
     suspend fun searchStocks(
         @Query("q") query: String,
     ): FinnhubSearchResponse
-
-    /**
-     * Gets current exchange rates for a base currency.
-     *
-     * @param baseCurrency The base currency code (defaults to "USD")
-     * @return [FinnhubExchangeResponse] containing exchange rate data
-     */
-    @GET("finnhub/forex/rates")
-    suspend fun getExchangeRate(
-        @Query("base") baseCurrency: String = "USD",
-    ): FinnhubExchangeResponse
 }
 
 /**
  * Response model for Finnhub stock quote API.
  *
- * @property c Current price
- * @property d Change amount
- * @property dp Change percentage
- * @property h High price of the day
- * @property l Low price of the day
- * @property o Open price of the day
- * @property pc Previous close price
- * @property t Timestamp of the quote
+ * @property currentPrice Current price
+ * @property change Change amount
+ * @property changePercent Change percentage
+ * @property highPrice High price of the day
+ * @property lowPrice Low price of the day
+ * @property openPrice Open price of the day
+ * @property previousClosePrice Previous close price
+ * @property timestamp Timestamp of the quote
  */
 data class FinnhubQuoteResponse(
-    @SerializedName("c") val c: Double,
-    @SerializedName("d") val d: Double,
-    @SerializedName("dp") val dp: Double,
-    @SerializedName("h") val h: Double,
-    @SerializedName("l") val l: Double,
-    @SerializedName("o") val o: Double,
-    @SerializedName("pc") val pc: Double,
-    @SerializedName("t") val t: Long,
+    @SerializedName("c") val currentPrice: Double,
+    @SerializedName("d") val change: Double,
+    @SerializedName("dp") val changePercent: Double,
+    @SerializedName("h") val highPrice: Double,
+    @SerializedName("l") val lowPrice: Double,
+    @SerializedName("o") val openPrice: Double,
+    @SerializedName("pc") val previousClosePrice: Double,
+    @SerializedName("t") val timestamp: Long,
 )
 
 /**
@@ -92,17 +81,4 @@ data class FinnhubSearchResult(
     @SerializedName("displaySymbol") val displaySymbol: String,
     @SerializedName("symbol") val symbol: String,
     @SerializedName("type") val type: String,
-)
-
-/**
- * Response model for Finnhub exchange rate API.
- *
- * @property base Base currency code
- * @property quote Quote currency code
- * @property rate Exchange rate from base to quote currency
- */
-data class FinnhubExchangeResponse(
-    @SerializedName("base") val base: String,
-    @SerializedName("quote") val quote: String,
-    @SerializedName("rate") val rate: Double,
 )

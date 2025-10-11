@@ -4,6 +4,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.layout.WindowInsets
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
@@ -80,7 +81,7 @@ fun AssetsScreen(
                 Modifier
                     .fillMaxSize()
                     .padding(paddingValues)
-                    .padding(16.dp),
+                    .padding(horizontal = 16.dp),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             // Cash Assets Section
@@ -101,25 +102,11 @@ fun AssetsScreen(
                     )
                 }
             } else {
-                items(uiState.cashAssets.size) { index ->
+                items(items = uiState.cashAssets, key = { it.currency }) { asset ->
                     CashAssetItem(
-                        asset = uiState.cashAssets[index],
-                        onEdit = { asset ->
-                            debugLogManager.logUserAction("Edit Cash Asset")
-                            debugLogManager.log(
-                                "UI",
-                                "User wants to edit cash asset: ${asset.currency} ${asset.amount}",
-                            )
-                            showEditCashDialog = asset
-                        },
-                        onDelete = { asset ->
-                            debugLogManager.logUserAction("Delete Cash Asset")
-                            debugLogManager.log(
-                                "UI",
-                                "User wants to delete cash asset: ${asset.currency} ${asset.amount}",
-                            )
-                            viewModel.deleteCashAsset(asset)
-                        },
+                        asset = asset,
+                        onEdit = { showEditCashDialog = it },
+                        onDelete = { viewModel.deleteCashAsset(it) },
                     )
                 }
             }
@@ -142,19 +129,11 @@ fun AssetsScreen(
                     )
                 }
             } else {
-                items(uiState.stockAssets.size) { index ->
+                items(items = uiState.stockAssets, key = { it.id }) { asset ->
                     StockAssetItem(
-                        asset = uiState.stockAssets[index],
-                        onEdit = { asset ->
-                            debugLogManager.logUserAction("Edit Stock Asset")
-                            debugLogManager.log("UI", "User wants to edit stock asset: ${asset.symbol}")
-                            showEditStockDialog = asset
-                        },
-                        onDelete = { asset ->
-                            debugLogManager.logUserAction("Delete Stock Asset")
-                            debugLogManager.log("UI", "User wants to delete stock asset: ${asset.symbol}")
-                            viewModel.deleteStockAsset(asset)
-                        },
+                        asset = asset,
+                        onEdit = { showEditStockDialog = it },
+                        onDelete = { viewModel.deleteStockAsset(it) },
                     )
                 }
             }

@@ -18,9 +18,6 @@ interface CashAssetDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertCashAsset(cashAsset: CashAsset)
 
-    @Update
-    suspend fun updateCashAsset(cashAsset: CashAsset)
-
     @Delete
     suspend fun deleteCashAsset(cashAsset: CashAsset)
 

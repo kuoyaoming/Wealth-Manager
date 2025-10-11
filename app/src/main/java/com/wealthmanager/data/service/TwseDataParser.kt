@@ -26,7 +26,7 @@ class TwseDataParser
             stockNo: String,
         ): TwseStockData? {
             return try {
-                val stockItem = allData.find { it.Code == stockNo }
+                val stockItem = allData.find { it.code == stockNo }
                 stockItem?.let { convertToTwseStockData(it) }
             } catch (e: Exception) {
                 debugLogManager.logError("Failed to find stock $stockNo in TWSE data: ${e.message}", e)
@@ -39,17 +39,17 @@ class TwseDataParser
          */
         private fun convertToTwseStockData(item: TwseStockItem): TwseStockData {
             return TwseStockData(
-                stockNo = item.Code,
-                stockName = item.Name,
-                tradeVolume = item.TradeVolume,
-                tradeValue = item.TradeValue,
-                open = item.OpeningPrice,
-                high = item.HighestPrice,
-                low = item.LowestPrice,
-                close = item.ClosingPrice,
-                change = item.Change,
-                changePercent = calculateChangePercent(item.Change, item.ClosingPrice),
-                transactionCount = item.Transaction,
+                stockNo = item.code,
+                stockName = item.name,
+                tradeVolume = item.tradeVolume,
+                tradeValue = item.tradeValue,
+                open = item.openingPrice,
+                high = item.highestPrice,
+                low = item.lowestPrice,
+                close = item.closingPrice,
+                change = item.change,
+                changePercent = calculateChangePercent(item.change, item.closingPrice),
+                transactionCount = item.transaction,
             )
         }
 

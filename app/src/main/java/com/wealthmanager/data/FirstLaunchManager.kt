@@ -3,82 +3,79 @@ package com.wealthmanager.data
 import android.content.Context
 import android.content.SharedPreferences
 import com.wealthmanager.BuildConfig
+import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 import javax.inject.Singleton
 
+private const val PREFS_NAME = "wealth_manager_prefs"
+private const val KEY_FIRST_LAUNCH = "first_launch"
+private const val KEY_APP_VERSION = "app_version"
+private const val KEY_ABOUT_DIALOG_SHOWN = "about_dialog_shown"
+private const val KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN = "google_password_manager_onboarding_shown"
+
 /**
- * First Launch Detection Manager
- * Used to detect if this is the first time opening the app and manage related states
+ * Manages first-launch and onboarding-related flags using modern Kotlin properties.
  */
 @Singleton
-class FirstLaunchManager
-    @Inject
-    constructor(
-        private val context: Context,
-    ) {
-        companion object {
-            private const val PREFS_NAME = "wealth_manager_prefs"
-            private const val KEY_FIRST_LAUNCH = "first_launch"
-            private const val KEY_APP_VERSION = "app_version"
-            private const val KEY_ABOUT_DIALOG_SHOWN = "about_dialog_shown"
-            private const val KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN = "google_password_manager_onboarding_shown"
-        }
+class FirstLaunchManager @Inject constructor(@ApplicationContext private val context: Context) {
 
-        private val sharedPreferences: SharedPreferences =
-            context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+    private val sharedPreferences: SharedPreferences =
+        context.getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
 
-        fun isFirstLaunch(): Boolean {
-            return sharedPreferences.getBoolean(KEY_FIRST_LAUNCH, true)
-        }
+    /**
+     * Indicates if this is the first time the app is launched.
+     * Setting it to false marks the first launch as completed.
+     */
+    var isFirstLaunch: Boolean
+        get() = sharedPreferences.getBoolean(KEY_FIRST_LAUNCH, true)
+        private set(value) = sharedPreferences.edit().putBoolean(KEY_FIRST_LAUNCH, value).apply()
 
-        fun markFirstLaunchCompleted() {
-            sharedPreferences.edit()
-                .putBoolean(KEY_FIRST_LAUNCH, false)
-                .apply()
-        }
+    /**
+     * Indicates if the 'About' dialog has been shown to the user.
+     */
+    var hasAboutDialogBeenShown: Boolean
+        get() = sharedPreferences.getBoolean(KEY_ABOUT_DIALOG_SHOWN, false)
+        private set(value) = sharedPreferences.edit().putBoolean(KEY_ABOUT_DIALOG_SHOWN, value).apply()
 
-        fun shouldShowAboutDialog(): Boolean {
-            return isFirstLaunch()
-        }
+    /**
+     * Indicates if the Google Password Manager onboarding has been shown.
+     */
+    var hasGooglePasswordManagerOnboardingBeenShown: Boolean
+        get() = sharedPreferences.getBoolean(KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN, false)
+        set(value) = sharedPreferences.edit().putBoolean(KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN, value).apply()
 
-        fun markAboutDialogShown() {
-            markFirstLaunchCompleted()
-            sharedPreferences.edit()
-                .putBoolean(KEY_ABOUT_DIALOG_SHOWN, true)
-                .apply()
-        }
-
-        fun hasAboutDialogBeenShown(): Boolean {
-            return sharedPreferences.getBoolean(KEY_ABOUT_DIALOG_SHOWN, false)
-        }
-
-        fun shouldShowGooglePasswordManagerOnboarding(): Boolean {
-            return isFirstLaunch() && !hasGooglePasswordManagerOnboardingBeenShown()
-        }
-
-        fun hasGooglePasswordManagerOnboardingBeenShown(): Boolean {
-            return sharedPreferences.getBoolean(KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN, false)
-        }
-
-        fun markGooglePasswordManagerOnboardingShown() {
-            sharedPreferences.edit()
-                .putBoolean(KEY_GOOGLE_PASSWORD_MANAGER_ONBOARDING_SHOWN, true)
-                .apply()
-        }
-
-        private fun getCurrentAppVersion(): String {
-            return try {
-                val packageInfo = context.packageManager.getPackageInfo(context.packageName, 0)
-                packageInfo.versionName ?: BuildConfig.VERSION_NAME
-            } catch (e: Exception) {
-                BuildConfig.VERSION_NAME
-            }
-        }
-
-        fun resetFirstLaunch() {
-            sharedPreferences.edit()
-                .putBoolean(KEY_FIRST_LAUNCH, true)
-                .remove(KEY_ABOUT_DIALOG_SHOWN)
-                .apply()
-        }
+    /**
+     * Determines if the 'About' dialog should be displayed.
+     * This is typically true only on the very first launch.
+     */
+    fun shouldShowAboutDialog(): Boolean {
+        return isFirstLaunch
     }
+
+    /**
+     * Marks the 'About' dialog as shown, which also completes the first launch sequence.
+     */
+    fun markAboutDialogShown() {
+        if (isFirstLaunch) {
+            isFirstLaunch = false
+        }
+        hasAboutDialogBeenShown = true
+    }
+
+    /**
+     * Determines if the Google Password Manager onboarding should be shown.
+     */
+    fun shouldShowGooglePasswordManagerOnboarding(): Boolean {
+        return isFirstLaunch && !hasGooglePasswordManagerOnboardingBeenShown
+    }
+
+    /**
+     * Resets the first launch flag for debugging or testing purposes.
+     */
+    fun resetFirstLaunch() {
+        sharedPreferences.edit()
+            .putBoolean(KEY_FIRST_LAUNCH, true)
+            .remove(KEY_ABOUT_DIALOG_SHOWN)
+            .apply()
+    }
+}

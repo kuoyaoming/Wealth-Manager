@@ -1,11 +1,11 @@
 package com.wealthmanager
 
 import android.app.Application
-import android.content.Context
 import com.wealthmanager.auth.AuthStateManager
 import com.wealthmanager.auth.AuthStateManagerEntryPoint
 import com.wealthmanager.preferences.LocalePreferencesManager
 import com.wealthmanager.util.LanguageManager
+import com.wealthmanager.utils.StandardLogger
 import dagger.hilt.android.HiltAndroidApp
 import javax.inject.Inject
 
@@ -29,19 +29,6 @@ class WealthManagerApplication : Application(), AuthStateManagerEntryPoint {
     @Inject
     lateinit var localePreferencesManager: LocalePreferencesManager
 
-    companion object {
-        @Volatile
-        private var INSTANCE: WealthManagerApplication? = null
-
-        fun getInstance(): WealthManagerApplication {
-            return INSTANCE ?: throw IllegalStateException("Application not initialized")
-        }
-    }
-
-    override fun attachBaseContext(base: Context?) {
-        super.attachBaseContext(base)
-    }
-
     /**
      * Initializes the application and sets up language preferences.
      *
@@ -51,15 +38,14 @@ class WealthManagerApplication : Application(), AuthStateManagerEntryPoint {
      */
     override fun onCreate() {
         super.onCreate()
-        INSTANCE = this
 
         try {
-            val languageCode = localePreferencesManager.getLanguageCode()
+            val languageCode = localePreferencesManager.languageCode
             if (languageCode.isNotEmpty()) {
                 LanguageManager.setAppLanguage(this, languageCode)
             }
         } catch (e: Exception) {
-            // Ignore locale application errors during startup
+            StandardLogger.error("WealthManagerApplication", "Failed to set app language on startup", e)
         }
     }
 
