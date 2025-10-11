@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.wealthmanager.data.entity.CashAsset
 import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.data.repository.AssetRepository
+import com.wealthmanager.data.repository.ExchangeRateRepository
 import com.wealthmanager.data.service.ApiStatus
 import com.wealthmanager.data.service.ApiStatusManager
 import com.wealthmanager.data.service.MarketDataService
@@ -31,6 +32,7 @@ class DashboardViewModel
     @Inject
     constructor(
         private val assetRepository: AssetRepository,
+        private val exchangeRateRepository: ExchangeRateRepository,
         private val marketDataService: MarketDataService,
         private val debugLogManager: DebugLogManager,
         private val apiStatusManager: ApiStatusManager,
@@ -56,12 +58,14 @@ class DashboardViewModel
                 combine(
                     assetRepository.getAllCashAssets(),
                     assetRepository.getAllStockAssets(),
-                ) { cashAssets, stockAssets ->
+                    exchangeRateRepository.getLatestExchangeRateFlow("USD_TWD"),
+                ) { cashAssets, stockAssets, usdToTwdRate ->
                     debugLogManager.log(
                         "DASHBOARD",
                         "Assets updated - Cash: ${cashAssets.size}, Stock: ${stockAssets.size}",
                     )
-
+                    val exchangeRate = usdToTwdRate?.rate ?: 31.0
+                    val currency = _uiState.value.displayCurrency
                     val totalCash = cashAssets.sumOf { it.twdEquivalent }
                     val totalStock = stockAssets.sumOf { it.twdEquivalent }
                     val totalAssets = totalCash + totalStock
@@ -76,8 +80,11 @@ class DashboardViewModel
                             totalAssets = totalAssets,
                             cashAssets = totalCash,
                             stockAssets = totalStock,
-                            assets = cashAssets.map { it.toAssetItem(totalAssets) } + stockAssets.map { it.toAssetItem(totalAssets) },
+                            assets =
+                                cashAssets.map { it.toAssetItem(totalAssets, currency, exchangeRate) } +
+                                    stockAssets.map { it.toAssetItem(totalAssets, currency, exchangeRate) },
                             isLoading = false,
+                            exchangeRate = exchangeRate,
                         )
 
                     viewModelScope.launch {
@@ -103,6 +110,14 @@ class DashboardViewModel
                         com.wealthmanager.WealthManagerApplication.getInstance(),
                     )
                 }.collect { }
+            }
+        }
+
+        fun toggleCurrency() {
+            viewModelScope.launch {
+                val currentCurrency = _uiState.value.displayCurrency
+                val newCurrency = if (currentCurrency == "TWD") "USD" else "TWD"
+                _uiState.value = _uiState.value.copy(displayCurrency = newCurrency)
             }
         }
 
@@ -312,6 +327,8 @@ data class DashboardUiState(
     val stockAssets: Double = 0.0,
     val assets: List<AssetItem> = emptyList(),
     val isLoading: Boolean = true,
+    val displayCurrency: String = "TWD",
+    val exchangeRate: Double = 31.0,
 )
 
 data class AssetItem(
@@ -321,20 +338,30 @@ data class AssetItem(
     val percentage: Double = 0.0,
 )
 
-private fun StockAsset.toAssetItem(totalValue: Double): AssetItem {
+private fun StockAsset.toAssetItem(
+    totalValue: Double,
+    displayCurrency: String,
+    exchangeRate: Double,
+): AssetItem {
+    val value = if (displayCurrency == "USD") twdEquivalent / exchangeRate else twdEquivalent
     return AssetItem(
         id = id,
         name = companyName, // Only show company name, no duplicate symbol
-        value = twdEquivalent,
+        value = value,
         percentage = if (totalValue > 0) (twdEquivalent / totalValue * 100) else 0.0,
     )
 }
 
-private fun CashAsset.toAssetItem(totalValue: Double): AssetItem {
+private fun CashAsset.toAssetItem(
+    totalValue: Double,
+    displayCurrency: String,
+    exchangeRate: Double,
+): AssetItem {
+    val value = if (displayCurrency == "USD") twdEquivalent / exchangeRate else twdEquivalent
     return AssetItem(
         id = id,
         name = "$currency $amount",
-        value = twdEquivalent,
+        value = value,
         percentage = if (totalValue > 0) (twdEquivalent / totalValue * 100) else 0.0,
     )
 }

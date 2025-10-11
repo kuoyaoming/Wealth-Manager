@@ -73,6 +73,7 @@
     <string name="total_assets">Total Assets</string>
     <string name="cash_assets">Cash Assets</string>
     <string name="stock_assets">Stock Assets</string>
+    <string name="change_currency">Change Currency</string>
     <string name="refresh_data">Refresh Data</string>
 
     <!-- Assets -->

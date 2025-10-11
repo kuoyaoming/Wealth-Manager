@@ -1,10 +1,8 @@
 package com.wealthmanager.data.repository
 
 import com.wealthmanager.data.dao.CashAssetDao
-import com.wealthmanager.data.dao.ExchangeRateDao
 import com.wealthmanager.data.dao.StockAssetDao
 import com.wealthmanager.data.entity.CashAsset
-import com.wealthmanager.data.entity.ExchangeRate
 import com.wealthmanager.data.entity.StockAsset
 import com.wealthmanager.debug.DebugLogManager
 import kotlinx.coroutines.flow.Flow
@@ -18,12 +16,9 @@ import javax.inject.Singleton
  * This repository provides a unified interface for:
  * - Cash asset management (CRUD operations)
  * - Stock asset management (CRUD operations)
- * - Exchange rate data management
- * - Data validation and error handling
  *
  * @property cashAssetDao DAO for cash asset database operations
  * @property stockAssetDao DAO for stock asset database operations
- * @property exchangeRateDao DAO for exchange rate database operations
  * @property debugLogManager Manager for debug logging
  */
 @Singleton
@@ -32,7 +27,6 @@ class AssetRepository
     constructor(
         private val cashAssetDao: CashAssetDao,
         private val stockAssetDao: StockAssetDao,
-        private val exchangeRateDao: ExchangeRateDao,
         private val debugLogManager: DebugLogManager,
     ) {
         // Cash Assets
@@ -115,34 +109,4 @@ class AssetRepository
         }
 
         suspend fun getTotalStockValueInTWD(): Double? = stockAssetDao.getTotalStockValueInTWD()
-
-        // Exchange Rates
-        fun getAllExchangeRates(): Flow<List<ExchangeRate>> = exchangeRateDao.getAllExchangeRates()
-
-        suspend fun getExchangeRateSync(currencyPair: String): ExchangeRate? =
-            exchangeRateDao.getExchangeRateSync(currencyPair)
-
-        suspend fun insertExchangeRate(exchangeRate: ExchangeRate) {
-            debugLogManager.log(
-                "REPOSITORY",
-                "Inserting exchange rate: ${exchangeRate.currencyPair} = ${exchangeRate.rate}",
-            )
-            exchangeRateDao.insertExchangeRate(exchangeRate)
-            debugLogManager.log("REPOSITORY", "Exchange rate inserted successfully")
-        }
-
-        suspend fun updateExchangeRate(exchangeRate: ExchangeRate) {
-            debugLogManager.log("REPOSITORY", "Updating exchange rate: ${exchangeRate.currencyPair}")
-            exchangeRateDao.updateExchangeRate(exchangeRate)
-            debugLogManager.log("REPOSITORY", "Exchange rate updated successfully")
-        }
-
-        suspend fun deleteExchangeRate(exchangeRate: ExchangeRate) {
-            debugLogManager.log("REPOSITORY", "Deleting exchange rate: ${exchangeRate.currencyPair}")
-            exchangeRateDao.deleteExchangeRate(exchangeRate)
-            debugLogManager.log("REPOSITORY", "Exchange rate deleted successfully")
-        }
-
-        // Exchange Rate Flow
-        fun getExchangeRate(currencyPair: String): Flow<ExchangeRate> = exchangeRateDao.getExchangeRate(currencyPair)
     }

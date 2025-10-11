@@ -16,6 +16,7 @@ import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.Refresh
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Sync
+import androidx.compose.material.icons.filled.Wallet
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -131,6 +132,14 @@ fun DashboardScreen(
                         IconButton(
                             onClick = {
                                 hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
+                                viewModel.toggleCurrency()
+                            },
+                        ) {
+                            Icon(Icons.Default.Wallet, contentDescription = stringResource(R.string.change_currency))
+                        }
+                        IconButton(
+                            onClick = {
+                                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                                 viewModel.refreshData()
                             },
                         ) {
@@ -189,6 +198,8 @@ fun DashboardScreen(
                     TotalAssetsCardOptimized(
                         totalValue = uiState.totalAssets,
                         isLoading = uiState.isLoading,
+                        currency = uiState.displayCurrency,
+                        exchangeRate = uiState.exchangeRate,
                     )
                 }
 
@@ -203,6 +214,8 @@ fun DashboardScreen(
                                 cashValue = uiState.cashAssets,
                                 totalAssets = uiState.totalAssets,
                                 isLoading = uiState.isLoading,
+                                currency = uiState.displayCurrency,
+                                exchangeRate = uiState.exchangeRate,
                             )
                         }
 
@@ -212,6 +225,8 @@ fun DashboardScreen(
                                 stockValue = uiState.stockAssets,
                                 totalAssets = uiState.totalAssets,
                                 isLoading = uiState.isLoading,
+                                currency = uiState.displayCurrency,
+                                exchangeRate = uiState.exchangeRate,
                             )
                         }
                     }

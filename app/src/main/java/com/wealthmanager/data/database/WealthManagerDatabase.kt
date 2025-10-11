@@ -50,7 +50,7 @@ abstract class WealthManagerDatabase : RoomDatabase() {
                 """,
                     )
 
-                    // Copy data, convert INTEGER shares to REAL
+                    // Copy data, aconvert INTEGER shares to REAL
                     database.execSQL(
                         """
                     INSERT INTO stock_assets_new

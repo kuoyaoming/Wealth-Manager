@@ -24,9 +24,11 @@ import com.wealthmanager.utils.rememberMoneyText
 fun TotalAssetsCardOptimized(
     totalValue: Double,
     isLoading: Boolean,
+    currency: String,
+    exchangeRate: Double,
 ) {
     val responsiveLayout = rememberResponsiveLayout()
-
+    val displayValue = if (currency == "USD") totalValue / exchangeRate else totalValue
     PrimaryCard(
         modifier = Modifier.fillMaxWidth(),
     ) {
@@ -51,8 +53,8 @@ fun TotalAssetsCardOptimized(
                 Text(
                     text =
                         rememberMoneyText(
-                            totalValue,
-                            "TWD",
+                            displayValue,
+                            currency,
                             style = MoneyFormatter.Style.CurrencyCode,
                             moneyContext = MoneyFormatter.MoneyContext.Total,
                         ),
@@ -70,8 +72,11 @@ fun CashAssetsCardOptimized(
     cashValue: Double,
     totalAssets: Double,
     isLoading: Boolean,
+    currency: String,
+    exchangeRate: Double,
 ) {
     val responsiveLayout = rememberResponsiveLayout()
+    val displayValue = if (currency == "USD") cashValue / exchangeRate else cashValue
 
     SecondaryCard(
         modifier = Modifier.fillMaxWidth(),
@@ -107,8 +112,8 @@ fun CashAssetsCardOptimized(
                 Text(
                     text =
                         rememberMoneyText(
-                            cashValue,
-                            "TWD",
+                            displayValue,
+                            currency,
                             style = MoneyFormatter.Style.CurrencyCode,
                             moneyContext = MoneyFormatter.MoneyContext.Total,
                         ) + " (${String.format("%.1f", percentage)}%)",
@@ -126,8 +131,11 @@ fun StockAssetsCardOptimized(
     stockValue: Double,
     totalAssets: Double,
     isLoading: Boolean,
+    currency: String,
+    exchangeRate: Double,
 ) {
     val responsiveLayout = rememberResponsiveLayout()
+    val displayValue = if (currency == "USD") stockValue / exchangeRate else stockValue
 
     SecondaryCard(
         modifier = Modifier.fillMaxWidth(),
@@ -163,8 +171,8 @@ fun StockAssetsCardOptimized(
                 Text(
                     text =
                         rememberMoneyText(
-                            stockValue,
-                            "TWD",
+                            displayValue,
+                            currency,
                             style = MoneyFormatter.Style.CurrencyCode,
                             moneyContext = MoneyFormatter.MoneyContext.Total,
                         ) + " (${String.format("%.1f", percentage)}%)",
