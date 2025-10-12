@@ -16,6 +16,8 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
+    env:
+      KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
     steps:
       - name: Checkout
         uses: actions/checkout@v5
@@ -37,8 +39,8 @@ jobs:
           sdkmanager --install "platform-tools" "platforms;android-${{ env.ANDROID_SDK_VERSION }}" "build-tools;${{ env.BUILD_TOOLS_VERSION }}"
 
       - name: Decode Keystore
-        if: secrets.ANDROID_KEYSTORE_BASE64
-        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -di > keystore.jks
+        if: env.KEYSTORE_BASE64 != ''
+        run: echo "${{ env.KEYSTORE_BASE64 }}" | base64 -di > keystore.jks
 
       - name: Set Version
         run: |
