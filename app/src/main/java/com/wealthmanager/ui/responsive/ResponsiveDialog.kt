@@ -3,7 +3,6 @@ package com.wealthmanager.ui.responsive
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,24 +12,19 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Button
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
-import com.wealthmanager.accessibility.rememberAccessibilityState
 import com.wealthmanager.ui.components.DialogCard
 import androidx.compose.ui.window.DialogProperties as WindowDialogProperties
 
 /**
- * 響應式對話框
- * 符合2025 Android設計指導的對話框實現
+ * A responsive dialog that adapts its size to different screen dimensions.
  */
 @Composable
 fun ResponsiveDialog(
@@ -47,7 +41,6 @@ fun ResponsiveDialog(
         ),
 ) {
     val configuration = LocalConfiguration.current
-    val accessibilityState = rememberAccessibilityState()
     val responsiveLayout = rememberResponsiveLayout()
 
     Dialog(
@@ -82,10 +75,7 @@ fun ResponsiveDialog(
                                 horizontal = responsiveLayout.paddingLarge,
                                 vertical = responsiveLayout.paddingMedium,
                             ),
-                    verticalArrangement =
-                        Arrangement.spacedBy(
-                            if (accessibilityState.isLargeFontEnabled) 16.dp else 12.dp,
-                        ),
+                    verticalArrangement = Arrangement.spacedBy(responsiveLayout.paddingMedium),
                 ) {
                     // Title
                     title?.let {
@@ -102,78 +92,22 @@ fun ResponsiveDialog(
 
                     // Buttons
                     if (confirmButton != null || dismissButton != null) {
-                        Spacer(modifier = Modifier.height(16.dp))
+                        Spacer(modifier = Modifier.height(responsiveLayout.paddingLarge))
 
                         Row(
                             modifier = Modifier.fillMaxWidth(),
                             horizontalArrangement = Arrangement.End,
                             verticalAlignment = Alignment.CenterVertically,
                         ) {
-                            dismissButton?.let {
-                                it()
-                                if (confirmButton != null) {
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                }
+                            dismissButton?.invoke()
+                            if (dismissButton != null && confirmButton != null) {
+                                Spacer(modifier = Modifier.width(responsiveLayout.paddingSmall))
                             }
-                            confirmButton?.let {
-                                it()
-                            }
+                            confirmButton?.invoke()
                         }
                     }
                 }
             }
         }
-    }
-}
-
-/**
- * 無障礙性按鈕
- */
-@Composable
-fun AccessibleButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    content: @Composable () -> Unit,
-) {
-    val accessibilityState = rememberAccessibilityState()
-
-    Button(
-        onClick = onClick,
-        modifier = modifier,
-        enabled = enabled,
-        contentPadding =
-            PaddingValues(
-                horizontal = if (accessibilityState.isLargeFontEnabled) 24.dp else 16.dp,
-                vertical = if (accessibilityState.isLargeFontEnabled) 16.dp else 12.dp,
-            ),
-    ) {
-        content()
-    }
-}
-
-/**
- * 無障礙性輪廓按鈕
- */
-@Composable
-fun AccessibleOutlinedButton(
-    onClick: () -> Unit,
-    modifier: Modifier = Modifier,
-    enabled: Boolean = true,
-    content: @Composable () -> Unit,
-) {
-    val accessibilityState = rememberAccessibilityState()
-
-    OutlinedButton(
-        onClick = onClick,
-        modifier = modifier,
-        enabled = enabled,
-        contentPadding =
-            PaddingValues(
-                horizontal = if (accessibilityState.isLargeFontEnabled) 24.dp else 16.dp,
-                vertical = if (accessibilityState.isLargeFontEnabled) 16.dp else 12.dp,
-            ),
-    ) {
-        content()
     }
 }

@@ -12,15 +12,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import com.wealthmanager.R
-// import com.wealthmanager.ui.components.UnifiedOutlinedTextField
-// import com.wealthmanager.ui.components.TextFieldSize
-// import com.wealthmanager.ui.components.ValidationState
 
 /**
  * Input field with real-time validation
@@ -138,7 +136,8 @@ fun CashAmountInputField(
     currency: String,
     modifier: Modifier = Modifier,
 ) {
-    val validationResult = CashAmountValidator.validate(value, currency)
+    val context = LocalContext.current
+    val validationResult = CashAmountValidator.validate(context, value, currency)
 
     ValidatedInputField(
         value = value,
@@ -166,7 +165,8 @@ fun StockSymbolInputField(
     modifier: Modifier = Modifier,
     trailingIcon: @Composable (() -> Unit)? = null,
 ) {
-    val validationResult = StockSymbolValidator.validate(value)
+    val context = LocalContext.current
+    val validationResult = StockSymbolValidator.validate(context, value)
 
     ValidatedInputField(
         value = value,
@@ -190,7 +190,8 @@ fun StockSharesInputField(
     onValueChange: (String) -> Unit,
     modifier: Modifier = Modifier,
 ) {
-    val validationResult = StockSharesValidator.validate(value)
+    val context = LocalContext.current
+    val validationResult = StockSharesValidator.validate(context, value)
 
     ValidatedInputField(
         value = value,

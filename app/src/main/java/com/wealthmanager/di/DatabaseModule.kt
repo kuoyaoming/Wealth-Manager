@@ -8,8 +8,6 @@ import com.wealthmanager.data.dao.CashAssetDao
 import com.wealthmanager.data.dao.ExchangeRateDao
 import com.wealthmanager.data.dao.StockAssetDao
 import com.wealthmanager.data.database.WealthManagerDatabase
-import com.wealthmanager.debug.DebugLogManager
-import com.wealthmanager.security.BiometricProtectionManager
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.EntryPoint
@@ -116,14 +114,5 @@ object DatabaseModule {
     @Provides
     fun provideExchangeRateDao(database: WealthManagerDatabase): ExchangeRateDao {
         return database.exchangeRateDao()
-    }
-
-    @Provides
-    @Singleton
-    fun provideBiometricProtectionManager(
-        @ApplicationContext context: Context,
-        debugLogManager: DebugLogManager
-    ): BiometricProtectionManager {
-        return BiometricProtectionManager(context, debugLogManager)
     }
 }

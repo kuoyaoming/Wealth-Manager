@@ -29,14 +29,12 @@ fun AssetsScreen(
 ) {
     val uiState by viewModel.uiState.collectAsState()
     var showAddDialog by remember { mutableStateOf(false) }
-    var showEditCashDialog by remember { mutableStateOf<CashAsset?>(null) }
-    var showEditStockDialog by remember { mutableStateOf<StockAsset?>(null) }
+    var assetToEdit by remember { mutableStateOf<Any?>(null) }
     val debugLogManager = remember { DebugLogManager() }
     val (hapticManager, view) = rememberHapticFeedbackWithView()
 
     LaunchedEffect(Unit) {
         debugLogManager.logUserAction("Assets Screen Opened")
-        debugLogManager.log("UI", "Assets screen loaded, starting to load assets")
         viewModel.loadAssets()
     }
 
@@ -50,7 +48,6 @@ fun AssetsScreen(
                 navigationIcon = {
                     IconButton(onClick = {
                         debugLogManager.logUserAction("Back Button Clicked")
-                        debugLogManager.log("UI", "User clicked back button to return to dashboard")
                         hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
                         onNavigateBack()
                     }) {
@@ -66,10 +63,8 @@ fun AssetsScreen(
             FloatingActionButton(
                 onClick = {
                     debugLogManager.logUserAction("Add Asset FAB Clicked")
-                    debugLogManager.log("UI", "User clicked FAB to open Add Asset dialog")
                     hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.MEDIUM)
                     showAddDialog = true
-                    viewModel.openAddCashDialog()
                 },
             ) {
                 Icon(Icons.Default.Add, contentDescription = stringResource(R.string.cd_add_asset))
@@ -105,7 +100,7 @@ fun AssetsScreen(
                 items(items = uiState.cashAssets, key = { it.currency }) { asset ->
                     CashAssetItem(
                         asset = asset,
-                        onEdit = { showEditCashDialog = it },
+                        onEdit = { assetToEdit = it },
                         onDelete = { viewModel.deleteCashAsset(it) },
                     )
                 }
@@ -132,7 +127,7 @@ fun AssetsScreen(
                 items(items = uiState.stockAssets, key = { it.id }) { asset ->
                     StockAssetItem(
                         asset = asset,
-                        onEdit = { showEditStockDialog = it },
+                        onEdit = { assetToEdit = it },
                         onDelete = { viewModel.deleteStockAsset(it) },
                     )
                 }
@@ -140,59 +135,14 @@ fun AssetsScreen(
         }
     }
 
-    val cashCurrencyState by viewModel.selectedCashCurrency.collectAsState()
-    val cashAmountState by viewModel.cashAmountInput.collectAsState()
-    val cashButtonLabelState by viewModel.cashActionButtonLabel.collectAsState()
-
     if (showAddDialog) {
-        AddAssetDialog(
-            onDismiss = { showAddDialog = false },
-            cashCurrency = cashCurrencyState,
-            cashAmount = cashAmountState,
-            cashButtonLabelRes = cashButtonLabelState,
-            onCurrencyChange = { viewModel.setSelectedCashCurrency(it) },
-            onCashAmountChange = { viewModel.onCashAmountChanged(it) },
-            onAddCash = { currency, amount ->
-                viewModel.addCashAsset(currency, amount)
-                showAddDialog = false
-            },
-            onAddStock = { symbol, shares ->
-                viewModel.addStockAsset(symbol, shares)
-                showEditStockDialog = null
-                showAddDialog = false
-            },
-            onSearchStocks = { query, _ ->
-                viewModel.searchStocksNow(query)
-            },
-            onSearchQueryChange = { query ->
-                viewModel.setSearchQuery(query)
-            },
-            searchResults = uiState.searchResults,
-            isSearching = uiState.isSearching,
-        )
+        AddAssetDialog(onDismiss = { showAddDialog = false })
     }
 
-    // Edit Cash Asset Dialog
-    showEditCashDialog?.let { asset ->
-        EditCashAssetDialog(
-            asset = asset,
-            onDismiss = { showEditCashDialog = null },
-            onSave = { updatedAsset ->
-                viewModel.updateCashAsset(updatedAsset)
-                showEditCashDialog = null
-            },
-        )
-    }
-
-    // Edit Stock Asset Dialog
-    showEditStockDialog?.let { asset ->
-        EditStockAssetDialog(
-            asset = asset,
-            onDismiss = { showEditStockDialog = null },
-            onSave = { updatedAsset ->
-                viewModel.updateStockAsset(updatedAsset)
-                showEditStockDialog = null
-            },
+    assetToEdit?.let {
+        EditAssetDialog(
+            assetToEdit = it,
+            onDismiss = { assetToEdit = null },
         )
     }
 }

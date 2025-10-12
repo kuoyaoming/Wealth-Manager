@@ -3,7 +3,6 @@ package com.wealthmanager.ui.auth
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.wealthmanager.R
 import com.wealthmanager.debug.DebugLogManager
 import com.wealthmanager.security.BiometricProtectionManager
 import com.wealthmanager.security.BiometricStatus
@@ -52,12 +51,16 @@ class BiometricAuthViewModel @Inject constructor(
                 onCancel = {
                     debugLogManager.logBiometric("Authentication Cancelled", "User cancelled authentication")
                     _uiState.value = _uiState.value.copy(
-                        errorMessage = activity.getString(R.string.biometric_auth_cancelled),
+                        errorMessage = "",
                         isAuthenticated = false,
                     )
                 }
             )
         }
+    }
+
+    fun getBiometricStatusDescription(): String {
+        return biometricProtectionManager.getBiometricStatusDescription()
     }
 }
 

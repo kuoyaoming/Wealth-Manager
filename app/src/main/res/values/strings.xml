@@ -695,5 +695,9 @@
     
     <!-- Password Visibility Toggle -->
     <string name="cd_toggle_password_visibility">Toggle password visibility</string>
+    <string name="assets_cash_amount_label">Amount</string>
+    <string name="assets_stock_symbol_label">Stock Symbol</string>
+    <string name="assets_stock_shares_label">Number of Shares</string>
+    <string name="biometric_auth_cancelled">Authentication cancelled</string>
     
 </resources>

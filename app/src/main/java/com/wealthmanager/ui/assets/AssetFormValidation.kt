@@ -1,12 +1,11 @@
 package com.wealthmanager.ui.assets
 
-import androidx.compose.runtime.Composable
+import android.content.Context
 import androidx.compose.runtime.Immutable
-import androidx.compose.ui.platform.LocalContext
 import com.wealthmanager.R
 
 /**
- * Asset form validation result.
+ * Represents the outcome of a validation check, including potential errors, warnings, or suggestions.
  */
 @Immutable
 data class ValidationResult(
@@ -17,29 +16,15 @@ data class ValidationResult(
 )
 
 /**
- * Cash amount validator.
+ * Validator for cash asset amounts.
  */
 object CashAmountValidator {
-    /**
-     * Validate cash amount.
-     */
-    @Composable
-    fun validate(
-        amount: String,
-        currency: String,
-    ): ValidationResult {
-        val context = LocalContext.current
-
+    fun validate(context: Context, amount: String, currency: String): ValidationResult {
         if (amount.isEmpty()) {
             return ValidationResult(
                 isValid = false,
                 errorMessage = context.getString(R.string.validation_amount_required),
-                suggestion =
-                    if (currency == context.getString(R.string.assets_currency_twd)) {
-                        context.getString(R.string.validation_amount_example_twd)
-                    } else {
-                        context.getString(R.string.validation_amount_example_usd)
-                    },
+                suggestion = if (currency == "TWD") context.getString(R.string.validation_amount_example_twd) else context.getString(R.string.validation_amount_example_usd),
             )
         }
 
@@ -60,7 +45,7 @@ object CashAmountValidator {
             )
         }
 
-        val maxReasonableAmount = if (currency == context.getString(R.string.assets_currency_twd)) 1_000_000_000.0 else 100_000_000.0
+        val maxReasonableAmount = if (currency == "TWD") 1_000_000_000.0 else 100_000_000.0
         if (numericAmount > maxReasonableAmount) {
             return ValidationResult(
                 isValid = true,
@@ -69,15 +54,13 @@ object CashAmountValidator {
             )
         }
 
-        if (amount.contains(".")) {
-            val decimalPlaces = amount.substringAfter(".").length
-            if (decimalPlaces > 2) {
-                return ValidationResult(
-                    isValid = true,
-                    warningMessage = context.getString(R.string.validation_amount_decimal_places),
-                    suggestion = context.getString(R.string.validation_amount_auto_adjusted),
-                )
-            }
+        val decimalPlaces = amount.substringAfter('.', "").length
+        if (decimalPlaces > 2) {
+            return ValidationResult(
+                isValid = true,
+                warningMessage = context.getString(R.string.validation_amount_decimal_places),
+                suggestion = context.getString(R.string.validation_amount_auto_adjusted),
+            )
         }
 
         return ValidationResult(isValid = true)
@@ -85,17 +68,11 @@ object CashAmountValidator {
 }
 
 /**
- * Stock symbol validator.
+ * Validator for stock asset symbols.
  */
 object StockSymbolValidator {
-    /**
-     * Validate stock symbol.
-     */
-    @Composable
-    fun validate(symbol: String): ValidationResult {
-        val context = LocalContext.current
-
-        if (symbol.isEmpty()) {
+    fun validate(context: Context, symbol: String): ValidationResult {
+        if (symbol.isBlank()) {
             return ValidationResult(
                 isValid = false,
                 errorMessage = context.getString(R.string.validation_symbol_required),
@@ -104,7 +81,6 @@ object StockSymbolValidator {
         }
 
         val trimmedSymbol = symbol.trim().uppercase()
-
         if (!trimmedSymbol.matches(Regex("^[A-Z0-9.]{1,10}$"))) {
             return ValidationResult(
                 isValid = false,
@@ -113,44 +89,15 @@ object StockSymbolValidator {
             )
         }
 
-        val isTaiwanStock =
-            trimmedSymbol.matches(Regex("^\\d{4}$")) ||
-                trimmedSymbol.endsWith(".TW") ||
-                trimmedSymbol.endsWith(".T")
-
-        if (isTaiwanStock) {
-            return ValidationResult(
-                isValid = true,
-                suggestion = context.getString(R.string.validation_symbol_taiwan_stock),
-            )
-        }
-
-        if (trimmedSymbol.matches(Regex("^[A-Z]{1,5}$"))) {
-            return ValidationResult(
-                isValid = true,
-                suggestion = context.getString(R.string.validation_symbol_us_stock),
-            )
-        }
-
-        return ValidationResult(
-            isValid = true,
-            warningMessage = context.getString(R.string.validation_symbol_confirm_correct),
-            suggestion = context.getString(R.string.validation_symbol_search_confirm),
-        )
+        return ValidationResult(isValid = true)
     }
 }
 
 /**
- * Stock shares validator.
+ * Validator for stock asset shares.
  */
 object StockSharesValidator {
-    /**
-     * Validate stock shares.
-     */
-    @Composable
-    fun validate(shares: String): ValidationResult {
-        val context = LocalContext.current
-
+    fun validate(context: Context, shares: String): ValidationResult {
         if (shares.isEmpty()) {
             return ValidationResult(
                 isValid = false,
@@ -184,15 +131,13 @@ object StockSharesValidator {
             )
         }
 
-        if (shares.contains(".")) {
-            val decimalPlaces = shares.substringAfter(".").length
-            if (decimalPlaces > 4) {
-                return ValidationResult(
-                    isValid = true,
-                    warningMessage = context.getString(R.string.validation_shares_decimal_places),
-                    suggestion = context.getString(R.string.validation_shares_auto_adjusted),
-                )
-            }
+        val decimalPlaces = shares.substringAfter('.', "").length
+        if (decimalPlaces > 4) {
+            return ValidationResult(
+                isValid = true,
+                warningMessage = context.getString(R.string.validation_shares_decimal_places),
+                suggestion = context.getString(R.string.validation_shares_auto_adjusted),
+            )
         }
 
         return ValidationResult(isValid = true)
@@ -200,34 +145,20 @@ object StockSharesValidator {
 }
 
 /**
- * Form validation utility.
+ * Facade for validating different parts of an asset form.
  */
 object AssetFormValidator {
-    /**
-     * Validate cash form.
-     */
-    @Composable
-    fun validateCashForm(
-        amount: String,
-        currency: String,
-    ): ValidationResult {
-        return CashAmountValidator.validate(amount, currency)
+    fun validateCashForm(context: Context, amount: String, currency: String): ValidationResult {
+        return CashAmountValidator.validate(context, amount, currency)
     }
 
-    /**
-     * Validate stock form.
-     */
-    @Composable
-    fun validateStockForm(
-        symbol: String,
-        shares: String,
-    ): ValidationResult {
-        val symbolResult = StockSymbolValidator.validate(symbol)
+    fun validateStockForm(context: Context, symbol: String, shares: String): ValidationResult {
+        val symbolResult = StockSymbolValidator.validate(context, symbol)
         if (!symbolResult.isValid) {
             return symbolResult
         }
 
-        val sharesResult = StockSharesValidator.validate(shares)
+        val sharesResult = StockSharesValidator.validate(context, shares)
         if (!sharesResult.isValid) {
             return sharesResult
         }

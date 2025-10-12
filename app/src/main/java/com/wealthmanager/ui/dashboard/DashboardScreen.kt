@@ -139,7 +139,7 @@ fun DashboardScreen(
 
             // Total Assets Card
             item {
-                TotalAssetsCardOptimized(
+                TotalAssetsCard(
                     totalValue = uiState.totalAssets,
                     isLoading = uiState.isLoading,
                     currency = uiState.displayCurrency,

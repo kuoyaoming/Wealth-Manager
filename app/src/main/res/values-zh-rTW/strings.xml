@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">財富管理</string>
-    
+
     <!-- About Page - New Design -->
     <string name="about_subtitle">現代化個人理財追蹤器</string>
     <string name="about_version_info">版本資訊</string>
@@ -26,7 +26,7 @@
     <string name="about_report_issue">回報問題</string>
     <string name="action_close">關閉</string>
     <string name="action_got_it">了解！</string>
-    
+
     <!-- Authentication -->
     <string name="biometric_auth_title">生物識別驗證</string>
     <string name="biometric_auth_subtitle">使用您的生物識別來存取資產</string>
@@ -38,7 +38,7 @@
     <string name="biometric_auth_error_user_cancel">驗證已取消</string>
     <string name="biometric_auth_error_locked_out">失敗次數過多，請稍後再試</string>
     <string name="biometric_auth_error_permanent_lockout">生物識別驗證已永久鎖定</string>
-    
+
     <!-- Privacy Protection -->
     <string name="privacy_protection_title">隱私保護說明</string>
     <string name="privacy_protection_description">生物識別驗證用於保護您的財務資料，確保只有您能存取您的財富資訊。您的生物識別資料永遠不會離開您的裝置，並由 Android 硬體安全模組安全處理。</string>
@@ -46,7 +46,7 @@
 2. 本應用程式不會傳輸或儲存任何生物識別資料。
 3. 需要驗證才能查看敏感的財務資訊。
 4. 若選擇跳過驗證，資料安全性將降低。</string>
-    
+
     <!-- Card Design System -->
     <string name="card_design_system_examples">統一卡片設計系統範例</string>
     <string name="primary_cards_title">主要卡片</string>
@@ -67,14 +67,14 @@
     <string name="nav_dashboard">儀表板</string>
     <string name="nav_assets">資產</string>
     <string name="nav_settings">設定</string>
-    
+
     <!-- Dashboard -->
     <string name="dashboard_title">投資組合概覽</string>
     <string name="total_assets">總資產</string>
     <string name="cash_assets">現金資產</string>
     <string name="stock_assets">股票資產</string>
     <string name="refresh_data">刷新資料</string>
-    
+
     <!-- Assets -->
     <string name="assets_title">管理資產</string>
     <string name="add_cash">新增現金</string>
@@ -83,13 +83,13 @@
     <string name="cash_usd">美元現金</string>
     <string name="stock_tw">台股</string>
     <string name="stock_us">美股</string>
-    
+
     <!-- Cash Input -->
     <string name="cash_amount">金額</string>
     <string name="cash_currency">幣別</string>
     <string name="save">儲存</string>
     <string name="cancel">取消</string>
-    
+
     <!-- Stock Input -->
     <string name="stock_symbol">股票代號</string>
     <string name="stock_shares">股數</string>
@@ -97,7 +97,7 @@
     <string name="search_stock">搜尋股票</string>
     <string name="stock_price">目前價格</string>
     <string name="stock_value">總價值</string>
-    
+
     <!-- Settings -->
     <string name="settings_title">設定</string>
     <string name="language">語言</string>
@@ -131,11 +131,11 @@
     <string name="settings_haptic_intensity_confirm">確認</string>
     <string name="settings_haptic_test_title">測試觸覺回饋</string>
     <string name="settings_haptic_test_desc">點擊下方按鈕預覽各種強度</string>
-    
+
     <!-- Language -->
     <string name="settings_language_title">語言</string>
     <string name="settings_language_desc">選擇應用程式中使用的語言。</string>
-    
+
     <!-- Common -->
     <string name="add">新增</string>
     <string name="update">更新</string>
@@ -149,14 +149,14 @@
     <string name="searching">搜尋中...</string>
     <string name="action_later">稍後</string>
     <string name="action_i_understand">了解</string>
-    
+
     <!-- Error Messages -->
     <string name="error_network">網路錯誤，請檢查您的連線</string>
     <string name="error_api">無法取得市場資料</string>
     <string name="error_invalid_amount">請輸入有效金額</string>
     <string name="error_invalid_symbol">請輸入有效股票代號</string>
     <string name="error_stock_not_found">找不到股票</string>
-    
+
     <!-- API Error Messages -->
     <string name="api_error_server_busy">伺服器忙碌，請稍後再試</string>
     <string name="api_error_data_stale">資料可能過期</string>
@@ -170,7 +170,7 @@
     <string name="settings_api_working">API 正常</string>
     <string name="settings_api_error">API 錯誤</string>
     <string name="settings_api_manual_search">搜尋結果（%1$d 筆）:</string>
-    
+
     <!-- API Key Management -->
     <string name="settings_api_manage_title">管理 API 金鑰</string>
     <string name="settings_api_finnhub_label">Finnhub API 金鑰</string>
@@ -178,7 +178,7 @@
     <string name="settings_api_input_placeholder">輸入您的 API 金鑰</string>
     <string name="settings_api_validate_and_save">驗證並儲存</string>
     <string name="settings_api_saved_preview">已儲存：%1$s</string>
-    
+
     <!-- Input Validation -->
     <string name="validation_enter_valid_number">請輸入有效數字。</string>
     <string name="validation_enter_valid_shares">請輸入有效股數。</string>
@@ -245,7 +245,7 @@
 
     <string name="language_option_english">English</string>
     <string name="language_option_traditional_chinese">繁體中文</string>
-    
+
 
     <!-- Assets -->
     <string name="assets_tab_cash">現金</string>
@@ -282,7 +282,7 @@
     <string name="cd_edit_stock_asset">編輯股票資產</string>
     <string name="cd_delete_stock_asset">刪除股票資產</string>
     <string name="cd_notifications">通知</string>
-    
+
     <!-- Notification Permissions -->
     <string name="notification_permission_title">啟用通知</string>
     <string name="notification_permission_description">接收重要的市場更新和投資組合變更通知。</string>
@@ -328,15 +328,15 @@
     <string name="validation_shares_decimal_places">股數通常只需要4位小數</string>
     <string name="validation_shares_auto_adjusted">已自動調整為4位小數</string>
     <string name="validation_suggestion_prefix">提示：%1$s</string>
-    
+
     <!-- Asset Form Labels -->
     <string name="asset_form_amount_label">金額</string>
     <string name="asset_form_symbol_label">股票代碼</string>
     <string name="asset_form_shares_label">股數</string>
-    
+
     <!-- Settings Messages -->
     <string name="settings_security_level_set">安全級別已設定為: %1$s</string>
-    
+
     <!-- API Key Validation Suggestions -->
     <string name="api_validation_check_format">檢查 API 金鑰格式是否正確</string>
     <string name="api_validation_check_length">確認金鑰長度符合要求（16-128 字元）</string>
@@ -359,7 +359,7 @@
     <string name="api_validation_check_copied">檢查 API 金鑰是否正確複製</string>
     <string name="api_validation_confirm_network">確認網路連線正常</string>
     <string name="api_validation_check_provider_status">查看 API 提供商的狀態頁面</string>
-    
+
     <!-- Security Enhancement Messages -->
     <string name="security_biometric_required">需要生物識別驗證</string>
     <string name="security_finnhub_key_failed">Finnhub金鑰設定失敗: %1$s</string>
@@ -369,7 +369,7 @@
     <string name="missing_api_keys_title">需要 API 金鑰</string>
     <string name="missing_api_keys_message">請至「設定」新增 Finnhub 與 Exchange Rate 的 API 金鑰後，才能刷新市場資料。</string>
     <string name="go_to_settings">前往設定</string>
-    
+
     <!-- API Key Guide Dialog -->
     <string name="api_guide_title">申請API金鑰</string>
     <string name="api_guide_description">為了使用完整的財富管理功能，您需要申請以下API金鑰：</string>
@@ -378,7 +378,7 @@
     <string name="api_guide_reminder_points">• 請妥善儲存您的API金鑰，不要分享給他人\n• 免費額度有限，建議申請自己的金鑰\n• 如遇問題，請查看API提供商的官方文檔</string>
     <string name="api_guide_main_features">主要功能：</string>
     <string name="api_guide_free_quota">免費額度：%1$s</string>
-    
+
     <!-- Settings Screen -->
     <string name="settings_apply_api_keys">申請API金鑰</string>
     <string name="settings_apply_api_keys_desc">獲取免費API金鑰以使用完整功能</string>
@@ -387,7 +387,7 @@
     <string name="settings_developer_mode_desc">使用內建測試用API金鑰</string>
     <string name="settings_developer_warning">注意：此功能僅在開發者模式下可用，將自動填入測試用API金鑰</string>
     <string name="settings_security_status">安全狀態</string>
-    
+
     <!-- Chart Components -->
     <string name="asset_distribution_title">資產分布</string>
     <string name="asset_distribution_empty">無可顯示資產</string>
@@ -396,7 +396,7 @@
     <string name="chart_no_assets_available">無可用資產</string>
     <string name="chart_treemap_content_description">顯示投資組合分布的樹狀圖</string>
     <string name="chart_others_group">其他</string>
-    
+
     <!-- Security Level -->
     <string name="security_level_settings">安全級別設定</string>
     <string name="security_level_description">選擇適合您需求的安全級別。較高的安全級別提供更好的保護，但可能需要更多驗證步驟。</string>
@@ -406,14 +406,14 @@
     <string name="scroll_down_more">向下滑動查看更多</string>
     <string name="cd_refresh_security_status">刷新安全狀態</string>
     <string name="cd_scroll_down_more">向下滾動查看更多內容</string>
-    
+
     <!-- Hardcoded String Replacements -->
     <string name="biometric_prompt_title">API金鑰存取驗證</string>
     <string name="biometric_prompt_subtitle">請使用生物識別驗證以存取API金鑰</string>
     <string name="biometric_prompt_negative">取消</string>
     <string name="biometric_error_retry">生物識別驗證失敗，請重試</string>
     <string name="biometric_error_cannot_show">無法顯示生物識別提示</string>
-    
+
     <!-- Biometric Status Descriptions -->
     <string name="biometric_status_available">生物識別驗證可用</string>
     <string name="biometric_status_no_hardware">裝置不支援生物識別</string>
@@ -422,7 +422,7 @@
     <string name="biometric_status_security_update_required">需要安全更新</string>
     <string name="biometric_status_unsupported">不支援生物識別</string>
     <string name="biometric_status_unknown">生物識別狀態未知</string>
-    
+
     <!-- Security Level Messages -->
     <string name="security_level_high_title">高安全級別</string>
     <string name="security_level_high_desc">• 需要生物識別驗證\n• 所有功能完全可用\n• 最高安全保護</string>
@@ -432,7 +432,7 @@
     <string name="security_level_low_desc">• 基本驗證要求\n• 核心功能可用\n• 適合日常使用</string>
     <string name="security_level_fallback_title">備案安全級別</string>
     <string name="security_level_fallback_desc">• 最低安全要求\n• 基本功能可用\n• 某些功能可能受限</string>
-    
+
     <!-- Security Status Messages -->
     <string name="security_status_high">高 (硬體保護 + 生物識別)</string>
     <string name="security_status_medium">中 (硬體保護)</string>
@@ -441,7 +441,7 @@
     <string name="security_status_unavailable">不可用</string>
     <string name="security_status_not_set">未設定</string>
     <string name="security_status_not_supported">不支援</string>
-    
+
     <!-- API Key Management Messages -->
     <string name="api_key_current_security_level">當前安全級別: %1$s\n%2$s</string>
     <string name="api_key_security_test_complete">安全測試完成: %1$s</string>
@@ -457,23 +457,23 @@
     <string name="api_key_biometric_retry_required">請重新嘗試生物識別驗證</string>
     <string name="api_key_operation_cancelled">操作已取消</string>
     <string name="api_key_security_level_set">安全級別已設定為: %1$s</string>
-    
+
     <!-- Feature Permission Messages -->
     <string name="feature_permission_full_access">完全功能可用</string>
     <string name="feature_permission_limited_access">部分功能可用（安全級別較低）</string>
     <string name="feature_permission_no_access">此功能需要更高安全級別</string>
-    
+
     <!-- Security Recommendations -->
     <string name="security_recommendation_high">建議：保持當前高安全級別設定</string>
     <string name="security_recommendation_medium">建議：考慮啟用生物驗證以提高安全性</string>
     <string name="security_recommendation_low">建議：啟用生物驗證或設定強密碼</string>
     <string name="security_recommendation_fallback">注意：當前使用備案安全級別，某些功能可能受限</string>
-    
+
     <!-- API Test Results -->
     <string name="api_test_high_security">高安全等級 - 所有API正常</string>
     <string name="api_test_medium_security">中安全等級 - 部分API正常</string>
     <string name="api_test_low_security">低安全等級 - 需要檢查設定</string>
-    
+
     <!-- Dialog Messages -->
     <string name="dialog_continue_lower_security">繼續使用（降低安全級別）</string>
     <string name="dialog_retry_biometric">重新嘗試生物識別</string>
@@ -483,7 +483,7 @@
     <string name="dialog_use_developer_api">使用開發者API KEY</string>
     <string name="dialog_i_understand">我知道了</string>
     <string name="dialog_go_apply">前往申請</string>
-    
+
     <!-- API Guide Content -->
     <string name="api_guide_finnhub_description">用於獲取股票價格和市場資料</string>
     <string name="api_guide_finnhub_features">即時股票報價\n歷史價格資料\n公司財務資訊\n市場新聞</string>
@@ -507,7 +507,7 @@
     <string name="api_key_hide_password">隱藏密碼</string>
     <string name="api_key_show_password">顯示密碼</string>
     <string name="api_key_autofill_hint">提示：如果您之前儲存過 API 金鑰，點擊此欄位會自動填入</string>
-    
+
     <!-- API Guide Dialog Responsive -->
     <string name="api_guide_complete">完成</string>
     <string name="api_guide_visit_website">訪問網站</string>
@@ -518,7 +518,7 @@
     <string name="api_guide_finnhub_global_desc">提供全球股票價格、公司資訊等資料</string>
     <string name="api_guide_exchange_rate_title">ExchangeRate-API (匯率資料)</string>
     <string name="api_guide_exchange_rate_desc">提供USD/TWD等匯率資訊</string>
-    
+
     <!-- Sync Messages -->
     <string name="sync_cancelled">同步已取消</string>
     <string name="sync_market_data_success">市場資料更新成功</string>
@@ -532,7 +532,7 @@
     <string name="sync_wear_not_installed">Wear 應用程式未安裝</string>
     <string name="sync_wear_failed">Wear 同步失敗：%1$s</string>
     <string name="sync_error">同步錯誤</string>
-    
+
     <!-- Accessibility Audit -->
     <string name="accessibility_audit_content_description">內容描述</string>
     <string name="accessibility_audit_semantic_role">語義角色</string>
@@ -661,25 +661,25 @@
 
     <!-- Debug -->
     <string name="debug_clipboard_label">除錯日誌</string>
-    
+
     <!-- Widget -->
     <string name="widget_total_asset_description">總資產小工具 - 一目了然地顯示您的投資組合價值</string>
     <string name="widget_total_asset_title">總資產</string>
     <string name="widget_last_updated_format">更新時間：%1$s</string>
     <string name="widget_error_loading_data">載入資料時發生錯誤</string>
     <string name="widget_tap_to_open_app">點擊開啟財富管理應用程式</string>
-    
+
     <!-- Content Descriptions -->
     <string name="cd_toggle_password_visibility">切換密碼可見性</string>
-    
+
     <!-- Snackbar Messages -->
     <string name="snackbar_prompt_gpm_save">API 金鑰已儲存。是否儲存到 Google Password Manager？</string>
     <string name="snackbar_action_learn_more">了解更多</string>
-    
+
     <!-- GPM Info -->
     <string name="gpm_info_title">Google Password Manager</string>
     <string name="gpm_info_body">將您的 API 金鑰儲存到 Google Password Manager 可實現安全儲存和跨設備同步。您可以啟用自動填入功能以便下次快速輸入。</string>
-    
+
     <!-- Technology Stack -->
     <string name="tech_kotlin">Kotlin</string>
     <string name="tech_compose">Compose</string>
@@ -687,7 +687,7 @@
     <string name="tech_room">Room</string>
     <string name="tech_hilt">Hilt</string>
     <string name="tech_retrofit">Retrofit</string>
-    
+
     <!-- Search Error Messages -->
     <string name="search_error_stock_not_found">找不到股票代碼，請檢查是否正確</string>
     <string name="search_error_api_limit">API 請求限制已達上限，請明天再試</string>
@@ -698,7 +698,7 @@
     <string name="search_error_authentication">API 驗證失敗，請檢查 API 金鑰設定</string>
     <string name="search_error_rate_limit">請求頻率限制已超出，請稍後再試</string>
     <string name="search_error_unknown">發生未知錯誤，請重新啟動應用程式</string>
-    
+
     <!-- Missing Accessibility Strings -->
     <string name="accessibility_audit_title">無障礙性檢查</string>
     <string name="accessibility_color_contrast">顏色對比</string>
@@ -714,7 +714,7 @@
     <string name="accessibility_semantic_role">語義角色</string>
     <string name="accessibility_small_touch_target">觸控目標過小</string>
     <string name="accessibility_touch_target">觸控目標</string>
-    
+
     <!-- Missing Sync Strings -->
     <string name="sync_backup_failed">備份失敗</string>
     <string name="sync_backup_success">備份成功</string>
@@ -724,4 +724,8 @@
     <string name="sync_market_data">同步市場資料</string>
     <string name="sync_retry">重試</string>
     <string name="sync_undo">撤銷</string>
+    <string name="assets_cash_amount_label">Amount</string>
+  <string name="assets_stock_symbol_label">Stock Symbol</string>
+  <string name="assets_stock_shares_label">Number of Shares</string>
+  <string name="biometric_auth_cancelled">Authentication cancelled</string>
 </resources>

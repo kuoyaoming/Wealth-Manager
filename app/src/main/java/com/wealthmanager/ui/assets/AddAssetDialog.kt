@@ -13,387 +13,143 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.Role
-import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.wealthmanager.R
-import com.wealthmanager.data.model.StockSearchItem
-import com.wealthmanager.debug.DebugLogManager
-import com.wealthmanager.haptic.HapticFeedbackManager
-import com.wealthmanager.haptic.rememberHapticFeedbackWithView
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AddAssetDialog(
     onDismiss: () -> Unit,
-    cashCurrency: String,
-    cashAmount: String,
-    cashButtonLabelRes: Int,
-    onCurrencyChange: (String) -> Unit,
-    onCashAmountChange: (String) -> Unit,
-    onAddCash: (String, Double) -> Unit,
-    onAddStock: (String, Double) -> Unit,
-    onSearchStocks: (String, String) -> Unit = { _, _ -> },
-    onSearchQueryChange: (String) -> Unit = {},
-    searchResults: List<StockSearchItem> = emptyList(),
-    isSearching: Boolean = false,
+    viewModel: AddAssetViewModel = hiltViewModel(),
 ) {
-    val debugLogManager = remember { DebugLogManager() }
-    val (hapticManager, view) = rememberHapticFeedbackWithView()
-    var selectedTab by remember { mutableStateOf(0) }
-    val isUpdating = remember(cashButtonLabelRes) { cashButtonLabelRes == R.string.update }
-    var stockSymbol by remember { mutableStateOf("") }
-    var stockShares by remember { mutableStateOf("") }
-    var showSearchResults by remember { mutableStateOf(false) }
-    var searchError by remember { mutableStateOf("") }
-
-    LaunchedEffect(cashCurrency) {
-        debugLogManager.log("UI", "Cash currency changed to: $cashCurrency")
-        debugLogManager.logUserAction("Cash Currency Changed")
-    }
-    LaunchedEffect(cashAmount) {
-        debugLogManager.log("UI", "Cash amount changed to: $cashAmount")
-        debugLogManager.logUserAction("Cash Amount Changed")
-    }
-
-    LaunchedEffect(Unit) {
-        debugLogManager.logUserAction("Add Asset Dialog Opened")
-    }
-
-    // Debounced search is handled in ViewModel; this composable only forwards query changes
+    val uiState by viewModel.uiState.collectAsState()
 
     AlertDialog(
         onDismissRequest = onDismiss,
         title = { Text(stringResource(R.string.dialog_add_asset)) },
         text = {
             Column {
-                // Tab Selection
-                Row(
-                    modifier =
-                        Modifier
-                            .fillMaxWidth()
-                            .selectableGroup(),
-                ) {
-                    Row(
-                        modifier =
-                            Modifier
-                                .weight(1f)
-                                .selectable(
-                                    selected = selectedTab == 0,
-                                    onClick = {
-                                        debugLogManager.logUserAction("Cash Tab Selected")
-                                        debugLogManager.log("UI", "User switched to Cash tab in Add Asset dialog")
-                                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                                        selectedTab = 0
-                                    },
-                                    role = Role.Tab,
-                                ),
-                    ) {
-                        RadioButton(
-                            selected = selectedTab == 0,
-                            onClick = null,
-                        )
-                        Text(stringResource(R.string.assets_tab_cash), modifier = Modifier.padding(start = 8.dp))
-                    }
-                    Row(
-                        modifier =
-                            Modifier
-                                .weight(1f)
-                                .selectable(
-                                    selected = selectedTab == 1,
-                                    onClick = {
-                                        debugLogManager.logUserAction("Stock Tab Selected")
-                                        debugLogManager.log("UI", "User switched to Stock tab in Add Asset dialog")
-                                        hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                                        selectedTab = 1
-                                    },
-                                    role = Role.Tab,
-                                ),
-                    ) {
-                        RadioButton(
-                            selected = selectedTab == 1,
-                            onClick = null,
-                        )
-                        Text(stringResource(R.string.assets_tab_stock), modifier = Modifier.padding(start = 8.dp))
-                    }
+                Row(modifier = Modifier.fillMaxWidth().selectableGroup()) {
+                    AssetTypeRadioButton(text = stringResource(R.string.assets_tab_cash), selected = uiState.selectedTab == 0, onClick = { viewModel.onTabSelected(0) })
+                    Spacer(modifier = Modifier.width(8.dp))
+                    AssetTypeRadioButton(text = stringResource(R.string.assets_tab_stock), selected = uiState.selectedTab == 1, onClick = { viewModel.onTabSelected(1) })
                 }
 
                 Spacer(modifier = Modifier.height(16.dp))
 
-                when (selectedTab) {
-                    0 -> { // Cash
-                        Column {
-                            Text(stringResource(R.string.assets_cash_currency_label))
-                            Spacer(modifier = Modifier.height(8.dp))
-                            Row {
-                                Row(
-                                    modifier =
-                                        Modifier
-                                            .weight(1f)
-                                            .selectable(
-                                                selected = cashCurrency == "TWD",
-                                                onClick = {
-                                                    debugLogManager.logUserAction("TWD Currency Selected")
-                                                    debugLogManager.log(
-                                                        "UI",
-                                                        "User selected TWD currency for cash asset",
-                                                    )
-                                                    hapticManager.triggerHaptic(
-                                                        view,
-                                                        HapticFeedbackManager.HapticIntensity.LIGHT,
-                                                    )
-                                                    onCurrencyChange("TWD")
-                                                },
-                                                role = Role.RadioButton,
-                                            ),
-                                ) {
-                                    RadioButton(
-                                        selected = cashCurrency == "TWD",
-                                        onClick = null,
-                                    )
-                                    Text(
-                                        stringResource(R.string.assets_currency_twd),
-                                        modifier = Modifier.padding(start = 8.dp),
-                                    )
-                                }
-                                Row(
-                                    modifier =
-                                        Modifier
-                                            .weight(1f)
-                                            .selectable(
-                                                selected = cashCurrency == "USD",
-                                                onClick = {
-                                                    debugLogManager.logUserAction("USD Currency Selected")
-                                                    debugLogManager.log(
-                                                        "UI",
-                                                        "User selected USD currency for cash asset",
-                                                    )
-                                                    hapticManager.triggerHaptic(
-                                                        view,
-                                                        HapticFeedbackManager.HapticIntensity.LIGHT,
-                                                    )
-                                                    onCurrencyChange("USD")
-                                                },
-                                                role = Role.RadioButton,
-                                            ),
-                                ) {
-                                    RadioButton(
-                                        selected = cashCurrency == "USD",
-                                        onClick = null,
-                                    )
-                                    Text(
-                                        stringResource(R.string.assets_currency_usd),
-                                        modifier = Modifier.padding(start = 8.dp),
-                                    )
-                                }
-                            }
-                            Spacer(modifier = Modifier.height(16.dp))
-                            if (isUpdating) {
-                                Text(
-                                    text = stringResource(R.string.cash_update_existing, cashCurrency.uppercase()),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                                Spacer(modifier = Modifier.height(12.dp))
-                            }
-                            CashAmountInputField(
-                                value = cashAmount,
-                                onValueChange = {
-                                    debugLogManager.log("UI", "User typing cash amount: $it")
-                                    if (it.isEmpty() || it.matches(Regex("^\\d*\\.?\\d*$"))) {
-                                        onCashAmountChange(it)
-                                    }
-                                },
-                                currency = cashCurrency,
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
-                    }
-                    1 -> { // Stock
-                        Column {
-                            StockSymbolInputField(
-                                value = stockSymbol,
-                                onValueChange = {
-                                    debugLogManager.log("UI", "User typing stock symbol: $it")
-                                    stockSymbol = it
-                                    searchError = ""
-                                    onSearchQueryChange(it)
-                                    showSearchResults = it.isNotEmpty()
-                                },
-                                modifier = Modifier.fillMaxWidth(),
-                                trailingIcon = {
-                                    if (isSearching) {
-                                        CircularProgressIndicator(modifier = Modifier.size(20.dp))
-                                    } else {
-                                        IconButton(onClick = {
-                                            debugLogManager.logUserAction("Manual Stock Search Clicked")
-                                            debugLogManager.log(
-                                                "UI",
-                                                "User clicked manual search button for: $stockSymbol",
-                                            )
-                                            hapticManager.triggerHaptic(
-                                                view,
-                                                HapticFeedbackManager.HapticIntensity.MEDIUM,
-                                            )
-                                            if (stockSymbol.isNotEmpty()) {
-                                                onSearchStocks(stockSymbol, "")
-                                                showSearchResults = true
-                                            }
-                                        }) {
-                                            Icon(
-                                                Icons.Default.Search,
-                                                contentDescription = stringResource(R.string.cd_search),
-                                            )
-                                        }
-                                    }
-                                },
-                            )
-
-                            // Show search results when available
-                            if (searchResults.isNotEmpty() && showSearchResults) {
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = stringResource(R.string.assets_search_results_count, searchResults.size),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                )
-                                Spacer(modifier = Modifier.height(4.dp))
-                                LazyColumn(
-                                    modifier =
-                                        Modifier
-                                            .fillMaxWidth()
-                                            .heightIn(max = 150.dp),
-                                ) {
-                                    items(searchResults.take(5)) { result ->
-                                        Card(
-                                            modifier =
-                                                Modifier
-                                                    .fillMaxWidth()
-                                                    .padding(vertical = 2.dp),
-                                            onClick = {
-                                                debugLogManager.logUserAction("Stock Selected from Search")
-                                                debugLogManager.log(
-                                                    "UI",
-                                                    "User selected stock: ${result.symbol} - ${result.longName}",
-                                                )
-                                                hapticManager.triggerHaptic(
-                                                    view,
-                                                    HapticFeedbackManager.HapticIntensity.MEDIUM,
-                                                )
-                                                stockSymbol = result.symbol
-                                                showSearchResults = false
-                                                searchError = ""
-                                            },
-                                        ) {
-                                            Column(
-                                                modifier = Modifier.padding(8.dp),
-                                            ) {
-                                                Text(
-                                                    text = result.symbol,
-                                                    style = MaterialTheme.typography.bodyMedium,
-                                                    fontWeight = FontWeight.Medium,
-                                                )
-                                                Text(
-                                                    text = result.longName,
-                                                    style = MaterialTheme.typography.bodySmall,
-                                                    color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                                )
-                                            }
-                                        }
-                                    }
-                                }
-                            } else if (isSearching) {
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Row(
-                                    modifier = Modifier.fillMaxWidth(),
-                                    horizontalArrangement = Arrangement.Center,
-                                    verticalAlignment = Alignment.CenterVertically,
-                                ) {
-                                    CircularProgressIndicator(modifier = Modifier.size(16.dp))
-                                    Spacer(modifier = Modifier.width(8.dp))
-                                    Text(
-                                        text = stringResource(R.string.searching),
-                                        style = MaterialTheme.typography.bodySmall,
-                                        color = MaterialTheme.colorScheme.onSurfaceVariant,
-                                    )
-                                }
-                            } else if (searchError.isNotEmpty()) {
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = searchError,
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.error,
-                                )
-                            } else if (showSearchResults && searchResults.isEmpty() && !isSearching) {
-                                Spacer(modifier = Modifier.height(8.dp))
-                                Text(
-                                    text = stringResource(R.string.assets_search_no_match),
-                                    style = MaterialTheme.typography.bodySmall,
-                                    color = MaterialTheme.colorScheme.error,
-                                )
-                            }
-                            Spacer(modifier = Modifier.height(16.dp))
-                            StockSharesInputField(
-                                value = stockShares,
-                                onValueChange = {
-                                    debugLogManager.log("UI", "User typing stock shares: $it")
-                                    stockShares = it
-                                },
-                                modifier = Modifier.fillMaxWidth(),
-                            )
-                        }
-                    }
+                when (uiState.selectedTab) {
+                    0 -> CashInputFields(viewModel = viewModel)
+                    1 -> StockInputFields(viewModel = viewModel)
                 }
             }
         },
         confirmButton = {
             TextButton(
                 onClick = {
-                    debugLogManager.logUserAction("Add Asset Button Clicked")
-                    hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.CONFIRM)
-                    when (selectedTab) {
-                        0 -> {
-                            debugLogManager.log("UI", "Adding cash asset: $cashCurrency $cashAmount")
-                            val amount = cashAmount.toDoubleOrNull()
-                            if (amount != null && amount > 0) {
-                                onAddCash(cashCurrency, amount)
-                            } else {
-                                debugLogManager.log("UI", "Invalid cash amount: $cashAmount")
-                            }
-                        }
-                        1 -> {
-                            debugLogManager.log("UI", "Adding stock asset: $stockSymbol, $stockShares shares")
-                            val shares = stockShares.toDoubleOrNull()
-                            if (stockSymbol.isNotEmpty() && shares != null && shares > 0) {
-                                onAddStock(stockSymbol, shares)
-                            } else {
-                                debugLogManager.log(
-                                    "UI",
-                                    "Invalid stock data: symbol=$stockSymbol, shares=$stockShares",
-                                )
-                            }
-                        }
+                    if (uiState.selectedTab == 0) {
+                        viewModel.addCashAsset()
+                    } else {
+                        viewModel.addStockAsset()
                     }
-                },
+                    onDismiss()
+                }
             ) {
-                Text(
-                    text =
-                        if (selectedTab == 0) {
-                            if (isUpdating) stringResource(R.string.update) else stringResource(R.string.add_cash)
-                        } else {
-                            stringResource(R.string.add_stock)
-                        },
-                )
+                Text(stringResource(if (uiState.selectedTab == 0) R.string.add_cash else R.string.add_stock))
             }
         },
         dismissButton = {
-            TextButton(onClick = {
-                debugLogManager.logUserAction("Cancel Asset Dialog")
-                debugLogManager.log("UI", "User cancelled Add Asset dialog")
-                hapticManager.triggerHaptic(view, HapticFeedbackManager.HapticIntensity.LIGHT)
-                onDismiss()
-            }) {
+            TextButton(onClick = onDismiss) {
                 Text(stringResource(R.string.dialog_cancel))
             }
         },
     )
+}
+
+@Composable
+private fun AssetTypeRadioButton(text: String, selected: Boolean, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier.selectable(selected = selected, onClick = onClick, role = Role.RadioButton).padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RadioButton(selected = selected, onClick = null)
+        Text(text = text, modifier = Modifier.padding(start = 8.dp))
+    }
+}
+
+@Composable
+private fun CashInputFields(viewModel: AddAssetViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    Column {
+        Text(stringResource(R.string.assets_cash_currency_label))
+        Spacer(modifier = Modifier.height(8.dp))
+        Row(modifier = Modifier.selectableGroup()) {
+            CurrencyRadioButton(text = "TWD", selected = uiState.cashCurrency == "TWD", onClick = { viewModel.onCashCurrencyChange("TWD") })
+            Spacer(modifier = Modifier.width(16.dp))
+            CurrencyRadioButton(text = "USD", selected = uiState.cashCurrency == "USD", onClick = { viewModel.onCashCurrencyChange("USD") })
+        }
+        Spacer(modifier = Modifier.height(16.dp))
+        OutlinedTextField(
+            value = uiState.cashAmount,
+            onValueChange = viewModel::onCashAmountChange,
+            label = { Text("Amount") }, // Placeholder
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+    }
+}
+
+@Composable
+internal fun CurrencyRadioButton(text: String, selected: Boolean, onClick: () -> Unit) {
+    Row(
+        modifier = Modifier.selectable(selected = selected, onClick = onClick, role = Role.RadioButton).padding(vertical = 8.dp),
+        verticalAlignment = Alignment.CenterVertically
+    ) {
+        RadioButton(selected = selected, onClick = null)
+        Text(text = text, modifier = Modifier.padding(start = 8.dp))
+    }
+}
+
+@Composable
+private fun StockInputFields(viewModel: AddAssetViewModel) {
+    val uiState by viewModel.uiState.collectAsState()
+
+    Column {
+        OutlinedTextField(
+            value = uiState.stockSymbol,
+            onValueChange = viewModel::onStockSymbolChange,
+            label = { Text("Stock Symbol") }, // Placeholder
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true,
+            trailingIcon = {
+                if (uiState.isSearching) {
+                    CircularProgressIndicator(modifier = Modifier.size(20.dp))
+                } else {
+                    Icon(Icons.Default.Search, contentDescription = null)
+                }
+            }
+        )
+
+        if (uiState.searchResults.isNotEmpty()) {
+            LazyColumn(modifier = Modifier.heightIn(max = 150.dp)) {
+                items(uiState.searchResults) { result ->
+                    Text(
+                        text = "${result.symbol} - ${result.longName}",
+                        modifier = Modifier.fillMaxWidth().padding(8.dp).selectable(selected = false, onClick = { viewModel.onSearchResultSelected(result.symbol) })
+                    )
+                }
+            }
+        }
+
+        Spacer(modifier = Modifier.height(16.dp))
+
+        OutlinedTextField(
+            value = uiState.stockShares,
+            onValueChange = viewModel::onStockSharesChange,
+            label = { Text("Number of Shares") }, // Placeholder
+            modifier = Modifier.fillMaxWidth(),
+            singleLine = true
+        )
+    }
 }

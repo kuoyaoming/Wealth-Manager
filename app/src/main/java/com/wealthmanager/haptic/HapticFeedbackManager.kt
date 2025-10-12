@@ -1,9 +1,7 @@
 package com.wealthmanager.haptic
 
 import android.content.Context
-import android.media.AudioAttributes
 import android.media.AudioManager
-import android.media.SoundPool
 import android.os.Build
 import android.os.VibrationEffect
 import android.os.Vibrator
@@ -19,52 +17,26 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import javax.inject.Inject
 
 /**
- * Haptic feedback manager providing centralized control over haptic and sound feedback.
+ * Manages haptic and sound feedback throughout the application.
  *
- * This manager is a ViewModel, ensuring its lifecycle is tied to the composable scope.
- * It should be accessed in Composables via `hiltViewModel()`.
+ * This manager is a ViewModel, ensuring a single instance is used within a lifecycle scope.
+ * It is the central point for triggering all tactile and auditory user feedback.
  */
 @HiltViewModel
 class HapticFeedbackManager @Inject constructor() : ViewModel() {
 
-    /** Haptic feedback intensity levels. */
+    /** Defines the intensity of the haptic feedback. */
     enum class HapticIntensity {
         LIGHT, MEDIUM, STRONG, CONFIRM
     }
 
-    /** Haptic feedback settings. */
-    data class HapticSettings(
-        val hapticEnabled: Boolean = true,
-        val soundEnabled: Boolean = true,
-        val intensity: HapticIntensity = HapticIntensity.MEDIUM,
-    )
-
-    private var settings = HapticSettings()
-    private var soundPool: SoundPool? = null
-
-    private fun initializeSound(context: Context) {
-        if (soundPool == null) {
-            val audioAttributes = AudioAttributes.Builder()
-                .setUsage(AudioAttributes.USAGE_ASSISTANCE_SONIFICATION)
-                .setContentType(AudioAttributes.CONTENT_TYPE_SONIFICATION)
-                .build()
-
-            soundPool = SoundPool.Builder()
-                .setMaxStreams(1)
-                .setAudioAttributes(audioAttributes)
-                .build()
-        }
-    }
-
-    fun updateSettings(newSettings: HapticSettings) {
-        settings = newSettings
-    }
-
-    fun getSettings(): HapticSettings = settings
-
+    /**
+     * Triggers a standard haptic feedback event.
+     *
+     * @param view The view to perform the haptic feedback on.
+     * @param intensity The desired intensity of the feedback.
+     */
     fun triggerHaptic(view: View, intensity: HapticIntensity = HapticIntensity.MEDIUM) {
-        if (!settings.hapticEnabled) return
-
         val hapticConstant = when (intensity) {
             HapticIntensity.LIGHT -> HapticFeedbackConstants.KEYBOARD_TAP
             HapticIntensity.MEDIUM -> HapticFeedbackConstants.VIRTUAL_KEY
@@ -74,10 +46,13 @@ class HapticFeedbackManager @Inject constructor() : ViewModel() {
         view.performHapticFeedback(hapticConstant)
     }
 
+    /**
+     * Triggers a standard system sound effect.
+     *
+     * @param context The context used to access the AudioManager.
+     * @param intensity The intensity of the sound, which maps to different system sound types.
+     */
     fun triggerSound(context: Context, intensity: HapticIntensity = HapticIntensity.MEDIUM) {
-        if (!settings.soundEnabled) return
-        initializeSound(context)
-
         val audioManager = context.getSystemService(Context.AUDIO_SERVICE) as? AudioManager
         if (audioManager?.ringerMode != AudioManager.RINGER_MODE_SILENT) {
             val soundType = when (intensity) {
@@ -90,10 +65,14 @@ class HapticFeedbackManager @Inject constructor() : ViewModel() {
         }
     }
 
+    /**
+     * Triggers a custom vibration effect.
+     *
+     * @param context The context used to access the Vibrator service.
+     * @param duration The duration of the vibration in milliseconds.
+     */
     @Suppress("DEPRECATION")
-    fun triggerVibration(context: Context, duration: Long = 50L, intensity: HapticIntensity = HapticIntensity.MEDIUM) {
-        if (!settings.hapticEnabled) return
-
+    fun triggerVibration(context: Context, duration: Long = 50L) {
         val vibrator = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
             val vibratorManager = context.getSystemService(Context.VIBRATOR_MANAGER_SERVICE) as VibratorManager
             vibratorManager.defaultVibrator
@@ -102,23 +81,19 @@ class HapticFeedbackManager @Inject constructor() : ViewModel() {
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val vibrationEffect = when (intensity) {
-                HapticIntensity.LIGHT -> VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE / 2)
-                HapticIntensity.MEDIUM -> VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE)
-                HapticIntensity.STRONG -> VibrationEffect.createOneShot(duration * 2, VibrationEffect.DEFAULT_AMPLITUDE)
-                HapticIntensity.CONFIRM -> VibrationEffect.createWaveform(longArrayOf(0, 100, 50, 100), -1)
-            }
-            vibrator.vibrate(vibrationEffect)
+            vibrator.vibrate(VibrationEffect.createOneShot(duration, VibrationEffect.DEFAULT_AMPLITUDE))
         } else {
             vibrator.vibrate(duration)
         }
     }
 
+    /** Triggers a combined haptic and sound feedback for success events. */
     fun triggerSuccess(view: View, context: Context) {
         triggerHaptic(view, HapticIntensity.CONFIRM)
         triggerSound(context, HapticIntensity.CONFIRM)
     }
 
+    /** Triggers a combined haptic and sound feedback for error events. */
     fun triggerError(view: View, context: Context) {
         triggerHaptic(view, HapticIntensity.STRONG)
         triggerSound(context, HapticIntensity.STRONG)
@@ -127,9 +102,6 @@ class HapticFeedbackManager @Inject constructor() : ViewModel() {
 
 /**
  * A Composable hook to remember and provide the HapticFeedbackManager and the current View.
- *
- * This is the recommended way to access the HapticFeedbackManager in Composables.
- * It ensures that the same ViewModel-scoped instance is used, and provides the necessary View for haptic feedback.
  */
 @Composable
 fun rememberHapticFeedbackWithView(): Pair<HapticFeedbackManager, View> {
