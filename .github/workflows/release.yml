@@ -26,116 +26,42 @@ jobs:
           distribution: temurin
           java-version: ${{ env.JAVA_VERSION }}
 
-        - name: Setup Android SDK
-          uses: android-actions/setup-android@v3
-
-        - name: Accept Licenses & Install SDK
-          run: |
-            yes | sdkmanager --licenses
-            sdkmanager --install "platform-tools" "platforms;android-${{ env.ANDROID_SDK_VERSION }}" "build-tools;${{ env.BUILD_TOOLS_VERSION }}"
-
-        - name: Decode Keystore
-          if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
-          run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -di > keystore.jks
-
-        - name: Set Version
-          run: |
-            TAG=${GITHUB_REF#refs/tags/v}
-            echo "WM_VERSION_NAME=$TAG" >> $GITHUB_ENV
-            echo "WM_VERSION_CODE=200" >> $GITHUB_ENV
-
-        - name: Build Release Bundle
-          env:
-            ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/keystore.jks
-            ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
-            ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
-            ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
-          run: |
-            set -e
-            ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:bundleRelease :app:assembleRelease --no-daemon || { echo "Build failed!"; exit 1; }
-
-        - name: Generate Checksums
-          run: |
-            cd app
-            sha256sum build/outputs/bundle/release/*.aab > SHA256SUMS.txt
-            sha256sum build/outputs/apk/release/*.apk >> SHA256SUMS.txt
-            [ -f build/outputs/mapping/release/mapping.txt ] && sha256sum build/outputs/mapping/release/mapping.txt >> SHA256SUMS.txt
-
-        - name: Create Release
-          uses: softprops/action-gh-release@v2.1.0
-          with:
-            tag_name: ${{ github.ref_name }}
-            name: v${{ env.WM_VERSION_NAME }}
-            files: |
-              app/build/outputs/bundle/release/*.aab
-              app/build/outputs/apk/release/*.apk
-              app/build/outputs/mapping/release/mapping.txt
-              app/SHA256SUMS.txt
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-    strategy:
-      matrix:
-        build-type: [release, internal]
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v5
-
-      - name: Setup Java
-        uses: actions/setup-java@v5
-        with:
-          distribution: temurin
-          java-version: ${{ env.JAVA_VERSION }}
-
       - name: Setup Android SDK
         uses: android-actions/setup-android@v3
 
-      - name: Install Android SDK
+      - name: Accept Licenses & Install SDK
         run: |
           yes | sdkmanager --licenses
           sdkmanager --install "platform-tools" "platforms;android-${{ env.ANDROID_SDK_VERSION }}" "build-tools;${{ env.BUILD_TOOLS_VERSION }}"
 
-      - name: Setup Keystore
-        if: env.ANDROID_KEYSTORE_BASE64 != ''
-        run: echo "$ANDROID_KEYSTORE_BASE64" | base64 -d > keystore.jks
-        env:
-          ANDROID_KEYSTORE_BASE64: ${{ secrets.ANDROID_KEYSTORE_BASE64 }}
+      - name: Decode Keystore
+        if: ${{ secrets.ANDROID_KEYSTORE_BASE64 != '' }}
+        run: echo "${{ secrets.ANDROID_KEYSTORE_BASE64 }}" | base64 -di > keystore.jks
 
-      - name: Set Build Version
+      - name: Set Version
         run: |
-          if [ "${{ matrix.build-type }}" = "internal" ]; then
-            VERSION_NAME="1.8.0-internal"
-          else
-            VERSION_NAME="${{ needs.setup.outputs.version-name }}"
-          fi
-          echo "WM_VERSION_NAME=$VERSION_NAME" >> $GITHUB_ENV
-          echo "WM_VERSION_CODE=${{ needs.setup.outputs.version-code }}" >> $GITHUB_ENV
+          TAG=${GITHUB_REF#refs/tags/v}
+          echo "WM_VERSION_NAME=$TAG" >> $GITHUB_ENV
+          echo "WM_VERSION_CODE=200" >> $GITHUB_ENV
 
-      - name: Build
+      - name: Build Release Bundle
         env:
           ANDROID_KEYSTORE_PATH: ${{ github.workspace }}/keystore.jks
           ANDROID_KEYSTORE_PASSWORD: ${{ secrets.ANDROID_KEYSTORE_PASSWORD }}
           ANDROID_KEY_ALIAS: ${{ secrets.ANDROID_KEY_ALIAS }}
           ANDROID_KEY_PASSWORD: ${{ secrets.ANDROID_KEY_PASSWORD }}
         run: |
-          if [ "${{ matrix.build-type }}" = "release" ]; then
-            ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} \
-              :app:bundleRelease :app:assembleRelease --no-daemon
-          else
-            ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} \
-              :app:bundleRelease --no-daemon
-          fi
+          set -e
+          ./gradlew -PwmVersionName=${{ env.WM_VERSION_NAME }} -PwmVersionCode=${{ env.WM_VERSION_CODE }} :app:bundleRelease :app:assembleRelease --no-daemon || { echo "Build failed!"; exit 1; }
 
       - name: Generate Checksums
-        if: matrix.build-type == 'release'
         run: |
           cd app
           sha256sum build/outputs/bundle/release/*.aab > SHA256SUMS.txt
           sha256sum build/outputs/apk/release/*.apk >> SHA256SUMS.txt
-          [ -f build/outputs/mapping/release/mapping.txt ] && \
-            sha256sum build/outputs/mapping/release/mapping.txt >> SHA256SUMS.txt
+          [ -f build/outputs/mapping/release/mapping.txt ] && sha256sum build/outputs/mapping/release/mapping.txt >> SHA256SUMS.txt
 
       - name: Create Release
-        if: matrix.build-type == 'release'
         uses: softprops/action-gh-release@v2.1.0
         with:
           tag_name: ${{ github.ref_name }}
@@ -147,13 +73,3 @@ jobs:
             app/SHA256SUMS.txt
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-      - name: Upload to Play Console
-        if: matrix.build-type == 'internal'
-        uses: r0adkll/upload-google-play@v1
-        with:
-          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
-          packageName: com.wealthmanager
-          releaseFiles: app/build/outputs/bundle/release/app-release.aab
-          track: internal
-          status: completed
