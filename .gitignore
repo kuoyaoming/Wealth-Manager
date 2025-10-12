@@ -48,8 +48,24 @@ google-services.json
 *.hprof
 
 # OS
+
 .DS_Store
 Thumbs.db
+
+# Kotlin plugin cache
+.kotlin/
+
+# Download/測試暫存
+download-ripgrepknqyNN/
+
+# 錄影/多媒體測試檔
+Screen_recording_*.mp4
+
+# 其他常見臨時/測試/紀錄檔
+WIDGET_IMPLEMENTATION_SUMMARY.md
+WIDGET_TESTING_GUIDE.md
+FRAME_RATE_MIGRATION_SUMMARY.md
+about_page_test_guide.md
 
 # Releases / Artifacts
 app/release/
