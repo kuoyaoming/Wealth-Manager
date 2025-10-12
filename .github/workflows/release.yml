@@ -1,9 +1,7 @@
 # .github/workflows/release.yml
-# 檔名可以維持 release.yml，或者改成更貼切的 build-and-release.yml
 
 name: Build and Release to Google Play
 
-# 當推播 v 開頭的 tag 時觸發
 on:
   push:
     tags:
@@ -16,23 +14,40 @@ jobs:
     steps:
       # 1. Checkout 程式碼
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4 # 建議更新到 v4
 
       # 2. 設定 Java 環境
       - name: Set up JDK 11
-        uses: actions/setup-java@v1
+        uses: actions/setup-java@v4 # 建議更新到 v4
         with:
           java-version: 11
+          distribution: 'temurin' # 建議明確指定 distribution
 
-      # 3. 給予 Gradle wrapper 執行權限
+      # --- 新增快取步驟 ---
+      # 3. 設定 Gradle 快取
+      - name: Cache Gradle packages
+        uses: actions/cache@v4 # 使用官方的 cache action
+        with:
+          # 需要被快取起來的檔案路徑
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          # 快取的唯一識別碼。當 build.gradle 檔案有變動時，會產生新的 key，建立新的快取
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+          # 當找不到完全符合的 key 時，會嘗試用這個 key 來找部分符合的舊快取
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+
+      # 4. 給予 Gradle wrapper 執行權限
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # 4. 執行 Gradle 建置，產生 AAB
+      # 5. 執行 Gradle 建置 (現在會因為快取而變快)
       - name: Build with Gradle
         run: ./gradlew bundleRelease
 
-      # 5. 建立 GitHub Release
+      # --- 後續的發布步驟維持不變 ---
+      # 6. 建立 GitHub Release
       - name: Create GitHub Release
         id: create_release
         uses: actions/create-release@v1
@@ -44,7 +59,7 @@ jobs:
           draft: false
           prerelease: false
 
-      # 6. 上傳 AAB 到 GitHub Release
+      # 7. 上傳 AAB 到 GitHub Release
       - name: Upload AAB to GitHub Release
         uses: actions/upload-release-asset@v1
         env:
@@ -55,17 +70,14 @@ jobs:
           asset_name: app-release.aab
           asset_content_type: application/vnd.android.package-archive
 
-      # --- 從 play-upload.yml 合併過來的步驟 ---
-      # 7. 簽署 AAB 並上傳到 Google Play
+      # 8. 簽署 AAB 並上傳到 Google Play
       - name: Sign and Upload to Google Play
         uses: r0adkll/sign-android-release@v1
         with:
-          # 這個 action 會自動尋找 releaseDir 下的 .aab 檔案
           releaseDir: app/build/outputs/bundle/release
           signingKeyBase64: ${{ secrets.SIGNING_KEY }}
           alias: ${{ secrets.ALIAS }}
           keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
           keyPassword: ${{ secrets.KEY_PASSWORD }}
         env:
-          # 將 Service Account JSON 放在 env 環境變數中
           SERVICE_ACCOUNT_JSON: ${{ secrets.SERVICE_ACCOUNT_JSON }}
