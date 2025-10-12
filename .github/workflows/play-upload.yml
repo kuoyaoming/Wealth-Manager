@@ -1,0 +1,28 @@
+name: Play Console Upload
+
+on:
+  workflow_dispatch:
+    inputs:
+      releaseFile:
+        description: 'Path to .aab file'
+        required: true
+      track:
+        description: 'Track (internal, alpha, beta, production)'
+        required: true
+        default: 'internal'
+
+jobs:
+  upload:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v5
+
+      - name: Upload to Play Console
+        uses: r0adkll/upload-google-play@v1
+        with:
+          serviceAccountJsonPlainText: ${{ secrets.PLAY_SERVICE_ACCOUNT_JSON }}
+          packageName: com.wealthmanager
+          releaseFiles: ${{ github.event.inputs.releaseFile }}
+          track: ${{ github.event.inputs.track }}
+          status: completed
