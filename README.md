@@ -56,10 +56,6 @@ A modern Android personal finance tracker built with Jetpack Compose, featuring 
 
 <div align="center">
 
-### Live App Demonstration
-[![Wealth Manager App Demo](https://img.youtube.com/vi/kW68GsKsGJ0/0.jpg)](https://youtube.com/shorts/kW68GsKsGJ0?feature=share)
-<p align="center"><em>Complete app workflow: biometric authentication, portfolio management, asset tracking, and real-time market data</em></p>
-
 </div>
 
 ## 🚀 Quick Start
@@ -86,6 +82,46 @@ A modern Android personal finance tracker built with Jetpack Compose, featuring 
    # Option 2: Create local.properties (for SDK path only)
    echo "sdk.dir=/path/to/android/sdk" > local.properties
    ```
+## 🆕 Release & Repository Cleanup
+
+- Latest version: `v1.9.0` (tagged and released via CI/CD)
+- Only Android project and essential GitHub files are kept; temp, test, and IDE files have been removed for a clean repository.
+- `.gitignore` updated to ignore all unnecessary files and folders.
+
+#### Tag & Release Example
+```bash
+git tag v1.9.0
+git push origin v1.9.0
+```
+
+---
+
+## 📦 Project Structure
+```mermaid
+graph TD
+      A[Wealth-Manager] --> B[app/]
+      A --> C[wear/]
+      A --> D[docs/]
+    
+      B --> B1[src/main/java/com/wealthmanager/]
+      B --> B2[src/main/res/]
+    
+      B1 --> B1a[auth/]
+      B1 --> B1b[data/]
+      B1 --> B1c[security/]
+      B1 --> B1d[ui/]
+      B1 --> B1e[utils/]
+    
+      C --> C1[src/main/java/com/wealthmanager/wear/]
+      C --> C2[src/main/res/]
+    
+      C1 --> C1a[tiles/]
+      C1 --> C1b[ui/]
+    
+      D --> D1[API_SETUP.md]
+      D --> D2[DEVELOPMENT.md]
+      D --> D3[assets/]
+```
 
 3. **Build and run**
    ```bash
