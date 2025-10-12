@@ -42,6 +42,7 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.colorResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
@@ -203,10 +204,14 @@ private fun AssetListItem(asset: AssetItem, currency: String) {
                 )
 
                 if (asset.dayChangePercentage != 0.0) {
-                    val (color, sign) = if (asset.dayChangePercentage > 0) {
-                        colorResource(id = R.color.deep_green) to "+"
+                    val color: Color
+                    val sign: String
+                    if (asset.dayChangePercentage > 0) {
+                        color = colorResource(id = R.color.deep_green)
+                        sign = "+"
                     } else {
-                        colorResource(id = R.color.deep_red) to ""
+                        color = colorResource(id = R.color.deep_red)
+                        sign = ""
                     }
                     Text(
                         text = String.format(Locale.US, "%s%.2f%%", sign, asset.dayChangePercentage),
