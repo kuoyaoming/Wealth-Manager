@@ -82,4 +82,17 @@
     <color name="widget_text_primary">@color/widget_text_primary_light</color>
     <color name="widget_text_secondary">@color/widget_text_secondary_light</color>
     <color name="widget_text_tertiary">@color/widget_text_tertiary_light</color>
+
+    <!-- Semantic Colors -->
+    <color name="success_green">#4CAF50</color>
+    <color name="warning_orange">#FF9800</color>
+    <color name="negative_red">#F44336</color>
+    <color name="neutral_gray">#9E9E9E</color>
+    <color name="info_blue">#2196F3</color>
+    <color name="deep_green">#2E7D32</color>
+    <color name="deep_red">#C62828</color>
+    <color name="red">#E53935</color>
+    <color name="light_red">#EF5350</color>
+    <color name="light_green">#66BB6A</color>
+    <color name="green">#43A047</color>
 </resources>

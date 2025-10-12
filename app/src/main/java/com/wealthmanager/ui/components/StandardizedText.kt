@@ -126,9 +126,9 @@ private fun getTextStyleAndColor(purpose: TextPurpose): Pair<TextStyle, Color> {
             ) to MaterialTheme.colorScheme.onSurfaceVariant
         TextPurpose.BUTTON_TEXT -> MaterialTheme.typography.labelLarge to MaterialTheme.colorScheme.onPrimary
         TextPurpose.ERROR_TEXT -> MaterialTheme.typography.bodyMedium to MaterialTheme.colorScheme.error
-        TextPurpose.SUCCESS_TEXT -> MaterialTheme.typography.bodyMedium to Color(0xFF4CAF50)
-        TextPurpose.WARNING_TEXT -> MaterialTheme.typography.bodyMedium to Color(0xFFFF9800)
-        TextPurpose.INFO_TEXT -> MaterialTheme.typography.bodyMedium to MaterialTheme.colorScheme.primary
+        TextPurpose.SUCCESS_TEXT -> MaterialTheme.typography.bodyMedium to colorResource(id = R.color.success_green)
+        TextPurpose.WARNING_TEXT -> MaterialTheme.typography.bodyMedium to colorResource(id = R.color.warning_orange)
+        TextPurpose.INFO_TEXT -> MaterialTheme.typography.bodyMedium to colorResource(id = R.color.info_blue)
     }
 }
 

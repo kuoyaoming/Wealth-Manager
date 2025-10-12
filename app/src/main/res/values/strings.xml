@@ -699,5 +699,18 @@
     <string name="assets_stock_symbol_label">Stock Symbol</string>
     <string name="assets_stock_shares_label">Number of Shares</string>
     <string name="biometric_auth_cancelled">Authentication cancelled</string>
+
+    <!-- Widget Settings -->
+    <string name="widget_force_update_widgets">Force Update Widgets</string>
+    <string name="widget_installation_instructions">Installation Instructions</string>
+    <string name="widget_status">Widget Status: %1$s</string>
+    <string name="installed_widgets">Installed Widgets: %1$d</string>
+    <string name="privacy_settings">Privacy Settings</string>
+    <string name="show_asset_amount">Show Asset Amount</string>
+    <string name="display_total_asset_value">Display total asset value on widgets</string>
+    <string name="privacy_mode">Privacy Mode</string>
+    <string name="hide_all_sensitive_information">Hide all sensitive information</string>
+    <string name="recommendations">Recommendations</string>
+    <string name="actions">Actions</string>
     
 </resources>

@@ -79,7 +79,7 @@ private fun ValidationStatusIcon(validationResult: ValidationResult) {
         when {
             !validationResult.isValid -> Icons.Default.Error to MaterialTheme.colorScheme.error
             validationResult.warningMessage != null -> Icons.Default.Warning to MaterialTheme.colorScheme.primary
-            validationResult.isValid -> Icons.Default.CheckCircle to Color(0xFF4CAF50)
+            validationResult.isValid -> Icons.Default.CheckCircle to colorResource(id = R.color.success_green)
             else -> null to Color.Unspecified
         }
 

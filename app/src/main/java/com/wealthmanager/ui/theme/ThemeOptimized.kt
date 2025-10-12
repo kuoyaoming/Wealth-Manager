@@ -22,17 +22,17 @@ private val DarkColorScheme =
         primary = Purple80,
         secondary = PurpleGrey80,
         tertiary = Pink80,
-        background = androidx.compose.ui.graphics.Color(0xFF121212),
-        surface = androidx.compose.ui.graphics.Color(0xFF1E1E1E),
-        onBackground = androidx.compose.ui.graphics.Color(0xFFE1E1E1),
-        onSurface = androidx.compose.ui.graphics.Color(0xFFE1E1E1),
-        surfaceVariant = androidx.compose.ui.graphics.Color(0xFF2A2A2A),
-        onSurfaceVariant = androidx.compose.ui.graphics.Color(0xFFB3B3B3),
-        error = androidx.compose.ui.graphics.Color(0xFFCF6679),
-        onError = androidx.compose.ui.graphics.Color(0xFF000000),
-        outline = androidx.compose.ui.graphics.Color(0xFF4A4A4A),
-        inverseSurface = androidx.compose.ui.graphics.Color(0xFFE1E1E1),
-        inverseOnSurface = androidx.compose.ui.graphics.Color(0xFF1A1A1A),
+        background = Color(0xFF1C1B1F),
+        surface = Color(0xFF1C1B1F),
+        onBackground = Color(0xFFE6E1E5),
+        onSurface = Color(0xFFE6E1E5),
+        surfaceVariant = Color(0xFF49454F),
+        onSurfaceVariant = Color(0xFFCAC4D0),
+        error = Color(0xFFF2B8B5),
+        onError = Color(0xFF601410),
+        outline = Color(0xFF938F99),
+        inverseSurface = Color(0xFFE6E1E5),
+        inverseOnSurface = Color(0xFF313033),
         inversePrimary = Purple40,
     )
 
@@ -41,17 +41,17 @@ private val LightColorScheme =
         primary = Purple40,
         secondary = PurpleGrey40,
         tertiary = Pink40,
-        background = androidx.compose.ui.graphics.Color(0xFFFFFBFE),
-        surface = androidx.compose.ui.graphics.Color(0xFFFFFBFE),
-        onBackground = androidx.compose.ui.graphics.Color(0xFF1C1B1F),
-        onSurface = androidx.compose.ui.graphics.Color(0xFF1C1B1F),
-        surfaceVariant = androidx.compose.ui.graphics.Color(0xFFE7E0EC),
-        onSurfaceVariant = androidx.compose.ui.graphics.Color(0xFF49454F),
-        error = androidx.compose.ui.graphics.Color(0xFFBA1A1A),
-        onError = androidx.compose.ui.graphics.Color(0xFFFFFFFF),
-        outline = androidx.compose.ui.graphics.Color(0xFF79747E),
-        inverseSurface = androidx.compose.ui.graphics.Color(0xFF313033),
-        inverseOnSurface = androidx.compose.ui.graphics.Color(0xFFF4EFF4),
+        background = Color(0xFFFFFBFE),
+        surface = Color(0xFFFFFBFE),
+        onBackground = Color(0xFF1C1B1F),
+        onSurface = Color(0xFF1C1B1F),
+        surfaceVariant = Color(0xFFE7E0EC),
+        onSurfaceVariant = Color(0xFF49454F),
+        error = Color(0xFFBA1A1A),
+        onError = Color(0xFFFFFFFF),
+        outline = Color(0xFF79747E),
+        inverseSurface = Color(0xFF313033),
+        inverseOnSurface = Color(0xFFF4EFF4),
         inversePrimary = Purple80,
     )
 
@@ -98,11 +98,11 @@ fun WealthManagerThemeOptimized(
  * Extended color scheme for financial app specific colors
  */
 object FinancialColors {
-    val positiveGreen = androidx.compose.ui.graphics.Color(0xFF4CAF50)
-    val negativeRed = androidx.compose.ui.graphics.Color(0xFFF44336)
-    val neutralGray = androidx.compose.ui.graphics.Color(0xFF9E9E9E)
-    val warningOrange = androidx.compose.ui.graphics.Color(0xFFFF9800)
-    val infoBlue = androidx.compose.ui.graphics.Color(0xFF2196F3)
+    val positiveGreen @Composable get() = colorResource(id = R.color.success_green)
+    val negativeRed @Composable get() = colorResource(id = R.color.negative_red)
+    val neutralGray @Composable get() = colorResource(id = R.color.neutral_gray)
+    val warningOrange @Composable get() = colorResource(id = R.color.warning_orange)
+    val infoBlue @Composable get() = colorResource(id = R.color.info_blue)
 
     @Composable
     fun getPositiveColor(): androidx.compose.ui.graphics.Color {
@@ -115,7 +115,7 @@ object FinancialColors {
 
     @Composable
     fun getNegativeColor(): androidx.compose.ui.graphics.Color {
-        return if (MaterialTheme.colorScheme.error == androidx.compose.ui.graphics.Color(0xFFBA1A1A)) {
+        return if (MaterialTheme.colorScheme.error == colorResource(id = R.color.md_theme_light_error)) {
             negativeRed
         } else {
             MaterialTheme.colorScheme.error

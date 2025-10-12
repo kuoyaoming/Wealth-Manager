@@ -180,11 +180,11 @@ private fun getTreemapColor(asset: AssetItem): Color {
     }
 
     return when {
-        asset.dayChangePercentage <= -2.5 -> Color(0xFFC62828) // Deep Red
-        asset.dayChangePercentage <= -1.5 -> Color(0xFFE53935) // Red
-        asset.dayChangePercentage < 0 -> Color(0xFFEF5350)     // Light Red
-        asset.dayChangePercentage <= 1.5 -> Color(0xFF66BB6A)  // Light Green
-        asset.dayChangePercentage <= 2.5 -> Color(0xFF43A047)  // Green
-        else -> Color(0xFF2E7D32)           // Deep Green
+        asset.dayChangePercentage <= -2.5 -> colorResource(id = R.color.deep_red)
+        asset.dayChangePercentage <= -1.5 -> colorResource(id = R.color.red)
+        asset.dayChangePercentage < 0 -> colorResource(id = R.color.light_red)
+        asset.dayChangePercentage <= 1.5 -> colorResource(id = R.color.light_green)
+        asset.dayChangePercentage <= 2.5 -> colorResource(id = R.color.green)
+        else -> colorResource(id = R.color.deep_green)
     }
 }

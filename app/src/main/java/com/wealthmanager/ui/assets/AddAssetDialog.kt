@@ -93,7 +93,7 @@ private fun CashInputFields(viewModel: AddAssetViewModel) {
         OutlinedTextField(
             value = uiState.cashAmount,
             onValueChange = viewModel::onCashAmountChange,
-            label = { Text("Amount") }, // Placeholder
+            label = { Text(stringResource(id = R.string.assets_cash_amount_label)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
@@ -119,7 +119,7 @@ private fun StockInputFields(viewModel: AddAssetViewModel) {
         OutlinedTextField(
             value = uiState.stockSymbol,
             onValueChange = viewModel::onStockSymbolChange,
-            label = { Text("Stock Symbol") }, // Placeholder
+            label = { Text(stringResource(id = R.string.assets_stock_symbol_label)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true,
             trailingIcon = {
@@ -147,7 +147,7 @@ private fun StockInputFields(viewModel: AddAssetViewModel) {
         OutlinedTextField(
             value = uiState.stockShares,
             onValueChange = viewModel::onStockSharesChange,
-            label = { Text("Number of Shares") }, // Placeholder
+            label = { Text(stringResource(id = R.string.assets_stock_shares_label)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )

@@ -41,10 +41,10 @@ fun WidgetSettingsScreen(
             verticalAlignment = Alignment.CenterVertically,
         ) {
             IconButton(onClick = onNavigateBack) {
-                Icon(Icons.Default.ArrowBack, contentDescription = "Back")
+                Icon(Icons.Default.ArrowBack, contentDescription = stringResource(id = R.string.cd_back_to_dashboard))
             }
             Text(
-                text = "Widget Settings",
+                text = stringResource(id = R.string.settings_title),
                 style = MaterialTheme.typography.headlineMedium,
                 fontWeight = FontWeight.Bold,
             )
@@ -88,7 +88,7 @@ fun WidgetSettingsScreen(
                     )
                     Spacer(modifier = Modifier.width(8.dp))
                     Text(
-                        text = "Widget Status: ${uiState.displayState.name}",
+                        text = stringResource(id = R.string.widget_status, uiState.displayState.name),
                         style = MaterialTheme.typography.titleMedium,
                         fontWeight = FontWeight.Bold,
                     )
@@ -97,7 +97,7 @@ fun WidgetSettingsScreen(
                 Spacer(modifier = Modifier.height(8.dp))
 
                 Text(
-                    text = "Installed Widgets: ${uiState.installedWidgetCount}",
+                    text = stringResource(id = R.string.installed_widgets, uiState.installedWidgetCount),
                     style = MaterialTheme.typography.bodyMedium,
                 )
 
@@ -122,7 +122,7 @@ fun WidgetSettingsScreen(
                 modifier = Modifier.padding(16.dp),
             ) {
                 Text(
-                    text = "Privacy Settings",
+                    text = stringResource(id = R.string.privacy_settings),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                 )
@@ -137,11 +137,11 @@ fun WidgetSettingsScreen(
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "Show Asset Amount",
+                            text = stringResource(id = R.string.show_asset_amount),
                             style = MaterialTheme.typography.titleMedium,
                         )
                         Text(
-                            text = "Display total asset value on widgets",
+                            text = stringResource(id = R.string.display_total_asset_value),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -165,11 +165,11 @@ fun WidgetSettingsScreen(
                 ) {
                     Column(modifier = Modifier.weight(1f)) {
                         Text(
-                            text = "Privacy Mode",
+                            text = stringResource(id = R.string.privacy_mode),
                             style = MaterialTheme.typography.titleMedium,
                         )
                         Text(
-                            text = "Hide all sensitive information",
+                            text = stringResource(id = R.string.hide_all_sensitive_information),
                             style = MaterialTheme.typography.bodySmall,
                             color = MaterialTheme.colorScheme.onSurfaceVariant,
                         )
@@ -195,7 +195,7 @@ fun WidgetSettingsScreen(
                     modifier = Modifier.padding(16.dp),
                 ) {
                     Text(
-                        text = "Recommendations",
+                        text = stringResource(id = R.string.recommendations),
                         style = MaterialTheme.typography.titleLarge,
                         fontWeight = FontWeight.Bold,
                     )
@@ -233,7 +233,7 @@ fun WidgetSettingsScreen(
                 modifier = Modifier.padding(16.dp),
             ) {
                 Text(
-                    text = "Actions",
+                    text = stringResource(id = R.string.actions),
                     style = MaterialTheme.typography.titleLarge,
                     fontWeight = FontWeight.Bold,
                 )
@@ -247,7 +247,7 @@ fun WidgetSettingsScreen(
                 ) {
                     Icon(Icons.Default.Refresh, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Force Update Widgets")
+                    Text(stringResource(id = R.string.widget_force_update_widgets))
                 }
 
                 Spacer(modifier = Modifier.height(8.dp))
@@ -259,7 +259,7 @@ fun WidgetSettingsScreen(
                 ) {
                     Icon(Icons.Default.Help, contentDescription = null)
                     Spacer(modifier = Modifier.width(8.dp))
-                    Text("Installation Instructions")
+                    Text(stringResource(id = R.string.widget_installation_instructions))
                 }
             }
         }

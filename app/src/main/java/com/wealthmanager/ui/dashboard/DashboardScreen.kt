@@ -204,9 +204,9 @@ private fun AssetListItem(asset: AssetItem, currency: String) {
 
                 if (asset.dayChangePercentage != 0.0) {
                     val (color, sign) = if (asset.dayChangePercentage > 0) {
-                        Color(0xFF2E7D32) to "+"
+                        colorResource(id = R.color.deep_green) to "+"
                     } else {
-                        Color(0xFFC62828) to ""
+                        colorResource(id = R.color.deep_red) to ""
                     }
                     Text(
                         text = String.format(Locale.US, "%s%.2f%%", sign, asset.dayChangePercentage),
