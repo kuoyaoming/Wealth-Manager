@@ -28,66 +28,143 @@ A modern Android personal finance tracker built with Jetpack Compose, featuring 
 - **Smart Failover**: Automatic API switching with retry mechanisms
 - **Offline Support**: Intelligent caching with offline availability
 
-### 🎨 **Modern UI/UX**
-- **Material 3 Design**: Dynamic theming with Material You
-- **Jetpack Compose**: Modern declarative UI framework
-- **120Hz Optimization**: High refresh rate support for smooth animations
-- **Responsive Design**: Adaptive layouts for phones and tablets
-- **Edge-to-Edge**: Immersive full-screen experience
+# Wealth Manager
 
-### 🌍 **Internationalization**
-- **Multi-Language**: English and Traditional Chinese support
-- **Instant Switching**: Real-time language switching without restart
-- **Localized Content**: Complete UI and content descriptions
+A modern, privacy-focused personal finance tracker for Android and Wear OS. Wealth Manager is built with Jetpack Compose, Kotlin, and the latest Android technologies, providing secure local data storage, biometric authentication, and real-time market data integration.
 
-### ⌚ **Wear OS Integration**
-- **Companion App**: Dedicated Wear OS module
-- **Data Sync**: Seamless synchronization via Data Layer
-- **Tile Support**: Quick portfolio overview on watch face
-- **Independent Operation**: Works standalone on Wear OS
+---
 
-### 🚀 **Android 2025 Compliance**
-- **Latest APIs**: Target SDK 36 (Android 16)
-- **Splash Screen**: Professional app launch experience
-- **Notification Permissions**: Android 13+ notification management
-- **Modern Architecture**: MVVM + Repository pattern with Hilt DI
+## 🚀 Key Features
 
-## 📱 App Demo
+- **Local-Only Data Storage**: All financial data is encrypted and stored on your device. No cloud sync, no analytics, no third-party sharing.
+- **Biometric Authentication**: Secure access using fingerprint or face recognition. Session timeout and hardware-backed security.
+- **Asset Management**: Track cash (TWD, USD) and stock portfolios. CRUD operations for assets.
+- **Market Data Integration**: Real-time prices via Finnhub, TWSE, and ExchangeRate-API. Smart failover and caching for offline use.
+- **120Hz Performance**: Optimized for high refresh rate devices.
+- **Multi-Language Support**: English and Traditional Chinese. Instant switching, full localization.
+- **Wear OS Companion**: Standalone Wear OS app with data sync, tiles, and haptic feedback.
+- **Modern UI/UX**: Material 3, responsive layouts, edge-to-edge design.
+- **Security & Privacy**: Encrypted database, API key protection, no personal data collection.
 
-<div align="center">
+---
 
-</div>
+## 🏗️ Architecture
 
-## 🚀 Quick Start
+- **MVVM + Repository Pattern**: Separation of UI, business logic, and data layers.
+- **Dependency Injection**: Hilt for scalable, testable code.
+- **Database**: Room with encryption.
+- **Networking**: Retrofit + OkHttp.
+- **Authentication**: Android Biometric API.
+- **Async**: Kotlin Coroutines and Flow.
+
+---
+
+## 📦 Modules
+
+- `app/` — Main Android application
+- `wear/` — Wear OS companion app
+- `docs/` — Documentation, setup scripts, contributing guides
+- `.github/` — CI/CD workflows, issue templates
+
+---
+
+## ⚙️ Build & Setup
 
 ### Prerequisites
-- Android 14+ (API 34+)
+
 - Android Studio Hedgehog or later
-- Kotlin 1.9.0+
 - JDK 17+
+- Android SDK API 34+ (Android 14+)
+- Kotlin 1.9.0+
 
-### Installation
+### Quick Start
 
-1. **Clone the repository**
-   ```bash
-   git clone https://github.com/kuoyaoming/Wealth-Manager.git
-   cd Wealth-Manager
-   ```
-
-2. **Configure Android SDK**
 ```bash
-   # Option 1: Set environment variable
-   export ANDROID_HOME=/path/to/android/sdk
-   
-   # Option 2: Create local.properties (for SDK path only)
-   echo "sdk.dir=/path/to/android/sdk" > local.properties
-   ```
-## 🆕 Release & Repository Cleanup
+git clone https://github.com/kuoyaoming/Wealth-Manager.git
+cd Wealth-Manager
 
-- Latest version: `v1.9.0` (tagged and released via CI/CD)
-- Only Android project and essential GitHub files are kept; temp, test, and IDE files have been removed for a clean repository.
-- `.gitignore` updated to ignore all unnecessary files and folders.
+# Configure Android SDK
+echo "sdk.dir=/path/to/android/sdk" > local.properties
 
+# Build debug version
+./gradlew assembleDebug
+
+# Install on device
+./gradlew installDebug
+```
+
+### API Keys
+
+- API keys are managed via app settings (Settings → Manage API Keys).
+- No hardcoded API keys; keys are encrypted and stored locally.
+- Supported APIs: Finnhub, TWSE, ExchangeRate-API.
+
+---
+
+## 🛡️ Security
+
+- All sensitive data is encrypted using Android Keystore and EncryptedSharedPreferences.
+- No hardcoded secrets in source code.
+- API keys are never stored in version control.
+- HTTPS-only network communication.
+
+---
+
+## ⌚ Wear OS
+
+- Standalone Wear OS app (`wear/`)
+- Data sync via Play Services Wearable Data Layer
+- Tiles for quick portfolio overview
+- Haptic feedback and optimized UI
+
+---
+
+## 🧪 Testing
+
+- Unit tests: JUnit, Mockito
+- UI tests: Espresso, Compose UI Test
+- Code quality: Detekt, ktlint
+
+---
+
+## 🛠️ CI/CD
+
+- GitHub Actions for automated builds, tests, and releases
+- Tag-based release workflow (`vX.Y.Z`)
+- Release AAB builds only produced by CI
+
+---
+
+## 🌍 Localization
+
+- English and Traditional Chinese
+- Currency formatting and number systems
+- Accessibility and content descriptions
+
+---
+
+## 🤝 Contributing
+
+We welcome contributions! Please read [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+
+---
+
+## 📄 License
+
+MIT License. See [LICENSE](LICENSE) for details.
+
+---
+
+## 🆘 Support
+
+- Documentation: [docs/README.md](docs/README.md)
+- API Setup: [docs/API_SETUP.md](docs/API_SETUP.md)
+- Security: [SECURITY.md](SECURITY.md)
+- Issues: [GitHub Issues](https://github.com/kuoyaoming/Wealth-Manager/issues)
+
+---
+
+**Wealth Manager** — Secure, private, and modern personal finance tracking for Android and Wear OS.
 #### Tag & Release Example
 ```bash
 git tag v1.9.0
