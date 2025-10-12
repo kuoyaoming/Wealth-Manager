@@ -1,292 +1,115 @@
-# Wealth Manager
+# Wealth Manager 財富管家
 
-以 Jetpack Compose 打造的現代化 Android 個人理財應用。資料僅存於本機、生物識別登入、即時市場數據（Finnhub、TWSE、ExchangeRate‑API）、多語系介面、120Hz 最佳化與豐富觸覺回饋。**現已完全符合 Android 2025 官方設計指南！**
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Build Status](https://github.com/kuoyaoming/Wealth-Manager/actions/workflows/release.yml/badge.svg)](https://github.com/kuoyaoming/Wealth-Manager/actions)
 
-語言：[English](README.md) | [繁體中文](README_zh.md)
-
-## 主要功能
--  **在地化**：英文／繁中即時切換
-- ⌚ **Wear OS**：資料層同步（獨立 Wear 模組）
-
-- versionName：來自 Git Tag `vX.Y.Z` → `X.Y.Z`（SemVer）
-- 目前最新版本：`v1.9.0`
-- 釋出 AAB：僅於推送 Tag 時由 CI 產生
-
-範例
-```bash
-# 建立並推送釋出標籤
-
-### 投資組合概覽與資產管理
-```
-
-## 專案整理
-
-- 2025/10/12：專案已移除暫存、測試、IDE 設定等非必要檔案，僅保留 Android 專案與必要 GitHub 文件。
-- `.gitignore` 已加強，未來將自動忽略暫存與測試檔案，確保版本庫乾淨。
-<table>
-<tr>
-<td width="50%">
-<img src="docs/screenshots/portfolio-overview.png" alt="投資組合概覽" width="100%"/>
-<p align="center"><em>資產分佈與即時估值</em></p>
-</td>
-<td width="50%">
-<img src="docs/screenshots/asset-management.png" alt="資產管理" width="100%"/>
-<p align="center"><em>直覺的現金與股票管理流程</em></p>
-</td>
-</tr>
-</table>
-
-### 生物識別與新增資產
-<table>
-<tr>
-<td width="50%">
-<img src="docs/screenshots/biometric-auth.png" alt="生物識別" width="100%"/>
-<p align="center"><em>安全登入與清楚隱私說明</em></p>
-</td>
-<td width="50%">
-<img src="docs/screenshots/add-assets.png" alt="新增資產" width="100%"/>
-<p align="center"><em>智慧新增流程，支援股票搜尋與代碼查詢</em></p>
-</td>
-</tr>
-</table>
-
-### 關於與隱私
-<table>
-<tr>
-<td width="50%">
-<img src="docs/screenshots/about-app.png" alt="關於 Wealth Manager" width="100%"/>
-<p align="center"><em>透明的隱私與第三方 API 資訊</em></p>
-</td>
-<td width="50%">
-<!-- 空白欄位以保持版面均衡 -->
-</td>
-</tr>
-</table>
-
-</div>
-
-## 安全與隱私
-
-- **僅本機儲存**：財務資料不離開裝置（無雲端同步）
-- **生物識別登入**：無需密碼，24 小時會話逾時
-- **API 金鑰加密**：以 EncryptedSharedPreferences 儲存
-- **日誌衛生**：金鑰遮罩；偵錯聚焦非敏感資訊
-
-文件：[`Security Policy`](docs/security/SECURITY.md) · [`API 設定指南`](docs/api/API_SETUP.md)
-
-## 快速開始
-
-```bash
-# 複製專案（或你的 fork）
-git clone https://github.com/kuoyaoming/Wealth-Manager.git
-
-# 建置（Debug）
-./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug
-
-# 安裝到裝置
-./gradlew installDebug
-```
-
-系統需求
-- Android 14+（API 34+）
-- 目標 SDK 35（Android 15）
-- 建議具備生物辨識硬體
-- 市場數據需網路連線
-
-## API 金鑰
-
-- 於 App 內設定：設定 → 管理 API 金鑰 → 驗證並儲存
-- 金鑰以加密方式儲存在本機；請勿提交到版本控制
-- 不需要 `local.properties` 或 BuildConfig 金鑰配置
-- 詳細步驟：[英文版](docs/api/API_SETUP.md) · [繁體中文](docs/api/API_SETUP_zh.md)
-
-## 架構概覽
-
-- **模式**：MVVM + Repository
-- **資料**：Room（本機儲存）、Retrofit/OkHttp
-- **依賴注入**：Hilt
-- **UI**：Jetpack Compose + Material 3
-- **安全**：EncryptedSharedPreferences 金鑰；生物識別登入
-
-```mermaid
-flowchart TB
-  subgraph UI_層
-    U1[UI 畫面]
-    U2[導覽]
-    U3[Material 3 與響應式]
-    U4[觸覺與 120Hz]
-  end
-
-  subgraph 業務邏輯層
-    B1[ViewModels]
-    B2[MarketDataService]
-    B3[認證狀態]
-    B4[FirstLaunchManager]
-  end
-
-  subgraph 資料層
-    D1[Repositories]
-    D2[Room 資料庫]
-    D3[API Provider]
-    D4[快取與韌性]
-  end
-
-  U1 --> B1
-  U2 --> B1
-  U3 --> B1
-  U4 --> B1
-
-  B1 --> D1
-  B2 --> D1
-  B3 --> D1
-
-  D1 --> D2
-  D1 --> D3
-  D1 --> D4
-```
-
-### 核心模組
-
-```mermaid
-graph LR
-  subgraph "🔐 認證"
-    A1[BiometricAuthManager]
-    A2[AuthStateManager]
-    A3[BiometricAuthScreen]
-  end
-
-  subgraph "💰 資產"
-    B1[AssetsScreen]
-    B2[AssetRepository]
-    B3[Room DAOs]
-  end
-
-  subgraph "📊 市場數據"
-    C1[MarketDataService]
-    C2[ApiProviderService<br/>（FinnhubApi／TwseApi／ExchangeRateApi）]
-    C3[快取與解析<br/>（TwseCacheManager／TwseDataParser）]
-    C4[韌性<br/>（重試／去重／錯誤／驗證）]
-  end
-
-  subgraph "🎨 介面與系統"
-    D1[DashboardScreen]
-    D2[SettingsScreen]
-    D3[Navigation]
-    D4[Material 3／響應式]
-    D5[PerformanceMonitor120Hz]
-  end
-
-  A1 --> A3
-  A2 --> A3
-  A3 --> D1
-  D1 --> B1
-  B1 --> C1
-  C1 --> B2
-  B2 --> B3
-```
-
-## 數據流程
-
-```mermaid
-graph TD
-  UI[Compose UI] --> VM[ViewModel]
-  VM --> RP[Repository]
-  RP --> DB[Room]
-  RP --> AP[ApiProviderService]
-
-  AP --> F[Finnhub]
-  AP --> T[TWSE]
-  AP --> X[ExchangeRate]
-
-  F --> C[快取]
-  T --> C
-  X --> C
-
-  C --> MDS[MarketDataService]
-  MDS --> AU[資產資料更新]
-  AU --> DB
-
-  AUTH[生物識別＋認證狀態（24h）] --> VM
-  KEY[KeyRepository] --> AP
-  RES[韌性<br/>（重試／去重／錯誤／驗證／診斷）] --> AP
-  OFF[離線模式] --> C
-  C --> LC[本地快取] --> UI
-```
-
-## 技術棧
-
-- Kotlin、Jetpack Compose、Material 3
-- Hilt、Room（本機儲存）、Retrofit、OkHttp（日誌）
-- AndroidX Biometric
-- Coroutines/Flows
-- Wear OS 資料層
-
-## Wear OS
-
-- 獨立模組 `wear`（`minSdk 30`、`targetSdk 35`）
-- 透過 `MobileWearSyncService` 與 Play Services Wearable 同步
-
-## 貢獻
-
-詳見 [`docs/development/CONTRIBUTING.md`](docs/development/CONTRIBUTING.md)
-
-## 授權
-
-MIT License — 見 [LICENSE](LICENSE)
+現代化、隱私優先的 Android 與 Wear OS 個人理財追蹤工具。採用 Jetpack Compose、Kotlin 及最新 Android 技術打造。
 
 ---
 
-版本：1.4.7  
-最後更新：2025  
-最低支援：Android 14（API 34）  
-目標 SDK：35（Android 15）
+## 目錄
+- [功能特色](#功能特色)
+- [快速開始](#快速開始)
+- [架構說明](#架構說明)
+- [模組結構](#模組結構)
+- [安全性](#安全性)
+- [在地化](#在地化)
+- [貢獻指南](#貢獻指南)
+- [授權](#授權)
+- [支援](#支援)
 
-## 發佈與版本
+---
 
-- versionName：來自 Git Tag `vX.Y.Z` → `X.Y.Z`（SemVer）
-- versionCode：CI 的 `GITHUB_RUN_NUMBER`
-- 釋出 AAB：僅於推送 Tag 時由 CI 產生
+## 功能特色
+- **本機加密儲存**：所有財務資料僅儲存於裝置，無雲端同步、無分析、無第三方分享。
+- **生物識別登入**：支援指紋或臉部辨識，硬體安全防護。
+- **資產管理**：現金（台幣/美金）與股票投資組合，完整 CRUD。
+- **市場數據整合**：即時行情（Finnhub、TWSE、ExchangeRate-API），韌性快取與離線支援。
+- **120Hz 效能最佳化**：高刷新率裝置流暢體驗。
+- **多語系支援**：繁體中文與英文，介面即時切換。
+- **Wear OS 伴侶**：獨立 Wear OS 應用，資料同步、錶面 Tiles、震動回饋。
+- **現代化 UI/UX**：Material 3、響應式版面、全螢幕設計。
 
-範例
-```bash
-# 建立並推送釋出標籤
-git tag v1.4.7
-git push origin v1.4.7
+---
 
-# 本地 Debug（Release 僅限 CI）
-./gradlew -PwmVersionName=0.0.0-beta.local -PwmVersionCode=1 assembleDebug
+## 快速開始
+
+### 環境需求
+- Android Studio Hedgehog 或更新版
+- JDK 17+
+- Android SDK API 34+（Android 14+）
+- Kotlin 1.9.0+
+
+### 建置與執行
+```sh
+git clone https://github.com/kuoyaoming/Wealth-Manager.git
+cd Wealth-Manager
+# 設定 Android SDK
+# echo "sdk.dir=/path/to/android/sdk" > local.properties
+./gradlew assembleDebug
+./gradlew installDebug
 ```
 
-### 導覽圖（Navigation Graph）
+### API 金鑰
+- 於 App 設定頁管理 API 金鑰（設定 → 管理 API 金鑰）。
+- 不會有硬編碼金鑰，所有金鑰皆加密儲存於本機。
+- 支援 API：Finnhub、TWSE、ExchangeRate-API。
 
-```mermaid
-flowchart TD
-  A[auth] -->|onAuthSuccess| B[dashboard]
-  A -->|onSkipAuth（未認證時）| B
-  B -->|onNavigateToAssets| C[assets]
-  B -->|onNavigateToSettings| D[settings]
-  C -->|onNavigateBack| B
-  D -->|onNavigateBack| B
-```
+---
 
-產物
-- Tag 觸發後，CI 會執行 `:app:bundleRelease` 並上傳 `.aab` 與 `mapping.txt`
+## 架構說明
+- **MVVM + Repository Pattern**：UI、業務邏輯、資料層分離。
+- **依賴注入**：Hilt，易於擴充與測試。
+- **資料庫**：Room 加密。
+- **網路**：Retrofit + OkHttp。
+- **認證**：Android Biometric API。
+- **非同步**：Kotlin Coroutines 與 Flow。
 
-## 開發狀態
+---
 
-### ✅ 已完成
-- 生物識別登入，24 小時會話逾時
-- 現金／股票資產管理（CRUD）
-- 即時市場數據（Finnhub、TWSE、ExchangeRate‑API）
-- 故障轉移、重試、請求去重
-- Material 3 響應式 UI
-- 英文／繁體中文在地化
-- 效能監控與 120Hz 最佳化
-- 智能快取與離線支援
-- 錯誤復原與診斷
+## 模組結構
+- `app/` — 主 Android 應用程式
+- `wear/` — Wear OS 伴侶應用
+- `docs/` — 文件、開發腳本、貢獻指南
+- `.github/` — CI/CD 工作流程、議題模板
 
-### 🚧 開發中
-- 投資組合圖表
-- 進階分析
-- 數據匯出
-- 強化圖表元件
+---
+
+## 安全性
+- 所有敏感資料皆以 Android Keystore 與 EncryptedSharedPreferences 加密。
+- 原始碼中無硬編碼金鑰。
+- API 金鑰不會進入版本控制。
+- 僅使用 HTTPS 網路通訊。
+
+---
+
+## 在地化
+- 支援繁體中文與英文
+- 貨幣格式、數字系統
+- 無障礙設計與內容描述
+
+---
+
+## 貢獻指南
+歡迎任何貢獻！請參閱 [CONTRIBUTING.md](CONTRIBUTING.md) 取得詳細規範。
+
+---
+
+## 授權
+MIT License，詳見 [LICENSE](LICENSE)。
+
+---
+
+
+## 支援
+- 文件：[docs/README.md](docs/README.md)
+- API 設定：[docs/API_SETUP.md](docs/API_SETUP.md)
+- 安全性：[docs/SECURITY.md](docs/SECURITY.md)
+- 隱私權政策：[docs/privacy_policy.md](docs/privacy_policy.md)
+- 更新日誌：[docs/CHANGELOG.md](docs/CHANGELOG.md)
+- 發佈說明：[docs/RELEASE_NOTES.md](docs/RELEASE_NOTES.md)
+- 問題回報：[GitHub Issues](https://github.com/kuoyaoming/Wealth-Manager/issues)
+
+---
+
+**Wealth Manager 財富管家** — 安全、隱私、現代化的 Android 與 Wear OS 個人理財追蹤工具。

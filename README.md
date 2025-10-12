@@ -103,7 +103,10 @@ MIT License. See [LICENSE](LICENSE) for details.
 ## Support
 - Documentation: [docs/README.md](docs/README.md)
 - API Setup: [docs/API_SETUP.md](docs/API_SETUP.md)
-- Security: [SECURITY.md](SECURITY.md)
+- Security: [docs/SECURITY.md](docs/SECURITY.md)
+- Privacy Policy: [docs/privacy_policy.md](docs/privacy_policy.md)
+- Changelog: [docs/CHANGELOG.md](docs/CHANGELOG.md)
+- Release Notes: [docs/RELEASE_NOTES.md](docs/RELEASE_NOTES.md)
 - Issues: [GitHub Issues](https://github.com/kuoyaoming/Wealth-Manager/issues)
 
 ---
