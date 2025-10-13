@@ -186,7 +186,7 @@ dependencies {
     // Google Credential Manager for password manager integration
     implementation 'androidx.credentials:credentials:1.2.0'
     implementation 'androidx.credentials:credentials-play-services-auth:1.2.0'
-    implementation 'com.google.android.gms:play-services-auth:21.0.0'
+    implementation 'com.google.android.gms:play-services-auth:21.4.0'
 
     // Wear OS data layer
     implementation 'com.google.android.gms:play-services-wearable:18.2.0'
